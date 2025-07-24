@@ -5205,6 +5205,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Driver Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7475693644030108357, guid: 0e528b71753ef4e9f87a181f40e3bdac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5317,11 +5322,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Doctor Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6639434847749123952, guid: 5bd54102471bc4dd6aee06dc90172066,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

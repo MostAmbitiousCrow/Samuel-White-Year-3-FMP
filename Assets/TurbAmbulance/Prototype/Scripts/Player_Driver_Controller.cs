@@ -37,7 +37,7 @@ public class Player_Driver_Controller : MonoBehaviour
         // Subscribe to the PlayerInput component's events
         PlayerInput input = GetComponent<PlayerInput>();
 
-        // Cache actions from the provided InputActionAsset
+        // Save actions from the provided InputActionAsset
         _steerAction = input.actions["Steer"];
         _actionAction = input.actions["Action"];
 
