@@ -16,12 +16,12 @@
                 },
                 {
                     "name": "Vault",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "d43fde6e-a426-42bd-a0fd-2dac81f4f8bf",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pause",
@@ -156,7 +156,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "D-Pad (Gamepad)",
+                    "name": "D-Pad [Gamepad]",
                     "id": "70ddba14-7e8a-4f4d-ad41-6bb2d4487836",
                     "path": "2DVector",
                     "interactions": "",
@@ -203,6 +203,39 @@
                     "name": "right",
                     "id": "6889a6b5-d754-4251-92e9-7ed3527c4614",
                     "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shoulders [Gamepad]",
+                    "id": "6d203a56-cbb0-48ad-a122-8b868fde3101",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "c087bbb7-9b8f-4e93-9f8a-2311e02c22cb",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "ec50ec3e-f4fe-4cab-8fde-212dd157387f",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
