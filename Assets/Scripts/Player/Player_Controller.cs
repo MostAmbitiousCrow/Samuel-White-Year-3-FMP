@@ -63,9 +63,8 @@ class Player_Controller : Boat_Character, IDamageable
         }
         if (context.performed)
         {
-            _isVaulting = true;
-            VaultToSpace(Boat_Space_Manager.GetOppositeLaneID(GetCurrentLane()), GetCurrentSpace(), vaultSpeed);
-            _isVaulting = false; //TODO: Implement vaulting animation here
+            VaultToSpace(boatSpaceManager.GetOppositeLaneID(GetCurrentLane()), GetCurrentSpace(), vaultSpeed);
+            //TODO: Implement vaulting animation here
         }
     }
 

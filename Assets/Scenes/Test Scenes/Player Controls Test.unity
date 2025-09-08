@@ -6379,11 +6379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf220d8a9599463e9a2f6072f550732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentLane: 0
-  startLane: 1
-  isAnimated: 1
-  riverObjectAnimator: {fileID: 974976776}
-  steerSpeed: 1
+  steerSpeed: 5
   SteerInterpolationCurve:
     serializedVersion: 2
     m_Curve:
@@ -6408,21 +6404,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _currentLane: 0
+  startLane: 1
   stunDuration: 1.5
   stunSlowMultiplier: 0.5
---- !u!114 &974976776
-MonoBehaviour:
+  _isMoving: 0
+  rb: {fileID: 974976776}
+--- !u!54 &974976776
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974976773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49726d83d5cdf4dafbce6848c31c8ad2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  art: {fileID: 1375061097}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &995981137
 GameObject:
   m_ObjectHideFlags: 0
@@ -6467,6 +6481,7 @@ GameObject:
   - component: {fileID: 1148686859}
   - component: {fileID: 1148686858}
   - component: {fileID: 1148686860}
+  - component: {fileID: 1148686861}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6503,11 +6518,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95835f4ba011c4619a837353c8210af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stepSpeed: 5
+  vaultSpeed: 7
+  vaultSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  vaultHeight: 1.2
+  vaultHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 3.6981146
+      outSlope: 3.6981146
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0.0066550854
+      outSlope: 0.0026996958
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.36129534
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 0.2
+      inSlope: -4.528305
+      outSlope: -4.528305
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041666627
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _currentSpace: 0
   _currentLane: 0
   startSpace: 1
+  _isVaulting: 0
+  _isMoving: 0
   canInteractWithBoat: 1
   boatInteractor: {fileID: 1148686860}
+  rb: {fileID: 1148686861}
   playerInput: {fileID: 1148686859}
 --- !u!114 &1148686859
 MonoBehaviour:
@@ -6555,6 +6615,33 @@ MonoBehaviour:
   boatController: {fileID: 974976775}
   weight: 1
   canMoveBoat: 1
+--- !u!54 &1148686861
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148686856}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1253991678
 GameObject:
   m_ObjectHideFlags: 0
@@ -6812,7 +6899,7 @@ GameObject:
   - component: {fileID: 1681226462}
   - component: {fileID: 1681226463}
   m_Layer: 0
-  m_Name: Sewer RIver
+  m_Name: Sewer River
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6846,6 +6933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b38f32a2e594085a103e55827a5835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RiverSpeed: 1
   _lanesParent: {fileID: 654339542}
   RiverLanes:
   - ID: 0
@@ -7163,5 +7251,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 513975013}
   - {fileID: 292888714}
-  - {fileID: 974976774}
   - {fileID: 1681226462}
+  - {fileID: 974976774}

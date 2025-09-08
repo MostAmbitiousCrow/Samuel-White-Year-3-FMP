@@ -5,7 +5,7 @@ public interface IRiverLaneMovement
     /// </summary>
     /// <param name="direction"></param>
     /// <param name="speed"></param>
-    public void MoveTowardsLane(int direction);
+    public void MoveToLane(int direction);
     public void GoToLane(int lane);
 
     public int GetCurrentLane();

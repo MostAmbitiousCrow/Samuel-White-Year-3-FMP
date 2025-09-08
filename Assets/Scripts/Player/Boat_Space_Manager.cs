@@ -2,15 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
 using System;
+using System.Linq;
 
 public class Boat_Space_Manager : MonoBehaviour
 {
-    public static Boat_Space_Manager instance;
+    public Boat_Controller BoatController { get; private set; }
+    public List<IBoatSpaceMovement> boatSpaceObjects = new();
 
     [Serializable]
     public class BoatSide
     {
-        // public List<Vector3> SpaceDatas = new();
         [Serializable]
         public class SpaceData
         {
@@ -47,23 +48,36 @@ public class Boat_Space_Manager : MonoBehaviour
             BoatSides.Add(bs);
         }
     }
-
-    private void Awake()
+    [Button]
+    public void GetAndInjectBoatAffectedObjects()
     {
-        instance = this;
+        boatSpaceObjects = new List<IBoatSpaceMovement>(FindObjectsOfType<MonoBehaviour>().OfType<IBoatSpaceMovement>());
+        foreach (var item in boatSpaceObjects)
+        {
+            item.InjectBoatSpaceManager(this);
+        }
+        print($"Injected {this} into {boatSpaceObjects.Count} objects");
     }
+
+    #region Injection
+    void Awake()
+    {
+        GetAndInjectBoatAffectedObjects();
+        BoatController = FindAnyObjectByType<Boat_Controller>();
+    }
+    #endregion
 
     #region Lane and Space Checks
     // Returns a true/false if the space exists within the lane
-    public static bool CheckAvailableSpace(int side, int space)
+    public bool CheckAvailableSpace(int side, int space)
     {
-        if (space > instance.BoatSides[side].SpaceDatas.Count || space < 0) return false;
+        if (space > BoatSides[side].SpaceDatas.Count || space < 0) return false;
         else return true;
     }
 
     // Get Space Data based on a given direction
     // Checks if there is a space available, will otherwise return the initial provided space
-    public static BoatSide.SpaceData GetSpaceFromDirection(int currentLane, int currentSpace, int direction)
+    public BoatSide.SpaceData GetSpaceFromDirection(int currentLane, int currentSpace, int direction)
     {
         int spaces;
         int targetSpace;
@@ -71,26 +85,33 @@ public class Boat_Space_Manager : MonoBehaviour
         spaces = GetSpaces(currentLane).Count;
         targetSpace = currentSpace + direction;
 
-        if (targetSpace < spaces && targetSpace > -1) return instance.BoatSides[currentLane].SpaceDatas[targetSpace];
-        else return instance.BoatSides[currentLane].SpaceDatas[currentSpace];
+        if (targetSpace < spaces && targetSpace > -1) return BoatSides[currentLane].SpaceDatas[targetSpace];
+        else return BoatSides[currentLane].SpaceDatas[currentSpace];
     }
 
     // Obtain the ID number of the opposite lane
-    public static int GetOppositeLaneID(int currentLane)
+    public int GetOppositeLaneID(int currentLane)
     {
         return currentLane == 0 ? 1 : 0;
     }
 
     // Get Space Data
-    public static BoatSide.SpaceData GetSpace(int lane, int space)
+    public BoatSide.SpaceData GetSpace(int lane, int space)
     {
-        return instance.BoatSides[lane].SpaceDatas[space];
+        return BoatSides[lane].SpaceDatas[space];
     }
 
     // Get All Space Data
-    public static List<BoatSide.SpaceData> GetSpaces(int lane)
+    public List<BoatSide.SpaceData> GetSpaces(int lane)
     {
-        return instance.BoatSides[lane].SpaceDatas;
+        return BoatSides[lane].SpaceDatas;
+    }
+    #endregion
+
+    #region Get Boat Centre
+    public Vector3 GetBoatCentre()
+    {
+        return transform.position;
     }
     #endregion
 }

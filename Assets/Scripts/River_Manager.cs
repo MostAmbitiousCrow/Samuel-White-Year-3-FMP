@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
 using System;
+using System.Linq;
 
 public class River_Manager : MonoBehaviour
 {
-    public static River_Manager instance;
+    [Header("River Stats")]
+    public float RiverSpeed = 1f;
 
+    [Header("River Lanes Info")]
     [SerializeField] Transform _lanesParent;
 
     [Serializable]
@@ -16,6 +19,7 @@ public class River_Manager : MonoBehaviour
         public Vector2 axis;
     }
     public List<RiverLane> RiverLanes;
+    public List<IAffectedByRiver> riverInfluencedObjects = new();
     
     [Button]
     public void UpdateSpaceDatas()
@@ -24,33 +28,45 @@ public class River_Manager : MonoBehaviour
 
         for (int i = 0; i < _lanesParent.childCount; i++)
         {
-            RiverLane rl = new()
-            {
-                axis = _lanesParent.GetChild(i).position,
-                ID = i
-            };
+            RiverLane rl = new() { axis = _lanesParent.GetChild(i).position, ID = i };
             RiverLanes.Add(rl);
         }
         print($"Updated River Lanes to {RiverLanes.Count} lanes");
     }
 
-    private void Awake()
+    [Button]
+    public void GetAndInjectAffectedRiverObjects()
     {
-        instance = this;
+        riverInfluencedObjects = new List<IAffectedByRiver>(FindObjectsOfType<MonoBehaviour>().OfType<IAffectedByRiver>());
+        foreach (var item in riverInfluencedObjects)
+        {
+            item.InjectRiverManager(this);
+        }
+        print($"Injected {this} into {riverInfluencedObjects.Count} objects");
     }
+
+    #region Injection
+    void Awake()
+    {
+        GetAndInjectAffectedRiverObjects();
+    }
+    #endregion
 
     #region Lane and Space Checks
 
-    // Returns a true/false if a lane exists within the list of lanes
-    public static bool CheckAvailableLane(int lane)
+    /// <summary>
+    /// Returns a true/false if a lane exists within the list of lanes
+    /// </summary>
+    public bool CheckAvailableLane(int lane)
     {
-        if (lane > instance.RiverLanes.Count || lane < 0) return false;
+        if (lane > RiverLanes.Count || lane < 0) return false;
         else return true;
     }
 
-    // Get Lane Data based on a given direction
-    // Checks if there is a lane available, will otherwise return the initial provided lane
-    public static RiverLane GetLaneFromDirection(int currentLane, int direction)
+    /// <summary>
+    /// Checks if there is a lane available based on a given direction, will otherwise return the initial provided lane, and returns Lane Data.
+    /// </summary>
+    public RiverLane GetLaneFromDirection(int currentLane, int direction)
     {
         int spaces;
         int targetLane;
@@ -58,26 +74,32 @@ public class River_Manager : MonoBehaviour
         spaces = GetLanes().Count;
         targetLane = currentLane + direction;
 
-        if (targetLane < spaces && targetLane > -1) return instance.RiverLanes[targetLane];
-        else return instance.RiverLanes[currentLane];
+        if (targetLane < spaces && targetLane > -1) return RiverLanes[targetLane];
+        else return RiverLanes[currentLane];
     }
 
-    // Obtain the ID number of the opposite lane
-    public static int GetOppositeLaneID(int currentLane)
+    /// <summary>
+    /// Obtain the ID number of the opposite lane
+    /// </summary>
+    public int GetOppositeLaneID(int currentLane)
     {
         return currentLane == 0 ? 1 : 0;
     }
 
-    // Get Lane Data
-    public static RiverLane GetLane(int lane)
+    /// <summary>
+    /// Returns Lane Data based on a given lane ID
+    /// </summary>
+    public RiverLane GetLane(int lane)
     {
-        return instance.RiverLanes[lane];
+        return RiverLanes[lane];
     }
 
-    // Get All Lane Datas
-    public static List<RiverLane> GetLanes()
+    /// <summary>
+    /// Returns the list containing all Lane Datas
+    /// </summary>
+    public List<RiverLane> GetLanes()
     {
-        return instance.RiverLanes;
+        return RiverLanes;
     }
     #endregion
 }
