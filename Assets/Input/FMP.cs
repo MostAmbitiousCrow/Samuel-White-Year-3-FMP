@@ -46,6 +46,15 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""VaultJump"",
+                    ""type"": ""Value"",
+                    ""id"": ""99d09a95-f8bf-43c6-be87-7f1d46160c52"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""c3bb2c24-90be-4e91-bb27-2f45d97ad4b2"",
@@ -361,6 +370,72 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75ef551f-edca-4639-a954-e7ae0a76948c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""VaultJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""176d9ea3-709d-45ff-afe4-3a1ef86bfb84"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""VaultJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92c06f3a-f4f2-4396-a404-1ac698aa0cdf"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""VaultJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0aa51e60-5f80-4a6f-8eb5-100e29d59bda"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""VaultJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a5d0a0a-aaff-4a6a-b5d3-454845ccb51d"",
+                    ""path"": ""<Joystick>/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""VaultJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66c4f5aa-9e5e-457d-af6c-b784a19d1b9b"",
+                    ""path"": ""<Joystick>/{SecondaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""VaultJump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -888,6 +963,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Vault = m_Player.FindAction("Vault", throwIfNotFound: true);
+        m_Player_VaultJump = m_Player.FindAction("VaultJump", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -962,6 +1038,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Vault;
+    private readonly InputAction m_Player_VaultJump;
     private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
@@ -969,6 +1046,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         public PlayerActions(@FMP wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Vault => m_Wrapper.m_Player_Vault;
+        public InputAction @VaultJump => m_Wrapper.m_Player_VaultJump;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -985,6 +1063,9 @@ public partial class @FMP: IInputActionCollection2, IDisposable
             @Vault.started += instance.OnVault;
             @Vault.performed += instance.OnVault;
             @Vault.canceled += instance.OnVault;
+            @VaultJump.started += instance.OnVaultJump;
+            @VaultJump.performed += instance.OnVaultJump;
+            @VaultJump.canceled += instance.OnVaultJump;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -998,6 +1079,9 @@ public partial class @FMP: IInputActionCollection2, IDisposable
             @Vault.started -= instance.OnVault;
             @Vault.performed -= instance.OnVault;
             @Vault.canceled -= instance.OnVault;
+            @VaultJump.started -= instance.OnVaultJump;
+            @VaultJump.performed -= instance.OnVaultJump;
+            @VaultJump.canceled -= instance.OnVaultJump;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -1160,6 +1244,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnVault(InputAction.CallbackContext context);
+        void OnVaultJump(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions

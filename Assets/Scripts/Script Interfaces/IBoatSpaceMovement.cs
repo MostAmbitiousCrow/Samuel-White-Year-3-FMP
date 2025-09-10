@@ -7,5 +7,15 @@ public interface IBoatSpaceMovement
     public int GetCurrentSpace();
     public int GetCurrentLane();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="goToCurrentSpace"></param> <summary>
+    /// Should the character snap to their currently assigned space upon leaving the boat?
+    /// </summary>
+    /// <param name="goToCurrentSpace"></param>
+    public void EnterBoat(bool goToCurrentSpace);
+    public void ExitBoat(bool goToCurrentSpace);
+
     public void InjectBoatSpaceManager(Boat_Space_Manager manager);
 }

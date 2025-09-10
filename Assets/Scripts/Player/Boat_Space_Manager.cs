@@ -15,7 +15,7 @@ public class Boat_Space_Manager : MonoBehaviour
         [Serializable]
         public class SpaceData
         {
-            public Vector3 position = new();
+            public Transform t;
             public int ID;
         }
         public List<SpaceData> SpaceDatas = new();
@@ -41,7 +41,7 @@ public class Boat_Space_Manager : MonoBehaviour
                 BoatSide.SpaceData sd = new()
                 {
                     ID = l,
-                    position = o.GetChild(l).position,
+                    t = o.GetChild(l),
                 };
                 bs.SpaceDatas.Add(sd);
             }
@@ -112,6 +112,25 @@ public class Boat_Space_Manager : MonoBehaviour
     public Vector3 GetBoatCentre()
     {
         return transform.position;
+    }
+    #endregion
+
+    #region Boat Passenger Checks
+
+    [Space(10)]
+    public List<IBoatSpaceMovement> BoatPassengers = new();
+    [SerializeField] Transform _passengerFolder;
+
+    public void AddPassenger(Boat_Character passenger)
+    {
+        BoatPassengers.Add(passenger);
+        passenger.transform.SetParent(_passengerFolder);
+    }
+
+    public void RemovePassenger(Boat_Character passenger)
+    {
+        BoatPassengers.Remove(passenger);
+        passenger.transform.SetParent(null);
     }
     #endregion
 }

@@ -23,10 +23,17 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
     [SerializeField] Rigidbody rb;
 
     private River_Manager riverManager;
+    [SerializeField] private Boat_Space_Manager boatSpaceManager;
 
     private void Start()
     {
         GoToLane(startLane);
+    }
+
+    void Awake()
+    {
+        if (boatSpaceManager == null)
+            Debug.LogError("Missing Boat_Space_Manager component");
     }
 
     /// <summary>
