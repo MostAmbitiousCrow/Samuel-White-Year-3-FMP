@@ -91,14 +91,6 @@ class Player_Controller : Boat_Character, IDamageable
     }
     #endregion
 
-    #region Damage Logic
-    public void TakeDamage(int amount)
-    {
-        print($"{name} Took Damage");
-        // Damage Logic Here
-    }
-    #endregion
-
     #region Vault Jump Action
 
     [Header("Jump Settings")]
@@ -175,6 +167,49 @@ class Player_Controller : Boat_Character, IDamageable
     public void CancelJump()
     {
         //TODO
+    }
+
+    #endregion
+
+    #region Damage Events
+
+    [Header("Health Stats")]
+    [SerializeField] int _currentHealth;
+    [SerializeField] int _maxHealth;
+    public int CurrentHealth
+    {
+        get { return (_currentHealth); }
+        set { _currentHealth = value; }
+    }
+    public int MaxHealth
+    {
+        get { return (_maxHealth); }
+        set { _maxHealth = value; }
+    }
+
+    [Header("Events")]
+    [SerializeField] IDamageable[] damageableEvents;
+
+    public void TakeDamage(int amount)
+    {
+        CurrentHealth -= amount;
+        // TODO: Damage Effect and Animation
+
+        if (CurrentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        // Death Event / Game Over, Effect and Animation
+        
+    }
+
+    public void RestoreHealth()
+    {
+        CurrentHealth = MaxHealth;
     }
 
     #endregion

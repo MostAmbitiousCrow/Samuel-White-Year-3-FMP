@@ -34,6 +34,8 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
     {
         if (boatSpaceManager == null)
             Debug.LogError("Missing Boat_Space_Manager component");
+
+        RestoreHealth();
     }
 
     /// <summary>
@@ -67,11 +69,6 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
         return _currentLane;
     }
 
-    public void TakeDamage(int amount)
-    {
-        throw new System.NotImplementedException(); //TODO: Implement Stun Effect and Animations
-    }
-
     #region Movement
     void FixedUpdate()
     {
@@ -101,5 +98,45 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
         riverManager = manager;
         print($"Injected {manager} into {name}");
     }
+    #endregion
+
+    #region Damage Events
+
+    [Header("Health Stats")]
+    [SerializeField] int _currentHealth;
+    [SerializeField] int _maxHealth;
+    public int CurrentHealth
+    {
+        get { return (_currentHealth); }
+        set { _currentHealth = value; }
+    }
+    public int MaxHealth
+    {
+        get { return (_maxHealth); }
+        set { _maxHealth = value; }
+    }
+
+    [Header("Events")]
+    [SerializeField] IDamageable[] damageableEvents;
+
+    public void TakeDamage(int amount)
+    {
+        if (CurrentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RestoreHealth()
+    {
+        CurrentHealth = MaxHealth;
+    }
+
+
     #endregion
 }

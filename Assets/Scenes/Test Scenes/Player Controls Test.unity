@@ -6412,6 +6412,8 @@ MonoBehaviour:
   _isMoving: 0
   rb: {fileID: 974976776}
   boatSpaceManager: {fileID: 699958565}
+  _currentHealth: 0
+  _maxHealth: 0
 --- !u!54 &974976776
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6625,6 +6627,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _fallRate: 15
+  _currentHealth: 0
+  _maxHealth: 3
 --- !u!114 &1148686859
 MonoBehaviour:
   m_ObjectHideFlags: 0
