@@ -8,6 +8,7 @@ public class River_Manager : MonoBehaviour
 {
     [Header("River Stats")]
     public float RiverSpeed = 1f;
+    public SO_RiverLaneData RiverLaneData; //TODO: Implement this somehow
 
     [Header("River Lanes Info")]
     [SerializeField] Transform _lanesParent;

@@ -4,5 +4,8 @@ public class River_Object_Animator : MonoBehaviour
 {
     [SerializeField] Transform art;
 
-    //TODO
+    public void TriggerDestroyAnimation()
+    {
+        // TODO
+    }
 }

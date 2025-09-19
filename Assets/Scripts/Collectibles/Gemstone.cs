@@ -1,16 +1,8 @@
 using UnityEngine;
 
-public class Gemstone : MonoBehaviour, ICollectible
+[RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(BoxCollider))]
+public class Gemstone : River_Collectible
 {
-    [SerializeField] int _bankVaulue;
-    public int BankValue
-    {
-        get { return (_bankVaulue); }
-        set { _bankVaulue = value; }
-    }
-
-    public bool IsCollected { get; set; }
-
     [Header("Art Animation Control")]
     /// <summary>
     /// This object's art object that will be animated
@@ -59,20 +51,18 @@ public class Gemstone : MonoBehaviour, ICollectible
     [SerializeField] float homingStrength = 1f;
     [SerializeField] float particleDespawnDistance = .5f;
 
-    public void OnCollected()
+    public override void OnCollected()
     {
-        // var emitParams = new ParticleSystem.EmitParams
-        // {
-        //     startColor = Color.red,
-        //     startSize = 0.2f
-        // };
+        base.OnCollected();
+
         _collectParticles.Emit(_collectParticlesAmount);
         _collectParticles.Pause();
     }
 
-    public void Reset()
+    public override void Reset()
     {
-        throw new System.NotImplementedException();
+        base.Reset();
+        // TODO
     }
 
     void Start()
@@ -123,7 +113,7 @@ public class Gemstone : MonoBehaviour, ICollectible
                 print("Stopped");
                 return;
             }
-            
+
             float age = particles[i].startLifetime - particles[i].remainingLifetime;
 
             if (age >= homingDelay)
@@ -141,10 +131,5 @@ public class Gemstone : MonoBehaviour, ICollectible
         }
 
         _collectParticles.SetParticles(particles, aliveCount);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        OnCollected();
     }
 }

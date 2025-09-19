@@ -190,9 +190,10 @@ class Player_Controller : Boat_Character, IDamageable
     [Header("Events")]
     [SerializeField] IDamageable[] damageableEvents;
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
-        CurrentHealth -= amount;
+        int newamount = Mathf.RoundToInt(amount);
+        CurrentHealth -= newamount;
         // TODO: Damage Effect and Animation
 
         if (CurrentHealth <= 0)

@@ -107,19 +107,16 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
     [SerializeField] int _maxHealth;
     public int CurrentHealth
     {
-        get { return (_currentHealth); }
+        get { return _currentHealth; }
         set { _currentHealth = value; }
     }
     public int MaxHealth
     {
-        get { return (_maxHealth); }
+        get { return _maxHealth; }
         set { _maxHealth = value; }
     }
 
-    [Header("Events")]
-    [SerializeField] IDamageable[] damageableEvents;
-
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         if (CurrentHealth <= 0)
         {

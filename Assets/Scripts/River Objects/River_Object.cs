@@ -1,38 +1,60 @@
 using EditorAttributes;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 /// <summary>
 /// Base class of all Objects that will interact with the Sewer River
 /// </summary>
 public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
 {
+    [Line(GUIColor.White, 1, 3)]
     [Header("River Object Options")]
     [Tooltip("Should this object be affected by the speed of the river?")]
-    [SerializeField] protected bool isAffectedByRiverSpeed;
+    [SerializeField] protected bool isAffectedByRiverSpeed = true;
     [Tooltip("The speed of which this object travels without the influence of the river.")]
-    [SerializeField, ShowField(nameof(isAffectedByRiverSpeed))] protected float travelSpeed = 1f;
+    [SerializeField, HideField(nameof(isAffectedByRiverSpeed))] protected float travelSpeed = 1f;
 
     [Space(10)]
 
-    [Tooltip("The current lane of the boat the character is standing on")]
+    /// <summary>
+    /// The current lane of the river this object is on
+    /// </summary>
+    [Tooltip("The current lane of the river this object is on")]
     [SerializeField] protected int _currentLane;
+    /// <summary>
+    /// The lane this object starts on
+    /// </summary>
     [Tooltip("What lane should this object start on? (if applicable)")]
-    public int startLane = 1;
+    [SerializeField] protected int startLane = 1;
+    /// <summary>
+    /// The current height of this object
+    /// </summary>
+    [Tooltip("The current height of this object")]
+    [SerializeField] protected float _height = 0f;
+    /// <summary>
+    /// The distance of this object to the destination of its lane
+    /// </summary>
+    [Tooltip("The distance of this object to the destination of its lane")]
+    [SerializeField] protected float _distance = 0f;
     [Space(10)]
+    public bool CanMove = false;
     [SerializeField] protected bool _isMoving;
 
     protected Vector3 _currentMoveTarget;
 
     [Header("Components")]
     [SerializeField] protected bool isAnimated;
-    [SerializeField, ShowField(nameof(isAnimated))] River_Object_Animator riverObjectAnimator;
-    [Space(10)]
-    public Rigidbody rb;
+    [SerializeField, ShowField(nameof(isAnimated))] protected River_Object_Animator riverObjectAnimator;
 
     protected River_Manager riverManager;
 
     #region Space Movement Logic
+
+    public void StartOnLane(int lane, float distance, float height)
+    {
+        startLane = lane;
+        GoToLane(startLane);
+        SetDistanceAndHeight(distance, height);
+    }
 
     public void MoveToLane(int direction)
     {
@@ -56,13 +78,24 @@ public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
     {
         return _currentLane;
     }
+
+    public void SetDistanceAndHeight(float distance, float height)
+    {
+        _distance = distance; _height = height;
+
+        Vector3 t = transform.position;
+        transform.position = new(t.x, height, distance);
+    }
     #endregion
 
     #region Update Events
 
     void FixedUpdate()
     {
-        RiverFlowMovement();
+        if (!CanMove) return;
+
+        if (_isMoving)
+            RiverFlowMovement();
     }
 
     void RiverFlowMovement()
@@ -70,8 +103,8 @@ public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
         float speed = isAffectedByRiverSpeed ? riverManager.RiverSpeed : travelSpeed;
 
         // Move the object forwards
-        Vector3 forwardMovement = Time.fixedDeltaTime * speed * transform.forward;
-        rb.MovePosition(rb.position + forwardMovement);
+        Vector3 forwardMovement = Time.fixedDeltaTime * speed * (transform.forward * -1); // Invert movement direction
+        transform.Translate(forwardMovement);
     }
     #endregion
 
@@ -80,6 +113,13 @@ public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
     {
         riverManager = manager;
         print($"Injected {manager} into {name}");
+    }
+    #endregion
+
+    #region Math
+    protected float GetDistanceToCurrentLane()
+    {
+        return Vector3.Distance(transform.position, riverManager.GetLane(_currentLane).axis);
     }
     #endregion
 }
