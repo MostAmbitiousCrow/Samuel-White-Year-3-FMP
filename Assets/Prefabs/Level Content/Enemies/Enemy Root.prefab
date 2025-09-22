@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 937027563811819174}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ': Silhouette Art'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8245006621412079573}
   - component: {fileID: 6032525736964061710}
   - component: {fileID: 2446909290951515389}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3952070885681981904}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ': Enemy Character'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5474106261059026457}
   - component: {fileID: 6419227462993012122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,6 +198,7 @@ MonoBehaviour:
   startLane: 1
   _height: 0
   _distance: 0
+  CanMove: 0
   _isMoving: 1
   isAnimated: 0
   riverObjectAnimator: {fileID: 0}

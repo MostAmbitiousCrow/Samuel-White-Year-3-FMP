@@ -12,6 +12,7 @@ public abstract class River_Collectible : River_Object, ICollectible
     [Line(GUIColor.Yellow, 1, 3)]
     #region Variables
     [SerializeField] protected int _bankVaulue;
+    [SerializeField] int _defautlBankValue;
 
     public int BankValue
     {
@@ -37,13 +38,18 @@ public abstract class River_Collectible : River_Object, ICollectible
     /// <summary>
     /// Resets the collectible
     /// </summary>
-    public virtual void Reset() { }
+    public virtual void Reset()
+    {
+        IsCollected = false;
+        BankValue = _defautlBankValue;
+    }
 
     #endregion
 
     #region Trigger
     void OnTriggerEnter(Collider other)
     {
+        if (IsCollected)
         OnCollected();
     }
     #endregion

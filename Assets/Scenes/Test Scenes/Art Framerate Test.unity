@@ -2687,6 +2687,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4036285809704031513, guid: b56b33f6abb424e87831cba4eb8b1f43,
+        type: 3}
+      propertyPath: _particleHomeTarget
+      value: 
+      objectReference: {fileID: 1964298793}
     - target: {fileID: 5979095628691551611, guid: b56b33f6abb424e87831cba4eb8b1f43,
         type: 3}
       propertyPath: m_Name

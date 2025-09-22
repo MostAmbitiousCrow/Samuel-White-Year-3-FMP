@@ -29,6 +29,10 @@ class Player_Controller : Boat_Character, IDamageable
         pauseAction.performed += OnPause;
 
         _currentSpace = startSpace;
+    }
+
+    private void Start()
+    {
         EnterBoat(true);
     }
 

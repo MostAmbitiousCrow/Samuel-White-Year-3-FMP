@@ -14,7 +14,8 @@ public class River_Obstacle : River_Object
     /// <summary>
     /// Overrided Stats Data
     /// </summary>
-    public float impactDamage = 1f; // TODO: private get/set
+    [SerializeField] float impactDamage = 1f;
+    [SerializeField] bool isHit;
 
     public void OverrideStats(Section_Obstacle_Object.ObstacleData.ObstacleOverrideStats overrideStats)
     {
@@ -25,7 +26,11 @@ public class River_Obstacle : River_Object
     // When collided with an object (player or enemy), damage it and destroy this obstacle
     void OnTriggerEnter(Collider other)
     {
+        if (isHit) return;
+
         other.GetComponent<IDamageable>().TakeDamage(impactDamage);
+        isHit = true;
+        print($"{name} hit: {other}");
 
         riverObjectAnimator.TriggerDestroyAnimation();
     }

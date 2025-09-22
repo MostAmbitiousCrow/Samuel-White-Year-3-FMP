@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8654578106729643833}
   - component: {fileID: 2479052348807227457}
   m_Layer: 0
-  m_Name: Sewer
+  m_Name: Sewer Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollingMaterial: {fileID: 2100000, guid: dcb3e1e20358b43d6a55662a9c93a8c0, type: 2}
   scrollDirection: {x: -1, y: 0}
+  _paused: 1
 --- !u!1 &4901875249035285721
 GameObject:
   m_ObjectHideFlags: 0

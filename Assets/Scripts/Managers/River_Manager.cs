@@ -11,11 +11,11 @@ public class River_Manager : MonoBehaviour
     /// <summary>
     /// The default speed of the river. Default value is: 1
     /// </summary>
-    public float DefaultRiverSpeed { get; private set; } = 1f;
+    public float DefaultRiverSpeed { get; private set; } = 5f;
     /// <summary>
     /// The speed of the river shared across river objects
     /// </summary>
-    public float RiverSpeed { get; private set; } = 1f;
+    public float RiverSpeed { get; private set; } = 5f;
     /// <summary>
     /// Is the river currently paused?
     /// </summary>
@@ -136,7 +136,7 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="multiplier"></param>
-    public void SlowDownRiver(float amount = 2f, float multiplier = 1f)
+    public void SlowDownRiver(float amount = 2f, float multiplier = 10f)
     {
         float targetSpeed = RiverSpeed / amount;
 
@@ -156,50 +156,61 @@ public class River_Manager : MonoBehaviour
     }
 
     private Coroutine speedRoutine;
+    //private Coroutine fastRoutine;
+    //private Coroutine slowRoutine;
     IEnumerator RiverSpeedroutine(float targetspeed, bool reversed, float multiplier)
     {
-        float roundedSpeed = 0f;
+        float startSpeed = RiverSpeed;
         float t = 0f;
 
         if (reversed)
         {
+            yield return new WaitUntil(() => !IsTransitioning); // Wait until the fast routine has finished before slowing down
+
             t = 1f;
+
             while (t > 0f) // Slowing down
             {
                 yield return new WaitUntil(() => !IsPaused); // Wait if paused
 
                 t -= Time.deltaTime * multiplier;
 
-                roundedSpeed = Mathf.Round(slowCurve.Evaluate(t) * 100) / 100;
-                RiverSpeed = roundedSpeed;
+                RiverSpeed = Mathf.Lerp(targetspeed, startSpeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
+
                 print($"River Speed: {RiverSpeed}");
                 yield return null;
             }
+            IsTransitioning = false;
         }
         else
         {
+            yield return new WaitUntil(() => !IsTransitioning); // Wait until the slow routine has finished before speeding up
+
             t = 0f;
+
             while (t < 1f) // Speeding up
             {
                 yield return new WaitUntil(() => !IsPaused); // Wait if paused
 
                 t += Time.deltaTime * multiplier;
 
-                roundedSpeed = Mathf.Round(speedCurve.Evaluate(t) * 100) / 100;
-                RiverSpeed = roundedSpeed;
+                RiverSpeed = Mathf.Lerp(startSpeed, targetspeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
+
                 print($"River Speed: {RiverSpeed}");
                 yield return null;
             }
+            IsTransitioning = false;
         }
         RiverSpeed = targetspeed;
     }
 
     /// <summary>
-    /// Completely stops the speed of the river without any smoothing
+    /// Completely stops the speed of the river with optional smoothing
     /// </summary>
-    public void StopRiver()
+    public void StopRiver(bool smoothing = false, float smoothAmount = 1f)
     {
-        IsPaused = false;
+        IsPaused = true;
+        // TODO add optional smoothing towards stopping
     }
 
     /// <summary>
@@ -207,7 +218,7 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public void ResumeRiver(bool smoothing = false, float smoothAmount = 1f)
     {
-        IsPaused = true;
+        IsPaused = false;
     }
 
     /// <summary>
@@ -215,6 +226,8 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public void ResetRiver()
     {
+        //if (fastRoutine != null) StopCoroutine(fastRoutine);
+        //if (slowRoutine != null) StopCoroutine(slowRoutine);
         if (speedRoutine != null) StopCoroutine(speedRoutine);
         RiverSpeed = DefaultRiverSpeed;
     }

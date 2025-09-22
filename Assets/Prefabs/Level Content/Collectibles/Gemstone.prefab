@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6287545423735836601}
   - component: {fileID: 1570232790181881637}
   - component: {fileID: 6927788100893637800}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collected Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4900,7 +4900,7 @@ GameObject:
   - component: {fileID: 3689677038719848066}
   - component: {fileID: 7776811727822959558}
   - component: {fileID: 4085480279202592993}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Idle Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9731,7 +9731,7 @@ GameObject:
   - component: {fileID: 296885744109283027}
   - component: {fileID: 3789497758191291376}
   - component: {fileID: 6362812658244813250}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9812,7 +9812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8470983020858837656}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9849,7 +9849,7 @@ GameObject:
   - component: {fileID: 4036285809704031513}
   - component: {fileID: 7490656816264122009}
   - component: {fileID: 6388475469257854256}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gemstone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9890,6 +9890,7 @@ MonoBehaviour:
   startLane: 1
   _height: 0
   _distance: 0
+  CanMove: 0
   _isMoving: 1
   isAnimated: 0
   riverObjectAnimator: {fileID: 0}

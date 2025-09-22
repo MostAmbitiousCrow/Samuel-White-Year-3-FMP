@@ -118,12 +118,13 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
 
     public void TakeDamage(float amount)
     {
+        print("Boat hit, slowing river");
         riverManager.SlowDownRiver();
     }
 
     public void Die()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void RestoreHealth()

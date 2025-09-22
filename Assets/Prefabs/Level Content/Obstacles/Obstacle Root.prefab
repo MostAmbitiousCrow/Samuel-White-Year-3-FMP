@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2976940064806932684}
   - component: {fileID: 1486993625528279179}
   - component: {fileID: 6112428136379561885}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Obstacle Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ MonoBehaviour:
   startLane: 1
   _height: 0
   _distance: 0
+  CanMove: 0
   _isMoving: 1
   isAnimated: 1
   riverObjectAnimator: {fileID: 2976940064806932684}
@@ -130,7 +131,7 @@ GameObject:
   - component: {fileID: 7340371279494694190}
   - component: {fileID: 1600284678128663551}
   - component: {fileID: 4032871390115003212}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
