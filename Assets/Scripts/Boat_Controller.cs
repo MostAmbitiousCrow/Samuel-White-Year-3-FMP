@@ -118,10 +118,7 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
 
     public void TakeDamage(float amount)
     {
-        if (CurrentHealth <= 0)
-        {
-            Die();
-        }
+        riverManager.SlowDownRiver();
     }
 
     public void Die()

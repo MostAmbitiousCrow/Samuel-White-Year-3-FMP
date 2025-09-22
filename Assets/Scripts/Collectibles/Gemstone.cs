@@ -65,16 +65,24 @@ public class Gemstone : River_Collectible
         // TODO
     }
 
-    void Start()
+    #region FrameRateManager subscription
+    void OnEnable()
     {
-        Animation_Frame_Rate_Manager.OnTick += delegate (object sender, Animation_Frame_Rate_Manager.OnTickEvent tickEvent)
-        {
-            AnimateArtObject();
-            TickParticles();
-            ParticleAnimation();
-        };
+        Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
     }
+    void OnDisable()
+    {
+        Animation_Frame_Rate_Manager.OnTick -= HandleOnTick;
+    }
+    private void HandleOnTick(object sender, Animation_Frame_Rate_Manager.OnTickEvent tickEvent)
+    {
+        AnimateArtObject();
+        TickParticles();
+        ParticleAnimation();
+    }
+    #endregion
 
+    #region Animation
     private void AnimateArtObject()
     {
         // Rotate the art object
@@ -132,4 +140,5 @@ public class Gemstone : River_Collectible
 
         _collectParticles.SetParticles(particles, aliveCount);
     }
+    #endregion
 }

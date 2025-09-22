@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Animation_Frame_Rate_Manager : MonoBehaviour
 {
-    public static int AnimationFramerate = 24;
+    public static int AnimationFramerate = 16;
     private const int DefaultAnimationFrameRate = 24;
 
     /// <summary>

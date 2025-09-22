@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 3268598440306108210}
   - component: {fileID: 8362121423649790839}
   m_Layer: 0
-  m_Name: Sewer River
+  m_Name: River Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,8 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b38f32a2e594085a103e55827a5835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RiverSpeed: 1
-  RiverLaneData: {fileID: 0}
   _lanesParent: {fileID: 3663419595711803000}
   RiverLanes:
   - ID: 0
@@ -192,6 +190,54 @@ MonoBehaviour:
     axis: {x: 0, y: 0}
   - ID: 2
     axis: {x: 5, y: 0}
+  slowCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3450312016689361990
 GameObject:
   m_ObjectHideFlags: 0

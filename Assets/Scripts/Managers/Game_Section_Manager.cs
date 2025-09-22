@@ -13,6 +13,10 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver
 
     [Header("Section Info")]
     [Min(0)][SerializeField] int currentSection = 0;
+    /// <summary>
+    /// Is the current section halted from progressing onto its post delay?
+    /// </summary>
+    [SerializeField] bool isHalted;
 
     [Header("Section Objects")] // TODO: rework to use object pooling!
     [Line(GUIColor.Cyan)]
@@ -49,135 +53,142 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver
             Debug.LogError($"currentSection index {currentSection} is out of bounds for sectionDatas (Count: {sectionDatas.Count}).");
             yield break;
         }
-        Section_Content.SectionData s = sectionDatas[currentSection];
-        AsyncInstantiateOperation<GameObject> op;
-
-        // Initial Delay
-        yield return new WaitForSeconds(sectionDatas[currentSection].initialDelay);
-
-        int c; // Count
-        int a = 0; // Amount Remaining
-
-        // Spawn Obstacles
-        c = s.ObstacleDatas.Count;
-        while (a < c)
+        
+        for (int i = 0; i < sectionDatas.Count; i++)
         {
-            op = InstantiateAsync(obstacleObject, c);
+            Section_Content.SectionData s = sectionDatas[currentSection];
+            AsyncInstantiateOperation<GameObject> op;
 
-            yield return new WaitUntil(() => op.isDone);
-            print($"Instantiating {op.Result.Length} Obstacles");
+            // Initial Delay
+            yield return new WaitForSeconds(sectionDatas[currentSection].initialDelay);
 
-            foreach (GameObject item in op.Result)
+            int c; // Count
+            int a = 0; // Amount Remaining
+
+            // Spawn Obstacles
+            c = s.ObstacleDatas.Count;
+            while (a < c)
             {
-                // Obtain the items River Component and obtain its alligned obstacle data
-                if (!item.TryGetComponent<River_Obstacle>(out var itemData))
+                op = InstantiateAsync(obstacleObject, c);
+
+                yield return new WaitUntil(() => op.isDone);
+                print($"Instantiating {op.Result.Length} Obstacles");
+
+                foreach (GameObject item in op.Result)
                 {
-                    Debug.LogError("River Component is missing!");
-                    continue;
+                    // Obtain the items River Component and obtain its alligned obstacle data
+                    if (!item.TryGetComponent<River_Obstacle>(out var itemData))
+                    {
+                        Debug.LogError("River Component is missing!");
+                        continue;
+                    }
+                    Section_Obstacle_Object.ObstacleData obstacleData = sectionDatas?[currentSection].ObstacleDatas[a].data;
+
+                    // Inject River_Manager
+                    itemData.InjectRiverManager(riverManager);
+
+                    // Place the obstacle in the world
+                    PlaceSectionObject(itemData, sectionDatas[currentSection].ObstacleDatas[a]);
+
+                    // Override Stats (if true)
+                    if (obstacleData.overrideStats)
+                    {
+                        itemData.OverrideStats(obstacleData.overridedStats);
+                    }
+
+                    // Update amount
+                    a++;
+
+                    yield return null;
                 }
-                Section_Obstacle_Object.ObstacleData obstacleData = sectionDatas?[currentSection].ObstacleDatas[a].data;
-
-                // Inject River_Manager
-                itemData.InjectRiverManager(riverManager);
-
-                // Place the obstacle in the world
-                PlaceSectionObject(itemData, sectionDatas[currentSection].ObstacleDatas[a]);
-
-                // Override Stats (if true)
-                if (obstacleData.overrideStats)
-                {
-                    itemData.OverrideStats(obstacleData.overridedStats);
-                }
-
-                // Update amount
-                a++;
-
-                yield return null;
             }
-        }
 
-        a = 0;
+            a = 0;
 
-        // Spawn Enemies
-        c = s.EnemyDatas.Count;
-        while (a < c)
-        {
-            op = InstantiateAsync(enemyObject, c);
-
-            yield return new WaitUntil(() => op.isDone);
-
-            foreach (GameObject item in op.Result)
+            // Spawn Enemies
+            c = s.EnemyDatas.Count;
+            while (a < c)
             {
-                // Obtain the items River Component and obtain its alligned obstacle data
-                if (!item.TryGetComponent<River_Enemy>(out var itemData))
+                op = InstantiateAsync(enemyObject, c);
+
+                yield return new WaitUntil(() => op.isDone);
+
+                foreach (GameObject item in op.Result)
                 {
-                    Debug.LogError("River Component is missing!");
-                    continue;
+                    // Obtain the items River Component and obtain its alligned obstacle data
+                    if (!item.TryGetComponent<River_Enemy>(out var itemData))
+                    {
+                        Debug.LogError("River Component is missing!");
+                        continue;
+                    }
+                    Section_Enemy_Object.EnemyData enemyData = sectionDatas?[currentSection].EnemyDatas[a].data;
+
+                    // Inject River_Manager
+                    itemData.InjectRiverManager(riverManager);
+
+                    // Place the obstacle in the world
+                    PlaceSectionObject(itemData, sectionDatas[currentSection].EnemyDatas[a]);
+
+                    // Override Stats (if true)
+                    if (enemyData.overrideStats)
+                    {
+                        itemData.OverrideStats(enemyData.overridedStats);
+                    }
+
+                    // Update amount
+                    a++;
+
+                    yield return null;
                 }
-                Section_Enemy_Object.EnemyData enemyData = sectionDatas?[currentSection].EnemyDatas[a].data;
-
-                // Inject River_Manager
-                itemData.InjectRiverManager(riverManager);
-
-                // Place the obstacle in the world
-                PlaceSectionObject(itemData, sectionDatas[currentSection].EnemyDatas[a]);
-
-                // Override Stats (if true)
-                if (enemyData.overrideStats)
-                {
-                    itemData.OverrideStats(enemyData.overridedStats);
-                }
-
-                // Update amount
-                a++;
-
-                yield return null;
             }
-        }
 
-        a = 0;
+            a = 0;
 
-        // Spawn Collectibles
-        c = s.CollectibleDatas.Count;
-        while (a < c)
-        {
-            op = InstantiateAsync(gemStoneObject, c);
-
-            yield return new WaitUntil(() => op.isDone);
-
-            foreach (GameObject item in op.Result)
+            // Spawn Collectibles
+            c = s.CollectibleDatas.Count;
+            while (a < c)
             {
-                Section_Collectible_Object.CollectibleData collectibleData = sectionDatas?[currentSection].CollectibleDatas[a].data;
+                op = InstantiateAsync(gemStoneObject, c);
 
-                // Obtain the items River Component and obtain its alligned obstacle data
-                if (!item.TryGetComponent<River_Collectible>(out var itemData))
+                yield return new WaitUntil(() => op.isDone);
+
+                foreach (GameObject item in op.Result)
                 {
-                    Debug.LogError("River Component is missing!");
-                    continue;
+                    Section_Collectible_Object.CollectibleData collectibleData = sectionDatas?[currentSection].CollectibleDatas[a].data;
+
+                    // Obtain the items River Component and obtain its alligned obstacle data
+                    if (!item.TryGetComponent<River_Collectible>(out var itemData))
+                    {
+                        Debug.LogError("River Component is missing!");
+                        continue;
+                    }
+
+                    // Inject River_Manager
+                    itemData.InjectRiverManager(riverManager);
+
+                    // Place the obstacle in the world
+                    PlaceSectionObject(itemData, sectionDatas[currentSection].CollectibleDatas[a]);
+
+                    // Override Stats (if true)
+                    if (collectibleData.overrideStats)
+                    {
+                        itemData.OverrideStats(collectibleData.overridedStats);
+                    }
+
+                    // Update amount
+                    a++;
+
+                    yield return null;
                 }
-
-                // Inject River_Manager
-                itemData.InjectRiverManager(riverManager);
-
-                // Place the obstacle in the world
-                PlaceSectionObject(itemData, sectionDatas[currentSection].CollectibleDatas[a]);
-
-                // Override Stats (if true)
-                if (collectibleData.overrideStats)
-                {
-                    itemData.OverrideStats(collectibleData.overridedStats);
-                }
-
-                // Update amount
-                a++;
-
-                yield return null;
             }
-        }
 
-        // Post Delay
-        yield return new WaitForSeconds(sectionDatas[currentSection].postDelay);
-        currentSection++;
+            // Halt section
+            yield return new WaitUntil(() => !isHalted);
+
+            // Post Delay
+            yield return new WaitForSeconds(sectionDatas[currentSection].postDelay);
+            currentSection++;
+        }
 
         yield break;
     }

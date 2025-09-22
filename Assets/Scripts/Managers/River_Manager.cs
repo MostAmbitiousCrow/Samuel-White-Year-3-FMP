@@ -3,12 +3,28 @@ using UnityEngine;
 using EditorAttributes;
 using System;
 using System.Linq;
+using System.Collections;
 
 public class River_Manager : MonoBehaviour
 {
-    [Header("River Stats")]
-    public float RiverSpeed = 1f;
-    public SO_RiverLaneData RiverLaneData; //TODO: Implement this somehow
+    #region Variables
+    /// <summary>
+    /// The default speed of the river. Default value is: 1
+    /// </summary>
+    public float DefaultRiverSpeed { get; private set; } = 1f;
+    /// <summary>
+    /// The speed of the river shared across river objects
+    /// </summary>
+    public float RiverSpeed { get; private set; } = 1f;
+    /// <summary>
+    /// Is the river currently paused?
+    /// </summary>
+    /// <value></value>
+    public bool IsPaused { get; private set; } = false;
+    /// <summary>
+    /// Is the river currently speeding up or slowing down?
+    /// </summary>
+    public bool IsTransitioning { get; private set; }
 
     [Header("River Lanes Info")]
     [SerializeField] Transform _lanesParent;
@@ -21,7 +37,9 @@ public class River_Manager : MonoBehaviour
     }
     public List<RiverLane> RiverLanes;
     public List<IAffectedByRiver> riverInfluencedObjects = new();
-    
+    #endregion
+
+    #region Data Update Methods
     [Button]
     public void UpdateSpaceDatas()
     {
@@ -34,7 +52,9 @@ public class River_Manager : MonoBehaviour
         }
         print($"Updated River Lanes to {RiverLanes.Count} lanes");
     }
+    #endregion
 
+    #region Injection
     [Button]
     public void GetAndInjectAffectedRiverObjects()
     {
@@ -46,7 +66,6 @@ public class River_Manager : MonoBehaviour
         print($"Injected {this} into {riverInfluencedObjects.Count} objects");
     }
 
-    #region Injection
     void Awake()
     {
         GetAndInjectAffectedRiverObjects();
@@ -101,6 +120,103 @@ public class River_Manager : MonoBehaviour
     public List<RiverLane> GetLanes()
     {
         return RiverLanes;
+    }
+    #endregion
+
+    #region River Modification
+    [Header("Animation")]
+    [Tooltip("The curve representing the slow down transition")] // Don't know any other way to describe it :sob
+    [SerializeField] AnimationCurve slowCurve;
+
+    [Tooltip("The curve representing the speed up transition")] // Don't know any other way to describe it :sob
+    [SerializeField] AnimationCurve speedCurve;
+
+    /// <summary>
+    /// The method to slow down the global river speed
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="multiplier"></param>
+    public void SlowDownRiver(float amount = 2f, float multiplier = 1f)
+    {
+        float targetSpeed = RiverSpeed / amount;
+
+        speedRoutine = StartCoroutine(RiverSpeedroutine(targetSpeed, true, multiplier));
+    }
+
+    /// <summary>
+    /// The method to speed up the global river speed
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="multiplier"></param>
+    public void SpeedUpRiver(float amount = 2f, float multiplier = 1f)
+    {
+        float targetSpeed = RiverSpeed * amount;
+
+        speedRoutine = StartCoroutine(RiverSpeedroutine(targetSpeed, false, multiplier));
+    }
+
+    private Coroutine speedRoutine;
+    IEnumerator RiverSpeedroutine(float targetspeed, bool reversed, float multiplier)
+    {
+        float roundedSpeed = 0f;
+        float t = 0f;
+
+        if (reversed)
+        {
+            t = 1f;
+            while (t > 0f) // Slowing down
+            {
+                yield return new WaitUntil(() => !IsPaused); // Wait if paused
+
+                t -= Time.deltaTime * multiplier;
+
+                roundedSpeed = Mathf.Round(slowCurve.Evaluate(t) * 100) / 100;
+                RiverSpeed = roundedSpeed;
+                print($"River Speed: {RiverSpeed}");
+                yield return null;
+            }
+        }
+        else
+        {
+            t = 0f;
+            while (t < 1f) // Speeding up
+            {
+                yield return new WaitUntil(() => !IsPaused); // Wait if paused
+
+                t += Time.deltaTime * multiplier;
+
+                roundedSpeed = Mathf.Round(speedCurve.Evaluate(t) * 100) / 100;
+                RiverSpeed = roundedSpeed;
+                print($"River Speed: {RiverSpeed}");
+                yield return null;
+            }
+        }
+        RiverSpeed = targetspeed;
+    }
+
+    /// <summary>
+    /// Completely stops the speed of the river without any smoothing
+    /// </summary>
+    public void StopRiver()
+    {
+        IsPaused = false;
+    }
+
+    /// <summary>
+    /// Resumes the paused river with optional smoothing
+    /// </summary>
+    public void ResumeRiver(bool smoothing = false, float smoothAmount = 1f)
+    {
+        IsPaused = true;
+    }
+
+    /// <summary>
+    /// Completely resets all changes made to the river to their default value and stops any speed transitions
+    /// </summary>
+    public void ResetRiver()
+    {
+        if (speedRoutine != null) StopCoroutine(speedRoutine);
+        RiverSpeed = DefaultRiverSpeed;
     }
     #endregion
 }
