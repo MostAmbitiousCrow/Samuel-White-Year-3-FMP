@@ -127,7 +127,7 @@ public class Boat_Character : MonoBehaviour, IBoatSpaceMovement
             {
                 Vector3 currentPos = _currentMoveTarget.position;
                 transform.position = new(currentPos.x, currentHeight, currentPos.z);
-                print("Jumping");
+                // print("Jumping");
             }
         }
 

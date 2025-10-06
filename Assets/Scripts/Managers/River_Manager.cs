@@ -17,6 +17,10 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public float RiverSpeed { get; private set; } = 5f;
     /// <summary>
+    /// The minimum amount of distance river objects can spawn in the z axis
+    /// </summary>
+    public int RiverObjectSpawnDistance { get; private set; } = 45;
+    /// <summary>
     /// Is the river currently paused?
     /// </summary>
     /// <value></value>
@@ -33,11 +37,17 @@ public class River_Manager : MonoBehaviour
     public class RiverLane
     {
         public int ID;
-        public Vector2 axis;
+        public Vector3 axis;
     }
     public List<RiverLane> RiverLanes;
     public List<IAffectedByRiver> riverInfluencedObjects = new();
     #endregion
+
+    private void Awake()
+    {
+        UpdateSpaceDatas();
+        GetAndInjectAffectedRiverObjects();
+    }
 
     #region Data Update Methods
     [Button]
@@ -66,7 +76,7 @@ public class River_Manager : MonoBehaviour
         print($"Injected {this} into {riverInfluencedObjects.Count} objects");
     }
 
-    void Awake()
+    void Start()
     {
         GetAndInjectAffectedRiverObjects();
     }
@@ -172,7 +182,7 @@ public class River_Manager : MonoBehaviour
             while (t > 0f) // Slowing down
             {
                 yield return new WaitUntil(() => !IsPaused); // Wait if paused
-
+                
                 t -= Time.deltaTime * multiplier;
 
                 RiverSpeed = Mathf.Lerp(targetspeed, startSpeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);

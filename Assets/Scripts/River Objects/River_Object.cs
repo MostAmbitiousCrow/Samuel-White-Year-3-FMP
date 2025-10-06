@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Base class of all Objects that will interact with the Sewer River
 /// </summary>
-public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
+public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
 {
     [Line(GUIColor.White, 1, 3)]
     [Header("River Object Options")]
@@ -89,15 +89,17 @@ public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
     #endregion
 
     #region Update Events
-
     void FixedUpdate()
     {
-        if (!CanMove) return;
+        if (CanMove) VirtualUpdateMethod();
+    }
 
+    protected virtual void VirtualUpdateMethod()
+    {
         if (_isMoving)
         {
             RiverFlowMovement();
-            if (GetDistanceToCurrentLane() < .1f) // TODO Temporary until pooling is implemented
+            if (GetDistanceToCurrentLane() < .1f) // TODO Temporary until object pooling is implemented
                 Destroy(gameObject);
         }
     }
@@ -107,9 +109,20 @@ public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
         float speed = isAffectedByRiverSpeed ? riverManager.RiverSpeed : travelSpeed;
 
         // Move the object forwards
-        Vector3 forwardMovement = Time.fixedDeltaTime * speed * (transform.forward * -1); // Invert movement direction
-        transform.Translate(forwardMovement);
+        Vector3 travelDirection = Time.fixedDeltaTime * speed * Vector3.back;
+        transform.Translate(travelDirection, Space.World); // Move along the river in world space
     }
+    #endregion
+
+    #region Pooling Methods
+
+    public void Spawned()
+    {
+        OnSpawn();
+    }
+
+    protected virtual void OnSpawn() { }
+
     #endregion
 
     #region Injection
@@ -123,7 +136,8 @@ public class River_Object : MonoBehaviour, IRiverLaneMovement, IAffectedByRiver
     #region Math
     protected float GetDistanceToCurrentLane()
     {
-        return Vector3.Distance(transform.position, riverManager.GetLane(_currentLane).axis);
+        // return Vector3.Distance(transform.position, riverManager.GetLane(_currentLane).axis);
+        return transform.position.z - riverManager.GetLane(_currentLane).axis.z;
     }
     #endregion
 }

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using EditorAttributes;
 
-public class Section_Content : MonoBehaviour
+public class Section_Content : MonoBehaviour, IAffectedByRiver
 {
     [Header("Data")]
     [SerializeField] River_Manager riverManager;
-    
+
     [Serializable]
     public class SectionData
     {
@@ -16,13 +17,19 @@ public class Section_Content : MonoBehaviour
         public int ObjectCount => SectionBuilderDatas.Count;
         public List<ISection_Data> SectionBuilderDatas = new();
 
+        [Line(GUIColor.Cyan)]
         public List<Section_Obstacle_Object> ObstacleDatas = new();
+        [Line(GUIColor.Red)]
         public List<Section_Enemy_Object> EnemyDatas = new();
+        [Line(GUIColor.Yellow)]
         public List<Section_Collectible_Object> CollectibleDatas = new();
+
+        [Line(GUIColor.White)]
+        public List<Section_Gemstone_Gate> GemstoneGateDatas = new();
     }
     public SectionData sectionData = new();
 
-    [EditorAttributes.Button]
+    // [EditorAttributes.Button]
     public void GetSectionObjects()
     {
         sectionData.SectionBuilderDatas.Clear();
@@ -30,8 +37,29 @@ public class Section_Content : MonoBehaviour
         sectionData.ObstacleDatas.Clear();
         sectionData.EnemyDatas.Clear();
         sectionData.CollectibleDatas.Clear();
+        sectionData.GemstoneGateDatas.Clear();
 
         foreach (var sbo in GetComponentsInChildren<Section_Builder_Object>())
             sbo.Register(this);
+    }
+
+    public void InjectRiverManager(River_Manager manager)
+    {
+        riverManager = manager;
+    }
+
+    [Header("Debug")]
+    [SerializeField] bool enableDebug;
+
+    private void OnDrawGizmos()
+    {
+        GetSectionObjects();
+
+        if (!enableDebug) return;
+
+        foreach (var item in sectionData.ObstacleDatas) item.DrawGizmos();
+        foreach (var item in sectionData.EnemyDatas) item.DrawGizmos();
+        foreach (var item in sectionData.CollectibleDatas) item.DrawGizmos();
+        foreach (var item in sectionData.GemstoneGateDatas) item.DrawGizmos();
     }
 }

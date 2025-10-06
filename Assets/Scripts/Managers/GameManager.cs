@@ -1,44 +1,31 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(MainSceneManager))]
 public class GameManager : MonoBehaviour
 {
-    public SceneLoading SceneLoader { get; private set; }
+    public static GameManager Instance { get; private set; }
+
+    public MainSceneManager SceneManager { get; private set; }
+    public GameLevelManager LevelManager { get; private set; }
+    
     public MainGameLogic GameLogic { get; private set; }
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
+    private void Awake()
     {
-        
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(this);
+
+        GameLogic = new MainGameLogic();
+        SceneManager = GetComponent<MainSceneManager>();
+
+        // if (SceneManager.CurrentScene == MainSceneManager.GameScenes.MainGame)
+        // {
+        //     GameLogic.InitialiseGame();
+        // }
+
+        GameLogic.InitialiseGame(); //TODO: Temp
     }
-
-    #region Scene Loading
-    public class SceneLoading
-    {
-        public bool IsLoadingScene;
-
-        public enum GameScenes
-        {
-            MainMenu, MainGame
-        }
-        public GameScenes CurrentScene;
-
-        public void LoadScene(GameScenes scene)
-        {
-            // Load game scene logic here
-        }
-
-        public void ReloadScene(GameScenes scene)
-        {
-            // Reload selected scene
-        }
-
-    }
-    #endregion
 
     #region Main Game Logic
     public class MainGameLogic
@@ -63,79 +50,41 @@ public class GameManager : MonoBehaviour
         public void InitialiseGame()
         {
             // Logic to initalise the main game scene before starting the game
+            playerData = new()
+            {
+                PlayerTransform = FindObjectOfType<Player_Controller>().transform // TODO: Maker Cleaner
+            };
+
+            print("Game Initialised");
         }
 
         public void StartGame()
         {
             // Logic to start the main game after it has been initialised
         }
-    }
-    #endregion
 
-    #region Level Loading
-    public class LevelLoading : MonoBehaviour // TODO: Convert to its own script
-    {
-        // Level Information
-        public int CurrentLevel { get; private set; }
-        public int LevelCount;
-
-        // Loading Information
-        private AsyncOperation levelAsync;
-        public float LevelAsyncProgress { get; private set; }
-
-        // Events
-        public delegate void OnLevelLoaded(int level);
-        public OnLevelLoaded onLevelLoaded;
-
-        /// <summary>
-        /// Loads a specified level
-        /// </summary>
-        public void LoadLevel(int level)
+        public void EndGame()
         {
-            if (level < 0 || level > LevelCount) { Debug.LogWarning("Unable to load level less than 0 or greater than the current level count."); return; }
-            CurrentLevel = level;
-
-            StartCoroutine(LevelLoadRoutine());
+            // Logic to end the main game after it has started
         }
 
+        public PlayerData playerData = new();
 
-        /// <summary>
-        /// Loads the previous level based on the current level
-        /// </summary>
-        public void LoadPreviousLevel()
+        public class PlayerData
         {
-            LoadLevel(CurrentLevel--);
+            public int CurrentGemstones { get; set; } = 0;
+            public Transform PlayerTransform { get; set; }
+            // public Player_Controller controller; // TODO: Create a script that controls certain player events (dying, resetting etc)
         }
 
-        /// <summary>
-        /// Loads the next level based on the current level
-        /// </summary>
-        public void LoadNextLevel()
+        public delegate void OnGemstoneCollected(int gemstones);
+        public OnGemstoneCollected onGemstoneCollected;
+
+        public void AddGemstones(int amount = 1)
         {
-            LoadLevel(CurrentLevel++);
-        }
-
-        IEnumerator LevelLoadRoutine()
-        {
-            levelAsync = SceneManager.LoadSceneAsync(0);
-
-            // while (levelAsync.progress < .9f)
-            // {
-            //     LevelAsyncProgress = levelAsync.progress;
-
-            //     yield return null;
-            // }
-
-            // if(levelAsync.isDone)
-            //     onLevelLoaded?.Invoke(CurrentLevel);
-
-            while (!levelAsync.isDone)
-            {
-                yield return null;
-            }
-            onLevelLoaded?.Invoke(CurrentLevel);
-
-            yield break;
+            playerData.CurrentGemstones += amount;
+            onGemstoneCollected?.Invoke(playerData.CurrentGemstones); // Invoke all scripts that react to the collection of a gemstone
+            print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
         }
     }
     #endregion

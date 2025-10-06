@@ -115,6 +115,11 @@ public class Boat_Space_Manager : MonoBehaviour
     }
     #endregion
 
+    public float GetDistanceToBoat(float targetDistance)
+    {
+        return targetDistance - transform.position.z;
+    }
+
     #region Boat Passenger Checks
 
     [Space(10)]

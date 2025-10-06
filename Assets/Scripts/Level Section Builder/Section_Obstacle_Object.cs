@@ -1,30 +1,30 @@
+using UnityEngine;
+using EditorAttributes;
+
 /// <summary>
 /// Section Object derived class that shares overrided stats based on Obstacle objects
 /// </summary>
 public class Section_Obstacle_Object : Section_Builder_Object
 {
-
     [System.Serializable]
-    public class ObstacleData
+    public class SectionObstacleData
     {
         public ObstacleType obstacleType;
 
         // Override Stats?
-        public bool overrideStats;
+        public bool overrideData;
 
-        [System.Serializable]
-        public class ObstacleOverrideStats
-        {
-            public float ImpactDamage;
-        }
-        [EditorAttributes.ShowField(nameof(overrideStats))] public ObstacleOverrideStats overridedStats;
+        [ShowField(nameof(overrideData))] public ObstacleData overridedData = new();
+
+        // Pipe Data
+        [ShowField(nameof(obstacleType), ObstacleType.SewerPipe)] public Pipe_Obstacle_Data pipeObstacleData = new();
     }
 
-    [EditorAttributes.Line(EditorAttributes.GUIColor.Cyan)]
+    [Line(GUIColor.Cyan)]
     /// <summary>
     /// The data of the obstacle shared with the Game_Section_Manager and Section_Builder
     /// </summary>
-    public ObstacleData data;
+    public SectionObstacleData sectionData;
 
     public enum ObstacleType
     {
@@ -39,6 +39,7 @@ public class Section_Obstacle_Object : Section_Builder_Object
 
     protected override void AdditionalDebug()
     {
-        name = new($"{ObjectType} - {data.obstacleType}");
+        DrawItem(Color.cyan, Vector3.one);
+        name = new($"{ObjectType.Obstacle} - {sectionData.obstacleType}");
     }
 }

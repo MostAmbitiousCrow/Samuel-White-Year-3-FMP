@@ -42,6 +42,8 @@ class Player_Controller : Boat_Character, IDamageable
         vaultAction?.Enable();
         vaultJumpAction?.Enable();
         pauseAction?.Enable();
+
+        if(GameManager.Instance != null) GameManager.Instance.GameLogic.onGemstoneCollected += GemstoneCollected;
     }
 
     private void OnDisable()
@@ -50,6 +52,8 @@ class Player_Controller : Boat_Character, IDamageable
         vaultAction?.Disable();
         vaultJumpAction?.Disable();
         pauseAction?.Disable();
+
+        if(GameManager.Instance != null) GameManager.Instance.GameLogic.onGemstoneCollected -= GemstoneCollected;
     }
 
     private void OnMove(InputAction.CallbackContext context) //TODO: Rework to allow the player to simply hold down the move button to continue moving in that direction or tap to move a single space
@@ -74,7 +78,7 @@ class Player_Controller : Boat_Character, IDamageable
         }
         else
         {
-            print("Player Vaulted");
+            // print("Player Vaulted");
             VaultToSpace(boatSpaceManager.GetOppositeLaneID(GetCurrentLane()), GetCurrentSpace(), vaultSpeed);
             //TODO: Implement vaulting animation here
         }
@@ -209,12 +213,21 @@ class Player_Controller : Boat_Character, IDamageable
     public void Die()
     {
         // Death Event / Game Over, Effect and Animation
-        
+
     }
 
     public void RestoreHealth()
     {
         CurrentHealth = MaxHealth;
+    }
+
+    #endregion
+
+    #region Gemstone Events
+
+    void GemstoneCollected(int amount)
+    {
+        // TODO: Gemstone Collected, Trigger some sort of effect
     }
 
     #endregion

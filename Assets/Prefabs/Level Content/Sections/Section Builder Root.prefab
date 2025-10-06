@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &50791017761715935
+--- !u!1 &843829769449658046
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1865782061863169864}
-  - component: {fileID: 5455783782380915484}
+  - component: {fileID: 201578214979091923}
+  - component: {fileID: 3372578660937775789}
   m_Layer: 0
   m_Name: Obstacle - TrashPile
   m_TagString: Untagged
@@ -17,43 +17,46 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1865782061863169864
+--- !u!4 &201578214979091923
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50791017761715935}
+  m_GameObject: {fileID: 843829769449658046}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 45}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5806513433302663802}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5455783782380915484
+--- !u!114 &3372578660937775789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50791017761715935}
+  m_GameObject: {fileID: 843829769449658046}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lane: 2
-  distance: 45
+  lane: 0
+  distance: 0
   height: 0
-  objectType: 0
   enableSnapping: 1
-  data:
+  sectionData:
     obstacleType: 0
-    overrideStats: 0
-    overridedStats:
-      ImpactDamage: 0
+    overrideData: 0
+    overridedData:
+      ImpactDamage: 1
+    pipeObstacleData:
+      pipeConnection: 1
+      distancePerPipe: 1.6
+      amount: 5
 --- !u!1 &2730210995621811144
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +87,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1865782061863169864}
+  - {fileID: 7235556668447845005}
+  - {fileID: 5867496102379055383}
+  - {fileID: 201578214979091923}
+  - {fileID: 1172295034797517961}
   - {fileID: 6369917451240687647}
   - {fileID: 5298553034587403494}
   m_Father: {fileID: 0}
@@ -103,14 +109,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   riverManager: {fileID: 0}
   sectionData:
-    initialDelay: 0
-    postDelay: 0
+    initialDelay: 1
+    postDelay: 2
     ObstacleDatas:
-    - {fileID: 5455783782380915484}
+    - {fileID: 1720906431794451091}
+    - {fileID: 4261194632730990851}
+    - {fileID: 3372578660937775789}
+    - {fileID: 1141048769559380071}
     EnemyDatas:
     - {fileID: 2586220247129822895}
     CollectibleDatas:
     - {fileID: 4317962581328293579}
+    GemstoneGates: []
+--- !u!1 &2888650534647860149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5867496102379055383}
+  - component: {fileID: 4261194632730990851}
+  m_Layer: 0
+  m_Name: Obstacle - SewerPipe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5867496102379055383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2888650534647860149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5806513433302663802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4261194632730990851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2888650534647860149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lane: 2
+  distance: 0
+  height: 3
+  enableSnapping: 1
+  sectionData:
+    obstacleType: 1
+    overrideData: 0
+    overridedData:
+      ImpactDamage: 1
+    pipeObstacleData:
+      pipeConnection: 3
+      distancePerPipe: 1.6
+      amount: 5
 --- !u!1 &5625213071332071574
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 5625213071332071574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 45}
+  m_LocalPosition: {x: -5, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -156,16 +223,69 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 0
-  distance: 45
+  distance: 5
   height: 0
-  objectType: 2
   enableSnapping: 1
   data:
     collectibleType: 0
-    overrideStats: 0
-    overridedStats:
-      BankValue: 0
-      Amount: 0
+    overrideData: 0
+--- !u!1 &6359040131299024528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7235556668447845005}
+  - component: {fileID: 1720906431794451091}
+  m_Layer: 0
+  m_Name: Obstacle - SewerPipe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7235556668447845005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359040131299024528}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5806513433302663802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1720906431794451091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6359040131299024528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lane: 0
+  distance: 0
+  height: 3
+  enableSnapping: 1
+  sectionData:
+    obstacleType: 1
+    overrideData: 0
+    overridedData:
+      ImpactDamage: 1
+    pipeObstacleData:
+      pipeConnection: 0
+      distancePerPipe: 1.6
+      amount: 5
 --- !u!1 &6864334948925067990
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 6864334948925067990}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 50}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -211,14 +331,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 1
-  distance: 50
+  distance: 10
   height: 0
-  objectType: 1
   enableSnapping: 1
-  data:
+  sectionData:
     enemyType: 0
     silhouetteAlwaysVisible: 1
-    overrideStats: 0
-    overridedStats:
-      Health: 0
-      EmergeTime: 0
+    overrideData: 0
+    overridedData:
+      EmergeTime: 3
+      health: 1
+--- !u!1 &7682165827213847943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1172295034797517961}
+  - component: {fileID: 1141048769559380071}
+  m_Layer: 0
+  m_Name: Obstacle - TrashPile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1172295034797517961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7682165827213847943}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5806513433302663802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1141048769559380071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7682165827213847943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lane: 2
+  distance: 10
+  height: 0
+  enableSnapping: 1
+  sectionData:
+    obstacleType: 0
+    overrideData: 0
+    overridedData:
+      ImpactDamage: 1
+    pipeObstacleData:
+      pipeConnection: 1
+      distancePerPipe: 1.6
+      amount: 5

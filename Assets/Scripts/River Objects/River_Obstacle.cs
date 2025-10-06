@@ -1,5 +1,5 @@
 using UnityEngine;
-using EditorAttributes;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 // Collider will only register enemies, the player and their boat
@@ -9,31 +9,49 @@ using EditorAttributes;
 /// </summary>
 public class River_Obstacle : River_Object
 {
-    [Line(GUIColor.Cyan, 1, 3)]
+    [EditorAttributes.Line(EditorAttributes.GUIColor.Cyan, 1, 3)]
     [Header("Obstacle Stats")]
     /// <summary>
     /// Overrided Stats Data
     /// </summary>
-    [SerializeField] float impactDamage = 1f;
-    [SerializeField] bool isHit;
+    public ObstacleData obstacleData; //TODO can be private
+    public bool IsHit { get; private set; }
 
-    public void OverrideStats(Section_Obstacle_Object.ObstacleData.ObstacleOverrideStats overrideStats)
+    public void OverrideData(ObstacleData overridedData)
     {
-        impactDamage = overrideStats.ImpactDamage;
+        obstacleData = overridedData;
         print($"{name} stats were overrided");
     }
 
     // When collided with an object (player or enemy), damage it and destroy this obstacle
     void OnTriggerEnter(Collider other)
     {
-        if (isHit) return;
+        if (IsHit) return;
 
-        other.GetComponent<IDamageable>().TakeDamage(impactDamage);
-        isHit = true;
+        other.GetComponent<IDamageable>().TakeDamage(obstacleData.ImpactDamage);
+        IsHit = true;
         print($"{name} hit: {other}");
 
-        riverObjectAnimator.TriggerDestroyAnimation();
+        if (isAnimated)
+            riverObjectAnimator.TriggerDestroyAnimation();
     }
 
     // TODO: Add animation / Sink or destroy obstacle after damaging something
+
+
+    #region Pooling Methods
+
+    protected override void OnSpawn()
+    {
+        base.OnSpawn();
+        return;
+    }
+
+    #endregion
+}
+
+[Serializable]
+public class ObstacleData
+{
+    public float ImpactDamage = 1f;
 }

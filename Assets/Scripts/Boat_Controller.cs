@@ -43,7 +43,7 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
     /// </summary>
     public void SteerBoat(int direction, float force)
     {
-        print($"Steered Board in the {direction} direction");
+        // print($"Steered Board in the {direction} direction");
         MoveToLane(direction);
     }
 

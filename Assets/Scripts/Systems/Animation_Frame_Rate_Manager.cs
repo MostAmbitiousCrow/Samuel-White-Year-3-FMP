@@ -45,4 +45,28 @@ public class Animation_Frame_Rate_Manager : MonoBehaviour
         }
     }
     #endregion
+
+    /// <summary>
+    /// Custom Yield Instruction
+    /// </summary>
+    public class WaitForTick : CustomYieldInstruction
+    {
+        private bool ticked = false;
+
+        public WaitForTick()
+        {
+            OnTick += OnTickHandler;
+        }
+
+        private void OnTickHandler(object sender, OnTickEvent e)
+        {
+            ticked = true;
+            OnTick -= OnTickHandler;
+        }
+
+        public override bool keepWaiting
+        {
+            get { return !ticked; }
+        }
+    }
 }

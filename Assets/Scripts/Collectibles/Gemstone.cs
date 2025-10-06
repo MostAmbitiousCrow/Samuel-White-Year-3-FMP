@@ -51,29 +51,41 @@ public class Gemstone : River_Collectible
     [SerializeField] float homingStrength = 1f;
     [SerializeField] float particleDespawnDistance = .5f;
 
-    public override void OnCollected()
+    #region Collection Event
+    protected override void OnCollected()
     {
         base.OnCollected();
 
         _collectParticles.Emit(_collectParticlesAmount);
-        _collectParticles.Pause();
-    }
+        // _collectParticles.Pause();
+        _collectParticles.Play();
 
-    public override void Reset()
+        _artObject.gameObject.SetActive(false);
+
+        CanMove = false; //TOOD: Temp
+    }
+    #endregion
+
+    protected override void Reset()
     {
         base.Reset();
+        _artObject.gameObject.SetActive(true);
         // TODO
     }
 
-    #region FrameRateManager subscription
+    #region FrameRateManager Subscription
     void OnEnable()
     {
         Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
+
+        _particleHomeTarget = GameManager.Instance.GameLogic.playerData.PlayerTransform;
     }
+
     void OnDisable()
     {
         Animation_Frame_Rate_Manager.OnTick -= HandleOnTick;
     }
+
     private void HandleOnTick(object sender, Animation_Frame_Rate_Manager.OnTickEvent tickEvent)
     {
         AnimateArtObject();
@@ -95,7 +107,6 @@ public class Gemstone : River_Collectible
 
     private void TickParticles()
     {
-        _collectParticles.Play();
         float step = Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate();
         _collectParticles.Simulate(step, withChildren: true, restart: false, fixedTimeStep: false);
         _idleParticles.Simulate(step, withChildren: true, restart: false, fixedTimeStep: false);
@@ -105,14 +116,13 @@ public class Gemstone : River_Collectible
 
     private void ParticleAnimation()
     {
-        if (_particleHomeTarget == null) return;
+        if (_particleHomeTarget == null || !IsCollected) return;
 
         // Make sure buffer is large enough
         if (particles == null || particles.Length < _collectParticles.main.maxParticles)
             particles = new ParticleSystem.Particle[_collectParticles.main.maxParticles];
 
         int aliveCount = _collectParticles.GetParticles(particles);
-        print(aliveCount);
 
         for (int i = 0; i < aliveCount; i++)
         {
@@ -134,11 +144,17 @@ public class Gemstone : River_Collectible
                 {
                     particles[i].velocity = Vector3.zero;
                     particles[i].startColor = Color.clear;
+                    GameManager.Instance.GameLogic.AddGemstones();
+                    particles[i].remainingLifetime = 0f;
                 }
             }
         }
-
-        _collectParticles.SetParticles(particles, aliveCount);
+        if (aliveCount > 0) _collectParticles.SetParticles(particles, aliveCount);
+        else
+        {
+            IsCollected = false;
+            CanMove = true;
+        }
     }
     #endregion
 }

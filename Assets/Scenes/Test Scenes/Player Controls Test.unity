@@ -207,7 +207,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -573,6 +573,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Section Builder Root
       objectReference: {fileID: 0}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.ObstacleDatas.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.ObstacleDatas.Array.data[0]
+      value: 
+      objectReference: {fileID: 133661012}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.ObstacleDatas.Array.data[1]
+      value: 
+      objectReference: {fileID: 133661011}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.ObstacleDatas.Array.data[2]
+      value: 
+      objectReference: {fileID: 133661010}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.ObstacleDatas.Array.data[3]
+      value: 
+      objectReference: {fileID: 133661009}
     - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -660,7 +685,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &133661009 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5455783782380915484, guid: 295c66bc290b44760801d0a032edb696,
+  m_CorrespondingSourceObject: {fileID: 1141048769559380071, guid: 295c66bc290b44760801d0a032edb696,
+    type: 3}
+  m_PrefabInstance: {fileID: 133661005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &133661010 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
+    type: 3}
+  m_PrefabInstance: {fileID: 133661005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &133661011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4261194632730990851, guid: 295c66bc290b44760801d0a032edb696,
+    type: 3}
+  m_PrefabInstance: {fileID: 133661005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &133661012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1720906431794451091, guid: 295c66bc290b44760801d0a032edb696,
     type: 3}
   m_PrefabInstance: {fileID: 133661005}
   m_PrefabAsset: {fileID: 0}
@@ -1158,7 +1219,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1395,7 +1456,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2069,7 +2130,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2156,7 +2217,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1347785691
 MonoBehaviour:
@@ -2235,7 +2296,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 300}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1394729529
 MonoBehaviour:
@@ -2354,7 +2415,7 @@ PrefabInstance:
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].ObstacleDatas.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
@@ -2364,6 +2425,21 @@ PrefabInstance:
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].ObstacleDatas.Array.data[0]
+      value: 
+      objectReference: {fileID: 133661012}
+    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
+        type: 3}
+      propertyPath: sectionDatas.Array.data[0].ObstacleDatas.Array.data[1]
+      value: 
+      objectReference: {fileID: 133661011}
+    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
+        type: 3}
+      propertyPath: sectionDatas.Array.data[0].ObstacleDatas.Array.data[2]
+      value: 
+      objectReference: {fileID: 133661010}
+    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
+        type: 3}
+      propertyPath: sectionDatas.Array.data[0].ObstacleDatas.Array.data[3]
       value: 
       objectReference: {fileID: 133661009}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
@@ -2823,7 +2899,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

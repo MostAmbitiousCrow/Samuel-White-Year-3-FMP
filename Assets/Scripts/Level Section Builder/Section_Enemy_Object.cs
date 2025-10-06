@@ -1,33 +1,27 @@
+using UnityEngine;
+
 /// <summary>
 /// Section Object derived class that shares overrided stats based on Enemy objects
 /// </summary>
 public class Section_Enemy_Object : Section_Builder_Object
 {
     [System.Serializable]
-    public class EnemyData
+    public class SectionEnemyData
     {
         public EnemyType enemyType;
-        [UnityEngine.Tooltip("Should the enemy silhouette always be visible, or only when the enemy is emerging?")]
+        [Tooltip("Should the enemy silhouette always be visible, or only when the enemy is emerging?")]
         public bool silhouetteAlwaysVisible = true;
 
         // Override Stats?
-        public bool overrideStats;
-
-        [System.Serializable]
-        public class EnemyOverrideStats
-        {
-            public int Health;
-            public float EmergeTime;
-        }
-
-        [EditorAttributes.ShowField(nameof(overrideStats))] public EnemyOverrideStats overridedStats;
+        public bool overrideData;
+        [EditorAttributes.ShowField(nameof(overrideData))] public EnemyData overridedData;
     }
 
     [EditorAttributes.Line(EditorAttributes.GUIColor.Red)]
     /// <summary>
     /// The data of the enemy shared with the Game_Section_Manager and Section_Builder
     /// </summary>
-    public EnemyData data;
+    public SectionEnemyData sectionData;
 
     public enum EnemyType
     {
@@ -42,6 +36,7 @@ public class Section_Enemy_Object : Section_Builder_Object
 
     protected override void AdditionalDebug()
     {
-        name = new($"{ObjectType} - {data.enemyType}");
+        DrawItem(Color.red, Vector3.one);
+        name = new($"{ObjectType.Enemy} - {sectionData.enemyType}");
     }
 }
