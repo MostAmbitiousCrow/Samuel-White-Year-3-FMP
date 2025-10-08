@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using EditorAttributes;
+using TMPro;
 using UnityEngine;
 
 public class Gemstone_Gate : River_Object, ITargetsBoat
@@ -20,17 +21,25 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [SerializeField] float _explodeDuration = 2.5f;
     [SerializeField] GemstoneGateData data;
     [Space(10)]
-    [SerializeField] bool _consuming;
+    [SerializeField] bool _isConsuming;
+    [Space(10)]
+    [Header("Destroy Phase Stats")]
+    [Tooltip("")]
+    [SerializeField, MinMaxSlider(1f, 3.5f)] private Vector2 _insufficientGemsPauseDelay;
+    [Tooltip("Start positions of the destroy lasers")]
+    [SerializeField] Transform[] _laserPositions = new Transform[1];
 
     [Header("Components")]
     [SerializeField] ParticleSystem _gemstoneParticles;
     [Space(10)]
     [Header("Particle Settings")]
     [Tooltip("The time during the collect particle phase before the particles begin to home in on the target")]
-    [SerializeField] float homingDelay = 2f;
+    [SerializeField] float _homingDelay = 2f;
     [Tooltip("The strength of the homing collect particles")]
-    [SerializeField] float homingStrength = 1f;
-    [SerializeField] float particleDespawnDistance = .5f;
+    [SerializeField] float _homingStrength = 1f;
+    [SerializeField] float _particleDespawnDistance = .5f;
+    [Space]
+    [SerializeField] TextMeshPro _gemRequirementText;
 
     public Boat_Space_Manager SpaceManager { get; set; }
 
@@ -48,7 +57,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     protected override void VirtualUpdateMethod()
     {
         base.VirtualUpdateMethod();
-        if (_consuming) return;
+        if (_isConsuming) return;
 
         if (SpaceManager.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
         {
@@ -66,11 +75,17 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
     IEnumerator ConsumeGemstones() //TODO: WIP
     {
-        _consuming = true;
+        _isConsuming = true;
 
         GameManager.MainGameLogic.PlayerData playerdata = GameManager.Instance.GameLogic.playerData;
 
-        if (playerdata.PlayerTransform == null) yield break;
+        if (playerdata.PlayerTransform == null)
+        {
+            Debug.LogWarning("Missing Player Transform component, Cancelled Gemstone Gate Consumption Event");
+            yield break;
+        }
+
+        _isMoving = false;
 
         _gemstoneParticles.Play();
 
@@ -85,35 +100,33 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
             // Make sure buffer is large enough
             if (particles == null || particles.Length < _gemstoneParticles.main.maxParticles)
-            particles = new ParticleSystem.Particle[_gemstoneParticles.main.maxParticles];
+                particles = new ParticleSystem.Particle[_gemstoneParticles.main.maxParticles];
 
             for (int i = 0; i < aliveCount; i++)
             {
-                if (particles[i].totalVelocity == Vector3.zero)
-                {
-                    print("Stopped");
-                    yield return null;
-                }
-
                 float age = particles[i].startLifetime - particles[i].remainingLifetime;
 
-                if (age >= homingDelay)
+                if (age >= _homingDelay)
                 {
                     Vector3 dir = (transform.position - particles[i].position).normalized;
-                    particles[i].velocity = Vector3.Lerp(particles[i].velocity, dir * homingStrength, Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); //Time.deltaTime * 5f); // smoothing
+                    particles[i].velocity = Vector3.Lerp(particles[i].velocity, dir * _homingStrength, Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); //Time.deltaTime * 5f); // smoothing
 
                     float distance = Vector3.Distance(particles[i].position, transform.position);
-                    if (distance < particleDespawnDistance)
+                    if (distance < _particleDespawnDistance)
                     {
-                        particles[i].velocity = Vector3.zero;
-                        particles[i].startColor = Color.clear;
-                        GameManager.Instance.GameLogic.AddGemstones();
+                        // particles[i].velocity = Vector3.zero;
+                        // particles[i].startColor = Color.clear;
+                        particles[i].remainingLifetime = 0f;
                     }
                 }
             }
             _gemstoneParticles.Simulate(Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate(), withChildren: true, restart: false, fixedTimeStep: false);
             yield return new Animation_Frame_Rate_Manager.WaitForTick();
         }
+
+        // Does the Player have enough gemstones to break the wall
+        if (playerdata.CurrentGemstones >= data.GemRequirement) AbsorptionSucceeded();
+        else AbsorptionFailed();
 
         yield break;
     }
@@ -131,10 +144,29 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         }
         yield break;
     }
+
+    void AbsorptionSucceeded()
+    {
+        CanMove = true;
+        StartCoroutine(ExplodeWall());
+    }
+
+    void AbsorptionFailed()
+    {
+        // Trigger Freeze Time, except for this object, here
+        // Trigger Laser Player Boat Animation here
+
+        // TODO: Ideally there should be three ways of ending the game, forcing it to end, killing the player or destroying their boat. This is temporary
+        CanMove = false;
+        GameManager.Instance.GameLogic.EndGame();
+    }
 }
 
 [Serializable]
 public class GemstoneGateData
 {
+    /// <summary>
+    /// The amount of gems required to destroy the gate
+    /// </summary>
     public int GemRequirement = 10;
 }

@@ -96,7 +96,7 @@ public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffecte
 
     protected virtual void VirtualUpdateMethod()
     {
-        if (_isMoving)
+        if (_isMoving && CanMove)
         {
             RiverFlowMovement();
             if (GetDistanceToCurrentLane() < .1f) // TODO Temporary until object pooling is implemented

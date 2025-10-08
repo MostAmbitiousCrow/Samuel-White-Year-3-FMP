@@ -61,11 +61,13 @@ public class GameManager : MonoBehaviour
         public void StartGame()
         {
             // Logic to start the main game after it has been initialised
+            Debug.Log("Game Started");
         }
 
         public void EndGame()
         {
             // Logic to end the main game after it has started
+            Debug.Log("Game Ended");
         }
 
         public PlayerData playerData = new();
