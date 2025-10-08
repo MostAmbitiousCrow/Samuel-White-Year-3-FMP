@@ -4,7 +4,6 @@ using EditorAttributes;
 using System.Collections.Generic;
 using System.Linq;
 
-
 /// <summary>
 /// Controls and stores the flow and order of data from level sections
 /// </summary>
@@ -251,7 +250,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                 itemData.InjectBoatSpaceManager(boatManager);
 
                 // Place the collectible in the world
-                PlaceSectionObject(itemData, sectionDatas[currentSection].CollectibleDatas[j]);
+                PlaceSectionObject(itemData, sectionDatas[currentSection].GemstoneGateDatas[j]);
 
                 // Trigger Spawned Method
                 itemData.Spawned();

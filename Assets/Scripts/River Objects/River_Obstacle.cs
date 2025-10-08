@@ -27,10 +27,10 @@ public class River_Obstacle : River_Object
     void OnTriggerEnter(Collider other)
     {
         if (IsHit) return;
+        print($"{name} hit: {other}");
 
         other.GetComponent<IDamageable>().TakeDamage(obstacleData.ImpactDamage);
         IsHit = true;
-        print($"{name} hit: {other}");
 
         if (isAnimated)
             riverObjectAnimator.TriggerDestroyAnimation();

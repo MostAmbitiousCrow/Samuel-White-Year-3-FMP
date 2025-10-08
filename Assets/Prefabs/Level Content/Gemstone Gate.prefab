@@ -180,7 +180,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 535401219790000810}
-  - component: {fileID: 6682514169281804657}
   - component: {fileID: 5666194211246518001}
   m_Layer: 0
   m_Name: Gemstone Gate
@@ -206,28 +205,6 @@ Transform:
   - {fileID: 6681863477632637628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6682514169281804657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1244398510228997170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542eb6f4e4782499196c84f43b0fe899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAffectedByRiverSpeed: 1
-  travelSpeed: 1
-  _currentLane: 0
-  startLane: 1
-  _height: 0
-  _distance: 0
-  CanMove: 0
-  _isMoving: 0
-  isAnimated: 0
-  riverObjectAnimator: {fileID: 0}
 --- !u!114 &5666194211246518001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,10 +217,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8961e76ac531443df946f276d678ff31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAffectedByRiverSpeed: 1
+  travelSpeed: 1
+  _currentLane: 0
+  startLane: 1
+  _height: 0
+  _distance: 0
+  CanMove: 0
+  _isMoving: 0
+  isAnimated: 0
+  riverObjectAnimator: {fileID: 0}
   _gateBlocks: []
+  _distanceUntilConsumption: 10
   _explodeDelay: 0
   _explodeForce: 0
   _explodeDuration: 0
+  data:
+    GemRequirement: 10
+  _isConsuming: 0
+  _insufficientGemsPauseDelay: {x: 0, y: 0}
+  _laserPositions:
+  - {fileID: 0}
+  - {fileID: 0}
+  _gemstoneParticles: {fileID: 0}
+  _homingDelay: 2
+  _homingStrength: 1
+  _particleDespawnDistance: 0.5
+  _gemRequirementText: {fileID: 6368139652000639500}
 --- !u!1 &2213855217358940682
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +272,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 1}
+  m_LocalScale: {x: 12, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 535401219790000810}

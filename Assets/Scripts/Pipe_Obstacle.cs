@@ -34,22 +34,8 @@ public class Pipe_Obstacle : River_Obstacle
     }
     void ConnectPipeToSurface()
     {
-        // Set rotation based on pipe connection direction
-        switch (PipeData.pipeConnection)
-        {
-            case Pipe_Obstacle_Data.PipeConnection.Left:
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
-                break;
-            case Pipe_Obstacle_Data.PipeConnection.Top:
-                transform.localRotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case Pipe_Obstacle_Data.PipeConnection.Bottom:
-                transform.localRotation = Quaternion.Euler(0, 0, -90);
-                break;
-            case Pipe_Obstacle_Data.PipeConnection.Right:
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
-                break;
-        }
+        //// Set rotation based on pipe connection direction
+        transform.localRotation = Quaternion.Euler(0, 0, (int)PipeData.pipeConnection * 90);
 
         // Calculate hitbox center and size
         float pipesLength = _pipes.Length;
@@ -73,7 +59,8 @@ public class Pipe_Obstacle_Data
     /// <summary>
     /// Enum represetning the direction the pipe will repeat across each lane
     /// </summary>
-    public enum PipeConnection { Left, Top, Bottom, Right }
+    public enum PipeConnection
+    { Left = 2, Top = 1, Bottom = 3, Right = 0 }
     /// <summary>
     /// What direction will the pipe
     /// </summary>

@@ -27,7 +27,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [Tooltip("")]
     [SerializeField, MinMaxSlider(1f, 3.5f)] private Vector2 _insufficientGemsPauseDelay;
     [Tooltip("Start positions of the destroy lasers")]
-    [SerializeField] Transform[] _laserPositions = new Transform[1];
+    [SerializeField] Transform[] _laserPositions = new Transform[2];
 
     [Header("Components")]
     [SerializeField] ParticleSystem _gemstoneParticles;
@@ -69,6 +69,8 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     {
         base.OnSpawn();
         _isMoving = true;
+
+        _gemRequirementText.SetText(data.GemRequirement.ToString());
     }
 
     private ParticleSystem.Particle[] particles;

@@ -93,6 +93,7 @@ Transform:
   - {fileID: 1172295034797517961}
   - {fileID: 6369917451240687647}
   - {fileID: 5298553034587403494}
+  - {fileID: 1599593555759347915}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4329461565803888504
@@ -120,7 +121,9 @@ MonoBehaviour:
     - {fileID: 2586220247129822895}
     CollectibleDatas:
     - {fileID: 4317962581328293579}
-    GemstoneGates: []
+    GemstoneGateDatas:
+    - {fileID: 6661693478039078179}
+  enableDebug: 1
 --- !u!1 &2888650534647860149
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +181,58 @@ MonoBehaviour:
       pipeConnection: 3
       distancePerPipe: 1.6
       amount: 5
+--- !u!1 &4366664268317683961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1599593555759347915}
+  - component: {fileID: 6661693478039078179}
+  m_Layer: 0
+  m_Name: ---Gemstone Gate---(20)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1599593555759347915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366664268317683961}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5806513433302663802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6661693478039078179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4366664268317683961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dced1abfc944439d949b3886bee8659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lane: 1
+  distance: 20
+  height: 0
+  enableSnapping: 1
+  sectionData:
+    overrideData: 1
+    overridedData:
+      GemRequirement: 20
 --- !u!1 &5625213071332071574
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,9 +281,11 @@ MonoBehaviour:
   distance: 5
   height: 0
   enableSnapping: 1
-  data:
+  sectionData:
     collectibleType: 0
     overrideData: 0
+    overridedData:
+      BankValue: 1
 --- !u!1 &6359040131299024528
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 6359040131299024528}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 3, z: 0}
+  m_LocalPosition: {x: -5, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -275,7 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 0
   distance: 0
-  height: 3
+  height: 5
   enableSnapping: 1
   sectionData:
     obstacleType: 1

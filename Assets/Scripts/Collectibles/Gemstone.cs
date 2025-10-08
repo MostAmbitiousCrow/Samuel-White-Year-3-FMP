@@ -78,7 +78,8 @@ public class Gemstone : River_Collectible
     {
         Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
 
-        _particleHomeTarget = GameManager.Instance.GameLogic.playerData.PlayerTransform;
+        if(GameManager.Instance != null)
+            _particleHomeTarget = GameManager.Instance.GameLogic.playerData.PlayerTransform;
     }
 
     void OnDisable()
@@ -114,7 +115,7 @@ public class Gemstone : River_Collectible
 
     private ParticleSystem.Particle[] particles;
 
-    private void ParticleAnimation()
+    private void ParticleAnimation() // TODO: Turn into a coroutine
     {
         if (_particleHomeTarget == null || !IsCollected) return;
 
@@ -142,8 +143,8 @@ public class Gemstone : River_Collectible
                 float distance = Vector3.Distance(particles[i].position, _particleHomeTarget.position);
                 if (distance < particleDespawnDistance)
                 {
-                    particles[i].velocity = Vector3.zero;
-                    particles[i].startColor = Color.clear;
+                    //particles[i].velocity = Vector3.zero;
+                    //particles[i].startColor = Color.clear;
                     GameManager.Instance.GameLogic.AddGemstones();
                     particles[i].remainingLifetime = 0f;
                 }
