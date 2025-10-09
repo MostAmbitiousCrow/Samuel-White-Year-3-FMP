@@ -42,12 +42,14 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [Space]
     [SerializeField] TextMeshPro _gemRequirementText;
 
+    #region Injection
     public Boat_Space_Manager SpaceManager { get; set; }
 
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
     {
         SpaceManager = bsm;
     }
+    #endregion
 
     public void OverrideData(GemstoneGateData overridedData)
     {
@@ -55,6 +57,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         print($"{name} stats were overrided");
     }
 
+    #region Override Methods
     protected override void VirtualUpdateMethod()
     {
         base.VirtualUpdateMethod();
@@ -74,7 +77,9 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
         _gemRequirementText.SetText(data.GemRequirement.ToString());
     }
+    #endregion
 
+    #region Consume Gemstones Process
     private ParticleSystem.Particle[] particles;
 
     IEnumerator ConsumeGemstones() //TODO: WIP
@@ -92,23 +97,39 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         _isConsuming = true;
         _isMoving = false;
 
-        _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
-        _gemstoneParticles.Emit(data.GemRequirement);
+        if (playerdata.CurrentGemstones <= 0) AbsorptionFailed();
 
+        _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
+
+        ParticleSystem.EmissionModule emission = _gemstoneParticles.emission;
+        emission.rateOverTime = data.GemRequirement;
         var main = _gemstoneParticles.main;
-        main.maxParticles = Mathf.RoundToInt(playerdata.CurrentGemstones);
+
+        if (playerdata.CurrentGemstones > data.GemRequirement)
+            main.maxParticles = Mathf.RoundToInt(data.GemRequirement);
+        else
+            main.maxParticles = Mathf.RoundToInt(playerdata.CurrentGemstones);
+        _gemstoneParticles.Play();
+
+        yield return new WaitUntil(() => _gemstoneParticles.particleCount > 1);
 
         // Initialize particles array if null or too small
         if (particles == null || particles.Length < main.maxParticles)
             particles = new ParticleSystem.Particle[main.maxParticles];
 
         int aliveCount = _gemstoneParticles.GetParticles(particles);
+        int particlesRemaining = main.maxParticles;
+        int amountRemaining = data.GemRequirement;
 
         print($"Player Gemstone Count: {playerdata.CurrentGemstones}");
 
-        while (aliveCount > 0)
+        while (particlesRemaining > 0)
         {
-            aliveCount = _gemstoneParticles.GetParticles(particles);;
+            aliveCount = _gemstoneParticles.GetParticles(particles); ;
+
+            // Make sure buffer is large enough (If using Emission)
+            if (particles == null || particles.Length < _gemstoneParticles.main.maxParticles)
+                particles = new ParticleSystem.Particle[_gemstoneParticles.main.maxParticles];
 
             for (int i = 0; i < aliveCount; i++)
             {
@@ -123,14 +144,20 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
                     if (distance < _particleDespawnDistance)
                     {
                         particles[i].remainingLifetime = 0f;
-                        _gemRequirementText.SetText(aliveCount.ToString());
+                        particlesRemaining--;
+                        amountRemaining--;
+                        _gemRequirementText.SetText(amountRemaining.ToString());
+                        if (amountRemaining == 0)
+                            _gemstoneParticles.Stop();
                     }
                 }
             }
+            _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
             _gemstoneParticles.SetParticles(particles, aliveCount);
             _gemstoneParticles.Simulate(Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate(), withChildren: true, restart: false, fixedTimeStep: false);
             yield return new Animation_Frame_Rate_Manager.WaitForTick();
         }
+        _gemstoneParticles.Clear();
 
         // Does the Player have enough gemstones to break the wall
         if (playerdata.CurrentGemstones >= data.GemRequirement) AbsorptionSucceeded();
@@ -138,6 +165,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
         yield break;
     }
+    #endregion
 
     IEnumerator ExplodeWall()
     {
@@ -153,6 +181,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         yield break;
     }
 
+    #region Absorption Events
     void AbsorptionSucceeded()
     {
         print("Absorption Succeeded!");
@@ -174,6 +203,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         _isMoving = false;
         GameManager.Instance.GameLogic.EndGame();
     }
+    #endregion
 }
 
 [Serializable]

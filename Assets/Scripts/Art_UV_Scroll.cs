@@ -6,6 +6,8 @@ public class Art_UV_Scroll : MonoBehaviour, IAffectedByRiver
     [SerializeField] Vector2 scrollDirection = Vector2.right;
     [SerializeField] bool _paused = true;
 
+    private float X, Y;
+
     #region FrameRateManager subscription
     void OnEnable()
     {
@@ -25,12 +27,11 @@ public class Art_UV_Scroll : MonoBehaviour, IAffectedByRiver
     void ScrollUV()
     {
         if (_paused) return;
-        
-        float X = scrollDirection.x * riverManager.RiverSpeed * Time.time;
-        float Y = scrollDirection.y * riverManager.RiverSpeed * Time.time;
+
+        X = Mathf.Repeat(scrollDirection.x * riverManager.RiverSpeed * Time.time, 1f);
+        Y = Mathf.Repeat(scrollDirection.y * riverManager.RiverSpeed * Time.time, 1f);
 
         scrollingMaterial.mainTextureOffset = new(X, Y); // Note: if the UV is moving too quickly, it's because the art has been scaled
-        //TODO: prevent the offset from getting too high
     }
 
     #region Injection

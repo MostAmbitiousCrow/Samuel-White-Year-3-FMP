@@ -57,7 +57,6 @@ public class Gemstone : River_Collectible
         base.OnCollected();
 
         _collectParticles.Emit(_collectParticlesAmount);
-        _collectParticles.Play();
         _artObject.gameObject.SetActive(false);
         GameManager.Instance.GameLogic.AddGemstones(_collectParticlesAmount * Data.BankValue);
 
