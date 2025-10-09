@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
         {
             playerData.CurrentGemstones += amount;
             onGemstoneCollected?.Invoke(playerData.CurrentGemstones); // Invoke all scripts that react to the collection of a gemstone
-            print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
+            // print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
         }
     }
     #endregion

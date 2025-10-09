@@ -99,7 +99,9 @@ public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffecte
         if (_isMoving && CanMove)
         {
             RiverFlowMovement();
-            if (GetDistanceToCurrentLane() < .1f) // TODO Temporary until object pooling is implemented
+            _distance = GetDistanceToCurrentLane();
+            
+            if (_distance < .1f) // TODO Temporary until object pooling is implemented
                 Destroy(gameObject);
         }
     }

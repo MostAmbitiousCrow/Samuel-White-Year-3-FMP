@@ -9,6 +9,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [Header("Components")]
     [Tooltip("The voxels forming the gate that will explode")]
     [SerializeField] Transform[] _gateBlocks;
+    [SerializeField] GameObject _art; // TODO: Temporary. Replace once an explosion animation is implemented
 
     [Header("Stats")]
     /// <summary>
@@ -58,7 +59,6 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     {
         base.VirtualUpdateMethod();
         if (_isConsuming) return;
-
         if (SpaceManager.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
         {
             StartCoroutine(ConsumeGemstones());
@@ -70,6 +70,8 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         base.OnSpawn();
         _isMoving = true;
 
+        _art.SetActive(true);
+
         _gemRequirementText.SetText(data.GemRequirement.ToString());
     }
 
@@ -77,32 +79,36 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
     IEnumerator ConsumeGemstones() //TODO: WIP
     {
-        _isConsuming = true;
-
         GameManager.MainGameLogic.PlayerData playerdata = GameManager.Instance.GameLogic.playerData;
 
         if (playerdata.PlayerTransform == null)
         {
             Debug.LogWarning("Missing Player Transform component, Cancelled Gemstone Gate Consumption Event");
+            AbsorptionSucceeded(); // Callback
             yield break;
         }
 
+        print($"{name} Started Consumption");
+        _isConsuming = true;
         _isMoving = false;
 
-        _gemstoneParticles.Play();
+        _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
+        _gemstoneParticles.Emit(data.GemRequirement);
 
         var main = _gemstoneParticles.main;
         main.maxParticles = Mathf.RoundToInt(playerdata.CurrentGemstones);
 
+        // Initialize particles array if null or too small
+        if (particles == null || particles.Length < main.maxParticles)
+            particles = new ParticleSystem.Particle[main.maxParticles];
+
         int aliveCount = _gemstoneParticles.GetParticles(particles);
 
-        while (aliveCount < 0)
-        {
-            aliveCount = _gemstoneParticles.GetParticles(particles);
+        print($"Player Gemstone Count: {playerdata.CurrentGemstones}");
 
-            // Make sure buffer is large enough
-            if (particles == null || particles.Length < _gemstoneParticles.main.maxParticles)
-                particles = new ParticleSystem.Particle[_gemstoneParticles.main.maxParticles];
+        while (aliveCount > 0)
+        {
+            aliveCount = _gemstoneParticles.GetParticles(particles);;
 
             for (int i = 0; i < aliveCount; i++)
             {
@@ -116,12 +122,12 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
                     float distance = Vector3.Distance(particles[i].position, transform.position);
                     if (distance < _particleDespawnDistance)
                     {
-                        // particles[i].velocity = Vector3.zero;
-                        // particles[i].startColor = Color.clear;
                         particles[i].remainingLifetime = 0f;
+                        _gemRequirementText.SetText(aliveCount.ToString());
                     }
                 }
             }
+            _gemstoneParticles.SetParticles(particles, aliveCount);
             _gemstoneParticles.Simulate(Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate(), withChildren: true, restart: false, fixedTimeStep: false);
             yield return new Animation_Frame_Rate_Manager.WaitForTick();
         }
@@ -149,17 +155,23 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
     void AbsorptionSucceeded()
     {
-        CanMove = true;
-        StartCoroutine(ExplodeWall());
+        print("Absorption Succeeded!");
+        _isMoving = true;
+        _gemRequirementText.SetText(0.ToString());
+
+        _art.SetActive(false);
+
+        // StartCoroutine(ExplodeWall()); //TODO
     }
 
     void AbsorptionFailed()
     {
+        print("Absorption Failed...");
         // Trigger Freeze Time, except for this object, here
         // Trigger Laser Player Boat Animation here
 
         // TODO: Ideally there should be three ways of ending the game, forcing it to end, killing the player or destroying their boat. This is temporary
-        CanMove = false;
+        _isMoving = false;
         GameManager.Instance.GameLogic.EndGame();
     }
 }

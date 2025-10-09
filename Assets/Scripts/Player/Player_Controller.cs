@@ -88,7 +88,7 @@ class Player_Controller : Boat_Character, IDamageable
     {
         if (!_isVaulting) return;
 
-        print("Player Jumped");
+        // print("Player Jumped");
         _jumpRoutine = StartCoroutine(VaultJump());
         // InvokeRepeating(nameof(VaultJump), 0f, Time.fixedDeltaTime);
     }

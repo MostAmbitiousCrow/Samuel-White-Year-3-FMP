@@ -57,12 +57,12 @@ public class Gemstone : River_Collectible
         base.OnCollected();
 
         _collectParticles.Emit(_collectParticlesAmount);
-        // _collectParticles.Pause();
         _collectParticles.Play();
-
         _artObject.gameObject.SetActive(false);
+        GameManager.Instance.GameLogic.AddGemstones(_collectParticlesAmount * Data.BankValue);
 
-        CanMove = false; //TOOD: Temp
+        _idleParticles.Stop();
+        _isMoving = false; //TODO: Temp
     }
     #endregion
 
@@ -143,9 +143,7 @@ public class Gemstone : River_Collectible
                 float distance = Vector3.Distance(particles[i].position, _particleHomeTarget.position);
                 if (distance < particleDespawnDistance)
                 {
-                    //particles[i].velocity = Vector3.zero;
-                    //particles[i].startColor = Color.clear;
-                    GameManager.Instance.GameLogic.AddGemstones();
+                    // GameManager.Instance.GameLogic.AddGemstones(Data.BankValue); // Replace to update the Players visual Gemstone Count
                     particles[i].remainingLifetime = 0f;
                 }
             }
@@ -154,7 +152,7 @@ public class Gemstone : River_Collectible
         else
         {
             IsCollected = false;
-            CanMove = true;
+            _isMoving = true;
         }
     }
     #endregion
