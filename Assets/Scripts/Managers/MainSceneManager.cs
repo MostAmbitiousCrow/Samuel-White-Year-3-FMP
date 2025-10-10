@@ -6,6 +6,9 @@ public class MainSceneManager : MonoBehaviour
 {
     public bool IsLoadingScene { get; private set; }
 
+    [Header("Loading Screen Components")]
+    [SerializeField] GameObject _loadingScreen;
+
     public enum GameScenes
     {
         MainMenu, MainGame
@@ -33,15 +36,15 @@ public class MainSceneManager : MonoBehaviour
         async = SceneManager.LoadSceneAsync(scene, sceneMode);
         IsLoadingScene = true;
 
-        // while (levelAsync.progress < .9f)
-        // {
-        //     progress = levelAsync.progress;
+        //while (levelAsync.progress < .9f)
+        //{
+        //    progress = levelAsync.progress;
 
-        //     yield return null;
-        // }
+        //    yield return null;
+        //}
 
-        // if(levelAsync.isDone)
-        //     onLevelLoaded?.Invoke(CurrentLevel);
+        //if (levelAsync.isDone)
+        //    onLevelLoaded?.Invoke(CurrentLevel);
 
         while (!async.isDone)
         {

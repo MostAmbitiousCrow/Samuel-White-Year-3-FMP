@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Main source of management for the game. Always exists.
+/// </summary>
 [RequireComponent(typeof(MainSceneManager))]
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public MainSceneManager SceneManager { get; private set; }
     public GameLevelManager LevelManager { get; private set; }
+    public GameUserSettings UserSettings { get; private set; }
     
     public MainGameLogic GameLogic { get; private set; }
 
@@ -31,10 +35,15 @@ public class GameManager : MonoBehaviour
     public class MainGameLogic
     {
         public bool GamePauseState { get; private set; }
-
+        
+        /// <summary>
+        /// Delegate for whenever the game is paused
+        /// </summary>
         public delegate void OnGamePause();
         public OnGamePause onGamePause;
-
+        /// <summary>
+        /// Delegate for whenever the game is resumed
+        /// </summary>
         public delegate void OnGameResume();
         public OnGameResume onGameResume;
 
@@ -77,6 +86,8 @@ public class GameManager : MonoBehaviour
             public int CurrentGemstones { get; set; } = 0;
             public Transform PlayerTransform { get; set; }
             // public Player_Controller controller; // TODO: Create a script that controls certain player events (dying, resetting etc)
+
+            public bool IsControlsPaused { get; private set; }
         }
 
         public delegate void OnGemstoneCollected(int gemstones);
@@ -87,6 +98,22 @@ public class GameManager : MonoBehaviour
             playerData.CurrentGemstones += amount;
             onGemstoneCollected?.Invoke(playerData.CurrentGemstones); // Invoke all scripts that react to the collection of a gemstone
             // print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
+        }
+    }
+    #endregion
+
+    #region Game Settings
+    public class GameUserSettings
+    {
+        public delegate void SettingsUpdated(GameSettings gameSettings);
+        public SettingsUpdated onSettingsUpdated;
+
+        public GameSettings gameSettings;
+        public class GameSettings
+        {
+            public AsepectResolution TargetAspectResolution;
+
+
         }
     }
     #endregion
