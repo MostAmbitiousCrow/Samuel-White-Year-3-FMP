@@ -41,8 +41,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509492728796214088}
   serializedVersion: 8
-  lengthInSec: 5
-  simulationSpeed: 1
+  lengthInSec: 10
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -9838,6 +9838,8 @@ MonoBehaviour:
   riverObjectAnimator: {fileID: 0}
   _defautlBankValue: 0
   _isCollected: 0
+  Data:
+    BankValue: 1
   _artObject: {fileID: 8470983020858837656}
   _rotateSpeed: 60
   _hoverSpeed: 0.5

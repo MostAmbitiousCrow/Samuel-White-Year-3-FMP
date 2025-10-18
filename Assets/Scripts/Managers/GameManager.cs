@@ -1,3 +1,4 @@
+using EditorAttributes;
 using UnityEngine;
 
 /// <summary>
@@ -6,20 +7,32 @@ using UnityEngine;
 [RequireComponent(typeof(MainSceneManager))]
 public class GameManager : MonoBehaviour
 {
+    //private static GameManager _instance;
     public static GameManager Instance { get; private set; }
+    //{
+    //    get {
+    //        if (!_instance)
+    //        {
+    //            GameObject manager = new GameObject("Game Manager");
+    //            _instance = manager.AddComponent<GameManager>();
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
     public MainSceneManager SceneManager { get; private set; }
     public GameLevelManager LevelManager { get; private set; }
-    public GameUserSettings UserSettings { get; private set; }
-    
+    public GameUserSettings UserSettings { get; private set; } = new();
+
     public MainGameLogic GameLogic { get; private set; }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(this);
 
+        // Initialise Managers (Temporary)
         GameLogic = new MainGameLogic();
         SceneManager = GetComponent<MainSceneManager>();
 
@@ -28,7 +41,13 @@ public class GameManager : MonoBehaviour
         //     GameLogic.InitialiseGame();
         // }
 
-        GameLogic.InitialiseGame(); //TODO: Temp
+        //GameLogic.InitialiseGame(); //TODO: Temp
+    }
+
+    [Button]
+    public void DEVInitialiseGame()
+    {
+        GameLogic.InitialiseGame();
     }
 
     #region Main Game Logic

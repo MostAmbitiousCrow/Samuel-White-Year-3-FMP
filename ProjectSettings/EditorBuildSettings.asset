@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Test Scenes/Loading Screen Test/Test Main Menu.unity
+    guid: 859f9cd8883a606429bcd77283761a4a
+  - enabled: 1
+    path: Assets/Scenes/Test Scenes/Loading Screen Test/Test Empty Scene.unity
+    guid: 3e6ad30449130f946aac7d4b8463ad06
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 921f311abf6d1452495d15aab60bc67d,
       type: 2}
