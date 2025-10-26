@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 8783307303254613469}
   - component: {fileID: 1973921467020642727}
   - component: {fileID: 7920375892649218236}
+  - component: {fileID: 5170077300056732737}
   - component: {fileID: 3282527728548204596}
   - component: {fileID: 7075899837462323427}
   m_Layer: 0
@@ -326,6 +327,18 @@ MonoBehaviour:
   _fallRate: 15
   _currentHealth: 0
   _maxHealth: 3
+--- !u!114 &5170077300056732737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7148727233464969756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d9702e0fe64634bb6e8925deb39da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3282527728548204596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +431,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

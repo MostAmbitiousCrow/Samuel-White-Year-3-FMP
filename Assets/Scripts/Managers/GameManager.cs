@@ -1,4 +1,5 @@
 using EditorAttributes;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -20,11 +21,11 @@ public class GameManager : MonoBehaviour
     //    }
     //}
 
-    public MainSceneManager SceneManager { get; private set; }
-    public GameLevelManager LevelManager { get; private set; }
-    public GameUserSettings UserSettings { get; private set; } = new();
+    public static MainSceneManager SceneManager { get; private set; }
+    public static GameLevelManager LevelManager { get; private set; }
+    public static GameUserSettings UserSettings { get; private set; } = new();
 
-    public MainGameLogic GameLogic { get; private set; }
+    public static MainGameLogic GameLogic { get; private set; }
 
     private void Awake()
     {
@@ -53,28 +54,38 @@ public class GameManager : MonoBehaviour
     #region Main Game Logic
     public class MainGameLogic
     {
-        public bool GamePauseState { get; private set; }
+        /// <summary> Checker if the game is paused </summary>
+        public bool GamePaused { get { return _gamePaused; } }
+        [SerializeField] bool _gamePaused;
+        public int GamePauseInt { get { return GamePaused ? 0 : 1; } }
         
-        /// <summary>
-        /// Delegate for whenever the game is paused
-        /// </summary>
+        /// <summary> Delegate for whenever the game is paused </summary>
         public delegate void OnGamePause();
         public OnGamePause onGamePause;
-        /// <summary>
-        /// Delegate for whenever the game is resumed
-        /// </summary>
+        /// <summary> Delegate for whenever the game is resumed </summary>
         public delegate void OnGameResume();
         public OnGameResume onGameResume;
 
         public void SetPauseState(bool state)
         {
             // Pause game logic here
-            print($"Game Pause State = {GamePauseState = state}");
+            print($"Game Pause State = {_gamePaused = state}");
 
             if (state) onGamePause?.Invoke();
             else onGameResume?.Invoke();
         }
 
+        public void TogglePauseState()
+        {
+            // Pause game logic here
+            print($"Game Pause State = {_gamePaused = !_gamePaused}");
+
+            if (_gamePaused) onGamePause?.Invoke();
+            else onGameResume?.Invoke();
+        }
+
+        public delegate void OnGameInitialised();
+        public OnGameInitialised onGameInitialised;
         public void InitialiseGame()
         {
             // Logic to initalise the main game scene before starting the game
@@ -86,12 +97,16 @@ public class GameManager : MonoBehaviour
             print("Game Initialised");
         }
 
+        public delegate void OnGameStarted();
+        public OnGameStarted onGameStarted;
         public void StartGame()
         {
             // Logic to start the main game after it has been initialised
             Debug.Log("Game Started");
         }
 
+        public delegate void OnGameEnded();
+        public OnGameEnded onGameEnded;
         public void EndGame()
         {
             // Logic to end the main game after it has started

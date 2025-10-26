@@ -145,13 +145,13 @@ public class Boat_Character : MonoBehaviour, IBoatSpaceMovement
             targetPosition = _currentMoveTarget.position;
             targetPosition.y = currentHeight;
 
-            movePosition = Vector3.MoveTowards(transform.localPosition, targetPosition, stepSpeed * Time.fixedDeltaTime);
+            movePosition = Vector3.MoveTowards(transform.localPosition, targetPosition, stepSpeed * Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt);
             movePosition.y = currentHeight;
         }
         else
         {
             targetPosition = _currentMoveTarget.localPosition;
-            movePosition = Vector3.MoveTowards(transform.localPosition, targetPosition, stepSpeed * Time.fixedDeltaTime);
+            movePosition = Vector3.MoveTowards(transform.localPosition, targetPosition, stepSpeed * Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt);
         }
 
         float xDistance = Mathf.Abs(movePosition.x - targetPosition.x);
@@ -190,7 +190,7 @@ public class Boat_Character : MonoBehaviour, IBoatSpaceMovement
         }
         _vaultTotalDistance = Vector3.Distance(_vaultStartPosition, targetPosition);
 
-        _vaultElapsedTime += Time.fixedDeltaTime;
+        _vaultElapsedTime += Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
         float progress = Mathf.Clamp01(_vaultElapsedTime * vaultSpeed / Mathf.Max(_vaultTotalDistance, 0.001f));
 
         // Evaluate height curve

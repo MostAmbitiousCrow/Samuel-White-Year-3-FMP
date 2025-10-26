@@ -58,7 +58,7 @@ public class Gemstone : River_Collectible
 
         _collectParticles.Emit(_collectParticlesAmount);
         _artObject.gameObject.SetActive(false);
-        GameManager.Instance.GameLogic.AddGemstones(_collectParticlesAmount * Data.BankValue);
+        GameManager.GameLogic.AddGemstones(_collectParticlesAmount * Data.BankValue);
 
         _idleParticles.Stop();
         _isMoving = false; //TODO: Temp
@@ -78,7 +78,7 @@ public class Gemstone : River_Collectible
         Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
 
         if(GameManager.Instance != null)
-            _particleHomeTarget = GameManager.Instance.GameLogic.playerData.PlayerTransform;
+            _particleHomeTarget = GameManager.GameLogic.playerData.PlayerTransform;
     }
 
     void OnDisable()

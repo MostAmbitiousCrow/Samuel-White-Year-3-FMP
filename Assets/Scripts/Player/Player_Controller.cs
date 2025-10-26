@@ -12,7 +12,6 @@ class Player_Controller : Boat_Character, IDamageable
     private InputAction moveAction;
     private InputAction vaultAction;
     private InputAction vaultJumpAction;
-    private InputAction pauseAction;
 
     private void Awake()
     {
@@ -20,13 +19,11 @@ class Player_Controller : Boat_Character, IDamageable
         moveAction = actionMap.FindAction("Move");
         vaultAction = actionMap.FindAction("Vault");
         vaultJumpAction = actionMap.FindAction("VaultJump");
-        pauseAction = actionMap.FindAction("Pause");
 
         moveAction.performed += OnMove;
         // moveAction.canceled += OnMove;
         vaultAction.performed += OnVault;
         vaultJumpAction.performed += OnVaultJump;
-        pauseAction.performed += OnPause;
 
         _currentSpace = startSpace;
     }
@@ -41,9 +38,8 @@ class Player_Controller : Boat_Character, IDamageable
         moveAction?.Enable();
         vaultAction?.Enable();
         vaultJumpAction?.Enable();
-        pauseAction?.Enable();
 
-        if(GameManager.Instance != null) GameManager.Instance.GameLogic.onGemstoneCollected += GemstoneCollected;
+        if(GameManager.Instance != null) GameManager.GameLogic.onGemstoneCollected += GemstoneCollected;
     }
 
     private void OnDisable()
@@ -51,9 +47,8 @@ class Player_Controller : Boat_Character, IDamageable
         moveAction?.Disable();
         vaultAction?.Disable();
         vaultJumpAction?.Disable();
-        pauseAction?.Disable();
 
-        if(GameManager.Instance != null) GameManager.Instance.GameLogic.onGemstoneCollected -= GemstoneCollected;
+        if(GameManager.Instance != null) GameManager.GameLogic.onGemstoneCollected -= GemstoneCollected;
     }
 
     private void OnMove(InputAction.CallbackContext context) //TODO: Rework to allow the player to simply hold down the move button to continue moving in that direction or tap to move a single space
@@ -91,11 +86,6 @@ class Player_Controller : Boat_Character, IDamageable
         // print("Player Jumped");
         _jumpRoutine = StartCoroutine(VaultJump());
         // InvokeRepeating(nameof(VaultJump), 0f, Time.fixedDeltaTime);
-    }
-
-    private void OnPause(InputAction.CallbackContext context)
-    {
-        // Handle pause logic here
     }
     #endregion
 

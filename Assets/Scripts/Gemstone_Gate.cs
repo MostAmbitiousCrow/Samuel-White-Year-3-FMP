@@ -84,7 +84,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
     IEnumerator ConsumeGemstones() //TODO: WIP
     {
-        GameManager.MainGameLogic.PlayerData playerdata = GameManager.Instance.GameLogic.playerData;
+        GameManager.MainGameLogic.PlayerData playerdata = GameManager.GameLogic.playerData;
 
         if (playerdata.PlayerTransform == null)
         {
@@ -201,7 +201,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
         // TODO: Ideally there should be three ways of ending the game, forcing it to end, killing the player or destroying their boat. This is temporary
         _isMoving = false;
-        GameManager.Instance.GameLogic.EndGame();
+        GameManager.GameLogic.EndGame();
     }
     #endregion
 }
