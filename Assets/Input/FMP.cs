@@ -343,7 +343,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3962ff18-2d67-4d05-8861-0d0d00da12d9"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

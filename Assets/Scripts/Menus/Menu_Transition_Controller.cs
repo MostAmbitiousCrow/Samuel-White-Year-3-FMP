@@ -3,17 +3,17 @@ using System.Collections;
 using UnityEngine;
 using EditorAttributes;
 
-public class Main_Menu_Transition_Controller : MonoBehaviour
+public class Menu_Transition_Controller : MonoBehaviour
 {
     // Delegates and Status variables
     public bool IsTransitioning { get { return _isTransitioning; } }
 
     /// <summary> Called whenever the transition has started </summary>
-    public static event Action<MainMenuScreenContent> OnTransitionStarted;
+    public static event Action<int> OnTransitionStarted;
     /// <summary> Called whenever the transition has begun waiting </summary>
-    public static event Action<MainMenuScreenContent, MainMenuScreenContent> OnTransitionWaiting;
+    public static event Action<int, int> OnTransitionWaiting;
     /// <summary> Called whenever the transition has finished waiting </summary>
-    public static event Action<MainMenuScreenContent> OnTransitionWaitCompleted;
+    public static event Action<int> OnTransitionWaitCompleted;
     /// <summary> Called whenever the transition has been completed </summary>
     public static event Action OnTransitionCompleted;
 
@@ -27,7 +27,7 @@ public class Main_Menu_Transition_Controller : MonoBehaviour
     [SerializeField, ShowField(nameof(_doTransitionAnimation))] float _transitionEndTime = .1f;
 
     [Header("Dependency")]
-    [SerializeField] Main_Menu_Manager _mainMenuManager;
+    [SerializeField] Menu_Manager _mainMenuManager;
 
     /// <summary>
     /// Method to trigger the screen transition
@@ -35,7 +35,7 @@ public class Main_Menu_Transition_Controller : MonoBehaviour
     /// <param name="screenToOpen"> The Screen contents to enable (open) </param>
     /// <param name="screenToClose"> The Screen contents to disable (close)</param>
     /// <param name="multiplier"> Optional. Multiply the speed of the transition</param>
-    public void TriggerTransition(MainMenuScreenContent screenToOpen, MainMenuScreenContent screenToClose,
+    public void TriggerTransition(int screenToOpen, int screenToClose,
         bool doTransition = true, float multiplier = 1f)
     {
         if(doTransition && _doTransitionAnimation) StartCoroutine(TransitionRoutine(screenToOpen, screenToClose, multiplier));
@@ -43,12 +43,12 @@ public class Main_Menu_Transition_Controller : MonoBehaviour
         {
             OnTransitionStarted.Invoke(screenToOpen);
             OnTransitionWaiting.Invoke(screenToOpen, screenToClose);
-            OnTransitionWaitCompleted(screenToOpen);
+            OnTransitionWaitCompleted.Invoke(screenToOpen);
             OnTransitionCompleted?.Invoke();
         }
     }
 
-    IEnumerator TransitionRoutine(MainMenuScreenContent screenToOpen, MainMenuScreenContent screenToClose, float speed = 1f)
+    IEnumerator TransitionRoutine(int screenToOpen, int screenToClose, float speed = 1f)
     {
         _isTransitioning = true;
 
@@ -60,25 +60,25 @@ public class Main_Menu_Transition_Controller : MonoBehaviour
         {
             // Insert your Start Transition Animation code here
 
-            yield return t += Time.deltaTime;
+            yield return t += Time.unscaledDeltaTime;
         }
 
         t = 0f;
-        OnTransitionWaiting.Invoke(screenToOpen, screenToClose);
+        OnTransitionWaiting?.Invoke(screenToOpen, screenToClose);
         while (t * speed < _transitionWaitTime)
         {
             // Insert your Transition Animation code here
 
-            yield return t += Time.deltaTime;
+            yield return t += Time.unscaledDeltaTime;
         }
-        OnTransitionWaitCompleted.Invoke(screenToOpen);
+        OnTransitionWaitCompleted?.Invoke(screenToOpen);
 
         t = 0f;
         while (t * speed < _transitionEndTime)
         {
             // Insert your End Transition Animation code here
 
-            yield return t += Time.deltaTime;
+            yield return t += Time.unscaledDeltaTime;
         }
 
         // Trigger Transition Completed delegate

@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public static GameLevelManager LevelManager { get; private set; }
     public static GameUserSettings UserSettings { get; private set; } = new();
 
-    public static MainGameLogic GameLogic { get; private set; }
+    public static MainGameLogic GameLogic { get; private set; } = new();
 
     private void Awake()
     {
@@ -36,11 +36,8 @@ public class GameManager : MonoBehaviour
         // Initialise Managers (Temporary)
         GameLogic = new MainGameLogic();
         SceneManager = GetComponent<MainSceneManager>();
-
-        // if (SceneManager.CurrentScene == MainSceneManager.GameScenes.MainGame)
-        // {
-        //     GameLogic.InitialiseGame();
-        // }
+        LevelManager = GetComponent<GameLevelManager>();
+        UserSettings = new GameUserSettings();
 
         //GameLogic.InitialiseGame(); //TODO: Temp
     }

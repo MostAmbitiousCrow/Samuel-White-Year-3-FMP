@@ -54,6 +54,8 @@ class Player_Controller : Boat_Character, IDamageable
     private void OnMove(InputAction.CallbackContext context) //TODO: Rework to allow the player to simply hold down the move button to continue moving in that direction or tap to move a single space
     // Additionally, fix the issue where the player is able to trigger the move event when pressing and releasing an additional key (or perhaps rework movement to use buttons instead?)
     {
+        if (GameManager.GameLogic.GamePaused) return;
+
         // Handle movement logic here
         int direction = Mathf.RoundToInt(context.ReadValue<Vector2>().x);
         MoveToSpace(Mathf.RoundToInt(direction), stepSpeed);
@@ -64,6 +66,8 @@ class Player_Controller : Boat_Character, IDamageable
     /// </summary>
     private void OnVault(InputAction.CallbackContext context)
     {
+        if (GameManager.GameLogic.GamePaused) return;
+
         // Vault logic
         if (_isVaulting)
         {
@@ -81,6 +85,8 @@ class Player_Controller : Boat_Character, IDamageable
 
     private void OnVaultJump(InputAction.CallbackContext context)
     {
+        if (GameManager.GameLogic.GamePaused) return;
+
         if (!_isVaulting) return;
 
         // print("Player Jumped");
@@ -120,15 +126,21 @@ class Player_Controller : Boat_Character, IDamageable
         _canMove = false;
 
         //TODO: Jump Prepare Animation
-        yield return new WaitForSeconds(_jumpDelay);
+        while (elapsed < _jumpDelay)
+        {
+            elapsed += Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
+            yield return new WaitForFixedUpdate();
+        }
+
         ExitBoat(false);
         _isJumping = true;
         _canMove = true;
 
         // Jump Up
+        elapsed = 0f;
         while (elapsed < _jumpTime)
         {
-            elapsed += Time.fixedDeltaTime;
+            elapsed += Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
             float t = Mathf.Clamp01(elapsed / _jumpTime);
 
             currentHeight = _jumpCurve.Evaluate(t) * _jumpHeight;
@@ -139,7 +151,7 @@ class Player_Controller : Boat_Character, IDamageable
         elapsed = 0f;
         while (elapsed < _jumpSustainTime)
         {
-            elapsed += Time.fixedDeltaTime;
+            elapsed += Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
             float t = Mathf.Clamp01(elapsed / _jumpSustainTime);
 
             currentHeight = Mathf.Lerp(_jumpHeight, _jumpSustainHeight, _jumpSustainCurve.Evaluate(t));
@@ -149,7 +161,7 @@ class Player_Controller : Boat_Character, IDamageable
         // Fall
         while (currentHeight > 0f)
         {
-            currentHeight -= _fallRate * Time.fixedDeltaTime;
+            currentHeight -= _fallRate * Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
             yield return new WaitForFixedUpdate();
         }
 

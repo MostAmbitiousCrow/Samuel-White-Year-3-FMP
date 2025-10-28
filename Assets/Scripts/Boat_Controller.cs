@@ -72,6 +72,8 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
     #region Movement
     void FixedUpdate()
     {
+        if (GameManager.GameLogic.GamePaused) return;
+
         if (_isMoving) SteerMovement();
     }
 
@@ -82,7 +84,7 @@ public class Boat_Controller : MonoBehaviour, IRiverLaneMovement, IDamageable, I
     {
         if (_currentMoveTarget != null)
         {
-            Vector3 newPosition = Vector3.MoveTowards(rb.position, _currentMoveTarget, steerSpeed * Time.fixedDeltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(rb.position, _currentMoveTarget, steerSpeed * Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt);
             rb.MovePosition(newPosition);
             if (rb.position.sqrMagnitude == newPosition.sqrMagnitude)
             {
