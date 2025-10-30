@@ -35,6 +35,8 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [Space(10)]
     [Header("Particle Settings")]
     [Tooltip("The time during the collect particle phase before the particles begin to home in on the target")]
+    [SerializeField] float _emmisionRate = .1f;
+    [SerializeField] float _emmisionMultiplier = .9f;
     [SerializeField] float _homingDelay = 2f;
     [Tooltip("The strength of the homing collect particles")]
     [SerializeField] float _homingStrength = 1f;
@@ -97,7 +99,9 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         _isConsuming = true;
         _isMoving = false;
 
-        if (playerdata.CurrentGemstones <= 0) AbsorptionFailed();
+        int savedGemstones = playerdata.CurrentGemstones;
+
+        if (savedGemstones <= 0) AbsorptionFailed();
 
         _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
 
@@ -105,11 +109,14 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         emission.rateOverTime = data.GemRequirement;
         var main = _gemstoneParticles.main;
 
-        if (playerdata.CurrentGemstones > data.GemRequirement)
+        ParticleSystem.LimitVelocityOverLifetimeModule limitVelocity = _gemstoneParticles.limitVelocityOverLifetime;
+
+        if (savedGemstones > data.GemRequirement)
             main.maxParticles = Mathf.RoundToInt(data.GemRequirement);
         else
-            main.maxParticles = Mathf.RoundToInt(playerdata.CurrentGemstones);
-        _gemstoneParticles.Play();
+            main.maxParticles = Mathf.RoundToInt(savedGemstones);
+
+        StartCoroutine(EmitParticlesOverTime(main.maxParticles, _emmisionRate, _emmisionMultiplier));
 
         yield return new WaitUntil(() => _gemstoneParticles.particleCount > 1);
 
@@ -120,8 +127,6 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         int aliveCount = _gemstoneParticles.GetParticles(particles);
         int particlesRemaining = main.maxParticles;
         int amountRemaining = data.GemRequirement;
-
-        print($"Player Gemstone Count: {playerdata.CurrentGemstones}");
 
         while (particlesRemaining > 0)
         {
@@ -137,6 +142,8 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
 
                 if (age >= _homingDelay)
                 {
+                    limitVelocity.drag = 0f;
+
                     Vector3 dir = (transform.position - particles[i].position).normalized;
                     particles[i].velocity = Vector3.Lerp(particles[i].velocity, dir * _homingStrength, Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); //Time.deltaTime * 5f); // smoothing
 
@@ -160,12 +167,41 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
         _gemstoneParticles.Clear();
 
         // Does the Player have enough gemstones to break the wall
-        if (playerdata.CurrentGemstones >= data.GemRequirement) AbsorptionSucceeded();
+        if (savedGemstones >= data.GemRequirement) AbsorptionSucceeded();
         else AbsorptionFailed();
 
         yield break;
     }
     #endregion
+
+    IEnumerator EmitParticlesOverTime(int amount, float time, float multiplierPerEmit = 1f)
+    {
+        int count = 0;
+        float t = time;
+        int c = Mathf.RoundToInt(amount * .9f);
+
+        while (_isConsuming)
+        {
+            if (count >= c)
+            {
+                int g = amount - count;
+                _gemstoneParticles.Emit(g);
+                GameManager.GameLogic.AddGemstones(-g);
+                yield break;
+            }
+            else
+            {
+                _gemstoneParticles.Emit(1);
+                GameManager.GameLogic.AddGemstones(-1);
+                count++;
+            }
+            if (count >= amount) yield break;
+
+            yield return new WaitForSeconds(t);
+            t = Mathf.Round((t *= multiplierPerEmit) * 1000f) / 1000f;
+            print(t);
+        }
+    }
 
     IEnumerator ExplodeWall()
     {

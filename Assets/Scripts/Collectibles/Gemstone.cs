@@ -142,7 +142,7 @@ public class Gemstone : River_Collectible
                 float distance = Vector3.Distance(particles[i].position, _particleHomeTarget.position);
                 if (distance < particleDespawnDistance)
                 {
-                    // GameManager.Instance.GameLogic.AddGemstones(Data.BankValue); // Replace to update the Players visual Gemstone Count
+                     GameManager.GameLogic.AddGemstones(Data.BankValue); // Replace to update the Players visual Gemstone Count
                     particles[i].remainingLifetime = 0f;
                 }
             }

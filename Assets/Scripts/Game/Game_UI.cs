@@ -5,18 +5,21 @@ using UnityEngine.UI;
 public class Game_UI : MonoBehaviour
 {
     #region Subscriptions
+    private void Start()
+    {
+        GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
+        GameManager.GameLogic.OnPlayerDamaged += UpdatePlayerHealthMeter;
+    }
     private void OnEnable()
     {
         GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
         GameManager.GameLogic.OnPlayerDamaged += UpdatePlayerHealthMeter;
-
     }
 
     private void OnDisable()
     {
         GameManager.GameLogic.OnGemstoneCollected -= UpdateGemstoneCounter;
         GameManager.GameLogic.OnPlayerDamaged -= UpdatePlayerHealthMeter;
-
     }
 
     #endregion
@@ -42,9 +45,10 @@ public class Game_UI : MonoBehaviour
     /// <summary> Fuction to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
     public void UpdateGemstoneCounter(int gemstones)
     {
-        if(gemstones < 0) _gemstoneCounterText.SetText($"Gemstones: {0}");
+        if(gemstones <= 0) _gemstoneCounterText.SetText($"Gemstones: {0}");
 
         _gemstoneCounterText.SetText($"Gemstones: {gemstones}");
+        //print($"Updated Gemstone Text: {gemstones}");
     }
 
     #endregion

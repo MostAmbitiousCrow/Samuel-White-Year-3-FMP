@@ -10,16 +10,6 @@ public class GameManager : MonoBehaviour
 {
     //private static GameManager _instance;
     public static GameManager Instance { get; private set; }
-    //{
-    //    get {
-    //        if (!_instance)
-    //        {
-    //            GameObject manager = new GameObject("Game Manager");
-    //            _instance = manager.AddComponent<GameManager>();
-    //        }
-    //        return _instance;
-    //    }
-    //}
 
     public static MainSceneManager SceneManager { get; private set; }
     public static GameLevelManager LevelManager { get; private set; }
@@ -38,8 +28,11 @@ public class GameManager : MonoBehaviour
         SceneManager = GetComponent<MainSceneManager>();
         LevelManager = GetComponent<GameLevelManager>();
         UserSettings = new GameUserSettings();
+    }
 
-        //GameLogic.InitialiseGame(); //TODO: Temp
+    private void Start()
+    {
+        GameLogic.InitialiseGame(); //TODO: Temp
     }
 
     [Button]
