@@ -34,6 +34,7 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
     [Header("Components")]
     [SerializeField] protected EventSystem _eventSystem;
     [SerializeField] protected AudioSource _audioSource;
+    [SerializeField] protected Canvas _canvas;
 
     [Header("Transition Components")]
     //[SerializeField] Settings_Menu_Manager settingsMenuManager;
@@ -124,16 +125,19 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
     #endregion
 
     #region OnValidation
+
+#if UNITY_EDITOR
     private void OnValidate()
     {
-        if (Application.isPlaying) return;
         Validation();
     }
 
     protected virtual void Validation()
     {
-
+        if (Application.isPlaying) return;
+        //if (_canvas) _canvas.gameObject.SetActive(_showCanvas);
     }
+#endif
 
-    #endregion
+#endregion
 }

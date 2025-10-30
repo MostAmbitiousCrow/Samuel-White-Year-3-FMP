@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class Menu_Manager_Main : Menu_Manager
 {
+#if UNITY_EDITOR
+
     protected override void Validation()
     {
         base.Validation();
+
         screenDatas = FindObjectsOfType<MenuScreenContent>();
 
         // Filter to only MenuScreenContent_Pause and sort by PauseMenuScreenTypes order
@@ -19,6 +22,7 @@ public class Menu_Manager_Main : Menu_Manager
 
         if (!_audioSource) _audioSource = GetComponent<AudioSource>();
     }
+#endif
 
     protected override void ToggleScreen(int openingScreen, int closingScreen)
     {

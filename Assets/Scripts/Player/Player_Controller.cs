@@ -39,7 +39,7 @@ class Player_Controller : Boat_Character, IDamageable
         vaultAction?.Enable();
         vaultJumpAction?.Enable();
 
-        if(GameManager.Instance != null) GameManager.GameLogic.onGemstoneCollected += GemstoneCollected;
+        if(GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
     }
 
     private void OnDisable()
@@ -48,7 +48,7 @@ class Player_Controller : Boat_Character, IDamageable
         vaultAction?.Disable();
         vaultJumpAction?.Disable();
 
-        if(GameManager.Instance != null) GameManager.GameLogic.onGemstoneCollected -= GemstoneCollected;
+        if(GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
     }
 
     private void OnMove(InputAction.CallbackContext context) //TODO: Rework to allow the player to simply hold down the move button to continue moving in that direction or tap to move a single space

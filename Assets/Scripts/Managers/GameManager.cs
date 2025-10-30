@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
             else onGameResume?.Invoke();
         }
 
+        #region Game Initialisation
         public delegate void OnGameInitialised();
         public OnGameInitialised onGameInitialised;
         public void InitialiseGame()
@@ -109,7 +110,12 @@ public class GameManager : MonoBehaviour
             // Logic to end the main game after it has started
             Debug.Log("Game Ended");
         }
+        #endregion
 
+        #region Player
+        /// <summary>
+        /// The class containing all data related to the current player
+        /// </summary>
         public PlayerData playerData = new();
 
         public class PlayerData
@@ -121,15 +127,16 @@ public class GameManager : MonoBehaviour
             public bool IsControlsPaused { get; private set; }
         }
 
-        public delegate void OnGemstoneCollected(int gemstones);
-        public OnGemstoneCollected onGemstoneCollected;
+        public event Action<int> OnGemstoneCollected;
+        public event Action<int> OnPlayerDamaged;
 
         public void AddGemstones(int amount = 1)
         {
             playerData.CurrentGemstones += amount;
-            onGemstoneCollected?.Invoke(playerData.CurrentGemstones); // Invoke all scripts that react to the collection of a gemstone
+            OnGemstoneCollected?.Invoke(playerData.CurrentGemstones); // Invoke all scripts that react to the collection of a gemstone
             // print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
         }
+        #endregion
     }
     #endregion
 

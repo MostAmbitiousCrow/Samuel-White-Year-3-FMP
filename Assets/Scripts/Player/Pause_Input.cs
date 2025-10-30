@@ -13,6 +13,7 @@ public class Pause_Input : MonoBehaviour
 
         var actionMap = playerInput.currentActionMap;
 
+        // The name of the pause input action
         pauseAction = actionMap.FindAction("Pause");
         pauseAction.performed += OnPause;
     }

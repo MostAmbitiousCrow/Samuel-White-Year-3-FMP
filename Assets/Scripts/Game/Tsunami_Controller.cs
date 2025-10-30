@@ -1,6 +1,7 @@
 using UnityEngine;
 using EditorAttributes;
 
+[RequireComponent(typeof(AudioSource))]
 public class Tsunami_Controller : MonoBehaviour
 {
     [Header("Data")]
@@ -21,6 +22,12 @@ public class Tsunami_Controller : MonoBehaviour
     [SerializeField] Transform _artTransform;
     [SerializeField] Transform _shadow; // TODO: The shadow that looms over the camera (since the game doesn't use any lighting)
 
+    private void Awake()
+    {
+        if (!_audio) _audio = GetComponent<AudioSource>();
+
+
+    }
     private void OnEnable()
     {
         GameManager.GameLogic.onGameStarted += StartProgressing;
