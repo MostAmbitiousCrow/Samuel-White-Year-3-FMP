@@ -1072,7 +1072,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 52
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2020,11 +2020,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2479052348807227457, guid: 27b7680c7f39a4f75a1221ef928a94f0,
-        type: 3}
-      propertyPath: _paused
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3321774252279206036, guid: 27b7680c7f39a4f75a1221ef928a94f0,
         type: 3}
       propertyPath: m_Name
@@ -3188,6 +3183,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1382381986945577228, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382381986945577228, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1382381986945577228, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4696321551657137428, guid: e19f5005176de004eb6c1e5fc5d00d57,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3248,10 +3258,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8575600913390741751, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575600913390741751, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8728975749978870904, guid: e19f5005176de004eb6c1e5fc5d00d57,
         type: 3}
       propertyPath: m_Name
       value: === Player UI ===
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890792626695020173, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890792626695020173, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890792626695020173, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970692461113404756, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8970692461113404756, guid: e19f5005176de004eb6c1e5fc5d00d57,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3328,11 +3373,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3992418287396168290, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992418287396168290, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992418287396168290, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992418287396168290, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992418287396168290, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3992418287396168290, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -45
+      objectReference: {fileID: 0}
     - target: {fileID: 8555857859445590250, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
         type: 3}
       propertyPath: m_Name
       value: Tsunami
       objectReference: {fileID: 0}
+    - target: {fileID: 8931706103474759340, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: _riverManager
+      value: 
+      objectReference: {fileID: 1189356666}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

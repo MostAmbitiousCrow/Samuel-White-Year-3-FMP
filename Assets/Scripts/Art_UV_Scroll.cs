@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class Art_UV_Scroll : MonoBehaviour, IAffectedByRiver
 {
-    [SerializeField] Material scrollingMaterial;
-    [SerializeField] Vector2 scrollDirection = Vector2.right;
+    [SerializeField] Material _scrollingMaterial;
+    [SerializeField] Vector2 _scrollDirection = Vector2.right;
     [SerializeField] bool _paused = true;
+    [SerializeField] MeshRenderer[] _meshes;
 
     private float X, Y;
 
     #region FrameRateManager subscription
+    private void Awake()
+    {
+        if (!_scrollingMaterial) _scrollingMaterial = _meshes[0].material;
+
+        _scrollingMaterial = new(_scrollingMaterial)
+        { mainTextureOffset = new() };
+
+        foreach (var item in _meshes)
+            item.material = _scrollingMaterial;
+    }
     void OnEnable()
     {
-        scrollingMaterial.mainTextureOffset = new();
         Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
     }
     void OnDisable()
@@ -28,10 +38,10 @@ public class Art_UV_Scroll : MonoBehaviour, IAffectedByRiver
     {
         if (_paused) return;
 
-        X = Mathf.Repeat(scrollDirection.x * riverManager.RiverSpeed * Time.time, 1f);
-        Y = Mathf.Repeat(scrollDirection.y * riverManager.RiverSpeed * Time.time, 1f);
+        X = Mathf.Repeat(_scrollDirection.x * riverManager.RiverFlowSpeed * Time.time, 1f);
+        Y = Mathf.Repeat(_scrollDirection.y * riverManager.RiverFlowSpeed * Time.time, 1f);
 
-        scrollingMaterial.mainTextureOffset = new(X, Y); // Note: if the UV is moving too quickly, it's because the art has been scaled
+        _scrollingMaterial.mainTextureOffset = new(X, Y); // Note: if the UV is moving too quickly, it's because the art has been scaled
     }
 
     #region Injection

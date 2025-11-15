@@ -4,7 +4,13 @@ using UnityEngine.UI;
 
 public class Game_UI : MonoBehaviour
 {
+    public static Game_UI Instance;
+
     #region Subscriptions
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
@@ -24,13 +30,15 @@ public class Game_UI : MonoBehaviour
 
     #endregion
 
+    //public static event Action<float, float> UpdateTsunamiUI; //TODO: event to update UI
+
     [Header("Player UI")]
     #region Player Health UI
     [SerializeField] Slider _playerHealthSlider;
     [SerializeField] TextMeshProUGUI _debugHealthText;
 
     /// <summary> Fuction to update the UI for the players health bar. Parameter must be the players current health. </summary>
-    public void UpdatePlayerHealthMeter(int health)
+    void UpdatePlayerHealthMeter(int health)
     {
         if (health < (int)_playerHealthSlider.minValue || health > (int)_playerHealthSlider.maxValue) return;
         
@@ -43,7 +51,7 @@ public class Game_UI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _gemstoneCounterText;
 
     /// <summary> Fuction to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
-    public void UpdateGemstoneCounter(int gemstones)
+    void UpdateGemstoneCounter(int gemstones)
     {
         if(gemstones <= 0) _gemstoneCounterText.SetText($"Gemstones: {0}");
 
@@ -58,11 +66,9 @@ public class Game_UI : MonoBehaviour
     [SerializeField] Slider _playerProgressSlider;
 
     /// <summary> Fuction to update the UI for the Players progress meter. Parameter must be the Players current progress </summary>
-    public void UpdatePlayerProgressMeter(float progress)
+    public void UpdatePlayerProgressMeter(float playerProgress)
     {
-        _playerProgressSlider.value = progress;
-
-
+        _playerProgressSlider.value = playerProgress;
     }
     #endregion
 
@@ -70,11 +76,9 @@ public class Game_UI : MonoBehaviour
     [SerializeField] Slider _tsunamiProgressSlider;
 
     /// <summary> Fuction to update the UI for the Tsunamis progress meter. Parameter must be the Tsunamis current progress </summary>
-    public void UpdateTsunamiMeter(float progress)
+    public void UpdateTsunamiMeter(float tsunamiProgress)
     {
-        _tsunamiProgressSlider.value = progress;
-
-
+        _tsunamiProgressSlider.value = tsunamiProgress;
     }
     #endregion
 

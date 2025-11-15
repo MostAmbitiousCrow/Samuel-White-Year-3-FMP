@@ -129,9 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ef2e07e7c9e413f806d4c92345b6d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollingMaterial: {fileID: 2100000, guid: dcb3e1e20358b43d6a55662a9c93a8c0, type: 2}
-  scrollDirection: {x: -1, y: 0}
-  _paused: 1
+  _scrollingMaterial: {fileID: 0}
+  _scrollDirection: {x: -1, y: 0}
+  _paused: 0
+  _meshes:
+  - {fileID: 1190898872398648380}
+  - {fileID: 2624818935708393075}
 --- !u!1 &4901875249035285721
 GameObject:
   m_ObjectHideFlags: 0

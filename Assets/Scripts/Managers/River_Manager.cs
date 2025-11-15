@@ -8,26 +8,21 @@ using System.Collections;
 public class River_Manager : MonoBehaviour
 {
     #region Variables
-    /// <summary>
-    /// The default speed of the river. Default value is: 1
-    /// </summary>
-    public float DefaultRiverSpeed { get; private set; } = 5f;
-    /// <summary>
-    /// The speed of the river shared across river objects
-    /// </summary>
-    public float RiverSpeed { get; private set; } = 5f;
-    /// <summary>
-    /// The minimum amount of distance river objects can spawn in the z axis
-    /// </summary>
+    public float RiverFlowSpeed { get { return _riverFlowSpeed; } }
+    [Tooltip("The current speed of the rivers flow. Affects the rivers animation.")]
+    [SerializeField] float _riverFlowSpeed = 5f;
+
+    [Tooltip("The min/max values of the levels of speed the river can reach")]
+    [MinMaxSlider(0, 5)] public Vector2Int MinMaxSpeed = new(0, 5);
+    /// <summary> The default speed of the river. Default value is: 1 </summary>
+    public int StartingRiverSpeed { get; private set; } = 5;
+    /// <summary> The speed of the river shared across river objects </summary>
+    public int CurrentRiverSpeed { get; private set; } = 5;
+    /// <summary> The minimum amount of distance river objects can spawn in the z axis </summary>
     public int RiverObjectSpawnDistance { get; private set; } = 45;
-    /// <summary>
-    /// Is the river currently paused?
-    /// </summary>
-    /// <value></value>
+    /// <summary> Is the river currently paused? </summary>
     public bool IsPaused { get; private set; } = false;
-    /// <summary>
-    /// Is the river currently speeding up or slowing down?
-    /// </summary>
+    /// <summary> Is the river currently speeding up or slowing down? </summary>
     public bool IsTransitioning { get; private set; }
 
     [Header("River Lanes Info")]
@@ -41,12 +36,17 @@ public class River_Manager : MonoBehaviour
     }
     public List<RiverLane> RiverLanes;
     public List<IAffectedByRiver> riverInfluencedObjects = new();
+
+    /// <summary> Action that updates all subcribed events whenever the river speed is updated </summary>
+    public event Action OnRiverSpeedUpdate;
+
     #endregion
 
     private void Awake()
     {
         UpdateSpaceDatas();
         GetAndInjectAffectedRiverObjects();
+        OnRiverSpeedUpdate.Invoke();
     }
 
     #region Data Update Methods
@@ -141,39 +141,47 @@ public class River_Manager : MonoBehaviour
     [Tooltip("The curve representing the speed up transition")] // Don't know any other way to describe it :sob
     [SerializeField] AnimationCurve speedCurve;
 
-    /// <summary>
-    /// The method to slow down the global river speed
-    /// </summary>
+    /// <summary> The method to slow down the global river speed </summary>
     /// <param name="amount"></param>
     /// <param name="multiplier"></param>
-    public void SlowDownRiver(float amount = 2f, float multiplier = 10f)
+    public void SlowDownRiver(int amount = 1, float multiplier = 10f)
     {
-        float targetSpeed = RiverSpeed / amount;
+        int targetSpeed = CurrentRiverSpeed - amount;
+        CurrentRiverSpeed = targetSpeed;
 
-        speedRoutine = StartCoroutine(RiverSpeedroutine(targetSpeed, true, multiplier));
+        if (targetSpeed < MinMaxSpeed.x) // If target speed is less than the min speed value
+        {
+            print("River speed has reached minimum speed");
+            return;
+        }
+        OnRiverSpeedUpdate.Invoke();
+        speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, true, multiplier));
     }
 
-    /// <summary>
-    /// The method to speed up the global river speed
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <param name="multiplier"></param>
-    public void SpeedUpRiver(float amount = 2f, float multiplier = 1f)
+    /// <summary> The method to speed up the global river speed </summary>
+    public void SpeedUpRiver(int amount = 1, float multiplier = 5f)
     {
-        float targetSpeed = RiverSpeed * amount;
+        int targetSpeed = CurrentRiverSpeed + amount;
 
-        speedRoutine = StartCoroutine(RiverSpeedroutine(targetSpeed, false, multiplier));
+        if (targetSpeed > MinMaxSpeed.y) // If target speed is less than the max speed value
+        {
+            print("River speed has reached maximum speed!");
+            return;
+        }
+        CurrentRiverSpeed = targetSpeed;
+
+        OnRiverSpeedUpdate.Invoke();
+        speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, false, multiplier));
     }
 
     private Coroutine speedRoutine;
-    //private Coroutine fastRoutine;
-    //private Coroutine slowRoutine;
-    IEnumerator RiverSpeedroutine(float targetspeed, bool reversed, float multiplier)
+    IEnumerator RiverSpeedIncreaseRoutine(int targetspeed, bool decrease, float multiplier)
     {
-        float startSpeed = RiverSpeed;
+        float startSpeed = CurrentRiverSpeed;
+
         float t = 0f;
 
-        if (reversed)
+        if (decrease)
         {
             yield return new WaitUntil(() => !IsTransitioning); // Wait until the fast routine has finished before slowing down
 
@@ -183,11 +191,9 @@ public class River_Manager : MonoBehaviour
             {
                 yield return new WaitUntil(() => !IsPaused); // Wait if paused
                 
-                t -= Time.deltaTime * multiplier;
+                t -= Time.deltaTime * multiplier * GameManager.GameLogic.GamePauseInt;
 
-                RiverSpeed = Mathf.Lerp(targetspeed, startSpeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
-
-                print($"River Speed: {RiverSpeed}");
+                _riverFlowSpeed = Mathf.Lerp(targetspeed, startSpeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
                 yield return null;
             }
             IsTransitioning = false;
@@ -202,44 +208,64 @@ public class River_Manager : MonoBehaviour
             {
                 yield return new WaitUntil(() => !IsPaused); // Wait if paused
 
-                t += Time.deltaTime * multiplier;
+                t += Time.deltaTime * multiplier * GameManager.GameLogic.GamePauseInt;
 
-                RiverSpeed = Mathf.Lerp(startSpeed, targetspeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
-
-                print($"River Speed: {RiverSpeed}");
+                _riverFlowSpeed = Mathf.Lerp(startSpeed, targetspeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
                 yield return null;
             }
             IsTransitioning = false;
         }
-        RiverSpeed = targetspeed;
+        _riverFlowSpeed = targetspeed;
     }
 
-    /// <summary>
-    /// Completely stops the speed of the river with optional smoothing
-    /// </summary>
-    public void StopRiver(bool smoothing = false, float smoothAmount = 1f)
+    /// <summary> Completely stops the speed of the river with optional smoothing </summary>
+    public void PauseRiver(bool smoothing = false, float smoothAmount = 1f) //TODO
     {
         IsPaused = true;
         // TODO add optional smoothing towards stopping
     }
 
-    /// <summary>
-    /// Resumes the paused river with optional smoothing
-    /// </summary>
-    public void ResumeRiver(bool smoothing = false, float smoothAmount = 1f)
+    /// <summary> Resumes the paused river with optional smoothing </summary>
+    public void ResumeRiver(bool smoothing = false, float smoothAmount = 1f) //TODO
     {
         IsPaused = false;
+        // TODO add optional smoothing towards stopping
     }
 
-    /// <summary>
-    /// Completely resets all changes made to the river to their default value and stops any speed transitions
-    /// </summary>
+    /// <summary> Completely resets all changes made to the river to their default value and stops any speed transitions </summary>
     public void ResetRiver()
     {
-        //if (fastRoutine != null) StopCoroutine(fastRoutine);
-        //if (slowRoutine != null) StopCoroutine(slowRoutine);
         if (speedRoutine != null) StopCoroutine(speedRoutine);
-        RiverSpeed = DefaultRiverSpeed;
+        CurrentRiverSpeed = StartingRiverSpeed;
     }
     #endregion
+
+    /*
+    #region Player Progress
+
+    [Header("Player Progress")]
+    [SerializeField, ProgressBar, Range(0f, 100f)] float _visualProgress = 0f;
+    [SerializeField, ProgressBar, Range(0f, 100f)] float _actualProgress = 0f;
+
+    void UpdateProgress(float multiplier = 1f)
+    {
+        (_actualProgress, _visualProgress) = CalculateProgress(multiplier);
+        UpdateProgressElements();
+    }
+
+    void UpdateProgressElements()
+    {
+        Game_UI.Instance.UpdatePlayerProgressMeter(_visualProgress);
+    }
+
+    (float, float) CalculateProgress(float multiplier)
+    {
+        float a = _actualProgress += Time.deltaTime * RiverSpeed *
+             multiplier * GameManager.GameLogic.GamePauseInt;
+        float v = _visualProgress = Mathf.Round(a * 10f) / 10f;
+        return (a, v);
+    }
+
+    #endregion
+    */
 }

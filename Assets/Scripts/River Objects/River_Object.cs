@@ -108,7 +108,7 @@ public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffecte
 
     void RiverFlowMovement()
     {
-        float speed = isAffectedByRiverSpeed ? riverManager.RiverSpeed : travelSpeed;
+        float speed = isAffectedByRiverSpeed ? riverManager.CurrentRiverSpeed : travelSpeed;
 
         // Move the object forwards
         Vector3 travelDirection = Time.fixedDeltaTime * speed * Vector3.back;
