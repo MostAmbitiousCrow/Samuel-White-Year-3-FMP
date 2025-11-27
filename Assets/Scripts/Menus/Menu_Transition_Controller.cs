@@ -27,7 +27,7 @@ public class Menu_Transition_Controller : MonoBehaviour
     [SerializeField, ShowField(nameof(_doTransitionAnimation))] float _transitionEndTime = .1f;
 
     [Header("Dependency")]
-    [SerializeField] Menu_Manager _mainMenuManager;
+    [SerializeField] Menu_Manager _menuManager;
 
     /// <summary>
     /// Method to trigger the screen transition
@@ -87,5 +87,13 @@ public class Menu_Transition_Controller : MonoBehaviour
         _isTransitioning = false;
 
         yield break;
+    }
+
+    public static void ResetEvents()
+    {
+        OnTransitionStarted = null;
+        OnTransitionWaiting = null;
+        OnTransitionWaitCompleted = null;
+        OnTransitionCompleted = null;
     }
 }

@@ -1,10 +1,10 @@
 using EditorAttributes;
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-/// <summary>
-/// Main source of management for the game. Always exists.
-/// </summary>
+/// <summary> Main source of management for the game. Always exists. </summary>
 [RequireComponent(typeof(MainSceneManager))]
 public class GameManager : MonoBehaviour
 {
@@ -17,27 +17,40 @@ public class GameManager : MonoBehaviour
 
     public static MainGameLogic GameLogic { get; private set; } = new();
 
+    public EventSystem CurrentEventSystem { get { return _currentEventSystem; } }
+    [SerializeField] EventSystem _currentEventSystem;
     private void Awake()
     {
-        if (Instance && Instance != this) { Destroy(gameObject); return; }
+        if (Instance) 
+        {
+            Debug.Log("Game Manager already exists, deleting new Game Manager");
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         DontDestroyOnLoad(this);
 
         // Initialise Managers (Temporary)
         GameLogic = new MainGameLogic();
         SceneManager = GetComponent<MainSceneManager>();
-        LevelManager = GetComponent<GameLevelManager>();
+        //LevelManager = GetComponent<GameLevelManager>();
         UserSettings = new GameUserSettings();
+
+        print($"Game Logic = {GameLogic} | Scene Manager = {SceneManager} | Level Manager = {LevelManager} | User Settings = {UserSettings}");
     }
 
     private void Start()
     {
+        SceneManager.onLevelLoaded += Fuck;
+        //SetEventSystem();
+        StartCoroutine(WaitForBullshit());
         GameLogic.InitialiseGame(); //TODO: Temp
     }
 
     [Button]
     public void DEVInitialiseGame()
     {
+        if(GameLogic.GameStarted)
         GameLogic.InitialiseGame();
     }
 
@@ -75,17 +88,28 @@ public class GameManager : MonoBehaviour
         }
 
         #region Game Initialisation
+        public bool GameStarted { get { return _gameStarted; } }
+        bool _gameStarted;
         public delegate void OnGameInitialised();
         public OnGameInitialised onGameInitialised;
         public void InitialiseGame()
         {
+            if (SceneManager.CurrentScene == MainSceneManager.GameScenes.MainMenu)
+            {
+                print("Scene is Main Menu, ignoring Game Initialisation");
+                return;
+            }
+
+            LevelManager = FindObjectOfType<GameLevelManager>();
+
             // Logic to initalise the main game scene before starting the game
             playerData = new()
             {
                 PlayerTransform = FindObjectOfType<Player_Controller>().transform // TODO: Maker Cleaner
             };
 
-            print("Game Initialised");
+            print("Game Initialised, started Game");
+            StartGame(); // Start the game upon the game being initialised.// TODO: Move to a stage where the game is started via a countdown/trigger
         }
 
         public delegate void OnGameStarted();
@@ -93,15 +117,32 @@ public class GameManager : MonoBehaviour
         public void StartGame()
         {
             // Logic to start the main game after it has been initialised
+            _gameStarted = true;
+
+            // Invoke subscribed methods
+            onGameStarted?.Invoke();
+
             Debug.Log("Game Started");
         }
 
         public delegate void OnGameEnded();
         public OnGameEnded onGameEnded;
+        /// <summary> Method that ends the current game session. </summary>
         public void EndGame()
         {
             // Logic to end the main game after it has started
+            _gameStarted = false;
+
+            // Invoke subscribed methods
+            onGameEnded?.Invoke();
+
             Debug.Log("Game Ended");
+        }
+
+        /// <summary> Method that resets the current game session. </summary>
+        public void ResetGame()
+        {
+            // TODO: Reset game content here
         }
         #endregion
 
@@ -129,12 +170,24 @@ public class GameManager : MonoBehaviour
             OnGemstoneCollected?.Invoke(playerData.CurrentGemstones); // Invoke all scripts that react to the collection of a gemstone
             // print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
         }
+
+        public delegate void OnPlayerDeath();
+        public OnPlayerDeath onPlayerDeath;
+
+        /// <summary> Method to trigger whenever the player dies during the game </summary>
+        public void PlayerDied()
+        {
+            onPlayerDeath?.Invoke();
+
+            EndGame();
+        }
+
         #endregion
     }
     #endregion
 
     #region Game Settings
-    public class GameUserSettings
+    public partial class GameUserSettings
     {
         public delegate void SettingsUpdated(GameSettings gameSettings);
         public SettingsUpdated onSettingsUpdated;
@@ -142,10 +195,26 @@ public class GameManager : MonoBehaviour
         public GameSettings gameSettings;
         public class GameSettings
         {
-            public AsepectResolution TargetAspectResolution;
+            public AspectResolution TargetAspectResolution;
 
 
         }
     }
     #endregion
+
+    public void SetEventSystem()
+    {
+        _currentEventSystem = FindObjectOfType<EventSystem>();
+        Debug.Log($"New Event System {_currentEventSystem}");
+        EventSystem.current = _currentEventSystem;
+    }
+    void Fuck()
+    {
+        StartCoroutine(WaitForBullshit());
+    }
+    IEnumerator WaitForBullshit()
+    {
+        yield return new WaitForSeconds(1f);
+        SetEventSystem();
+    }
 }

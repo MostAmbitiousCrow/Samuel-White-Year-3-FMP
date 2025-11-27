@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ReferenceResolutions", menuName = "ScriptableObjects/GameSettings/ReferenceResolutions", order = 0)]
 public class SO_TargetResolutions : ScriptableObject
 {
-    public AsepectResolution[] asepectResolutions =
+    public AspectResolution[] asepectResolutions =
     {
         new (new (1920, 1080), new ("16:9")), new (new (2560, 1440), new ("16:9")),
         new (new (3840, 2160), new ("16:9")),
@@ -21,12 +21,12 @@ public class SO_TargetResolutions : ScriptableObject
 }
 
 [Serializable]
-public class AsepectResolution
+public class AspectResolution
 {
     public string aspect;
     public Vector2Int resolution;
 
-    public AsepectResolution(Vector2Int vector2Int, string v)
+    public AspectResolution(Vector2Int vector2Int, string v)
     {
         resolution = vector2Int;
         aspect = v;

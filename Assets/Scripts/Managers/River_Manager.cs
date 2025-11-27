@@ -46,7 +46,6 @@ public class River_Manager : MonoBehaviour
     {
         UpdateSpaceDatas();
         GetAndInjectAffectedRiverObjects();
-        OnRiverSpeedUpdate.Invoke();
     }
 
     #region Data Update Methods
@@ -78,7 +77,7 @@ public class River_Manager : MonoBehaviour
 
     void Start()
     {
-        GetAndInjectAffectedRiverObjects();
+        OnRiverSpeedUpdate?.Invoke();
     }
     #endregion
 

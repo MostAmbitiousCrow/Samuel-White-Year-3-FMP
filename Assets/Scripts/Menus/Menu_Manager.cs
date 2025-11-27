@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Menu_Transition_Controller))]
-public class Menu_Manager : MonoBehaviour // By Samuel White
+public abstract class Menu_Manager : MonoBehaviour // By Samuel White
 {
     /*
     ========================================
@@ -32,7 +32,6 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
 
     #region Variables
     [Header("Components")]
-    [SerializeField] protected EventSystem _eventSystem;
     [SerializeField] protected AudioSource _audioSource;
     [SerializeField] protected Canvas _canvas;
 
@@ -53,6 +52,8 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
         Menu_Transition_Controller.OnTransitionWaiting += ToggleScreen;
         Menu_Transition_Controller.OnTransitionWaitCompleted += ScreenClosed;
         //Main_Menu_Transition_Controller.OnTransitionCompleted +=  // Something
+
+        //GameManager.SceneManager.onLevelLoaded += GetEventSystem;
     }
 
     private void OnEnable()
@@ -61,6 +62,8 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
         Menu_Transition_Controller.OnTransitionWaiting += ToggleScreen;
         Menu_Transition_Controller.OnTransitionWaitCompleted += ScreenClosed;
         //Main_Menu_Transition_Controller.OnTransitionCompleted +=  // Something
+
+        //GameManager.SceneManager.onLevelLoaded += GetEventSystem;
     }
     private void OnDisable()
     {
@@ -68,7 +71,16 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
         Menu_Transition_Controller.OnTransitionWaiting -= ToggleScreen;
         Menu_Transition_Controller.OnTransitionWaitCompleted -= ScreenClosed;
         //Main_Menu_Transition_Controller.OnTransitionCompleted -=  // Something
+
+        //GameManager.SceneManager.onLevelLoaded -= GetEventSystem;
     }
+    private void OnDestroy()
+    {
+        Menu_Transition_Controller.OnTransitionStarted -= ScreenOpened;
+        Menu_Transition_Controller.OnTransitionWaiting -= ToggleScreen;
+        Menu_Transition_Controller.OnTransitionWaitCompleted -= ScreenClosed;
+    }
+
 
     private void Start()
     {
@@ -78,7 +90,7 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
         screenDatas[_startScreen].ScreenRoot.SetActive(true);
 
         currentScreen = _startScreen;
-        _eventSystem.SetSelectedGameObject(screenDatas[currentScreen].EnterButton.gameObject);
+        EventSystem.current.SetSelectedGameObject(screenDatas[currentScreen].EnterButton.gameObject);
     }
 
     #region Screen Methods
@@ -87,7 +99,38 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
         _transitionArtController.TriggerTransition(type, currentScreen);
     }
 
-    protected virtual void ToggleScreen(int openingScreen, int closingScreen) { }
+    protected virtual void ToggleScreen(int openingScreen, int closingScreen)
+    {
+        print("Here are the current Screen Datas:");
+        foreach (var item in screenDatas)
+        {
+            Debug.Log(item);
+        }
+
+        MenuScreenContent OpeningScreen = screenDatas[openingScreen];
+        MenuScreenContent ClosingScreen = screenDatas[closingScreen];
+
+        // Disable closing and Enable opening additional screen content
+        foreach (var item in OpeningScreen.AdditionalScreenContent) { item.SetActive(true); }
+        foreach (var item in ClosingScreen.AdditionalScreenContent) { item.SetActive(false); }
+
+        // Disable closing scene and enable opening screen
+        OpeningScreen.ScreenRoot.SetActive(true);
+        ClosingScreen.ScreenRoot.SetActive(false);
+
+        /* // Optionally choose to determine if the pages main button should be selected if using Keyboard or Gamepad controls
+        if (// Insert check for player input here)
+        {
+            
+        }
+        */
+
+        // Select the opening screen
+        currentScreen = openingScreen;
+
+        if (ClosingScreen.UseExitButton) EventSystem.current.SetSelectedGameObject(ClosingScreen.ExitButton.gameObject);
+        else EventSystem.current.SetSelectedGameObject(OpeningScreen.EnterButton.gameObject);
+    }
 
     protected void ScreenOpened(int screen)
     {
@@ -108,7 +151,15 @@ public class Menu_Manager : MonoBehaviour // By Samuel White
     #region Input Toggle
     protected void ToggleInput(bool state)
     {
-        _eventSystem.enabled = state;
+        //if(GameManager.Instance.CurrentEventSystem)
+        //    GameManager.Instance.CurrentEventSystem.enabled = state;
+        return; // TODO: Find another way to disable button input without disabling the component.
+        if (EventSystem.current)
+            EventSystem.current.enabled = state;
+        else
+        {
+            Debug.LogWarning($"Event System is missing");
+        }
     }
     #endregion
 

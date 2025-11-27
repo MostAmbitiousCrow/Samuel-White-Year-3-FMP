@@ -282,7 +282,7 @@ MonoBehaviour:
   _transitionStartTime: 0.1
   _transitionWaitTime: 0.3
   _transitionEndTime: 0.1
-  _mainMenuManager: {fileID: 1937087047060164550}
+  _menuManager: {fileID: 1937087047060164550}
 --- !u!114 &1937087047060164550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bc19bcbefe3e742831d1ba258b2c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eventSystem: {fileID: 0}
   _audioSource: {fileID: 2975854705537476227}
   _canvas: {fileID: 8199408995818925659}
   _transitionArtController: {fileID: 7665587661956358317}
@@ -1034,7 +1033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3140429427119718693
 RectTransform:
   m_ObjectHideFlags: 0

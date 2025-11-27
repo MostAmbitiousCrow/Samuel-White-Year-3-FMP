@@ -1382,7 +1382,11 @@ MonoBehaviour:
   _audioSource: {fileID: 4288168400300953635}
   _canvas: {fileID: 3623447992599329381}
   _transitionArtController: {fileID: 4869474251055757682}
-  screenDatas: []
+  screenDatas:
+  - {fileID: 9091192308932553872}
+  - {fileID: 9074371508188134546}
+  - {fileID: 3225747243421091234}
+  - {fileID: 8867393983387922951}
   currentScreen: 0
   _startScreen: 0
 --- !u!114 &4869474251055757682
@@ -1402,7 +1406,7 @@ MonoBehaviour:
   _transitionStartTime: 0.1
   _transitionWaitTime: 0.3
   _transitionEndTime: 0.1
-  _mainMenuManager: {fileID: 6183115077853648783}
+  _menuManager: {fileID: 6183115077853648783}
 --- !u!82 &4288168400300953635
 AudioSource:
   m_ObjectHideFlags: 0

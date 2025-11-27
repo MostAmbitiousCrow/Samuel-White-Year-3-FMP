@@ -8,10 +8,9 @@ public class MainSceneManager : MonoBehaviour
     public bool IsLoadingScene { get; private set; }
 
     [Header("Loading Screen Components")]
-    [SerializeField] GameObject _loadingScreen;
-    [SerializeField] Loading_Screen_Controller _loadingScreenController;
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Loading_Screen_Controller loadingScreenController;
 
-    //[Header("Stats")]
     /// <summary>
     /// Delegate event for whenever the Main Scene Manager has successfully loaded a scene
     /// </summary>
@@ -20,14 +19,17 @@ public class MainSceneManager : MonoBehaviour
 
     public enum GameScenes
     {
-        MainMenu, MainGame
+        MainMenu = 0, MainGame = 1
     }
-    public GameScenes CurrentScene { get; private set; }
+
+    [SerializeField] GameScenes currentScene = GameScenes.MainMenu;
+    public GameScenes CurrentScene { get { return currentScene; } }
 
     [Button]
     public void LoadScene(GameScenes scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         // Load game scene logic here
+        Menu_Transition_Controller.ResetEvents(); // Reset events to prevent stacking
         StartCoroutine(LoadScene((int)scene, mode));
     }
 
@@ -44,40 +46,42 @@ public class MainSceneManager : MonoBehaviour
     /// </summary>
     public float Progress { get; private set; }
 
-    IEnumerator LoadScene(int scene, LoadSceneMode sceneMode)
+    private IEnumerator LoadScene(int scene, LoadSceneMode sceneMode)
     {
         async = SceneManager.LoadSceneAsync(scene, sceneMode);
         async.allowSceneActivation = false;
         IsLoadingScene = true;
 
         // Begin the opening Loading Transition
-        _loadingScreenController.StartLoadingScreen();
+        loadingScreenController.StartLoadingScreen();
 
-        Debug.Log($"Loading Screen Controller is Transitioning: {_loadingScreenController.IsTransitioning}");
+        Debug.Log($"Loading Screen Controller is Transitioning: {loadingScreenController.IsTransitioning}");
         // Wait until the opening loading screen is finished
-        yield return new WaitUntil(() => !_loadingScreenController.IsTransitioning);
-        Debug.Log($"Loading Screen Controller is Transitioning: {_loadingScreenController.IsTransitioning}");
+        yield return new WaitUntil(() => !loadingScreenController.IsTransitioning);
+        Debug.Log($"Loading Screen Controller is Transitioning: {loadingScreenController.IsTransitioning}");
 
         // Update Loading Screen Progress and wait until async loading is completed
         while (async.progress < .9f)
         {
             Progress = async.progress;
-            _loadingScreenController.UpdateLoadingMeter(Progress);
+            loadingScreenController.UpdateLoadingMeter(Progress);
             yield return null;
         }
 
         // Wait until the level is completed
-        yield return new WaitUntil(() => async.progress >= .9f);
+        var prog = new WaitUntil(() => async.progress >= .9f);
+        yield return prog;
 
-        _loadingScreenController.UpdateLoadingMeter(1f);
+        loadingScreenController.UpdateLoadingMeter(1f);
         async.allowSceneActivation = true;
 
         // End the opening Loading transition
-        _loadingScreenController.EndLoadingScreen();
+        loadingScreenController.EndLoadingScreen();
+        IsLoadingScene = false;
+        currentScene = (GameScenes)scene;
 
         onLevelLoaded?.Invoke();
-
-        IsLoadingScene = false;
+        Debug.Log("Level Loaded");
 
         yield break;
     }

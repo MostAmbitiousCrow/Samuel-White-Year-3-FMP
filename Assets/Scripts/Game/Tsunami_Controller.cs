@@ -47,11 +47,12 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
     [SerializeField] River_Manager _riverManager;
 
     #region Initialisers
-    private void Start()
+    private void Awake()
     {
         if (!_audio) _audio = GetComponent<AudioSource>();
-        GameManager.GameLogic.onGameStarted += StartProgressing;
-        _riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
+        if (!_riverManager) _riverManager = FindObjectOfType<River_Manager>();
+        //GameManager.GameLogic.onGameStarted += StartProgressing;
+        //_riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
     }
     private void OnEnable()
     {
