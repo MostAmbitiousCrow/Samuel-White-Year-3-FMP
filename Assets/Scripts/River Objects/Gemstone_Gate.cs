@@ -60,9 +60,9 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     }
 
     #region Override Methods
-    protected override void VirtualUpdateMethod()
+    protected override void OnFixedUpdate()
     {
-        base.VirtualUpdateMethod();
+        base.OnFixedUpdate();
         if (_isConsuming) return;
         if (SpaceManager.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
         {

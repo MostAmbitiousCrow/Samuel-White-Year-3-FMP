@@ -83,6 +83,12 @@ public class MainSceneManager : MonoBehaviour
         onLevelLoaded?.Invoke();
         Debug.Log("Level Loaded");
 
+        if (currentScene == GameScenes.MainGame)
+        {
+            yield return new WaitForSeconds(1f); // TODO: Polish
+            GameManager.GameLogic.InitialiseGame();
+        }
+
         yield break;
     }
 }

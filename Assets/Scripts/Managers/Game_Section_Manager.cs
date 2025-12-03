@@ -41,6 +41,16 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     [Line(GUIColor.White)]
     [SerializeField] GameObject gemStoneGateObject;
 
+    private void OnEnable()
+    {
+        GameManager.GameLogic.onGameStarted += StartSpawning;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.GameLogic.onGameStarted -= StartSpawning;
+    }
+
     [Button]
     public void GetSectionDatas()
     {
@@ -54,7 +64,12 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     [Button]
     public void SpawnButton()
     {
-        if (Application.isPlaying) StartCoroutine(SpawnSectionObjects());
+        StartSpawning();
+    }
+
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnSectionObjects());
     }
 
     IEnumerator SpawnSectionObjects()

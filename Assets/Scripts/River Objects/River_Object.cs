@@ -61,7 +61,7 @@ public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffecte
         River_Manager.RiverLane rl = riverManager.GetLaneFromDirection(_currentLane, direction);
 
         _currentLane = rl.ID;
-        _currentMoveTarget = new Vector3(rl.axis.x, rl.axis.y, transform.position.z); //TODO: Add movement interpolation
+        _currentMoveTarget = new Vector3(rl.axis.x, rl.axis.y, transform.position.z); //TODO: Add optional movement interpolation
         _isMoving = true;
         // print($"Moved {direction} to Space Position: {rl.axis}, ID {rl.ID}");
     }
@@ -89,12 +89,16 @@ public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffecte
     #endregion
 
     #region Update Events
+    private void Update()
+    {
+        OnUpdate();
+    }
     void FixedUpdate()
     {
-        if (CanMove) VirtualUpdateMethod();
+        OnFixedUpdate();
     }
 
-    protected virtual void VirtualUpdateMethod()
+    protected virtual void OnFixedUpdate()
     {
         if (_isMoving && CanMove)
         {
@@ -104,6 +108,11 @@ public abstract class River_Object : MonoBehaviour, IRiverLaneMovement, IAffecte
             if (_distance < .1f) // TODO Temporary until object pooling is implemented
                 Destroy(gameObject);
         }
+    }
+
+    protected virtual void OnUpdate()
+    {
+
     }
 
     void RiverFlowMovement()

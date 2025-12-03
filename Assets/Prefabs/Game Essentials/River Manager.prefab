@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 679949625211596971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: 7.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -182,14 +182,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b38f32a2e594085a103e55827a5835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _riverFlowSpeed: 5
+  MinMaxSpeed: {x: 0, y: 5}
   _lanesParent: {fileID: 3663419595711803000}
   RiverLanes:
   - ID: 0
-    axis: {x: -5, y: 0}
+    axis: {x: -7.5, y: 0, z: 0}
   - ID: 1
-    axis: {x: 0, y: 0}
+    axis: {x: 0, y: 0, z: 0}
   - ID: 2
-    axis: {x: 5, y: 0}
+    axis: {x: 7.5, y: 0, z: 0}
   slowCurve:
     serializedVersion: 2
     m_Curve:
@@ -297,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 5843774783822772629}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -7.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

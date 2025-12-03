@@ -8,7 +8,7 @@ public class River_Enemy : River_Object, ITargetsBoat
     [Header("Enemy Stats")]
     public EnemyData enemyData;
 
-    public Boat_Space_Manager SpaceManager { get; set; }
+    public Boat_Space_Manager SpaceManager { get; private set; }
     private Transform _boatTransform;
 
     public void OverrideStats(EnemyData overrideStats)
@@ -20,20 +20,37 @@ public class River_Enemy : River_Object, ITargetsBoat
 
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
     {
-        if (bsm == null) Debug.LogError($"Missing {bsm}");
+        if (!bsm) Debug.LogError($"Missing {bsm}");
         SpaceManager = bsm;
         _boatTransform = SpaceManager.transform;
     }
 
-    protected override void VirtualUpdateMethod()
+    protected override void OnFixedUpdate()
     {
-        base.VirtualUpdateMethod();
+        base.OnFixedUpdate();
         
         // TODO: Detect when close to the players boat
 
+        if(_boatTransform && GetDistanceToCurrentLane() < 3f) //TODO: Something to consider here
+        {
+            _isMoving = false;
+            _enemyStateMachine.EmergeFromRiver();
+        }
+        if (!_isMoving)
+        {
+            if (enemyData.FollowsBoat)
+            {
+                transform.position = new(transform.position.x, transform.position.y, _boatTransform.position.z);
+            }
+            else
+            {
+                transform.position = new(transform.position.x, transform.position.y, _boatTransform.position.z);
+
+            }
+        }
+
         return;
     }
-
 
     #region Pooling Methods
 
@@ -44,6 +61,12 @@ public class River_Enemy : River_Object, ITargetsBoat
     }
 
     #endregion
+
+    #region State Influence
+
+    [SerializeField] EnemyStateController _enemyStateMachine;
+
+    #endregion
 }
 
 [Serializable]
@@ -51,4 +74,5 @@ public class EnemyData
 {
     public float EmergeTime = 3f;
     public int health = 1;
+    public bool FollowsBoat = false;
 }
