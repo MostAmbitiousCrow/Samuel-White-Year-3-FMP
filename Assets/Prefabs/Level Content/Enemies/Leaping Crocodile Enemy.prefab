@@ -91,6 +91,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3022069612496646132, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 1c480caabc302374eafb97748d7035df,
+        type: 2}
     - target: {fileID: 5474106261059026457, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143,6 +149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6419227462993012122, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
+      propertyPath: _enemyController
+      value: 
+      objectReference: {fileID: 1209151564603122932}
+    - target: {fileID: 6419227462993012122, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
       propertyPath: _enemyStateMachine
       value: 
       objectReference: {fileID: 1209151564603122932}
@@ -161,8 +172,12 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5366757226011911095, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 1209151564603122932}
+    - targetCorrespondingSourceObject: {fileID: 5366757226011911095, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 8350838978296305534}
   m_SourcePrefab: {fileID: 100100000, guid: d441f6f7cd1d04bcca0eba886cf78253, type: 3}
 --- !u!95 &308802497633445460 stripped
 Animator:
@@ -185,6 +200,12 @@ ParticleSystem:
 --- !u!198 &4891603864006376065 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7952210964842787617, guid: d441f6f7cd1d04bcca0eba886cf78253,
+    type: 3}
+  m_PrefabInstance: {fileID: 3294834413634619808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &6933826614235506053 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 5584600842973260837, guid: d441f6f7cd1d04bcca0eba886cf78253,
     type: 3}
   m_PrefabInstance: {fileID: 3294834413634619808}
   m_PrefabAsset: {fileID: 0}
@@ -212,11 +233,183 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bd54519f965c547b6bdd4cf3491e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDead: 0
+  stepSpeed: 6
+  _stepCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  vaultSpeed: 6
+  vaultHeight: 2.2
+  vaultHeightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.0046515
+      outSlope: 3.0046515
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.041602172
+    - serializedVersion: 3
+      time: 0.50077516
+      value: 0.5007752
+      inSlope: -0.0046730414
+      outSlope: -0.0046730414
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33229822
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.891271
+      outSlope: -2.891271
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041731324
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fallSpeed: 1
+  startSpace: 1
+  startSide: 0
+  _currentSpace:
+    t: {fileID: 0}
+    spaceID: 0
+    sideID: 0
+    insideBoat: 1
+    isOccupied: 0
+  _canMove: 1
+  _canVault: 1
+  _canJump: 1
+  _isVaulting: 0
+  _isVaultAttacking: 0
   _isMoving: 0
+  _isJumping: 0
+  currentHeight: 0
+  _headStompOffset: 2
+  targetableMasks:
+    serializedVersion: 2
+    m_Bits: 192
+  canInteractWithBoat: 0
+  boatInteractor: {fileID: 0}
+  isOnBoat: 0
+  CanAccessOuterSides: 0
+  CanAccessBoatSides: 1
+  rb: {fileID: 6933826614235506053}
+  _characterHealth: {fileID: 8350838978296305534}
+  _bumpMultiplier: 0
+  _bumpCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _isDead: 0
   _isErupting: 0
+  _isAttacking: 0
   _enemyArtRoot: {fileID: 2750791622905630806}
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   _animator: {fileID: 308802497633445460}
+  _riverObject: {fileID: 8407155269637631034}
   _eruptParticles: {fileID: 4891603864006376065}
   _splashParticles: {fileID: 3007614878960765805}
+  _stateController: {fileID: 1209151564603122932}
   _enemyData: {fileID: 11400000, guid: ed0181f5182d2254fa37bbaed97faa32, type: 2}
+--- !u!114 &8350838978296305534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7476845309987908119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25e0babcd23f404b8b702afba226466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHealth: 1
+  _maxHealth: 1
+  _isDead: 0
+  _deathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1209151564603122932}
+        m_TargetAssemblyTypeName: LeapingCrocodile_StateController, Assembly-CSharp
+        m_MethodName: Died
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _healthRestoredEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1209151564603122932}
+        m_TargetAssemblyTypeName: LeapingCrocodile_StateController, Assembly-CSharp
+        m_MethodName: HealthRestored
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _tookDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1209151564603122932}
+        m_TargetAssemblyTypeName: LeapingCrocodile_StateController, Assembly-CSharp
+        m_MethodName: TookDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8407155269637631034 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6419227462993012122, guid: d441f6f7cd1d04bcca0eba886cf78253,
+    type: 3}
+  m_PrefabInstance: {fileID: 3294834413634619808}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ade90b53687e455f8f39bc18caac3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

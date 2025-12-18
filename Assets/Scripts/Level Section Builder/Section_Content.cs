@@ -51,6 +51,7 @@ public class Section_Content : MonoBehaviour, IAffectedByRiver
     [Header("Debug")]
     [SerializeField] bool enableDebug;
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         GetSectionObjects();
@@ -62,4 +63,5 @@ public class Section_Content : MonoBehaviour, IAffectedByRiver
         foreach (var item in sectionData.CollectibleDatas) item.DrawGizmos();
         foreach (var item in sectionData.GemstoneGateDatas) item.DrawGizmos();
     }
+#endif
 }

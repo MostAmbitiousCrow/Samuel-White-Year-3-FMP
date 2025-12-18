@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Crocodile Override Controller
+  m_Controller: {fileID: 9100000, guid: 76ede19c7c55392479745106e746e71a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 8a45a98d8d6441748a12e78fe84a68c2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c07bfa24f7ff36b4ca63f483d93c128e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0eb580eb48a936d47bfbaaa3981ca405, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3885cb45f5367784ea1ffaf29030244f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 208ba36a84124684e9086ba6f20a71f1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a3c796a06f35d67409d2de656bfcef52, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4960256b2da3f7a479f865efc2ee3560, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 26e101f215bd58046a25e5a29ae1ad34, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 179a91bbefcc03f4683af249dd071787, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0aa606cb5b2907d4ebb0167ad0b9cf97, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6aa1fdeec61a67c40b4728444e464972, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e5baeea5db010c34fa0184d8a1d0010d, type: 2}

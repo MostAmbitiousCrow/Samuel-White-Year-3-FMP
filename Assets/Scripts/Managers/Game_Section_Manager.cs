@@ -27,10 +27,10 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     [SerializeField, HideProperty] GameObject pipeObject;
 
     [Line(GUIColor.Red)]
-    [FoldoutGroup("Enemy Objects", nameof(crocodileObject), nameof(wormObject))]
+    [FoldoutGroup("Enemy Objects", nameof(crocodileObject), nameof(frogObject), nameof(batObject), nameof(tentacleObject))]
     [SerializeField] Void enemyGroup;
-    [SerializeField, HideProperty] GameObject crocodileObject;
-    [SerializeField, HideProperty] GameObject wormObject;
+    [SerializeField, HideProperty] GameObject crocodileObject, frogObject, batObject, tentacleObject;
+    //[SerializeField, HideProperty] GameObject tentacleObject;
 
     [Line(GUIColor.Yellow)]
     [FoldoutGroup("Collectible Objects", nameof(gemStoneObject), nameof(gemFragmentObject))]
@@ -128,8 +128,8 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                     itemData.GetComponent<Pipe_Obstacle>().PipeData = obstacleData.pipeObstacleData;
                 }
 
-                // Inject River_Manager
-                itemData.InjectRiverManager(riverManager);
+                // Inject River_Manager // Scrapped
+                //itemData.InjectRiverManager(riverManager);
 
                 // Place the obstacle in the world
                 PlaceSectionObject(itemData, sectionDatas[currentSection].ObstacleDatas[j]);
@@ -151,10 +151,18 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                 // Instantiate the selected object type
                 AsyncInstantiateOperation<GameObject> op = default;
 
+                // Leaping Crocodile
                 if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Crocodile)
                     op = InstantiateAsync(crocodileObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
-                else if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Worm)
-                    op = InstantiateAsync(wormObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                // Freaky Frog
+                if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Frog)
+                    op = InstantiateAsync(frogObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                // Flying Bat
+                if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Bat)
+                    op = InstantiateAsync(batObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                // Tentacle
+                else if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Tentacle)
+                    op = InstantiateAsync(tentacleObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
 
                 // Wait until the object has been Instantiated
                 yield return new WaitUntil(() => op.isDone);
@@ -174,8 +182,9 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                     itemData.OverrideStats(enemyData.overridedData);
                 }
 
-                // Inject River_Manager
-                itemData.InjectRiverManager(riverManager);
+                // Inject River_Manager and Boat Space Manager // Scrapped
+                //itemData.InjectRiverManager(riverManager);
+                //itemData.InjectBoatSpaceManager(boatManager);
 
                 // Place the enemy in the world
                 PlaceSectionObject(itemData, sectionDatas[currentSection].EnemyDatas[j]);
@@ -220,8 +229,8 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                     itemData.OverrideData(collectibleData.overridedData);
                 }
 
-                // Inject River_Manager
-                itemData.InjectRiverManager(riverManager);
+                // Inject River_Manager // Scrapped
+                //itemData.InjectRiverManager(riverManager);
 
                 // Place the collectible in the world
                 PlaceSectionObject(itemData, sectionDatas[currentSection].CollectibleDatas[j]);
@@ -261,8 +270,8 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                 }
 
                 // Inject River_Manager and Boat_Space_Manager
-                itemData.InjectRiverManager(riverManager);
-                itemData.InjectBoatSpaceManager(boatManager);
+                //itemData.InjectRiverManager(riverManager);
+                //itemData.InjectBoatSpaceManager(boatManager);
 
                 // Place the collectible in the world
                 PlaceSectionObject(itemData, sectionDatas[currentSection].GemstoneGateDatas[j]);

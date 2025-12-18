@@ -37,4 +37,9 @@ public class Section_Collectible_Object : Section_Builder_Object
         DrawItem(Color.yellow, Vector3.one);
         name = new($"{ObjectType.Collectible} - {sectionData.collectibleType}");
     }
+
+    protected override void AdditionalDebugSelected()
+    {
+        return;
+    }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5021084906246002435}
   - component: {fileID: 1694661779602260602}
   - component: {fileID: 6725892522352839035}
-  - component: {fileID: 1357065075584458573}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -84,29 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1357065075584458573
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5011285040327328480}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6119348237735976341
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1748721517329856423}
+  - component: {fileID: 3824983387439445873}
   m_Layer: 0
   m_Name: Art
   m_TagString: Untagged
@@ -139,6 +116,27 @@ Transform:
   - {fileID: 5021084906246002435}
   m_Father: {fileID: 8783307303254613469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &3824983387439445873
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6119348237735976341}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ceaed2d8d143dca4ebcf7518055860ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7148727233464969756
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,11 +147,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8783307303254613469}
   - component: {fileID: 1973921467020642727}
-  - component: {fileID: 7920375892649218236}
+  - component: {fileID: 1706838547445061435}
+  - component: {fileID: 8358172438031930665}
   - component: {fileID: 5170077300056732737}
   - component: {fileID: 3282527728548204596}
   - component: {fileID: 7075899837462323427}
-  m_Layer: 0
+  - component: {fileID: 4412410216500245499}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7148727233464969756}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7920375892649218236
+--- !u!114 &1706838547445061435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,116 +217,254 @@ MonoBehaviour:
   m_GameObject: {fileID: 7148727233464969756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95835f4ba011c4619a837353c8210af3, type: 3}
+  m_Script: {fileID: 11500000, guid: 553f22097aef6b24381b39fca99a758c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stepSpeed: 10
-  vaultSpeed: 7
-  vaultHeight: 1.2
+  _stepCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  vaultSpeed: 8
+  vaultHeight: 2.2
   vaultHeightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.2
-      inSlope: 3.6981146
-      outSlope: 3.6981146
+      value: 0
+      inSlope: 3.0046515
+      outSlope: 3.0046515
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.05
+      outWeight: 0.041602172
     - serializedVersion: 3
-      time: 0.5
-      value: 1
-      inSlope: 0.0066550854
-      outSlope: 0.0026996958
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.36129534
-      outWeight: 1
-    - serializedVersion: 3
-      time: 1
-      value: 0.2
-      inSlope: -4.528305
-      outSlope: -4.528305
+      time: 0.50077516
+      value: 0.5007752
+      inSlope: -0.0046730414
+      outSlope: -0.0046730414
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.041666627
+      inWeight: 0.33333334
+      outWeight: 0.33229822
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.891271
+      outSlope: -2.891271
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041731324
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _currentSpace: 0
-  _currentLane: 0
-  startSpace: 1
+  fallSpeed: 1
+  startSpace: 2
+  startSide: 0
+  _currentSpace:
+    t: {fileID: 0}
+    spaceID: 0
+    sideID: 0
+    insideBoat: 1
+    isOccupied: 0
   _canMove: 1
   _canVault: 1
   _canJump: 1
   _isVaulting: 0
+  _isVaultAttacking: 0
   _isMoving: 0
   _isJumping: 0
   currentHeight: 0
+  _headStompOffset: 2
+  targetableMasks:
+    serializedVersion: 2
+    m_Bits: 128
   canInteractWithBoat: 1
   boatInteractor: {fileID: 3282527728548204596}
   isOnBoat: 0
+  CanAccessOuterSides: 0
+  CanAccessBoatSides: 1
   rb: {fileID: 7075899837462323427}
+  _characterHealth: {fileID: 8358172438031930665}
+  _bumpMultiplier: 1
+  _bumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.0046515
+      outSlope: 3.0046515
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.041602172
+    - serializedVersion: 3
+      time: 0.50077516
+      value: 0.5007752
+      inSlope: -0.0046730414
+      outSlope: -0.0046730414
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33229822
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.891271
+      outSlope: -2.891271
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041731324
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   playerInput: {fileID: 1973921467020642727}
-  _jumpDelay: 0.2
-  _jumpHeight: 3
-  _jumpTime: 0.4
+  _jumpDelay: 0.1
+  _jumpHeight: 5
+  _jumpTime: 1
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 3.9628308
+      outSlope: 3.9628308
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.044444446
+    - serializedVersion: 3
+      time: 0.75
+      value: 1
+      inSlope: 0.0038617617
+      outSlope: 0.0038617617
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.47767
     - serializedVersion: 3
       time: 1
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _jumpSustainHeight: 3.2
-  _jumpSustainTime: 0.6
+  _jumpSustainHeight: 0
+  _jumpSustainTime: 0.2
   _jumpSustainCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _fallRate: 15
-  _currentHealth: 0
-  _maxHealth: 3
+--- !u!114 &8358172438031930665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7148727233464969756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25e0babcd23f404b8b702afba226466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHealth: 1
+  _maxHealth: 1
+  _isDead: 0
+  _deathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1706838547445061435}
+        m_TargetAssemblyTypeName: PlayerStateController, Assembly-CSharp
+        m_MethodName: Died
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _healthRestoredEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1706838547445061435}
+        m_TargetAssemblyTypeName: PlayerStateController, Assembly-CSharp
+        m_MethodName: HealthRestored
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _tookDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1706838547445061435}
+        m_TargetAssemblyTypeName: PlayerStateController, Assembly-CSharp
+        m_MethodName: TookDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5170077300056732737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +519,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &4412410216500245499
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7148727233464969756}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7179608596217650468
 GameObject:
   m_ObjectHideFlags: 0

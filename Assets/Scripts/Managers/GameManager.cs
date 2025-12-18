@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.onLevelLoaded += Fuck;
+        SceneManager.onLevelLoaded += Wait;
         //SetEventSystem();
-        StartCoroutine(WaitForBullshit());
+        StartCoroutine(Uhh());
         GameLogic.InitialiseGame(); //TODO: Temp
     }
 
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
             // Logic to initalise the main game scene before starting the game
             playerData = new()
             {
-                PlayerTransform = FindObjectOfType<Player_Controller>().transform // TODO: Maker Cleaner
+                PlayerTransform = FindObjectOfType<PlayerStateController>().transform // TODO: Maker Cleaner
             };
 
             print("Game Initialised, started Game");
@@ -208,11 +208,11 @@ public class GameManager : MonoBehaviour
         Debug.Log($"New Event System {_currentEventSystem}");
         EventSystem.current = _currentEventSystem;
     }
-    void Fuck()
+    void Wait()
     {
-        StartCoroutine(WaitForBullshit());
+        StartCoroutine(Uhh());
     }
-    IEnumerator WaitForBullshit()
+    IEnumerator Uhh()
     {
         yield return new WaitForSeconds(1f);
         SetEventSystem();

@@ -45,7 +45,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [SerializeField] TextMeshPro _gemRequirementText;
 
     #region Injection
-    public Boat_Space_Manager SpaceManager { get; set; }
+    public Boat_Space_Manager SpaceManager { get; private set; }
 
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
     {
@@ -63,7 +63,7 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     protected override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        if (_isConsuming) return;
+        if (_isConsuming || SpaceManager == null) return;
         if (SpaceManager.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
         {
             StartCoroutine(ConsumeGemstones());

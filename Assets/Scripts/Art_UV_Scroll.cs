@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Art_UV_Scroll : MonoBehaviour, IAffectedByRiver
+public class Art_UV_Scroll : MonoBehaviour
 {
     [SerializeField] Material _scrollingMaterial;
     [SerializeField] Vector2 _scrollDirection = Vector2.right;
@@ -38,17 +38,17 @@ public class Art_UV_Scroll : MonoBehaviour, IAffectedByRiver
     {
         if (_paused) return;
 
-        X = Mathf.Repeat(_scrollDirection.x * riverManager.RiverFlowSpeed * Time.time, 1f);
-        Y = Mathf.Repeat(_scrollDirection.y * riverManager.RiverFlowSpeed * Time.time, 1f);
+        X = Mathf.Repeat(_scrollDirection.x * River_Manager.Instance.RiverFlowSpeed * Time.time, 1f);
+        Y = Mathf.Repeat(_scrollDirection.y * River_Manager.Instance.RiverFlowSpeed * Time.time, 1f);
 
         _scrollingMaterial.mainTextureOffset = new(X, Y); // Note: if the UV is moving too quickly, it's because the art has been scaled
     }
 
     #region Injection
-    private River_Manager riverManager;
-    public void InjectRiverManager(River_Manager manager)
-    {
-        riverManager = manager;
-    }
+    //private River_Manager riverManager;
+    //public void InjectRiverManager(River_Manager manager)
+    //{
+    //    riverManager = manager;
+    //}
     #endregion
 }

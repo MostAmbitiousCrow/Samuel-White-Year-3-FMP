@@ -53,5 +53,5 @@ public class River_Obstacle : River_Object
 [Serializable]
 public class ObstacleData
 {
-    public float ImpactDamage = 1f;
+    public int ImpactDamage = 1;
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
 using System;
-using System.Linq;
 using System.Collections;
 
 public class River_Manager : MonoBehaviour
@@ -27,6 +26,7 @@ public class River_Manager : MonoBehaviour
 
     [Header("River Lanes Info")]
     [SerializeField] Transform _lanesParent;
+    [SerializeField] GlobalRiverValues _globalRiverValues;
 
     [Serializable]
     public class RiverLane
@@ -40,12 +40,16 @@ public class River_Manager : MonoBehaviour
     /// <summary> Action that updates all subcribed events whenever the river speed is updated </summary>
     public event Action OnRiverSpeedUpdate;
 
+    /// <summary> Instance of the River Manager </summary>
+    public static River_Manager Instance { get; private set; }
+
     #endregion
 
     private void Awake()
     {
+        Instance = this;
         UpdateSpaceDatas();
-        GetAndInjectAffectedRiverObjects();
+        //GetAndInjectAffectedRiverObjects();
     }
 
     #region Data Update Methods
@@ -63,23 +67,23 @@ public class River_Manager : MonoBehaviour
     }
     #endregion
 
-    #region Injection
-    [Button]
-    public void GetAndInjectAffectedRiverObjects()
-    {
-        riverInfluencedObjects = new List<IAffectedByRiver>(FindObjectsOfType<MonoBehaviour>().OfType<IAffectedByRiver>());
-        foreach (var item in riverInfluencedObjects)
-        {
-            item.InjectRiverManager(this);
-        }
-        print($"Injected {this} into {riverInfluencedObjects.Count} objects");
-    }
+    //#region Injection
+    //[Button]
+    //public void GetAndInjectAffectedRiverObjects()
+    //{
+    //    riverInfluencedObjects = new List<IAffectedByRiver>(FindObjectsOfType<MonoBehaviour>().OfType<IAffectedByRiver>());
+    //    foreach (var item in riverInfluencedObjects)
+    //    {
+    //        item.InjectRiverManager(this);
+    //    }
+    //    print($"Injected {this} into {riverInfluencedObjects.Count} objects");
+    //}
+    //#endregion
 
     void Start()
     {
         OnRiverSpeedUpdate?.Invoke();
     }
-    #endregion
 
     #region Lane and Space Checks
 
@@ -239,32 +243,19 @@ public class River_Manager : MonoBehaviour
     }
     #endregion
 
-    /*
-    #region Player Progress
-
-    [Header("Player Progress")]
-    [SerializeField, ProgressBar, Range(0f, 100f)] float _visualProgress = 0f;
-    [SerializeField, ProgressBar, Range(0f, 100f)] float _actualProgress = 0f;
-
-    void UpdateProgress(float multiplier = 1f)
+    private void OnValidate()
     {
-        (_actualProgress, _visualProgress) = CalculateProgress(multiplier);
-        UpdateProgressElements();
-    }
+        if (RiverLanes == null || _globalRiverValues == null)
+        {
+            Debug.LogWarning("Missing Global River Values or River Lanes");
+            return;
+        }
 
-    void UpdateProgressElements()
-    {
-        Game_UI.Instance.UpdatePlayerProgressMeter(_visualProgress);
+        int i = -1;
+        foreach (var item in RiverLanes)
+        {
+            item.axis = (Vector3.right * i) * _globalRiverValues.RiverLaneDistance;
+            i++;
+        }
     }
-
-    (float, float) CalculateProgress(float multiplier)
-    {
-        float a = _actualProgress += Time.deltaTime * RiverSpeed *
-             multiplier * GameManager.GameLogic.GamePauseInt;
-        float v = _visualProgress = Mathf.Round(a * 10f) / 10f;
-        return (a, v);
-    }
-
-    #endregion
-    */
 }

@@ -185,9 +185,10 @@ MonoBehaviour:
   _riverFlowSpeed: 5
   MinMaxSpeed: {x: 0, y: 5}
   _lanesParent: {fileID: 3663419595711803000}
+  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   RiverLanes:
   - ID: 0
-    axis: {x: -7.5, y: 0, z: 0}
+    axis: {x: -7.5, y: -0, z: -0}
   - ID: 1
     axis: {x: 0, y: 0, z: 0}
   - ID: 2

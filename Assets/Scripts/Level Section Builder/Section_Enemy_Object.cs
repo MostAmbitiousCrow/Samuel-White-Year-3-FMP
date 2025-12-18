@@ -1,4 +1,5 @@
 using UnityEngine;
+using EditorAttributes;
 
 /// <summary>
 /// Section Object derived class that shares overrided stats based on Enemy objects
@@ -14,10 +15,10 @@ public class Section_Enemy_Object : Section_Builder_Object
 
         // Override Stats?
         public bool overrideData;
-        [EditorAttributes.ShowField(nameof(overrideData))] public EnemyData overridedData;
+        [ShowField(nameof(overrideData))] public BoatEnemy_Data overridedData;
     }
 
-    [EditorAttributes.Line(EditorAttributes.GUIColor.Red)]
+    [Line(GUIColor.Red)]
     /// <summary>
     /// The data of the enemy shared with the Game_Section_Manager and Section_Builder
     /// </summary>
@@ -25,7 +26,7 @@ public class Section_Enemy_Object : Section_Builder_Object
 
     public enum EnemyType
     {
-        Crocodile, Worm
+        Crocodile, Frog, Bat, Tentacle
     }
 
     public override void Register(Section_Content section)
@@ -38,5 +39,18 @@ public class Section_Enemy_Object : Section_Builder_Object
     {
         DrawItem(Color.red, Vector3.one);
         name = new($"{ObjectType.Enemy} - {sectionData.enemyType}");
+    }
+
+    protected override void AdditionalDebugSelected()
+    {
+        // 
+        Gizmos.color = Color.white;
+        BoatEnemy_Data data = sectionData.overridedData;
+        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace(data.TargetSideSpace, data.TargetLeftSide).t.position, .5f);
+
+        // Draw targeted boat space
+        Gizmos.color = Color.black;
+        data = sectionData.overridedData;
+        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace(data.TargetBoatSide, data.TargetSpace).t.position, .25f);
     }
 }

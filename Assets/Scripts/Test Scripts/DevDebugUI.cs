@@ -4,7 +4,7 @@ using UnityEngine;
 public class DevDebugUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Player_Controller player_Controller;
+    [SerializeField] CharacterStateController player_Controller; // TODO: Replace with player character state controller
     [SerializeField] Boat_Controller boat_Controller;
     [SerializeField] River_Manager river_Manager;
 
@@ -16,7 +16,7 @@ public class DevDebugUI : MonoBehaviour
     {
         if (player_Controller == null || boat_Controller == null || river_Manager == null)
         {
-            player_Controller = FindObjectOfType<Player_Controller>();
+            player_Controller = FindObjectOfType<CharacterStateController>(); // TODO: This too
             boat_Controller = FindObjectOfType<Boat_Controller>();
             river_Manager = FindObjectOfType<River_Manager>();
         }
@@ -24,18 +24,18 @@ public class DevDebugUI : MonoBehaviour
 
     public void DamagePlayer(int amount)
     {
-        player_Controller.TakeDamage(amount);
+        player_Controller.HealthComponent.TakeDamage(amount);
     }
 
     public void DamageBoat(int amount)
     {
-        boat_Controller.TakeDamage(amount);
+        player_Controller.HealthComponent.TakeDamage(amount);
     }
 
     public void ResetCharacters()
     {
-        player_Controller.RestoreHealth();
-        boat_Controller.RestoreHealth();
+        player_Controller.HealthComponent.RestoreHealth();
+        player_Controller.HealthComponent.RestoreHealth();
     }
 
     public void SpeedUpRiver()

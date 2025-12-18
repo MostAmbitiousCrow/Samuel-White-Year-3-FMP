@@ -31,4 +31,9 @@ public class Section_Gemstone_Gate : Section_Builder_Object
         DrawItem(Color.magenta, new(4f, 6f, 1f));
         name = new($"---Gemstone Gate---({sectionData.overridedData.GemRequirement})");
     }
+
+    protected override void AdditionalDebugSelected()
+    {
+        return;
+    }
 }

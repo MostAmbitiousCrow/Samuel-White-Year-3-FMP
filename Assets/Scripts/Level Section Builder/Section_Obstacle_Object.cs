@@ -42,4 +42,9 @@ public class Section_Obstacle_Object : Section_Builder_Object
         DrawItem(Color.cyan, Vector3.one);
         name = new($"{ObjectType.Obstacle} - {sectionData.obstacleType}");
     }
+
+    protected override void AdditionalDebugSelected()
+    {
+        return;
+    }
 }

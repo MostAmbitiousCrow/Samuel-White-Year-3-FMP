@@ -1,11 +1,14 @@
 public interface IBoatSpaceMovement
 {
-    public void MoveToSpace(int direction, float speed);
-    public void GoToSpace(int lane, int space);
-    public void VaultToSpace(int lane, int space, float speed);
+    public void MoveToSpace(int side, int space);
+    public void GoToSpace(int side, int space);
+    public void GoToSideSpace(int side, bool goLeftSide = true);
+    public void GoToBoatSpace(int side, int space);
+    public void MoveToSpaceInDirection(int direction);
+    public void VaultToSpace(Boat_Space_Manager.BoatSide.SpaceData spaceData);
 
-    public int GetCurrentSpace();
-    public int GetCurrentLane();
+    public Boat_Space_Manager.BoatSide.SpaceData GetCurrentSpaceData();
+    //public int GetCurrentSide();
 
     /// <summary>
     /// 
@@ -17,5 +20,5 @@ public interface IBoatSpaceMovement
     public void EnterBoat(bool goToCurrentSpace);
     public void ExitBoat(bool goToCurrentSpace);
 
-    public void InjectBoatSpaceManager(Boat_Space_Manager manager);
+    //public void InjectBoatSpaceManager(Boat_Space_Manager manager); // Removing Dependency Injection
 }

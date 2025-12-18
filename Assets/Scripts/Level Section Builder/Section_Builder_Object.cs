@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 {
+    [Title("River Object for Building Objects for Level Sections", 11)]
     [Line(GUIColor.White, alpha: 1, lineThickness: 10)]
     [Range(0, 2), SerializeField] int lane;
     [Range(0, 100), SerializeField] int distance;
@@ -17,7 +18,9 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
     [Header("Debug")]
     [SerializeField] bool enableSnapping = true;
 
-#if UNITY_EDITOR
+    [Header("Data")]
+    [SerializeField] GlobalRiverValues _globalRiverValues;
+
     public void DrawGizmos()
     {
         SnapToLane();
@@ -32,9 +35,8 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 
     void SnapToLane()
     {
-        if (enableSnapping) transform.position = new((Lane - 1) * 5f, Height, Distance);
+        if (enableSnapping || _globalRiverValues != null) transform.position = new((Lane - 1) * _globalRiverValues.RiverLaneDistance, Height, Distance);
     }
-#endif
 
     /// <summary>
     /// Called to retrieve or assign object data from the provided Section_Content.
@@ -45,6 +47,12 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
     public abstract void Register(Section_Content section);
 
     protected abstract void AdditionalDebug();
+    protected abstract void AdditionalDebugSelected();
+
+    private void OnDrawGizmosSelected()
+    {
+        AdditionalDebugSelected();
+    }
 }
 
 public enum ObjectType

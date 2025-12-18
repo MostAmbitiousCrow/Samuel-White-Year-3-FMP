@@ -1,29 +1,33 @@
-using System;
 using EditorAttributes;
 using UnityEngine;
 
-public class River_Enemy : River_Object, ITargetsBoat
+public class River_Enemy : River_Object
 {
     [Line(GUIColor.Red, 1, 3)]
     [Header("Enemy Stats")]
-    public EnemyData enemyData;
+    [SerializeField] float _emergeTriggerDetectRadius = 3f;
+    public BoatEnemy_Data EnemyData { get; private set; }
 
-    public Boat_Space_Manager SpaceManager { get; private set; }
-    private Transform _boatTransform;
+    //public Boat_Space_Manager SpaceManager { get; private set; }
+    private Transform BoatTransform { get { return Boat_Space_Manager.Instance.transform; } }
+    [SerializeField] EnemyStateController _enemyController;
 
-    public void OverrideStats(EnemyData overrideStats)
+    public void OverrideStats(BoatEnemy_Data overrideStats)
     {
-        enemyData = overrideStats;
+        EnemyData = overrideStats;
+
+        _enemyController.InitialiseEnemy(overrideStats);
+
         // TODO Override Health!
         print($"{name} stats were overrided");
     }
 
-    public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
-    {
-        if (!bsm) Debug.LogError($"Missing {bsm}");
-        SpaceManager = bsm;
-        _boatTransform = SpaceManager.transform;
-    }
+    //public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
+    //{
+    //    if (!bsm) Debug.LogError($"Missing Boat Space Manager");
+    //    SpaceManager = bsm;
+    //    _boatTransform = SpaceManager.transform;
+    //}
 
     protected override void OnFixedUpdate()
     {
@@ -31,22 +35,17 @@ public class River_Enemy : River_Object, ITargetsBoat
         
         // TODO: Detect when close to the players boat
 
-        if(_boatTransform && GetDistanceToCurrentLane() < 3f) //TODO: Something to consider here
+        if(_isMoving) //TODO: Something to consider here
         {
-            _isMoving = false;
-            _enemyStateMachine.EmergeFromRiver();
+            if (GetDistanceToCurrentLane() < _emergeTriggerDetectRadius)
+            {
+                _isMoving = false;
+                _enemyController.EmergeFromRiver();
+            }
         }
-        if (!_isMoving)
+        else
         {
-            if (enemyData.FollowsBoat)
-            {
-                transform.position = new(transform.position.x, transform.position.y, _boatTransform.position.z);
-            }
-            else
-            {
-                transform.position = new(transform.position.x, transform.position.y, _boatTransform.position.z);
-
-            }
+            transform.position = new(transform.position.x, transform.position.y, BoatTransform.position.z);
         }
 
         return;
@@ -62,17 +61,29 @@ public class River_Enemy : River_Object, ITargetsBoat
 
     #endregion
 
-    #region State Influence
 
-    [SerializeField] EnemyStateController _enemyStateMachine;
-
-    #endregion
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _emergeTriggerDetectRadius);
+    }
 }
 
-[Serializable]
-public class EnemyData
-{
-    public float EmergeTime = 3f;
-    public int health = 1;
-    public bool FollowsBoat = false;
-}
+///// <summary>
+///// Override data for the enemy from creating levels
+///// </summary>
+//[Serializable]
+//public class EnemyData
+//{
+//    //public float EmergeTime = 3f;
+//    public int health = 1;
+//    //public bool FollowsBoat = false;
+
+//    public int TargetSpace;
+//    public int TargetBoatSide;
+//    [Space]
+//    [Tooltip("")]
+//    public int TargetSideSpace;
+//    [Tooltip("Should the enemy target the left side space of the boat")]
+//    public bool TargetLeftSide;
+//}
