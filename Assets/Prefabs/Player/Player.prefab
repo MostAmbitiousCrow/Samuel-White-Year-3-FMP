@@ -309,6 +309,7 @@ MonoBehaviour:
   rb: {fileID: 7075899837462323427}
   _characterHealth: {fileID: 8358172438031930665}
   _bumpMultiplier: 1
+  _bumpTime: 1.5
   _bumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -418,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentHealth: 1
-  _maxHealth: 1
+  _maxHealth: 3
   _isDead: 0
   _deathEvent:
     m_PersistentCalls:

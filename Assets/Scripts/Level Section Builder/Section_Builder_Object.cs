@@ -35,7 +35,8 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 
     void SnapToLane()
     {
-        if (enableSnapping || _globalRiverValues != null) transform.position = new((Lane - 1) * _globalRiverValues.RiverLaneDistance, Height, Distance);
+        if (enableSnapping && _globalRiverValues != null) 
+            transform.position = new((Lane - 1) * _globalRiverValues.RiverLaneDistance, Height, Distance);
     }
 
     /// <summary>

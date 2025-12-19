@@ -35,7 +35,7 @@ public abstract class EnemyStateController : CharacterStateController
     [SerializeField] LayerMask _playerLayerMask;
 
     public abstract SO_EnemyData EnemyData { get; }
-    public BoatEnemy_Data BoatData { get; private set; }
+    public BoatEnemy_Data BoatData; //{ get; private set; }
 
     [Header("Components")]
     [SerializeField] Animator _animator;

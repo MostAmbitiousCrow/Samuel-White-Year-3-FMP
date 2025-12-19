@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Animation_Frame_Rate_Manager : MonoBehaviour
+public class Animation_Frame_Rate_Manager : MonoTimeBehaviour
 {
     public static int AnimationFramerate = 16;
     private const int DefaultAnimationFrameRate = 24;

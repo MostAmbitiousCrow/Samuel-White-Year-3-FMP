@@ -256,16 +256,16 @@ public class PlayerStateController : CharacterStateController
     #endregion
     public override void Died()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("PLAYER DIED");
     }
 
     public override void HealthRestored()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public override void TookDamage()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }
