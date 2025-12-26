@@ -59,7 +59,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ae3510a1cf7451798f7778af66ffc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadingScreen: {fileID: 0}
   loadingScreenController: {fileID: 1401248404033444368}
   currentScene: 0
 --- !u!1001 &4935242949549685181
@@ -70,10 +69,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 553724003720820743}
     m_Modifications:
-    - target: {fileID: 5630238477471662179, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
+    - target: {fileID: 848825960994731584, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
-      propertyPath: m_SortingOrder
-      value: 100
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 92cd7d873ffaa4b4387b49019b82cc38,
+        type: 2}
+    - target: {fileID: 848825960994731584, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5457083732123187386, guid: 92cd7d873ffaa4b4387b49019b82cc38,
+        type: 2}
+    - target: {fileID: 848825960994731584, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6087985637557641204, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}

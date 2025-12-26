@@ -1,4 +1,5 @@
 using EditorAttributes;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -94,6 +95,7 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
     }
 
     #region Screen Methods
+
     public void InvokeScreen(int type)
     {
         _transitionArtController.TriggerTransition(type, currentScreen);

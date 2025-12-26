@@ -8,9 +8,12 @@ public class Loading_Screen_Controller : MonoBehaviour
     [Header("Components")]
     [SerializeField] Canvas _canvas;
     [SerializeField] CanvasScaler _canvasScaler;
+    [Space]
+    [SerializeField] CanvasGroup _loadingMeterGroup;
     [SerializeField] TextMeshProUGUI _loadingText;
     [SerializeField] Slider _loadingMeter;
-    [SerializeField] Image _loadingFadeTransition;
+    [Space]
+    [SerializeField] Animator _transitionAnimator;
     [SerializeField] GameObject _transitionScreen;
 
     [Header("Stats")]
@@ -57,12 +60,26 @@ public class Loading_Screen_Controller : MonoBehaviour
     {
         float t = startTransitionTime;
 
+        // Update Animator Speed and trigger the Enter Animation
+        _transitionAnimator.speed = 1f / startTransitionTime;
+        _transitionAnimator.SetTrigger("Enter");
+
+        _loadingMeterGroup.alpha = 0f;
+
         while (t > 0f)
         {
-            UpdateFadeTransition(t, startTransitionTime);
+            // Update Loading Meter Aplha
+            _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
             yield return t -= Time.deltaTime;
         }
+
+        // Reset Animator Speed and trigger Loading Animation
+        _transitionAnimator.speed = 1f;
+        _transitionAnimator.SetTrigger("Loading");
+
         UpdateLoadingMeter(0f);
+        _loadingMeterGroup.alpha = 1f;
+
         IsTransitioning = false;
         yield break;
     }
@@ -71,11 +88,20 @@ public class Loading_Screen_Controller : MonoBehaviour
     {
         float t = 0f;
 
+        // Update Animator Speed and trigger the Close Animation
+        _transitionAnimator.speed = 1f / endTransitionTime;
+        _transitionAnimator.SetTrigger("Close");
+
         while (t < endTransitionTime)
         {
-            UpdateFadeTransition(t, endTransitionTime);
+            // Update Loading Meter Aplha
+            _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
             yield return t += Time.deltaTime;
         }
+
+        // Reset speed and bring to inactive
+        _transitionAnimator.speed = 1f;
+        _transitionAnimator.SetTrigger("Inactive");
 
         IsTransitioning = false;
         _transitionScreen.SetActive(false);
@@ -91,9 +117,9 @@ public class Loading_Screen_Controller : MonoBehaviour
         _loadingText.SetText($"{amount}%");
     }
 
-    void UpdateFadeTransition(float prog, float timeRef)
-    {
-        Color pCol = Color.Lerp(Color.black, Color.clear, Mathf.InverseLerp(0, timeRef, prog));
-        _loadingFadeTransition.color = pCol;
-    }
+    //void UpdateFadeTransition(float prog, float timeRef)
+    //{
+    //    Color pCol = Color.Lerp(Color.black, Color.clear, Mathf.InverseLerp(0, timeRef, prog));
+    //    _loadingFadeTransition.color = pCol;
+    //}
 }

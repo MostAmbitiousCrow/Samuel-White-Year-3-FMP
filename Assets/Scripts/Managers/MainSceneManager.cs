@@ -8,7 +8,6 @@ public class MainSceneManager : MonoBehaviour
     public bool IsLoadingScene { get; private set; }
 
     [Header("Loading Screen Components")]
-    [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Loading_Screen_Controller loadingScreenController;
 
     /// <summary>
@@ -29,14 +28,15 @@ public class MainSceneManager : MonoBehaviour
     public void LoadScene(GameScenes scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
         // Load game scene logic here
-        Menu_Transition_Controller.ResetEvents(); // Reset events to prevent stacking
+        Menu_Transition_Controller.ResetTransitionEvents(); // Reset events to prevent stacking
         StartCoroutine(LoadScene((int)scene, mode));
     }
 
     public void ReloadScene(GameScenes scene, LoadSceneMode mode = LoadSceneMode.Additive)
     {
-        // Reload selected scene
+        // Reload selected scene and unpause the game
         StartCoroutine(LoadScene((int)scene, mode));
+        GameManager.GameLogic.SetPauseState(false);
     }
 
     // Loading Information
@@ -85,7 +85,9 @@ public class MainSceneManager : MonoBehaviour
 
         if (currentScene == GameScenes.MainGame)
         {
-            yield return new WaitForSeconds(1f); // TODO: Polish
+            // Unpause Game
+            GameManager.GameLogic.SetPauseState(false);
+            yield return new WaitForSeconds(1f); // TODO: Polish to have the game properly initialised
             GameManager.GameLogic.InitialiseGame();
         }
 
