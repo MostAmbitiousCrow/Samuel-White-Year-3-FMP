@@ -4,7 +4,7 @@ using EditorAttributes;
 using TMPro;
 using UnityEngine;
 
-public class Gemstone_Gate : River_Object, ITargetsBoat
+public class Gemstone_Gate : River_Object
 {
     [Header("Components")]
     [Tooltip("The voxels forming the gate that will explode")]
@@ -44,14 +44,14 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     [Space]
     [SerializeField] TextMeshPro _gemRequirementText;
 
-    #region Injection
-    public Boat_Space_Manager SpaceManager { get; private set; }
+    //#region Injection
+    //public Boat_Space_Manager SpaceManager { get; private set; }
 
-    public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
-    {
-        SpaceManager = bsm;
-    }
-    #endregion
+    //public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
+    //{
+    //    SpaceManager = bsm;
+    //}
+    //#endregion
 
     public void OverrideData(GemstoneGateData overridedData)
     {
@@ -63,8 +63,8 @@ public class Gemstone_Gate : River_Object, ITargetsBoat
     protected override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        if (_isConsuming || SpaceManager == null) return;
-        if (SpaceManager.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
+        if (_isConsuming) return; // || SpaceManager == null
+        if (Boat_Space_Manager.Instance.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
         {
             StartCoroutine(ConsumeGemstones());
         }

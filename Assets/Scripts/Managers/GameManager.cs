@@ -205,8 +205,16 @@ public class GameManager : MonoBehaviour
     public void SetEventSystem()
     {
         _currentEventSystem = FindObjectOfType<EventSystem>();
-        Debug.Log($"New Event System {_currentEventSystem}");
-        EventSystem.current = _currentEventSystem;
+
+        if (!_currentEventSystem)
+        {
+            Debug.LogWarning($"Failed to set new event system");
+        }
+        else
+        {
+            Debug.Log($"New Event System {_currentEventSystem}");
+            EventSystem.current = _currentEventSystem;
+        }
     }
     void Wait()
     {

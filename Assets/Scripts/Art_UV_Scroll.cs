@@ -36,7 +36,7 @@ public class Art_UV_Scroll : MonoBehaviour
 
     void ScrollUV()
     {
-        if (_paused) return;
+        if (_paused || !River_Manager.Instance) return;
 
         X = Mathf.Repeat(_scrollDirection.x * River_Manager.Instance.RiverFlowSpeed * Time.time, 1f);
         Y = Mathf.Repeat(_scrollDirection.y * River_Manager.Instance.RiverFlowSpeed * Time.time, 1f);

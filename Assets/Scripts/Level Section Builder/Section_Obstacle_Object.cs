@@ -41,6 +41,11 @@ public class Section_Obstacle_Object : Section_Builder_Object
     {
         DrawItem(Color.cyan, Vector3.one);
         name = new($"{ObjectType.Obstacle} - {sectionData.obstacleType}");
+
+        if (sectionData.obstacleType == ObstacleType.SewerPipe)
+        {
+            // TODO: Draw boxes displaying the connection of pipes
+        }
     }
 
     protected override void AdditionalDebugSelected()
