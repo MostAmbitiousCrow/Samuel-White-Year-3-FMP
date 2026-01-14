@@ -12,7 +12,7 @@ public class StandardMovingObject : MonoTimeBehaviour
         currentLimit = _directions.x;
     }
 
-    public override void TimeUpdate()
+    protected override void TimeUpdate()
     {
         if (transform.position.x < _directions.x)
         {

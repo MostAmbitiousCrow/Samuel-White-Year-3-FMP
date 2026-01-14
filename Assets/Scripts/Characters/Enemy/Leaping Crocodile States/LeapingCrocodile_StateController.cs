@@ -33,7 +33,7 @@ public class LeapingCrocodile_StateController : EnemyStateController
 
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         IdleState.Sc = this;
         EmergeState.Sc = this;
@@ -54,7 +54,6 @@ public class LeapingCrocodile_StateController : EnemyStateController
         BoatCharacterController.CanAccessOuterSides = true; // Enable Outer Boat Side Access
 
         BoatCharacterController.GoToSideSpace(BoatData.TargetSideSpace, BoatData.TargetLeftSide); // TODO: Update to move the croc to its targetted space
-
 
         ChangeState(EmergeState);
     }

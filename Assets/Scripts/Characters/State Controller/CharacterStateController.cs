@@ -33,7 +33,7 @@ public abstract class CharacterStateController : MonoTimeBehaviour
 
     /// <summary> The data of the current space the player is on </summary>
     [SerializeField, ReadOnly] protected SpaceData _currentSpace;
-    public SpaceData CurrentSpace { get; private set; }
+    public SpaceData CurrentSpace { get { return _currentSpace; } }
 
     [Space(10)]
 
@@ -41,29 +41,33 @@ public abstract class CharacterStateController : MonoTimeBehaviour
     [SerializeField] protected bool _canMove = true;
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
 
-    [Tooltip("Determines if the character can vault over the boat wall")]
-    [SerializeField] protected bool _canVault = true;
-    public bool CanVault { get { return _canVault; } set { _canVault = value; } }
+        [Tooltip("Determines if the character can vault over the boat wall")]
+        [SerializeField] protected bool _canVault = true;
+        public bool CanVault { get { return _canVault; } set { _canVault = value; } }
 
-    [Tooltip("Determines if the character can jump off the boat")]
-    [SerializeField] protected bool _canJump = true;
-    public bool CanJump { get { return _canJump; } set { _canJump = value; } }
+            [Tooltip("Determines if the character can jump off the boat")]
+            [SerializeField] protected bool _canJump = true;
+            public bool CanJump { get { return _canJump; } set { _canJump = value; } }
 
     [Tooltip("Determines if the character is currently vaulting")]
     [SerializeField, ReadOnly] protected bool _isVaulting;
     public bool IsVaulting { get { return _isVaulting; } }
 
-    [Tooltip("Determines if the characters vault is an attack")]
-    [SerializeField, ReadOnly] protected bool _isVaultAttacking;
-    public bool IsVaultAttacking { get { return _isVaultAttacking; } }
+        [Tooltip("Determines if the character is currently vaulting heavily")]
+        [SerializeField, ReadOnly] protected bool _isVaultingHeavily;
+        public bool IsVaultingHeavily { get { return _isVaultingHeavily; } }
+
+            [Tooltip("Determines if the characters vault is an attack")]
+            [SerializeField, ReadOnly] protected bool _isVaultAttacking;
+            public bool IsVaultAttacking { get { return _isVaultAttacking; } }
 
     [Tooltip("Determines if the character is currently moving")]
     [SerializeField, ReadOnly] protected bool _isMoving;
     public bool IsMoving { get { return _isMoving; } set { _isMoving = value; } }
 
-    [Tooltip("Determines if the character is currently jumping")]
-    [SerializeField, ReadOnly] protected bool _isJumping;
-    public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
+        [Tooltip("Determines if the character is currently jumping")]
+        [SerializeField, ReadOnly] protected bool _isJumping;
+        public bool IsJumping { get { return _isJumping; } set { _isJumping = value; } }
 
     /// <summary> The Transform of the current targeted space on the boat. </summary>
     protected Transform _currentMoveTarget;
@@ -79,8 +83,8 @@ public abstract class CharacterStateController : MonoTimeBehaviour
     [SerializeField] protected LayerMask targetableMasks;
 
     [Header("Boat Interaction")]
-    public bool canInteractWithBoat;
-    [ShowField(nameof(canInteractWithBoat))] public Character_Boat_Interactor boatInteractor;
+    public bool CanInteractWithBoat;
+    [ShowField(nameof(CanInteractWithBoat))] public Character_Boat_Interactor boatInteractor;
     [SerializeField] protected bool isOnBoat;
 
     [Space]
@@ -129,11 +133,11 @@ public abstract class CharacterStateController : MonoTimeBehaviour
     #region MonoTimeBehaviour Events
     // TODO: Transfer movement to state machine
 
-    public override void TimeUpdate()
+    protected override void TimeUpdate()
     {
         CurrentState?.UpdateState();
     }
-    public override void FixedTimeUpdate() // TODO: Rework player Step Movement controls to utilise animation curves. Use lerp.
+    protected override void FixedTimeUpdate() // TODO: Rework player Step Movement controls to utilise animation curves. Use lerp.
     {
         if (isOnBoat)
         {
@@ -142,13 +146,21 @@ public abstract class CharacterStateController : MonoTimeBehaviour
         }
         else if (_isJumping)
         {
-            if (_isMoving && _canMove) transform.localPosition = StepMovement();
-            else
+            if (_isMoving && _canMove) transform.localPosition = StepMovement(); // If moving and is jumping, step towards the targetted space
+            else // Else, just maintain current position and height
             {
-                Vector3 currentPos = _currentMoveTarget.position;
+                Vector3 currentPos = CurrentSpace.t.position;
                 transform.position = new(currentPos.x, currentHeight, currentPos.z);
-                // print("Jumping");
             }
+        }
+        else if (!IsGrounded())
+        {
+            // Target any targetted characters Y space position, else return this characters Y position
+            float y = GetTargetCharacterYPos() + currentHeight;
+            Vector3 pos = StepMovement();
+
+            transform.localPosition = new Vector3(pos.x, y, pos.z);
+            currentHeight = GetHeightFromSpace();
         }
 
         CurrentState?.FixedUpdateState();
@@ -204,7 +216,7 @@ public abstract class CharacterStateController : MonoTimeBehaviour
     }
 
     /// <summary> Vaults the character to a given side and space </summary>
-    public void VaultToSpace(SpaceData spaceData)
+    public void VaultToSpace(SpaceData spaceData, bool isHeavy = false)
     {
         if (!Boat_Space_Manager.Instance.CheckSpaceAccess(CanAccessOuterSides, CanAccessBoatSides, spaceData))
         {
@@ -214,6 +226,7 @@ public abstract class CharacterStateController : MonoTimeBehaviour
         {
             TransferToSpace(spaceData);
             _isVaulting = true;
+            _isVaultingHeavily = isHeavy;
         }
     }
 
@@ -305,9 +318,21 @@ public abstract class CharacterStateController : MonoTimeBehaviour
 
     // TODO: Ground check is messing with the players position and is restricting vault movement.
     // Additionally, doesn't compare height to the heads of targeted characters
-    bool IsGrounded() => Mathf.Abs(currentHeight) < 0.05f; // Mathf.Abs(GetCalculatedHeight()) < 0.05f;
+    bool IsGrounded() => Mathf.Abs(GetHeightFromSpace()) < 0.05f; // Mathf.Abs(GetCalculatedHeight()) < 0.05f;
 
-    float GetCalculatedHeight() => transform.localPosition.y - _currentMoveTarget.localPosition.y;  // Vector3.Distance(transform.localPosition, _currentMoveTarget.localPosition);
+    float GetHeightFromSpace()
+    {
+        return transform.localPosition.y - CurrentSpace.t.localPosition.y;
+        // Vector3.Distance(transform.localPosition, _currentMoveTarget.localPosition);
+    }
+
+    float GetTargetCharacterYPos()
+    {
+        if (_isVaultAttacking && targetedCharacter != null)
+            return targetedCharacter.transform.localPosition.y + targetedCharacter.HeadStompOffset;
+        else
+            return CurrentSpace.t.localPosition.y;
+    }
 
     /// <summary>
     /// Method to make the character enter the boats parent
@@ -414,17 +439,7 @@ public abstract class CharacterStateController : MonoTimeBehaviour
             _vaultTotalDistance = 0f;
             currentHeight = 0f;
 
-            if (canInteractWithBoat) boatInteractor.ImpactBoat(_currentSpace.spaceID);
-
-            if (_isVaultAttacking) // If attacking, damage the character upon landing
-            {
-                _isVaultAttacking = false;
-                targetedCharacter.HealthComponent.TakeDamage();
-
-                //BumpCharacter(); //TODO:
-
-                targetedCharacter = null;
-            }
+            VaultPerformed();
         }
 
         // Interpolate position
@@ -433,7 +448,27 @@ public abstract class CharacterStateController : MonoTimeBehaviour
 
         return nextPosition;
     }
+
+    protected virtual void VaultPerformed()
+    {
+        if (_isVaultAttacking) // If attacking, damage the character upon landing
+        {
+            _isVaultAttacking = false;
+            targetedCharacter.HealthComponent.TakeDamage();
+
+            BumpCharacter(); //TODO
+
+            targetedCharacter = null;
+        }
+        if (_isVaultingHeavily && CanInteractWithBoat)
+        {
+            boatInteractor.ImpactBoat(_currentSpace.spaceID);
+            _isVaultingHeavily = false;
+        }
+    }
     #endregion
+
+    #region Bump Interaction
 
     [Header("Bump Stats")]
     [Tooltip("Multiplier for how high the character will be bumped upwards after stomping an enemy")]
@@ -448,6 +483,9 @@ public abstract class CharacterStateController : MonoTimeBehaviour
     {
         print($"{name} was bumped upwards!");
 
+        // TODO: Play SFX Here
+        if (isOnBoat) ExitBoat(false);
+
         StartCoroutine(BumpProcess(amount));
     }
 
@@ -455,7 +493,7 @@ public abstract class CharacterStateController : MonoTimeBehaviour
     {
         float elapsed = 0f;
 
-        float offset = transform.localPosition.y;
+        float offset = !isOnBoat ? transform.position.y : transform.localPosition.y;
         currentHeight = offset;
 
         WaitForFixedUpdate wait = new();
@@ -463,32 +501,33 @@ public abstract class CharacterStateController : MonoTimeBehaviour
         // Bump upwards
         while (elapsed < _bumpTime)
         {
-            float t = Mathf.Clamp01(elapsed / amount);
-            currentHeight = _bumpCurve.Evaluate(t) * (amount * _bumpMultiplier) + offset;
-
             elapsed += Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
+
+            float t = Mathf.Clamp01(elapsed / _bumpTime);
+            currentHeight = _bumpCurve.Evaluate(t) * (amount * _bumpMultiplier) + offset;
 
             yield return wait;
         }
 
         // Check for any enemies below the player
+        //CurrentSpace.t.position
         CharacterStateController bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-            (_currentMoveTarget.position, new(1, 10, 1), Quaternion.identity, targetableMasks, true, false); // Scan in a tall area
+            (transform.position, new(1, 10, 1), Quaternion.identity, targetableMasks, true, false); // Scan in a tall area
 
         // Determine target height. If an enemy is below the player whilst falling, target their HeadStompOffset height
-        float targetHeight = bc == null ? _currentMoveTarget.position.y : bc.HeadStompOffset + _currentMoveTarget.position.y;
+        float targetHeight = bc == null ? CurrentSpace.t.position.y : bc.HeadStompOffset + CurrentSpace.t.position.y;
 
-        // Fall (copied from the player jump fall process)
+        // Fall
         while (currentHeight > targetHeight)
         {
-            if (_isMoving)
-            {
-                bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                    (_currentMoveTarget.position, new(1, 10, 1), Quaternion.identity, targetableMasks, true, false); // Scan in a tall area
-
-                if (bc == null) targetHeight = 0f;
-                else targetHeight = bc.HeadStompOffset;
-            }
+            bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+                (CurrentSpace.t.position, new(1, 10, 1), Quaternion.identity, targetableMasks, true, false); // Scan in a tall area
+            //if (_isMoving)
+            //{
+                targetHeight = bc == null? 
+                    CurrentSpace.t.position.y : 
+                    bc.HeadStompOffset + CurrentSpace.t.position.y;
+            //}
 
             float f = fallSpeed * Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt;
             currentHeight -= f;
@@ -500,5 +539,8 @@ public abstract class CharacterStateController : MonoTimeBehaviour
         }
 
         currentHeight = targetHeight;
+
+        EnterBoat(true);
     }
+    #endregion
 }

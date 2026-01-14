@@ -29,6 +29,11 @@ public class River_Enemy : River_Object
     //    _boatTransform = SpaceManager.transform;
     //}
 
+    private void OnEnable()
+    {
+        _enemyController.gameObject.SetActive(false); //TODO: Adjust this for bat enemies who will spawn with their enemy active
+    }
+
     protected override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
@@ -40,6 +45,7 @@ public class River_Enemy : River_Object
             if (GetDistanceToCurrentLane() < _emergeTriggerDetectRadius)
             {
                 _isMoving = false;
+                _enemyController.gameObject.SetActive(true);
                 _enemyController.EmergeFromRiver();
             }
         }

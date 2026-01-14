@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,19 +17,25 @@ public class PlayerStateController : CharacterStateController
     public PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction vaultAction;
-    private InputAction vaultJumpAction;
+    private InputAction vaultHeavyAction;
+    //private InputAction vaultJumpAction;
 
     private void Awake()
     {
         var actionMap = playerInput.currentActionMap;
         moveAction = actionMap.FindAction("Move");
-        vaultAction = actionMap.FindAction("Vault");
-        vaultJumpAction = actionMap.FindAction("VaultJump");
-
         moveAction.performed += OnMove;
-        // moveAction.canceled += OnMove;
-        vaultAction.performed += OnVault;
-        vaultJumpAction.performed += OnVaultJump;
+
+        vaultAction = actionMap.FindAction("Vault");
+        vaultHeavyAction = actionMap.FindAction("VaultHeavy");
+
+        // On Press trigger Vault
+        vaultHeavyAction.started += OnVaultHeavy;
+        vaultAction.started += OnVault;
+
+        // Jump Performed
+        vaultAction.performed += OnVaultJump;
+        vaultHeavyAction.performed += OnVaultJump;
     }
 
     private void Start()
@@ -43,7 +49,7 @@ public class PlayerStateController : CharacterStateController
     {
         moveAction?.Enable();
         vaultAction?.Enable();
-        vaultJumpAction?.Enable();
+        vaultHeavyAction?.Enable();
 
         if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
     }
@@ -52,13 +58,14 @@ public class PlayerStateController : CharacterStateController
     {
         moveAction?.Disable();
         vaultAction?.Disable();
-        vaultJumpAction?.Disable();
+        vaultHeavyAction?.Disable();
 
         if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
     }
 
     private void Update()
     {
+        //TODO: Temporary way of controlling timescale for playtesting purposes
         if (Input.GetKeyDown(KeyCode.Alpha1))
             Time.timeScale = 0f;
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -92,7 +99,7 @@ public class PlayerStateController : CharacterStateController
         if (GameManager.GameLogic.GamePaused) return;
 
         // Vault logic
-        if (_isVaulting)
+        if (_isVaultingHeavily || _isVaulting)
         {
             //TODO: Trigger Jump Upon Landing Logic Here
 
@@ -116,6 +123,39 @@ public class PlayerStateController : CharacterStateController
             }
             //TODO: Implement vaulting animation here?
         }
+        print("Performed Light Vault");
+    }
+
+    private void OnVaultHeavy(InputAction.CallbackContext context)
+    {
+        if (GameManager.GameLogic.GamePaused) return;
+
+        // Vault logic
+        if (_isVaultingHeavily || _isVaulting)
+        {
+            //TODO: Trigger Jump Upon Landing Logic Here
+
+            return;
+        }
+        else
+        {
+            //print("Player Vaulted");
+            Boat_Space_Manager.BoatSide.SpaceData newSpace = Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(_currentSpace.sideID, _currentSpace.spaceID);
+
+            // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
+            CharacterStateController bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+                (newSpace.t.position, Vector3.one, Quaternion.identity, targetableMasks, true, false);
+            if (bc != null)
+            {
+                VaultOnCharacter(newSpace, bc);
+            }
+            else
+            {
+                VaultToSpace(newSpace, true);
+            }
+            //TODO: Implement vaulting animation here?
+        }
+        print("Performed Heavy Vault");
     }
 
     private void OnVaultJump(InputAction.CallbackContext context)

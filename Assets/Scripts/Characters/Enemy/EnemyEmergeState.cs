@@ -3,7 +3,7 @@ public class EnemyEmergeState : EnemyState
 {
     public override void OnEnter()
     {
-        Debug.Log($"{Sc.name} entered {this}");
+        //Debug.Log($"{Sc.name} entered Emerge State");
         Sc.IsErupting = true;
         Sc.Animator.SetTrigger(1);
 

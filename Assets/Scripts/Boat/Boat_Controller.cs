@@ -63,7 +63,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     }
 
     #region Movement
-    public override void FixedTimeUpdate()
+    protected override void FixedTimeUpdate()
     {
         //if (GameManager.GameLogic.GamePaused) return;
 

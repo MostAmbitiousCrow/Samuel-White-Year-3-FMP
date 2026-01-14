@@ -89,11 +89,11 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
     #endregion
 
     #region Update Events
-    public override void TimeUpdate()
+    protected override void TimeUpdate()
     {
         OnUpdate();
     }
-    public override void FixedTimeUpdate()
+    protected override void FixedTimeUpdate()
     {
         OnFixedUpdate();
     }

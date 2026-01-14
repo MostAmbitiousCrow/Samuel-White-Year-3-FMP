@@ -18,10 +18,10 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     /// <summary>
     /// Update function that will only trigger if the game is not paused
     /// </summary>
-    public virtual void TimeUpdate() { }
+    protected virtual void TimeUpdate() { }
 
     /// <summary>
     /// Fixed Update function that will only trigger if the game is not paused
     /// </summary>
-    public virtual void FixedTimeUpdate() { }
+    protected virtual void FixedTimeUpdate() { }
 }

@@ -85,7 +85,7 @@ public class Boat_Space_Manager : MonoBehaviour
     //}
     #endregion
 
-    void Awake()
+    private void Awake()
     {
         //GetAndInjectBoatAffectedObjects();
         Instance = this;
@@ -162,8 +162,10 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public BoatSide.SpaceData GetBoatSpace(int side, int space)
     {
+        print($"Getting Space: {side} and Space: {space}");
+        print($"Space Datas =  {BoatSides[side].SpaceDatas.Count}.");
         if (space < 1) return BoatSides[side].SpaceDatas[1];
-        else if (space > SpaceCount - 2) return BoatSides[side].SpaceDatas[SpaceCount - 2];
+        if (space > SpaceCount - 2) return BoatSides[side].SpaceDatas[SpaceCount - 2];
         return BoatSides[side].SpaceDatas[space];
     }
     #endregion

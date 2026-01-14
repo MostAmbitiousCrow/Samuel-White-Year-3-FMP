@@ -1,6 +1,7 @@
 using EditorAttributes;
 using System;
 using System.Collections;
+using GameCharacters.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -105,7 +106,7 @@ public class GameManager : MonoBehaviour
             // Logic to initalise the main game scene before starting the game
             playerData = new()
             {
-                PlayerTransform = FindObjectOfType<PlayerStateController>().transform // TODO: Maker Cleaner
+                PlayerTransform = FindObjectOfType<PlayerCharacter>().transform // TODO: Maker Cleaner
             };
 
             print("Game Initialised, started Game");

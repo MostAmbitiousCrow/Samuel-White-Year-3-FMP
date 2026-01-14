@@ -42,13 +42,13 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""id"": ""d43fde6e-a426-42bd-a0fd-2dac81f4f8bf"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""VaultJump"",
+                    ""name"": ""VaultHeavy"",
                     ""type"": ""Value"",
-                    ""id"": ""99d09a95-f8bf-43c6-be87-7f1d46160c52"",
+                    ""id"": ""816bc734-6658-4132-87bc-f508ba6d28e1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
@@ -354,7 +354,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dea96027-466f-4f9a-a32d-81396d3a24e7"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -418,68 +418,90 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""75ef551f-edca-4639-a954-e7ae0a76948c"",
+                    ""name"": ""Space with Shift Modifier"",
+                    ""id"": ""e952f81c-e649-4505-83fb-3365865abd86"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VaultHeavy"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""14d722a1-3aef-40bb-a11c-2ae408838241"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VaultHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""aa9dd615-e20e-43f0-ac89-4982fd91e635"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""VaultJump"",
+                    ""action"": ""VaultHeavy"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
-                    ""id"": ""176d9ea3-709d-45ff-afe4-3a1ef86bfb84"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""d7d71c95-de55-4500-b342-260c0e999a73"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""VaultJump"",
+                    ""action"": ""VaultHeavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""92c06f3a-f4f2-4396-a404-1ac698aa0cdf"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""VaultJump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0aa51e60-5f80-4a6f-8eb5-100e29d59bda"",
+                    ""id"": ""4dcd8365-8a9c-474f-9541-b99776d6be9f"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""VaultJump"",
+                    ""action"": ""VaultHeavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6a5d0a0a-aaff-4a6a-b5d3-454845ccb51d"",
-                    ""path"": ""<Joystick>/{PrimaryAction}"",
+                    ""id"": ""008e9129-991e-4180-af81-3d19385575f2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""VaultJump"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""VaultHeavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""66c4f5aa-9e5e-457d-af6c-b784a19d1b9b"",
-                    ""path"": ""<Joystick>/{SecondaryAction}"",
+                    ""id"": ""856727b2-1758-4924-877a-580294f52ea8"",
+                    ""path"": ""<Joystick>/{PrimaryTrigger}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""VaultJump"",
+                    ""action"": ""VaultHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8624859a-b08d-413a-b361-073f64214a44"",
+                    ""path"": ""<Joystick>/{SecondaryTrigger}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""VaultHeavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1007,7 +1029,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Vault = m_Player.FindAction("Vault", throwIfNotFound: true);
-        m_Player_VaultJump = m_Player.FindAction("VaultJump", throwIfNotFound: true);
+        m_Player_VaultHeavy = m_Player.FindAction("VaultHeavy", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1082,7 +1104,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Vault;
-    private readonly InputAction m_Player_VaultJump;
+    private readonly InputAction m_Player_VaultHeavy;
     private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
@@ -1090,7 +1112,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         public PlayerActions(@FMP wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Vault => m_Wrapper.m_Player_Vault;
-        public InputAction @VaultJump => m_Wrapper.m_Player_VaultJump;
+        public InputAction @VaultHeavy => m_Wrapper.m_Player_VaultHeavy;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1107,9 +1129,9 @@ public partial class @FMP: IInputActionCollection2, IDisposable
             @Vault.started += instance.OnVault;
             @Vault.performed += instance.OnVault;
             @Vault.canceled += instance.OnVault;
-            @VaultJump.started += instance.OnVaultJump;
-            @VaultJump.performed += instance.OnVaultJump;
-            @VaultJump.canceled += instance.OnVaultJump;
+            @VaultHeavy.started += instance.OnVaultHeavy;
+            @VaultHeavy.performed += instance.OnVaultHeavy;
+            @VaultHeavy.canceled += instance.OnVaultHeavy;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -1123,9 +1145,9 @@ public partial class @FMP: IInputActionCollection2, IDisposable
             @Vault.started -= instance.OnVault;
             @Vault.performed -= instance.OnVault;
             @Vault.canceled -= instance.OnVault;
-            @VaultJump.started -= instance.OnVaultJump;
-            @VaultJump.performed -= instance.OnVaultJump;
-            @VaultJump.canceled -= instance.OnVaultJump;
+            @VaultHeavy.started -= instance.OnVaultHeavy;
+            @VaultHeavy.performed -= instance.OnVaultHeavy;
+            @VaultHeavy.canceled -= instance.OnVaultHeavy;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -1288,7 +1310,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnVault(InputAction.CallbackContext context);
-        void OnVaultJump(InputAction.CallbackContext context);
+        void OnVaultHeavy(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
