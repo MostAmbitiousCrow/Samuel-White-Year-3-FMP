@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading;
 using EditorAttributes;
 using UnityEngine;
 using static Boat_Space_Manager.BoatSide;
@@ -22,7 +24,17 @@ namespace GameCharacters
 
         [Header("Jump Movement")]
         [SerializeField] protected bool canJump = true;
-        [SerializeField, ShowField(nameof(canJump))] private float jumpHeight = 5f;
+        [SerializeField, ShowField(nameof(canJump))] protected float jumpPower = 10f;
+        // [SerializeField, ShowField(nameof(canJump))] private float jumpHeight = 5f;
+        // [SerializeField, ShowField(nameof(canJump))] private float jumpTime = 3.5f;
+        // [SerializeField, ShowField(nameof(canJump))] private AnimationCurve jumpCurve;
+        [SerializeField, ShowField(nameof(canJump))] private bool isJumping; 
+        
+        protected float JumpTimeElapsed = 0f;
+        
+        [Header("Head Bounce")]
+        [SerializeField, ReadOnly] protected bool isBouncing = false;
+        [SerializeField] protected float bouncePower = 5f;
 
         [Header("Space Information")]
         [Tooltip("The current space on the boat this character is on")]
@@ -31,9 +43,9 @@ namespace GameCharacters
 
         /* Variables for lerping target space movement */
         /// <summary> The space on the boat this character is currently moving towards </summary>
-        protected SpaceData _targetedSpace;
+        protected SpaceData TargetedSpace;
         /// <summary> The space on the boat this character was previously at before the next targeted space </summary>
-        protected SpaceData _previousSpace;
+        protected SpaceData PreviousSpace;
 
         [Space]
 
@@ -41,6 +53,10 @@ namespace GameCharacters
         [SerializeField] protected bool canAccessOuterBoatSides = false;
         [Tooltip("Determines whether the character can move to and stand on the spaces of the boat")]
         [SerializeField] protected bool canAccessBoatSpaces = true;
+        
+        [Header("Boat Interaction")]
+        [SerializeField] protected bool canInteractWithBoat = true;
+        [SerializeField, ShowField(nameof(canInteractWithBoat))] protected Character_Boat_Interactor boatInteractor;
 
         #endregion
 
@@ -51,12 +67,13 @@ namespace GameCharacters
         {
             if (currentSpace != null) currentSpace.isOccupied = false;
 
+            PreviousSpace = currentSpace;
+            
             currentSpace = targetSpace;
             currentSpace.isOccupied = true;
 
             // Assign previous and new target space for movement updates
-            _previousSpace = currentSpace;
-            _targetedSpace = targetSpace;
+            TargetedSpace = targetSpace;
 
             //Debug.Log("Got New Space Data!");
         }
@@ -84,23 +101,24 @@ namespace GameCharacters
 
             if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd) && !isVaulting && canMove)
             {
-                //print($"Moving to Space: {sd.spaceID}");
+                // print($"Moving to Space: {sd.spaceID}");
                 TargetSpace(sd);
                 isMoving = true;
             }
-            //else print($"Couldn't access space: {sd.spaceID}");
+            // else print($"Couldn't access space: {sd.spaceID}");
         }
 
         /// <summary> Vaults the character to a given side and space </summary>
-        protected void VaultToSide(SpaceData spaceData)
+        protected void VaultToSide(SpaceData spaceData, bool isHeavy)
         {
             // Check if the character can access that space
             if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
             {
-                if (!isVaulting && !isMoving && canVault && isGrounded)
+                if (!isVaulting && !isMoving && canVault)
                 {
                     TargetSpace(spaceData);
                     isVaulting = true;
+                    isVaultingHeavily = isHeavy;
                 }
             }
         }
@@ -108,15 +126,16 @@ namespace GameCharacters
         /// <summary>
         /// Vault to the side with a provided space data with an additional character to attack upon landing
         /// </summary>
-        protected void VaultToSide(SpaceData spaceData, Character victim)
+        protected void VaultToSide(SpaceData spaceData, bool isHeavy, Character victim)
         {
             // Check if the character can access that space
             if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
             {
-                if (!isVaulting && !isMoving && canVault && isGrounded)
+                if (!isVaulting && !isMoving && canVault)
                 {
                     TargetSpace(spaceData);
                     isVaulting = true;
+                    isVaultingHeavily = isHeavy;
                 }
             }
         }
@@ -182,87 +201,98 @@ namespace GameCharacters
         protected override void FixedTimeUpdate()
         {
             if (!currentSpace.t)  return;
-            
-            // Set vertical distance to distance from current boat space
-            verticalDistance = GetVerticalDistanceFromSpace();
 
-            if (canMove && isMoving)
+            // Check for grounded
+            GetVerticalDistanceFromSpace();
+            
+            // if (canJump && isJumping)
+            // {
+            //     JumpMovement();
+            // }
+            // else
+            // {
+            //     verticalDistance = currentSpace.t.localPosition.y;
+            // }
+            
+            if (canMove && isMoving && !isVaulting)
             {
                 SpaceMovement();
+                return;
             }
-            else if (canVault && isVaulting)
+            if (canVault && isVaulting && !isJumping) //TODO: Implement the ability to vault whilst jumping
             {
                 VaultMovement();
+                return;
             }
-            else
-            {
-                Vector3 pos = currentSpace.t.position;
-                rb.MovePosition(isGrounded ? pos : new(pos.x, rb.position.y, pos.z));
-            }
+            // Is just grounded. Stay at current space.
+            var pos = currentSpace.t.position;
+            rb.MovePosition(isGrounded && !isBouncing ? pos : new Vector3(pos.x, rb.position.y, pos.z));
         }
 
         #endregion
 
         #region Movement Updates
+        
         /// <summary>
         /// The movement of this character towards their targeted boat space
         /// </summary>
         protected virtual void SpaceMovement()
         {
-            _movementTimeElapsed += Time.fixedDeltaTime / groundedMovementTime;
-
             // Whilst moving
-            if (_movementTimeElapsed < 1f)
+            if (MovementTimeElapsed < 1f)
             {
                 // Lerp from the previous space to the new target space
                 Vector3 pos;
                 if (isGrounded)
                 {
+                    // Grounded Movement
                     pos = Vector3.Lerp
-                        (_previousSpace.t.position, _targetedSpace.t.position,
-                            groundedMovementCurve.Evaluate(_movementTimeElapsed)
+                        (PreviousSpace.t.position, TargetedSpace.t.position,
+                            groundedMovementCurve.Evaluate(MovementTimeElapsed)
                         );
                     rb.MovePosition(pos);
-
                 }
                 else
                 {
+                    // Air Movement
                     pos = Vector3.Lerp
-                        (_previousSpace.t.position, _targetedSpace.t.position,
-                            airMovementCurve.Evaluate(_movementTimeElapsed)
+                        (PreviousSpace.t.position, TargetedSpace.t.position,
+                            airMovementCurve.Evaluate(MovementTimeElapsed)
                         );
-                    rb.MovePosition(new (pos.x, verticalDistance, pos.z));
-
+                    rb.MovePosition(new Vector3(pos.x, rb.position.y, pos.z));
                 }
 
                 // Coyote Time
-                if (_movementTimeElapsed < coyoteTime && coyoteTriggered)
+                if (MovementTimeElapsed < coyoteTime && coyoteTriggered)
                 {
                     //TODO:
                     //establish a movement override method for quickly
                     //changing Boat Space targets if it's changed during the movement cycle
-
+                
                     coyoteTriggered = false;
-
+                
                     return;
                 }
             }
             else
             {
                 isMoving = false;
-                groundedMovementTime = 0f;
+                MovementTimeElapsed = 0f;
 
                 rb.MovePosition
                     (isGrounded ?
-                        _targetedSpace.t.position
+                        TargetedSpace.t.position
                         :
-                        new(_targetedSpace.t.position.x, rb.position.y, _targetedSpace.t.position.z
+                        new Vector3(TargetedSpace.t.position.x, rb.position.y, TargetedSpace.t.position.z
                     ));
+                
+                return;
             }
-
+            
+            MovementTimeElapsed += Time.fixedDeltaTime / groundedMovementTime;
         }
 
-        protected void VaultMovement()
+        protected virtual void VaultMovement()
         {
             //TODO:
 
@@ -270,13 +300,25 @@ namespace GameCharacters
             {
                 VaultTimeElapsed += Time.fixedDeltaTime / vaultTime;
 
-                Vector3 pos = Vector3.Lerp
-                    (_previousSpace.t.position, _targetedSpace.t.position,
-                    vaultCurve.Evaluate(VaultTimeElapsed)
+                Vector3 pos;
+                if (isGrounded)
+                {
+                    pos = Vector3.Lerp
+                        (PreviousSpace.t.position, TargetedSpace.t.position,
+                        vaultCurve.Evaluate(VaultTimeElapsed)
+                        );
+                    rb.MovePosition(pos);
+                }
+                else
+                {
+                    pos = Vector3.Lerp
+                    (PreviousSpace.t.position, TargetedSpace.t.position,
+                        vaultCurve.Evaluate(VaultTimeElapsed)
                     );
-                rb.MovePosition(pos);
+                    rb.MovePosition(new Vector3(pos.x, rb.position.y, pos.z));
+                }
 
-                //TODO: An optional art thing you could do is attatch the characters hands to the wall as they vault?
+                //TODO: An optional art thing you could do is attach the characters hands to the wall as they vault?
 
                 // Coyote Time
                 if (VaultTimeElapsed < coyoteTime && coyoteTriggered)
@@ -292,14 +334,18 @@ namespace GameCharacters
             }
             else
             {
+                if(isVaultingHeavily && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace.spaceID);
+                
                 isVaulting = false;
+                isVaultingHeavily = false;
                 VaultTimeElapsed = 0f;
-                rb.MovePosition(_targetedSpace.t.position);
+                var pos = currentSpace.t.position;
+                rb.MovePosition(isGrounded? pos : new Vector3(pos.x, rb.position.y, pos.z));
             }
         }
         #endregion
 
-        protected float GetVerticalDistanceFromSpace()
+        private float GetVerticalDistanceFromSpace()
         {
             var dist = rb.position.y - currentSpace.t.position.y;
             isGrounded = Mathf.Approximately(dist, 0f);
@@ -309,16 +355,64 @@ namespace GameCharacters
 
         protected void TriggerJump()
         {
+            if (!isGrounded) return;
+            StartCoroutine(JumpWaitRoutine());
+        }
+
+        private IEnumerator JumpWaitRoutine()
+        {
+            yield return new WaitUntil(() => !isVaulting);
+            
+            isJumping = true;
+            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            
             OnJumped();
-            ExitBoat(false);
-            rb.AddForce(Vector2.up * jumpHeight, ForceMode.Impulse);
+            
+            if (_waitGroundedRoutine != null) yield break;
+            _waitGroundedRoutine = StartCoroutine(WaitUntilGroundedRoutine());
         }
 
         /// <summary> Is called before the character jumps </summary>
         protected virtual void OnJumped()
         {
             anim.SetTrigger("Jump");
-            //TODO: Add Jump SFX
+            //TODO: Add Jump SFX and VFX
+        }
+
+        /// <summary> Called whenever this character lands </summary>
+        protected virtual void OnLanded()
+        {
+            anim.SetTrigger("Landed");
+            //TODO: Add landed SFX and VFX
+        }
+
+        protected void TriggerBounce()
+        {
+            isBouncing = true;
+            rb.AddForce(Vector3.up * bouncePower, ForceMode.Impulse);
+
+            if (_waitGroundedRoutine != null) return;
+            _waitGroundedRoutine = StartCoroutine(WaitUntilGroundedRoutine());
+        }
+        
+        private Coroutine _waitGroundedRoutine;
+
+        private IEnumerator WaitUntilGroundedRoutine()
+        {
+            if (isJumping) yield return new WaitUntil(() => !isVaulting);
+            else if (isBouncing) yield return new WaitUntil(() => isGrounded);
+
+            // Unnecessary?
+            if (isJumping)
+            {
+                isJumping = false;
+            }
+            if (isBouncing)
+            {
+                isBouncing = false;
+            }
+            OnLanded();
+            _waitGroundedRoutine = null;
         }
 
         #region Boat Entering Methods

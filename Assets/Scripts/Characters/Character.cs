@@ -16,7 +16,7 @@ namespace GameCharacters
 
         [Header("Movement")]
         [SerializeField] protected bool canMove;
-        [Tooltip("The time it takes for the character to move to their next targetted space whilst grounded")]
+        [Tooltip("The time it takes for the character to move to their next targeted space whilst grounded")]
         [SerializeField] protected float groundedMovementTime = .2f;
         [Tooltip("The curve controlling the ground movement animation of the character")]
         [SerializeField] protected AnimationCurve groundedMovementCurve;
@@ -25,11 +25,11 @@ namespace GameCharacters
         [SerializeField] protected float coyoteTime = .15f;
         [SerializeField, ReadOnly] protected bool coyoteTriggered;
 
-        protected float _movementTimeElapsed = 0f;
+        protected float MovementTimeElapsed = 0f;
 
         [Space]
 
-        [Tooltip("The time t takes for the character to move to their next targetted space whilst in the air")]
+        [Tooltip("The time it takes for the character to move to their next targeted space whilst in the air")]
         [SerializeField] protected float airMovementTime = .25f;
         [Tooltip("The curve controlling the air movement animation of the character")]
         [SerializeField] protected AnimationCurve airMovementCurve;

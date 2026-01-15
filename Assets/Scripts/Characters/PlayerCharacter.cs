@@ -1,3 +1,4 @@
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,25 +22,16 @@ namespace GameCharacters
             [Header("Input Actions")]
             public PlayerInput playerInput;
             private InputAction _moveAction;
-            private InputAction _vaultAction;
+            private InputAction _vaultLightAction;
             private InputAction _vaultHeavyAction;
 
             private void Awake()
             {
                 var actionMap = playerInput.currentActionMap;
                 _moveAction = actionMap.FindAction("Move");
-                // _moveAction.performed += OnMove;
 
-                _vaultAction = actionMap.FindAction("Vault");
+                _vaultLightAction = actionMap.FindAction("Vault");
                 _vaultHeavyAction = actionMap.FindAction("VaultHeavy");
-
-                // On Press trigger Vault
-                _vaultHeavyAction.started += OnVaultHeavy;
-                _vaultAction.started += OnVault;
-
-                //// Jump Performed
-                //vaultAction.performed += OnVaultJump;
-                //vaultHeavyAction.performed += OnVaultJump;
             }
 
             private void Start()
@@ -53,7 +45,7 @@ namespace GameCharacters
             private void OnEnable()
             {
                 _moveAction?.Enable();
-                _vaultAction?.Enable();
+                _vaultLightAction?.Enable();
                 _vaultHeavyAction?.Enable();
 
                 if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
@@ -62,15 +54,24 @@ namespace GameCharacters
             private void OnDisable()
             {
                 _moveAction?.Disable();
-                _vaultAction?.Disable();
+                _vaultLightAction?.Disable();
                 _vaultHeavyAction?.Disable();
 
                 if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
             }
 
-            private void Update()
+            protected override void TimeUpdate()
             {
-                //TODO: Temporary way of controlling timescale for playtesting purposes
+                // Insert player actions here
+                OnMove();
+                OnLightVault();
+                OnHeavyVault();
+                
+                //TODO: Temporary way of triggering the players bounce, for testing purposes. Remove on Build
+                if (Input.GetKeyDown(KeyCode.Alpha0))
+                    TriggerBounce();
+                
+                //TODO: Temporary way of controlling timescale for playtesting purposes. Remove on Build
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                     Time.timeScale = 0f;
                 if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -83,75 +84,54 @@ namespace GameCharacters
                     Time.timeScale = 2f;
             }
 
-            protected override void TimeUpdate()
-            {
-                // Insert player actions here
-                if (GameManager.GameLogic.GamePaused) return;
-                OnMove();
-            }
-
             private void OnMove()
             {
                 //TODO: Rework to allow the player to simply hold down the move button to continue moving in that direction or tap to move a single space
                 // Additionally, fix the issue where the player is able to trigger the move event when pressing and releasing an additional key (or perhaps rework movement to use buttons instead?)
-
+                
                 // Handle movement logic here
                 var direction = Mathf.RoundToInt(_moveAction.ReadValue<Vector2>().x);
+                if (direction == 0) return;
 
                 // Note: Inverting the direction since the order of the boat spaces are flipped...
-                //MoveToSpace(Mathf.RoundToInt(direction * -1), _currentSpace);
-                MoveToSpaceFromDirection(Mathf.RoundToInt(direction * -1));
+
+                if (!isMoving || isMoving && coyoteTriggered) MoveToSpaceFromDirection(Mathf.RoundToInt(direction * -1));
             }
 
             /// <summary>
             /// The Vault Player Input Action Function
             /// </summary>
-            private void OnVault(InputAction.CallbackContext context)
+            private void OnLightVault()
             {
-                if (GameManager.GameLogic.GamePaused) return;
-
-                // Vault logic
-                if (isVaultingHeavily || isVaulting)
-                {
-                    //TODO: Trigger Jump Upon Landing Logic Here
-
-                    return;
-                }
-                else
-                {
-                    //print("Player Vaulted");
-                    var newSpace = Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(currentSpace.sideID, currentSpace.spaceID);
-
-                    // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
-                    var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                        (newSpace.t.position, Vector3.one, Quaternion.identity, targetableCharacterLayers, true, false);
-                    if (bc)
-                    {
-                        //VaultToSide(newSpace, bc); // TODO: Modify to scan for damageable characters with the Character component
-                    }
-                    else
-                    {
-                        VaultToSide(newSpace);
-                    }
-                    //TODO: Implement vaulting animation here?
-                }
-                print("Performed Light Vault");
+                if (_vaultLightAction.WasPressedThisFrame()) PerformVault(false);
+                if (_vaultLightAction.WasPerformedThisFrame()) TriggerJump();
             }
 
-            private void OnVaultHeavy(InputAction.CallbackContext context)
+            private void OnHeavyVault()
+            {
+                if (_vaultHeavyAction.WasPressedThisFrame()) PerformVault(true);
+                if (_vaultHeavyAction.WasPerformedThisFrame()) TriggerJump();
+            }
+
+            private void PerformVault(bool isHeavy)
             {
                 if (GameManager.GameLogic.GamePaused) return;
 
-                // Vault logic
-                if (isVaultingHeavily || isVaulting)
+                if (isVaulting)
                 {
                     //TODO: Trigger Jump Upon Landing Logic Here
-
+                    
+                    // Trigger Jump if Vault Button is held
+                    if (isHeavy ? _vaultHeavyAction.WasPerformedThisFrame() : _vaultLightAction.WasPerformedThisFrame())
+                    {
+                        TriggerJump();
+                    }
+                    
+                    // coyoteTriggered = true;
                     return;
                 }
                 else
                 {
-                    //print("Player Vaulted");
                     var newSpace = Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(currentSpace.sideID, currentSpace.spaceID);
 
                     // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
@@ -163,17 +143,17 @@ namespace GameCharacters
                     }
                     else
                     {
-                        VaultToSide(newSpace);
+                        VaultToSide(newSpace, isHeavy);
                     }
                     //TODO: Implement vaulting animation here?
                 }
-                print("Performed Heavy Vault");
+                print($"Performed Vault. Heavy Vault = {isHeavy}");
             }
             #endregion
 
             #region Gemstone Events
 
-            void GemstoneCollected(int amount)
+            private void GemstoneCollected(int amount)
             {
                 // TODO: Gemstone Collected, Trigger some sort of effect
             }

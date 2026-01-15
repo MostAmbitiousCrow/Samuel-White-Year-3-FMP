@@ -140,6 +140,18 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 4610990917046099396}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1328674438625463792 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3282527728548204596, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 4610990917046099396}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6685846826760992728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2adaa1284a69748fa903733f15212d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2637210330330911843 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1973921467020642727, guid: e684e1ae00ee24287b3fd56d29f186fc,
@@ -182,28 +194,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb8d1c4e5aecefd4d83a4d05e4363964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 0
+  canMove: 1
   groundedMovementTime: 0.2
   groundedMovementCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      value: 0
+      inSlope: 3.62159
+      outSlope: 3.62159
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.05626551
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -216,21 +228,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      value: 0
+      inSlope: 3.62159
+      outSlope: 3.62159
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.05626551
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -247,7 +259,7 @@ MonoBehaviour:
   anim: {fileID: 786042988857715381}
   healthComponent: {fileID: 5477421973330938093}
   canVault: 1
-  vaultTime: 0.5
+  vaultTime: 0.35
   vaultCurve:
     serializedVersion: 2
     m_Curve:
@@ -276,6 +288,59 @@ MonoBehaviour:
   isVaultingHeavily: 0
   canJump: 1
   jumpHeight: 5
+  jumpTime: 1.2
+  jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.21549216
+      outSlope: 0
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.17785235
+    - serializedVersion: 3
+      time: 0.101345286
+      value: 0
+      inSlope: 0
+      outSlope: 3.934095
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.34977373
+      value: 0.9773411
+      inSlope: 0.013269493
+      outSlope: 0.090553574
+      tangentMode: 65
+      weightedMode: 1
+      inWeight: 0.47833505
+      outWeight: 0.1827612
+    - serializedVersion: 3
+      time: 0.6
+      value: 1
+      inSlope: 0.012734735
+      outSlope: -0.6574293
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.74013734
+      outWeight: 0.34977573
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.5000002
+      outSlope: -1.5342654
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  isJumping: 0
   currentSpace:
     t: {fileID: 0}
     spaceID: 0
@@ -285,6 +350,8 @@ MonoBehaviour:
   isOnBoat: 0
   canAccessOuterBoatSides: 0
   canAccessBoatSpaces: 1
+  canInteractWithBoat: 1
+  boatInteractor: {fileID: 1328674438625463792}
   startBoatSpace: 2
   startBoatSide: 0
   playerInput: {fileID: 2637210330330911843}

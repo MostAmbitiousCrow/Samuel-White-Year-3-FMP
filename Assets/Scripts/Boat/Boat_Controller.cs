@@ -21,7 +21,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     private Vector3 _currentMoveTarget;
 
     [Header("Components")]
-    [SerializeField] Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
 
     //private River_Manager riverManager;
     //[SerializeField] private Boat_Space_Manager boatSpaceManager;

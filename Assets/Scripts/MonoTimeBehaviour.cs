@@ -6,7 +6,7 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     /// Coroutine suspension supplied with the check for if the game is paused
     /// </summary>
     public WaitUntil PauseWait { get; } = new(() => !GameManager.GameLogic.GamePaused);
-    void Update()
+    private void Update()
     {
         if(!GameManager.GameLogic.GamePaused) TimeUpdate();
     }
