@@ -36,14 +36,6 @@ namespace GameCharacters
 
         [Space]
 
-        [Header("World")]
-        [Tooltip("The gravity of the character")]
-        [SerializeField] protected float gravity = 1f;
-        [Tooltip("The fall speed of the character")]
-        [SerializeField] protected float fallSpeed = 6f;
-
-        [Space]
-
         [Tooltip("The vertical distance from the characters current space or lane")]
         // Must be set specifically by either Boat or RiverLane Characters!
         [SerializeField, ReadOnly] protected float verticalDistance;

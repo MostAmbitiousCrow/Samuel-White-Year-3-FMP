@@ -205,21 +205,12 @@ namespace GameCharacters
             // Check for grounded
             GetVerticalDistanceFromSpace();
             
-            // if (canJump && isJumping)
-            // {
-            //     JumpMovement();
-            // }
-            // else
-            // {
-            //     verticalDistance = currentSpace.t.localPosition.y;
-            // }
-            
             if (canMove && isMoving && !isVaulting)
             {
                 SpaceMovement();
                 return;
             }
-            if (canVault && isVaulting && !isJumping) //TODO: Implement the ability to vault whilst jumping
+            if (canVault && isVaulting) //TODO: Implement the ability to vault whilst jumping
             {
                 VaultMovement();
                 return;
@@ -334,13 +325,19 @@ namespace GameCharacters
             }
             else
             {
-                if(isVaultingHeavily && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace.spaceID);
-                
                 isVaulting = false;
-                isVaultingHeavily = false;
+                
                 VaultTimeElapsed = 0f;
                 var pos = currentSpace.t.position;
                 rb.MovePosition(isGrounded? pos : new Vector3(pos.x, rb.position.y, pos.z));
+
+                if (!isGrounded) return;
+
+                if (isVaultingHeavily && canInteractWithBoat)
+                {
+                    isVaultingHeavily = false;
+                    boatInteractor.ImpactBoat(TargetedSpace.spaceID);
+                }
             }
         }
         #endregion
@@ -349,6 +346,7 @@ namespace GameCharacters
         {
             var dist = rb.position.y - currentSpace.t.position.y;
             isGrounded = Mathf.Approximately(dist, 0f);
+            verticalDistance = dist;
 
             return dist;
         }
@@ -399,8 +397,8 @@ namespace GameCharacters
 
         private IEnumerator WaitUntilGroundedRoutine()
         {
-            if (isJumping) yield return new WaitUntil(() => !isVaulting);
-            else if (isBouncing) yield return new WaitUntil(() => isGrounded);
+            yield return new WaitForSeconds(.1f);
+            yield return new WaitUntil(() => isGrounded);
 
             // Unnecessary?
             if (isJumping)
@@ -411,8 +409,16 @@ namespace GameCharacters
             {
                 isBouncing = false;
             }
+
+            if (isVaultingHeavily && canInteractWithBoat)
+            {
+                isVaultingHeavily = false;
+                boatInteractor.ImpactBoat(TargetedSpace.spaceID);
+            }
+            
             OnLanded();
             _waitGroundedRoutine = null;
+            print("Landed!");
         }
 
         #region Boat Entering Methods

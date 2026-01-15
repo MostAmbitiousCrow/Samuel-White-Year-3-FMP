@@ -147,7 +147,7 @@ namespace GameCharacters
                     }
                     //TODO: Implement vaulting animation here?
                 }
-                print($"Performed Vault. Heavy Vault = {isHeavy}");
+                // print($"Performed Vault. Heavy Vault = {isHeavy}");
             }
             #endregion
 
