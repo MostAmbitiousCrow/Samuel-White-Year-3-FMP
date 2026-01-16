@@ -46,11 +46,11 @@ public class Section_Enemy_Object : Section_Builder_Object
         // 
         Gizmos.color = Color.white;
         BoatEnemy_Data data = sectionData.overridedData;
-        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace(data.TargetSideSpace, data.TargetLeftSide).t.position, .5f);
+        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace(data.targetSideSpace, data.targetLeftSide).t.position, .5f);
 
         // Draw targeted boat space
         Gizmos.color = Color.black;
         data = sectionData.overridedData;
-        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace(data.TargetBoatSide, data.TargetSpace).t.position, .25f);
+        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace(data.targetBoatSide, data.targetSpace).t.position, .25f);
     }
 }

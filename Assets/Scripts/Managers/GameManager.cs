@@ -1,7 +1,7 @@
 using EditorAttributes;
 using System;
 using System.Collections;
-using GameCharacters.Player;
+using GameCharacters;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

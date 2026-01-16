@@ -1,6 +1,9 @@
+using System;
+using GameCharacters;
+
 public abstract class EnemyState : IState
 {
-    public EnemyStateController Sc { get; set; }
+    public BoatEnemyStateController Sc { get; set; }
     /// <summary>
     /// Is called whenever this state has been entered
     /// </summary>

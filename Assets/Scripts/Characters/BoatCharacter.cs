@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading;
 using EditorAttributes;
 using UnityEngine;
 using static Boat_Space_Manager.BoatSide;
@@ -12,7 +11,9 @@ namespace GameCharacters
     public class BoatCharacter : Character
     {
         #region Variables
-
+        [Title("Boat Character")]
+        [Line(GUIColor.Gray)]
+        
         [Header("Vault Movement")]
         [SerializeField] protected bool canVault = true;
         [SerializeField, ShowField(nameof(canVault))] protected float vaultTime = .5f;
@@ -25,9 +26,6 @@ namespace GameCharacters
         [Header("Jump Movement")]
         [SerializeField] protected bool canJump = true;
         [SerializeField, ShowField(nameof(canJump))] protected float jumpPower = 10f;
-        // [SerializeField, ShowField(nameof(canJump))] private float jumpHeight = 5f;
-        // [SerializeField, ShowField(nameof(canJump))] private float jumpTime = 3.5f;
-        // [SerializeField, ShowField(nameof(canJump))] private AnimationCurve jumpCurve;
         [SerializeField, ShowField(nameof(canJump))] private bool isJumping; 
         
         protected float JumpTimeElapsed = 0f;
@@ -39,6 +37,7 @@ namespace GameCharacters
         [Header("Space Information")]
         [Tooltip("The current space on the boat this character is on")]
         [SerializeField, ReadOnly] protected SpaceData currentSpace;
+        public  SpaceData CurrentSpace => currentSpace;
         [SerializeField] protected bool isOnBoat;
 
         /* Variables for lerping target space movement */
@@ -50,9 +49,9 @@ namespace GameCharacters
         [Space]
 
         [Tooltip("Determines whether the character can move to and stand on the outer spaces of the boat")]
-        [SerializeField] protected bool canAccessOuterBoatSides = false;
+        public bool canAccessOuterBoatSides = false;
         [Tooltip("Determines whether the character can move to and stand on the spaces of the boat")]
-        [SerializeField] protected bool canAccessBoatSpaces = true;
+        public bool canAccessBoatSpaces = true;
         
         [Header("Boat Interaction")]
         [SerializeField] protected bool canInteractWithBoat = true;
@@ -95,7 +94,7 @@ namespace GameCharacters
         }
 
         /// <summary> Moves the character to a space on the boat via a given direction </summary>
-        protected void MoveToSpaceFromDirection(int direction)
+        public void MoveToSpaceFromDirection(int direction)
         {
             SpaceData sd = Boat_Space_Manager.Instance.GetSpaceFromDirection(currentSpace.sideID, currentSpace.spaceID, direction);
 
@@ -181,15 +180,22 @@ namespace GameCharacters
                 else transform.position = sd.t.position;
             }
         }
-
-        /// <summary> Get this characters current space in the boat </summary>
-        public SpaceData GetCurrentSpaceData()
+        
+        public void GoToBoatSpace(SpaceData spaceData)
         {
-            return currentSpace;
+            SpaceData sd = Boat_Space_Manager.Instance.GetBoatSpace(spaceData.sideID, spaceData.spaceID);
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd))
+            {
+                TargetSpace(sd);
+
+                // TODO: Consider this. Character might be off the boat if they're going to a side space
+                if (isOnBoat) transform.localPosition = sd.t.localPosition;
+                else transform.position = sd.t.position;
+            }
         }
 
         /// <summary> Returns whether the next space is available to go to </summary>
-        protected bool CheckAvailableSpaceFromDirection(int direction)
+        public bool CheckAvailableSpaceFromDirection(int direction)
         {
             SpaceData sd = Boat_Space_Manager.Instance.GetSpaceFromDirection(currentSpace.sideID, currentSpace.spaceID, direction);
             //print($"Checked space: {sd.spaceID}");
@@ -359,6 +365,7 @@ namespace GameCharacters
 
         private IEnumerator JumpWaitRoutine()
         {
+            yield return PauseWait; // Time Behaviour Pause
             yield return new WaitUntil(() => !isVaulting);
             
             isJumping = true;
@@ -373,14 +380,14 @@ namespace GameCharacters
         /// <summary> Is called before the character jumps </summary>
         protected virtual void OnJumped()
         {
-            anim.SetTrigger("Jump");
+            animator.SetTrigger("Jump");
             //TODO: Add Jump SFX and VFX
         }
 
         /// <summary> Called whenever this character lands </summary>
         protected virtual void OnLanded()
         {
-            anim.SetTrigger("Landed");
+            animator.SetTrigger("Landed");
             //TODO: Add landed SFX and VFX
         }
 
@@ -397,6 +404,7 @@ namespace GameCharacters
 
         private IEnumerator WaitUntilGroundedRoutine()
         {
+            yield return PauseWait; // Time Behaviour Pause
             yield return new WaitForSeconds(.1f);
             yield return new WaitUntil(() => isGrounded);
 
@@ -418,14 +426,13 @@ namespace GameCharacters
             
             OnLanded();
             _waitGroundedRoutine = null;
-            print("Landed!");
         }
 
         #region Boat Entering Methods
         /// <summary>
         /// Method to make the character enter the boats parent
         /// </summary>
-        protected void EnterBoat(bool goToCurrentSpace)
+        public void EnterBoat(bool goToCurrentSpace)
         {
             //Boat_Space_Manager.Instance.AddPassenger(this); //TODO: Intergrate BoatCharacter to the BoatSpaceManager
             isOnBoat = true;
@@ -435,7 +442,7 @@ namespace GameCharacters
         /// <summary>
         /// Method to make the character exit the boats parent
         /// </summary>
-        protected void ExitBoat(bool goToCurrentSpace)
+        public void ExitBoat(bool goToCurrentSpace)
         {
             //Boat_Space_Manager.Instance.RemovePassenger(this); //TODO: Intergrate BoatCharacter to the BoatSpaceManager
             isOnBoat = false;

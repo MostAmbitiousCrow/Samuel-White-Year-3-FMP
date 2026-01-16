@@ -1,10 +1,11 @@
+using GameCharacters;
 using TMPro;
 using UnityEngine;
 
 public class DevDebugUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] CharacterStateController player_Controller; // TODO: Replace with player character state controller
+    [SerializeField] BoatCharacter player_Controller; // TODO: Replace with player character state controller
     [SerializeField] Boat_Controller boat_Controller;
     [SerializeField] River_Manager river_Manager;
 
@@ -16,7 +17,7 @@ public class DevDebugUI : MonoBehaviour
     {
         if (player_Controller == null || boat_Controller == null || river_Manager == null)
         {
-            player_Controller = FindObjectOfType<CharacterStateController>(); // TODO: This too
+            player_Controller = FindObjectOfType<BoatCharacter>(); // TODO: This too
             boat_Controller = FindObjectOfType<Boat_Controller>();
             river_Manager = FindObjectOfType<River_Manager>();
         }

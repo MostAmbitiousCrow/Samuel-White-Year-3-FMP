@@ -5,18 +5,17 @@ public class River_Enemy : River_Object
 {
     [Line(GUIColor.Red, 1, 3)]
     [Header("Enemy Stats")]
-    [SerializeField] float _emergeTriggerDetectRadius = 3f;
+    [SerializeField] float emergeTriggerDetectRadius = 3f;
     public BoatEnemy_Data EnemyData { get; private set; }
-
-    //public Boat_Space_Manager SpaceManager { get; private set; }
+    
     private Transform BoatTransform { get { return Boat_Space_Manager.Instance.transform; } }
-    [SerializeField] EnemyStateController _enemyController;
+    [SerializeField] BoatEnemyStateController enemyController;
 
     public void OverrideStats(BoatEnemy_Data overrideStats)
     {
         EnemyData = overrideStats;
 
-        _enemyController.InitialiseEnemy(overrideStats);
+        enemyController.InitialiseEnemy(overrideStats);
 
         // TODO Override Health!
         print($"{name} stats were overrided");
@@ -31,7 +30,7 @@ public class River_Enemy : River_Object
 
     private void OnEnable()
     {
-        _enemyController.gameObject.SetActive(false); //TODO: Adjust this for bat enemies who will spawn with their enemy active
+        enemyController.gameObject.SetActive(false); //TODO: Adjust this for bat enemies who will spawn with their enemy active
     }
 
     protected override void OnFixedUpdate()
@@ -42,11 +41,11 @@ public class River_Enemy : River_Object
 
         if(_isMoving) //TODO: Something to consider here
         {
-            if (GetDistanceToCurrentLane() < _emergeTriggerDetectRadius)
+            if (GetDistanceToCurrentLane() < emergeTriggerDetectRadius)
             {
                 _isMoving = false;
-                _enemyController.gameObject.SetActive(true);
-                _enemyController.EmergeFromRiver();
+                enemyController.gameObject.SetActive(true);
+                enemyController.EmergeFromRiver();
             }
         }
         else
@@ -71,7 +70,7 @@ public class River_Enemy : River_Object
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _emergeTriggerDetectRadius);
+        Gizmos.DrawWireSphere(transform.position, emergeTriggerDetectRadius);
     }
 }
 

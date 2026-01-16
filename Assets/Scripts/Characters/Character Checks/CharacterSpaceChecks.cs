@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using GameCharacters;
 
 public static class CharacterSpaceChecks
 {
     /// <summary> Scans an area for a character based on a given position and box shape </summary>
-    public static CharacterStateController ScanAreaForDamageableCharacter(Vector3 checkPosition, Vector3 boxSize, Quaternion checkRotation, LayerMask layerMask, bool returnClosest = false, bool log = false)
+    public static Character ScanAreaForDamageableCharacter(Vector3 checkPosition, Vector3 boxSize, Quaternion checkRotation, LayerMask layerMask, bool returnClosest = false, bool log = false)
     {
         Collider[] hits = Physics.OverlapBox(checkPosition, boxSize * 0.5f, checkRotation, layerMask);
 
@@ -28,7 +29,7 @@ public static class CharacterSpaceChecks
                 if (closestItem != null)
                 {
                     if (log) Debug.Log($"Hit {closestItem.name} at {checkPosition}");
-                    return closestItem.GetComponent<CharacterStateController>();
+                    return closestItem.GetComponent<Character>();
                 }
 
                 return null;
@@ -36,7 +37,7 @@ public static class CharacterSpaceChecks
             else
             {
                 if (log) Debug.Log($"Hit {hits[0].name} at {checkPosition}");
-                return hits[0].GetComponent<CharacterStateController>();
+                return hits[0].GetComponent<Character>();
             }
         }
         else

@@ -1,3 +1,5 @@
+using GameCharacters;
+
 public interface IState
 {
     /// <summary>

@@ -3,6 +3,8 @@ using UnityEngine;
 using EditorAttributes;
 using System;
 using System.Linq;
+using GameCharacters;
+using UnityEngine.Serialization;
 
 public class Boat_Space_Manager : MonoBehaviour
 {
@@ -203,18 +205,18 @@ public class Boat_Space_Manager : MonoBehaviour
     #region Boat Passenger Checks
 
     [Space(10)]
-    public List<CharacterStateController> BoatPassengers = new();
-    [SerializeField] Transform _passengerFolder;
+    public List<BoatCharacter> boatPassengers = new();
+    [FormerlySerializedAs("_passengerFolder")] [SerializeField] Transform passengerFolder;
 
-    public void AddPassenger(CharacterStateController passenger)
+    public void AddPassenger(BoatCharacter passenger)
     {
-        BoatPassengers.Add(passenger);
-        passenger.transform.SetParent(_passengerFolder);
+        boatPassengers.Add(passenger);
+        passenger.transform.SetParent(passengerFolder);
     }
 
-    public void RemovePassenger(CharacterStateController passenger)
+    public void RemovePassenger(BoatCharacter passenger)
     {
-        BoatPassengers.Remove(passenger);
+        boatPassengers.Remove(passenger);
         passenger.transform.SetParent(null);
     }
     #endregion

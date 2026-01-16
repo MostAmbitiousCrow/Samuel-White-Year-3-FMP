@@ -1,37 +1,39 @@
+using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class CharacterHealth : MonoBehaviour, IDamageable
 {
-    [SerializeField] int _currentHealth;
-    public int CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; } }
+    [SerializeField] private int currentHealth;
+    public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 
-    [SerializeField] int _maxHealth;
-    public int MaxHealth { get { return _maxHealth; } set { _maxHealth = value; } }
+    [SerializeField] int maxHealth;
+    public int MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
 
-    [SerializeField] bool _isDead;
-    public bool IsDead { get { return _isDead; } set { _isDead = value; } }
+    [SerializeField, ReadOnly] bool isDead;
+    public bool IsDead { get { return isDead; } set { isDead = value; } }
 
-    [Space]
-
-    [SerializeField] UnityEvent _deathEvent;
-    [SerializeField] UnityEvent _healthRestoredEvent;
-    [SerializeField] UnityEvent _tookDamageEvent;
+    [Space] 
+    [SerializeField] private bool showEvents;
+    [SerializeField, ShowField(nameof(showEvents))] private UnityEvent deathEvent;
+    [SerializeField, ShowField(nameof(showEvents))] private UnityEvent healthRestoredEvent;
+    [SerializeField, ShowField(nameof(showEvents))] private UnityEvent tookDamageEvent;
 
     public void Die()
     {
-        _deathEvent?.Invoke();
+        deathEvent?.Invoke();
     }
 
     public void RestoreHealth()
     {
         CurrentHealth = MaxHealth;
+        healthRestoredEvent?.Invoke();
     }
 
     public void TakeDamage(int amount = 1)
     {
         CurrentHealth -= amount;
 
-        if (CurrentHealth <= 0) _deathEvent?.Invoke();
+        if (CurrentHealth <= 0) Die();
     }
 }
