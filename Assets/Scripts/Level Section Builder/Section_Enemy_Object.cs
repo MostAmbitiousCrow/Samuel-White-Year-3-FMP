@@ -43,14 +43,21 @@ public class Section_Enemy_Object : Section_Builder_Object
 
     protected override void AdditionalDebugSelected()
     {
-        // 
-        Gizmos.color = Color.white;
-        BoatEnemy_Data data = sectionData.overridedData;
-        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace(data.targetSideSpace, data.targetLeftSide).t.position, .5f);
-
+        var data = sectionData.overridedData;
+        
+        // Draw Targeted Side Space
+        if (data.targetSideSpaces)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace
+                (data.targetSideSpace, data.targetLeftSide).t.position, .5f);
+        }
         // Draw targeted boat space
-        Gizmos.color = Color.black;
-        data = sectionData.overridedData;
-        Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace(data.targetBoatSide, data.targetSpace).t.position, .25f);
+        if (data.targetBoatSpaces)
+        {
+            Gizmos.color = Color.black;
+            data = sectionData.overridedData;
+            Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace(data.targetBoatSide, data.targetSpace).t.position, .25f);   
+        }
     }
 }

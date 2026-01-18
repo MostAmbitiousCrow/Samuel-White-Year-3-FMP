@@ -1,39 +1,59 @@
+using System.Collections;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class CharacterHealth : MonoBehaviour, IDamageable
 {
+    #region Variables
     [SerializeField] private int currentHealth;
-    public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
+    public int CurrentHealth => currentHealth;
 
-    [SerializeField] int maxHealth;
-    public int MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
+    [SerializeField] private int maxHealth;
+    public int MaxHealth => maxHealth;
 
-    [SerializeField, ReadOnly] bool isDead;
-    public bool IsDead { get { return isDead; } set { isDead = value; } }
+    [SerializeField, ReadOnly] private bool isDead;
+    public bool IsDead => isDead;
+    [SerializeField, ReadOnly] private bool isInvincible;
+    public bool IsInvincible => isInvincible;
 
     [Space] 
     [SerializeField] private bool showEvents;
     [SerializeField, ShowField(nameof(showEvents))] private UnityEvent deathEvent;
     [SerializeField, ShowField(nameof(showEvents))] private UnityEvent healthRestoredEvent;
     [SerializeField, ShowField(nameof(showEvents))] private UnityEvent tookDamageEvent;
+    #endregion
 
     public void Die()
     {
+        isDead = true;
         deathEvent?.Invoke();
     }
 
     public void RestoreHealth()
     {
-        CurrentHealth = MaxHealth;
+        isDead = false;
+        currentHealth = MaxHealth;
         healthRestoredEvent?.Invoke();
     }
 
-    public void TakeDamage(int amount = 1)
+    public void TakeDamage(DamageType type = DamageType.Standard, int amount = 1)
     {
-        CurrentHealth -= amount;
-
+        if (isInvincible || isDead) return;
+        
+        currentHealth -= amount;
         if (CurrentHealth <= 0) Die();
+        else
+        {
+            tookDamageEvent.Invoke();
+            StartCoroutine(DamageInvincibilityRoutine());
+        }
+    }
+
+    private IEnumerator DamageInvincibilityRoutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(.25f);
+        isInvincible = false;
     }
 }

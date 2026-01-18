@@ -24,8 +24,11 @@ public abstract class BoatEnemyStateController : BoatCharacter
     [ReadOnly] public bool isAttacking;
 
     [Header("Data")]
-    public BoatEnemy_Data boatEnterData;
+    [ReadOnly] public BoatEnemy_Data boatEnterData;
     public abstract SO_EnemyData EnemyData { get; set; }
+    [Space]
+    [SerializeField] private float emergeDelay = 2f;
+    public float EmergeDelay => emergeDelay;
 
     [Header("Components")] 
     [SerializeField] protected River_Enemy riverObject;
@@ -64,6 +67,18 @@ public abstract class BoatEnemyStateController : BoatCharacter
     public abstract EnemyMovingState MovingState { get; }
     public abstract EnemyAttackState AttackState { get; }
     public abstract EnemyDefeatedState DefeatedState { get; }
+
+    protected override void TimeUpdate()
+    {
+        CurrentState.UpdateState();
+    }
+
+    protected override void FixedTimeUpdate()
+    {
+        base.FixedTimeUpdate();
+        CurrentState.FixedUpdateState();
+    }
+
     #endregion
 
     /// <summary> Emerges the enemy from the River </summary>

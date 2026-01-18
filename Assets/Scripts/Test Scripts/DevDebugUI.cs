@@ -25,12 +25,12 @@ public class DevDebugUI : MonoBehaviour
 
     public void DamagePlayer(int amount)
     {
-        player_Controller.HealthComponent.TakeDamage(amount);
+        player_Controller.HealthComponent.TakeDamage(amount: amount);
     }
 
     public void DamageBoat(int amount)
     {
-        player_Controller.HealthComponent.TakeDamage(amount);
+        player_Controller.HealthComponent.TakeDamage(amount: amount);
     }
 
     public void ResetCharacters()

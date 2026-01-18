@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251fccbdd634dc0469709c95bfc9ad7d, type: 3}
   m_Name: GlobalRiverValues
   m_EditorClassIdentifier: 
-  RiverLaneDistance: 7.5
-  RiverLaneCount: 3
-  RiverBoatSideSpaceDistance: 4
+  riverLaneDistance: 7.5
+  riverLaneCount: 3
+  boatSideSpaceDistance: 4
+  boatSpaceDistance: 2

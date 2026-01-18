@@ -16,16 +16,18 @@ using GameCharacters;
 public class BoatEnemy_Data
 {
     [Header("Boat Side Space Targeting")]
+    public bool targetSideSpaces;
+    
     [Tooltip("The Boats Side Space for the Enemy to target")]
-    [Range(0, 1)] public int targetSideSpace;
+    [ShowField(nameof(targetSideSpaces)), Range(0, 1)] public int targetSideSpace;
 
     [Tooltip("Should the enemy target the left side space of the boat")]
-    public bool targetLeftSide;
-
-    [Tooltip("The direction the enemy should face upon landing on the boat")]
-    public Character.MoveDirection boardingMoveDirection = Character.MoveDirection.Right;
+    [ShowField(nameof(targetSideSpaces))] public bool targetLeftSide;
     
-    [Line]
+    [ShowField(nameof(targetSideSpaces))] 
+    public Character.MoveDirection startFacingDirection = Character.MoveDirection.Right;
+    
+    [Line,Header("Boat Space Targeting")]
     [Tooltip("Should this enemy target the boats space")]
     public bool targetBoatSpaces;
     
@@ -34,4 +36,8 @@ public class BoatEnemy_Data
     
     [Tooltip("The side of the boat to target")]
     [ShowField(nameof(targetBoatSpaces)), Range(0, 1)] public int targetBoatSide;
+    
+    [Tooltip("The direction the enemy should face upon landing on the boat")]
+    [ShowField(nameof(targetBoatSpaces))] 
+    public Character.MoveDirection boardingFacingDirection = Character.MoveDirection.Right;
 }

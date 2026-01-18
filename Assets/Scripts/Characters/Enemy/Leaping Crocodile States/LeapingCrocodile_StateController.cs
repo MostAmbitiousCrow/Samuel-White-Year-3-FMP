@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class LeapingCrocodile_StateController : BoatEnemyStateController
@@ -50,9 +51,6 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     public override void EmergeFromRiver()
     {
         Debug.Log($"{name} has emerged!");
-
-        // MoveToSpace(boatEnterData.targetBoatSide, boatEnterData.targetSpace);
-        SetDirection(boatEnterData.boardingMoveDirection);
         
         ChangeState(EmergeState);
     }
@@ -102,14 +100,40 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
     {
         base.OnEnter();
         
-        CrocSc.canAccessOuterBoatSides = true;
+        CrocSc.GoToSideSpace
+            (CrocSc.boatEnterData.targetBoatSide,
+            CrocSc.boatEnterData.targetLeftSide);
+        
+        CrocSc.SetDirection(CrocSc.boatEnterData.startFacingDirection);
+        
         _currentEmergeTime = 0f;
 
         CrocSc.EnterBoat(false);
+        
+        CrocSc.Animator.SetTrigger("Emerge");
+    }
 
-        // TEMP: Forcing the Crocodile to a space until leap and target values are available
-        CrocSc.GoToSideSpace
-            (CrocSc.boatEnterData.targetSideSpace, CrocSc.boatEnterData.targetLeftSide); // TODO: Add variables to enemies to define what side they should emerge from
+    public override void UpdateState()
+    {
+        if (_currentEmergeTime > CrocSc.EmergeDelay)
+        {
+            if (!CrocSc.isJumping)
+            {
+                // Trigger leap and move towards 
+                CrocSc.TriggerJump();
+                CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection);
+                CrocSc.MoveToSpace(CrocSc.boatEnterData.targetSideSpace, CrocSc.boatEnterData.targetSpace);
+            }
+            // When the Crocodile has landed on the boat, patrol
+            if (CrocSc.IsGrounded)
+            {
+                CrocSc.ChangeState(CrocSc.MovingState);
+            }
+        }
+        else
+        {
+            _currentEmergeTime += Time.deltaTime;
+        }
     }
 
     public override void OnExit()
@@ -119,45 +143,13 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
         CrocSc.canAccessOuterBoatSides = false;
 
         // Set the direction of the enemy upon landing on the boat
-        CrocSc.SetDirection(CrocSc.boatEnterData.boardingMoveDirection);
-
-        // Set the enemy to the targeted boat space upon landed
-        CrocSc.GoToBoatSpace(CrocSc.CurrentSpace);
+        CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection);
     }
 
     public override void OnHurt()
     {
 
         base.OnHurt();
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-        _currentEmergeTime += Time.deltaTime;
-        //Debug.Log(_currentEmergeTime);
-
-        if (_currentEmergeTime > CrocSc.EnemyData.TimeToEmerge)
-        {
-            /* After the emerge wait time is complete, 
-             * enter the boats parent and begin leaping towards 
-             * the targetted space on the boat
-             */
-
-            // TODO: Make the Crocodile leap towards the a targeted space on the boat
-
-            //TODO: Once landed, swap to Moving State
-            CrocSc.GoToBoatSpace
-                (CrocSc.boatEnterData.targetSideSpace, CrocSc.boatEnterData.targetSpace);
-
-            CrocSc.ChangeState(CrocSc.MovingState);
-        }
-
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
     }
 }
 
@@ -173,8 +165,6 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
     public override void OnEnter()
     {
         base.OnEnter();
-
-        //CrocSc.BoatCharacterController.CanAccessOuterSides = false; // Disable Outer Boat Side Access
 
         currentTimeUntilMove = currentCooldownTime = currentDelayTime = 0f;
     }
@@ -195,7 +185,7 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
     {
         base.UpdateState();
 
-        if (!CrocSc.CanMove) return;
+        if (!CrocSc.canMove) return;
 
         if (CrocSc.IsMoving) // Time nothing if the croc is already moving
         {
@@ -204,7 +194,7 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
         }
         else if (stepped) // Do Cooldown if they've already moved
         {
-            if (currentCooldownTime < CrocSc.EnemyData.CoolDownPerStep)
+            if (currentCooldownTime < CrocSc.EnemyData.coolDownPerStep)
             {
                 currentCooldownTime += Time.deltaTime;
             }
@@ -220,7 +210,7 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
         // Progress to the next move
         currentTimeUntilMove += Time.deltaTime;
 
-        if (currentTimeUntilMove > CrocSc.EnemyData.TimeUntilStep) // Move the Croc
+        if (currentTimeUntilMove > CrocSc.EnemyData.timeUntilStep) // Move the Croc
         {
             // If blocked, swap current direciton
             if (!CrocSc.CheckAvailableSpaceFromDirection((int)CrocSc.CurrentDirection))
@@ -241,9 +231,10 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
     public override void FixedUpdateState()
     {
         base.FixedUpdateState();
+        if (CrocSc.IsMoving) return;
 
         // Detect if the player is in the space ahead of them based on the current facing directions
-        Vector3 direction = (int)CrocSc.CurrentDirection * -1 * CrocSc.EnemyData.AttackDistance * Vector3.right + CrocSc.transform.position;
+        Vector3 direction = (int)CrocSc.CurrentDirection * -1 * CrocSc.EnemyData.attackDistance * Vector3.right + CrocSc.transform.position;
         if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers))
         {
             CrocSc.ChangeState(CrocSc.AttackState);
@@ -255,67 +246,42 @@ public class LeapingCrocodile_AttackState : EnemyAttackState
 {
     public LeapingCrocodile_StateController CrocSc => Sc as LeapingCrocodile_StateController;
 
-    private float _currentWaitTime;
-    private bool _hasAttacked;
-
     public override void OnEnter()
     {
         base.OnEnter();
-        _currentWaitTime = 0f;
-        _hasAttacked = false;
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-
+        CrocSc.canMove = false;
+        CrocSc.StartCoroutine(AttackRoutine());
     }
 
     public override void OnHurt()
     {
         base.OnHurt();
-
+        
     }
 
-    public override void UpdateState()
+    private IEnumerator AttackRoutine()
     {
-        base.UpdateState();
+        yield return new WaitForSeconds(CrocSc.CrocData.attackDelay);
+        
+        Sc.Animator.SetTrigger("Attack");
 
-        if (!_hasAttacked)
+        yield return new WaitForSeconds(CrocSc.CrocData.attackAtTime);
+
+        var direction = (int)CrocSc.CurrentDirection * -1 * CrocSc.EnemyData.attackDistance * Vector3.right +
+                        CrocSc.transform.position;
+        var player = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+        (direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
+
+        if (player)
         {
-            _currentWaitTime += Time.deltaTime;
-
-            if (_currentWaitTime > CrocSc.CrocData.AttackDelay)
-            {
-                var direction = (int)CrocSc.CurrentDirection * -1 * CrocSc.EnemyData.AttackDistance * Vector3.right + CrocSc.transform.position;
-                var player = CharacterSpaceChecks.ScanAreaForDamageableCharacter(direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
-
-                _hasAttacked = true;
-                Sc.Animator.SetTrigger("Attack");
-
-                if (player != null)
-                {
-                    _currentWaitTime = 0;
-                    player.GetComponent<IDamageable>().TakeDamage();
-                    Debug.Log("Damaged Player");
-                }
-            }
-        }
-        else // Has attacked. Do cooldown and move back to Moving State
-        {
-            _currentWaitTime += Time.deltaTime;
-
-            if (_currentWaitTime > CrocSc.CrocData.AttackCooldown)
-            {
-                CrocSc.ChangeState(CrocSc.MovingState);
-            }
+            player.GetComponent<IDamageable>().TakeDamage();
+            Debug.Log("Damaged Player");
         }
 
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
+        yield return new WaitForSeconds(CrocSc.CrocData.attackCooldown);
 
+        CrocSc.canMove = true;
+        CrocSc.ChangeState(CrocSc.MovingState);
     }
 }
 
@@ -346,11 +312,6 @@ public class LeapingCrocodile_DefeatedState : EnemyDefeatedState
     public override void UpdateState()
     {
         base.UpdateState();
-
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
+        
     }
 }

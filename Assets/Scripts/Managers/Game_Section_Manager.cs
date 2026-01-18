@@ -146,7 +146,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             c = s.EnemyDatas.Count;
             for (int j = 0; j < c; j++)
             {
-                Section_Enemy_Object.SectionEnemyData enemyData = sectionDatas?[currentSection].EnemyDatas[j].sectionData;
+                var enemyData = sectionDatas?[currentSection].EnemyDatas[j].sectionData;
 
                 // Instantiate the selected object type
                 AsyncInstantiateOperation<GameObject> op = default;

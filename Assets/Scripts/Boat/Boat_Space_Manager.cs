@@ -234,8 +234,17 @@ public class Boat_Space_Manager : MonoBehaviour
         for (int i = 0; i < BoatSides.Count; i++)
         {
             BoatSide bs = BoatSides[i];
-            bs.SpaceDatas.First().t.position = new(_globalRiverValues.RiverBoatSideSpaceDistance, 0, bs.SpaceDatas[1].t.position.z);
-            bs.SpaceDatas.Last().t.position = new(_globalRiverValues.RiverBoatSideSpaceDistance * -1, 0, bs.SpaceDatas[^1].t.position.z);
+            // Sides
+            bs.SpaceDatas.First().t.position = new Vector3(_globalRiverValues.boatSideSpaceDistance, 0, bs.SpaceDatas[1].t.position.z);
+            bs.SpaceDatas.Last().t.position = new Vector3(_globalRiverValues.boatSideSpaceDistance * -1, 0, bs.SpaceDatas[^1].t.position.z);
+            
+            // Boat Spaces //TODO
+            for (int j = 0; j < bs.SpaceDatas.Count; j++)
+            {
+                if (j == 0 || j == bs.SpaceDatas.Count - 1) continue; // Skip first and last space data
+                bs.SpaceDatas[j].t.position = new Vector3(_globalRiverValues.boatSpaceDistance, 0, .5f);
+            }
+
         }
 
     }

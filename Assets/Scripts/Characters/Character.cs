@@ -1,5 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using EditorAttributes;
+using UnityEngine.Serialization;
 
 namespace GameCharacters
 {
@@ -10,16 +12,16 @@ namespace GameCharacters
     public abstract class Character : MonoTimeBehaviour
     {
         #region Variables
+        //TODO: Convert majority movement variables to a scriptable object
         [Title("Character")]
         [Line(GUIColor.White)]
         
         [Header("Movement")]
-        [SerializeField] protected bool canMove;
-        public bool CanMove => canMove;
+        public bool canMove;
         [Tooltip("The time it takes for the character to move to their next targeted space whilst grounded")]
-        [SerializeField] protected float groundedMovementTime = .2f;
+        [SerializeField, ShowField(nameof(canMove))] protected float groundedMovementTime = .2f;
         [Tooltip("The curve controlling the ground movement animation of the character")]
-        [SerializeField] protected AnimationCurve groundedMovementCurve;
+        [SerializeField, ShowField(nameof(canMove))] protected AnimationCurve groundedMovementCurve;
 
         [Tooltip("The time remaining of the characters movement they're able to immediately move again")]
         [SerializeField] protected float coyoteTime = .15f;
@@ -30,9 +32,9 @@ namespace GameCharacters
         [Space]
 
         [Tooltip("The time it takes for the character to move to their next targeted space whilst in the air")]
-        [SerializeField] protected float airMovementTime = .25f;
+        [SerializeField, ShowField(nameof(canMove))] protected float airMovementTime = .25f;
         [Tooltip("The curve controlling the air movement animation of the character")]
-        [SerializeField] protected AnimationCurve airMovementCurve;
+        [SerializeField, ShowField(nameof(canMove))] protected AnimationCurve airMovementCurve;
 
         [Space]
 
@@ -64,10 +66,21 @@ namespace GameCharacters
         public Animator Animator => animator;
         [SerializeField] private CharacterHealth healthComponent;
         public CharacterHealth HealthComponent => healthComponent;
+        [SerializeField] private Transform stompPosition;
+        public Transform StompPosition => stompPosition;
 
         #endregion
         
         #region Directions
+        
+        [Header("Rotation")]
+        [Tooltip("Determines if this character is currently rotating towards a direction")]
+        [SerializeField, ReadOnly] private bool isDirecting;
+        /// <summary> Determines if this current is currently rotating towards a direction </summary>
+        public bool IsDirecting { get { return isDirecting; } }
+
+        [SerializeField] private AnimationCurve rotationCurve; 
+
         /// <summary> Reverses the current direction of the enemy </summary>
         public void FlipDirection()
         {
@@ -81,11 +94,55 @@ namespace GameCharacters
         }
 
         /// <summary> Explicitly sets the direction of the enemy with a given parameter </summary>
-        public void SetDirection(MoveDirection direction)
+        public void SetDirection(MoveDirection direction, bool animate = true)
         {
             currentDirection = direction;
         
             //TODO: Set the direction of the character here!
+            StartCoroutine(DirectionRoutine(animate));
+        }
+
+        private IEnumerator DirectionRoutine(bool animate)
+        {
+            isDirecting =  true;
+            var t = 0f;
+
+            float currentRotation, targetRotation;
+
+            // Switch Expression :D
+            currentRotation = currentDirection switch
+            {
+                MoveDirection.Left => 0f,
+                MoveDirection.Right => 180,
+            };
+            
+            targetRotation = currentDirection switch
+            {
+                MoveDirection.Left => 180f,
+                MoveDirection.Right => 0f,
+            };
+            
+            rb.freezeRotation = false;
+
+            if (animate)
+            {
+                while(t < 1f)
+                {
+                    rb.MoveRotation(Quaternion.Euler
+                    (0f, 
+                        Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t)),
+                    0f));
+                    t += Time.deltaTime;
+                    yield return PauseWait;
+                }
+            }
+            
+            rb.MoveRotation(Quaternion.Euler
+            (0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 1f));
+            
+            rb.freezeRotation = true;
+            
+            isDirecting = false;
         }
         #endregion
 
@@ -96,6 +153,7 @@ namespace GameCharacters
         public virtual void OnTookDamage()
         {
             animator.SetTrigger("TookDamage");
+            TriggerHitStop(.1f);
         }
 
         /// <summary>
@@ -104,6 +162,7 @@ namespace GameCharacters
         public virtual void OnDied()
         {
             animator.SetTrigger("Died");
+            TriggerHitStop(.5f);
         }
 
         /// <summary>
@@ -111,7 +170,7 @@ namespace GameCharacters
         /// </summary>
         public virtual void OnHealthRestored()
         {
-
+            
         }
         #endregion
 

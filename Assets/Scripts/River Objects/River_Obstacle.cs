@@ -29,7 +29,7 @@ public class River_Obstacle : River_Object
         if (IsHit) return;
         print($"{name} hit: {other}");
 
-        other.GetComponent<IDamageable>().TakeDamage(obstacleData.ImpactDamage);
+        other.GetComponent<IDamageable>().TakeDamage(amount: obstacleData.ImpactDamage);
         IsHit = true;
 
         if (isAnimated)

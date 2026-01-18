@@ -254,7 +254,7 @@ public class River_Manager : MonoBehaviour
         int i = -1;
         foreach (var item in RiverLanes)
         {
-            item.axis = (Vector3.right * i) * _globalRiverValues.RiverLaneDistance;
+            item.axis = (Vector3.right * i) * _globalRiverValues.riverLaneDistance;
             i++;
         }
     }

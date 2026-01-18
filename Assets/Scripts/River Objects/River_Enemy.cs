@@ -50,7 +50,7 @@ public class River_Enemy : River_Object
         }
         else
         {
-            transform.position = new(transform.position.x, transform.position.y, BoatTransform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y, BoatTransform.position.z);
         }
 
         return;
