@@ -367,7 +367,7 @@ namespace GameCharacters
                 if (isVaultingHeavily && canInteractWithBoat)
                 {
                     isVaultingHeavily = false;
-                    boatInteractor.ImpactBoat(TargetedSpace.spaceID);
+                    boatInteractor.ImpactBoat(TargetedSpace);
                 }
             }
         }
@@ -448,7 +448,7 @@ namespace GameCharacters
             if (isVaultingHeavily && canInteractWithBoat)
             {
                 isVaultingHeavily = false;
-                boatInteractor.ImpactBoat(TargetedSpace.spaceID);
+                boatInteractor.ImpactBoat(TargetedSpace);
             }
             
             OnLanded();

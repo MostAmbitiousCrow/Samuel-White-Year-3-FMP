@@ -25,7 +25,6 @@ public abstract class BoatEnemyStateController : BoatCharacter
 
     [Header("Data")]
     [ReadOnly] public BoatEnemy_Data boatEnterData;
-    public abstract SO_EnemyData EnemyData { get; set; }
     [Space]
     [SerializeField] private float emergeDelay = 2f;
     public float EmergeDelay => emergeDelay;

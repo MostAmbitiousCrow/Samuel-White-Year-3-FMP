@@ -96,7 +96,7 @@ namespace GameCharacters
 
             // Note: Inverting the direction since the order of the boat spaces are flipped...
 
-            if (!isMoving || isMoving && coyoteTriggered) MoveToSpaceFromDirection(Mathf.RoundToInt(direction * -1));
+            if (!isMoving || isMoving && coyoteTriggered) MoveToSpaceFromDirection(Mathf.RoundToInt(direction));
         }
 
         /// <summary>

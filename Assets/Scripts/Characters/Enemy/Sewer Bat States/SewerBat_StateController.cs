@@ -10,8 +10,6 @@ public class SewerBat_StateController : BoatEnemyStateController
 
     private void Awake()
     {
-        EnemyData = ScriptableObject.CreateInstance<SO_EnemyData_SewerBat>();
-                
         IdleState.Sc = this;
         EmergeState.Sc = this;
         MovingState.Sc = this;
@@ -21,7 +19,9 @@ public class SewerBat_StateController : BoatEnemyStateController
         ChangeState(IdleState);
     }
 
-    public override SO_EnemyData EnemyData { get; set; }
+    [Header("Sewer Bat Data")]
+    [SerializeField] private SO_EnemyData_SewerBat batData;
+    public SO_EnemyData_SewerBat BatData => batData;
 
     public override EnemyIdleState IdleState { get; } = new SewerBat_IdleState();
     public override EnemyEmergeState EmergeState { get; } = new SewerBat_EmergeState();

@@ -112,14 +112,14 @@ namespace GameCharacters
             // Switch Expression :D
             currentRotation = currentDirection switch
             {
-                MoveDirection.Left => 0f,
-                MoveDirection.Right => 180,
+                MoveDirection.Left => 180f,
+                MoveDirection.Right => 0f,
             };
             
             targetRotation = currentDirection switch
             {
-                MoveDirection.Left => 180f,
-                MoveDirection.Right => 0f,
+                MoveDirection.Left => 0f,
+                MoveDirection.Right => 180f,
             };
             
             rb.freezeRotation = false;

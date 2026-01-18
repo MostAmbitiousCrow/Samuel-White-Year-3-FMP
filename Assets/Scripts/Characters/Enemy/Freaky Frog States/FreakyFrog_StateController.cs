@@ -10,8 +10,6 @@ public class FreakyFrog_StateController : BoatEnemyStateController
     
     private void Awake()
     {
-        EnemyData = ScriptableObject.CreateInstance<SO_EnemyData_FreakyFrog>();
-                
         IdleState.Sc = this;
         EmergeState.Sc = this;
         MovingState.Sc = this;
@@ -21,7 +19,10 @@ public class FreakyFrog_StateController : BoatEnemyStateController
         ChangeState(IdleState);
     }
     
-    public override SO_EnemyData EnemyData { get; set; }
+    [Header("Freaky Frog Data")]
+    [SerializeField] private SO_EnemyData_FreakyFrog frogData;
+    public SO_EnemyData_FreakyFrog FrogData => frogData;
+    
     public override EnemyIdleState IdleState { get; } = new FreakyFrog_IdleState();
     public override EnemyEmergeState EmergeState { get; } =  new FreakyFrog_EmergeState();
     public override EnemyMovingState MovingState { get; } =  new FreakyFrog_MovingState();

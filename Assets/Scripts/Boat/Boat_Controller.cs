@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Boat_Space_Manager.BoatSide;
 
 public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamageable
 {
@@ -34,10 +35,14 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     /// <summary>
     /// The main method to steer the players boat in a given direction and animates the force.
     /// </summary>
-    public void SteerBoat(int direction, float force)
+    public void SteerBoat(SpaceData spaceData, float force)
     {
-        // print($"Steered Board in the {direction} direction");
-        MoveToLane(direction);
+        Transform spaceTransform = spaceData.t;
+        Vector3 localPos = transform.InverseTransformPoint(spaceTransform.position);
+
+        float steerDirection = Mathf.Sign(localPos.x);
+        
+        MoveToLane(Mathf.RoundToInt(steerDirection));
     }
 
     public void MoveToLane(int direction)

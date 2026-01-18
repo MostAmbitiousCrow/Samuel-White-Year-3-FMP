@@ -28,18 +28,18 @@ public class Boat_Space_Manager : MonoBehaviour
 
             [ReadOnly] public bool isOccupied = false;
         }
-        public List<SpaceData> SpaceDatas = new();
+        public List<SpaceData> spaceDatas = new();
     }
-    public List<BoatSide> BoatSides = new();
+    public List<BoatSide> boatSides = new();
     public int SpaceCount { get; private set; }
-
+    
     [Header("Data")]
-    [SerializeField] GlobalRiverValues _globalRiverValues;
+    [SerializeField] private GlobalRiverValues globalRiverValues;
 
     [Button]
     public void UpdateSpaceDatas()
     {
-        BoatSides.Clear();
+        boatSides.Clear();
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -57,20 +57,20 @@ public class Boat_Space_Manager : MonoBehaviour
             {
                 // Add new space to the current side
                 Transform space = currentSpaces.GetChild(j);
-                print(space);
+                // print(space);
                 BoatSide.SpaceData sd = new()
                 {
                     spaceID = j,
                     sideID = i,
                     t = space,
                 };
-                bs.SpaceDatas.Add(sd);
+                bs.spaceDatas.Add(sd);
             }
 
-            bs.SpaceDatas.First().insideBoat = false;
-            bs.SpaceDatas.Last().insideBoat = false;
+            bs.spaceDatas.First().insideBoat = false;
+            bs.spaceDatas.Last().insideBoat = false;
 
-            BoatSides.Add(bs);
+            boatSides.Add(bs);
         }
     }
 
@@ -91,13 +91,13 @@ public class Boat_Space_Manager : MonoBehaviour
     {
         //GetAndInjectBoatAffectedObjects();
         Instance = this;
-        SpaceCount = BoatSides[0].SpaceDatas.Count;
+        SpaceCount = boatSides[0].spaceDatas.Count;
     }
 
     private void OnValidate()
     {
         Instance = this;
-        SpaceCount = BoatSides[0].SpaceDatas.Count;
+        SpaceCount = boatSides[0].spaceDatas.Count;
     }
 
     #region Lane and Space Checks
@@ -106,7 +106,7 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public bool CheckAvailableSpace(int side, int space)
     {
-        if (space > BoatSides[side].SpaceDatas.Count || space < 0) return false;
+        if (space > boatSides[side].spaceDatas.Count || space < 0) return false;
         else return true;
     }
 
@@ -120,9 +120,9 @@ public class Boat_Space_Manager : MonoBehaviour
         int targetSpace = currentSpace + direction;
 
         // If target is within bounds of the space, return the targeted boat space
-        if (targetSpace < spaces && targetSpace > -1) return BoatSides[currentSide].SpaceDatas[targetSpace];
+        if (targetSpace < spaces && targetSpace > -1) return boatSides[currentSide].spaceDatas[targetSpace];
         // Otherwise, just return the current space
-        else return BoatSides[currentSide].SpaceDatas[currentSpace];
+        else return boatSides[currentSide].spaceDatas[currentSpace];
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public class Boat_Space_Manager : MonoBehaviour
     public BoatSide.SpaceData GetSpaceFromOppositeLane(int currentSide, int currentSpace)
     {
         int newSide = currentSide == 0 ? 1 : 0;
-        return BoatSides[newSide].SpaceDatas[currentSpace];
+        return boatSides[newSide].spaceDatas[currentSpace];
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public BoatSide.SpaceData GetSpace(int side, int space)
     {
-        return BoatSides[side].SpaceDatas[space];
+        return boatSides[side].spaceDatas[space];
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public List<BoatSide.SpaceData> GetSpaces(int side)
     {
-        return BoatSides[side].SpaceDatas;
+        return boatSides[side].spaceDatas;
     }
 
     /// <summary>
@@ -155,8 +155,8 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public BoatSide.SpaceData GetSideSpace(int side, bool getLeftSide)
     {
-        if (getLeftSide) return BoatSides[side].SpaceDatas.First();
-        else return BoatSides[side].SpaceDatas.Last();
+        if (getLeftSide) return boatSides[side].spaceDatas.First();
+        else return boatSides[side].spaceDatas.Last();
     }
 
     /// <summary>
@@ -165,10 +165,10 @@ public class Boat_Space_Manager : MonoBehaviour
     public BoatSide.SpaceData GetBoatSpace(int side, int space)
     {
         print($"Getting Space: {side} and Space: {space}");
-        print($"Space Datas =  {BoatSides[side].SpaceDatas.Count}.");
-        if (space < 1) return BoatSides[side].SpaceDatas[1];
-        if (space > SpaceCount - 2) return BoatSides[side].SpaceDatas[SpaceCount - 2];
-        return BoatSides[side].SpaceDatas[space];
+        print($"Space Datas =  {boatSides[side].spaceDatas.Count}.");
+        if (space < 1) return boatSides[side].spaceDatas[1];
+        if (space > SpaceCount - 2) return boatSides[side].spaceDatas[SpaceCount - 2];
+        return boatSides[side].spaceDatas[space];
     }
     #endregion
 
@@ -224,27 +224,52 @@ public class Boat_Space_Manager : MonoBehaviour
     // Adjust the side spaces of the boat to match the global River Boat Side Space Distance
     private void OnDrawGizmos()
     {
-        if (BoatSides == null || _globalRiverValues == null)
+        if (boatSides == null || globalRiverValues == null)
         {
             Debug.LogWarning("Missing Global River Values or Boat Sides");
             return;
         }
         if (Application.isPlaying) return;
+        
+        UpdateSpaceDatas();
 
-        for (int i = 0; i < BoatSides.Count; i++)
+        for (int i = 0; i < boatSides.Count; i++)
         {
-            BoatSide bs = BoatSides[i];
-            // Sides
-            bs.SpaceDatas.First().t.position = new Vector3(_globalRiverValues.boatSideSpaceDistance, 0, bs.SpaceDatas[1].t.position.z);
-            bs.SpaceDatas.Last().t.position = new Vector3(_globalRiverValues.boatSideSpaceDistance * -1, 0, bs.SpaceDatas[^1].t.position.z);
+            BoatSide bs = boatSides[i];
             
-            // Boat Spaces //TODO
-            for (int j = 0; j < bs.SpaceDatas.Count; j++)
+            // Boat Spaces (not including first and last)
+            int boatSpaceCount = bs.spaceDatas.Count - 2;
+            float spacing = globalRiverValues.boatSpaceDistance;
+
+            // float distance = i * 2f;
+
+            // Boat Spaces
+            for (int j = 1; j < bs.spaceDatas.Count - 1; j++)
             {
-                if (j == 0 || j == bs.SpaceDatas.Count - 1) continue; // Skip first and last space data
-                bs.SpaceDatas[j].t.position = new Vector3(_globalRiverValues.boatSpaceDistance, 0, .5f);
+                int localIndex = j - 1;
+                var data = bs.spaceDatas[j];
+
+                float zOffset = (localIndex - (boatSpaceCount - 1) / 2f) * spacing;
+
+                Vector3 pos = data.t.localPosition;
+                pos.z = 0f;
+                pos.x = zOffset; // keep centered on the boat
+                pos.y = .5f;
+
+                data.t.localPosition = pos;
+                data.insideBoat = true;
             }
 
+            // Side Spaces
+            float sideOffset = globalRiverValues.boatSideSpaceDistance;
+
+            bs.spaceDatas.First().t.localPosition =
+                new Vector3(sideOffset, 0, bs.spaceDatas[^1].t.localPosition.z);
+            bs.spaceDatas.Last().insideBoat = false;
+
+            bs.spaceDatas.Last().t.localPosition =
+                new Vector3(-sideOffset, 0, bs.spaceDatas[1].t.localPosition.z);
+            bs.spaceDatas.Last().insideBoat = false;
         }
 
     }

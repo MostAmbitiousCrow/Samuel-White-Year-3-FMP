@@ -10,7 +10,10 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     */
 
     #region Variables
-    public override SO_EnemyData EnemyData { get; set; }
+
+    [Header("Crocodile Data")]
+    [SerializeField] private SO_EnemyData_LeapingCrocodile crocData;
+    public SO_EnemyData_LeapingCrocodile CrocData => crocData;
     
     #region States
     public override EnemyIdleState IdleState { get; } = new LeapingCrocodile_IdleState();
@@ -22,20 +25,18 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     /// <summary>
     /// Crocodile Data converted from the Enemy Data
     /// </summary>
-    public SO_EnemyData_LeapingCrocodile CrocData
-    { get
-        {
-            var crocData = EnemyData as SO_EnemyData_LeapingCrocodile;
-            return crocData;
-        }
-    }
+    // public SO_EnemyData_LeapingCrocodile CrocData
+    // { get
+    //     {
+    //         var crocData = enemydata as SO_EnemyData_LeapingCrocodile;
+    //         return crocData;
+    //     }
+    // }
 
     #endregion
 
     private void Awake()
     {
-        EnemyData = ScriptableObject.CreateInstance<SO_EnemyData_LeapingCrocodile>();
-        
         IdleState.Sc = this;
         EmergeState.Sc = this;
         MovingState.Sc = this;
@@ -43,8 +44,6 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
         DefeatedState.Sc = this;
 
         ChangeState(IdleState);
-
-        CrocData.LeapSpeedMultiplier = 0f;
     }
 
     /// <summary> Emerges the enemy from the River </summary>
@@ -194,13 +193,14 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
         }
         else if (stepped) // Do Cooldown if they've already moved
         {
-            if (currentCooldownTime < CrocSc.EnemyData.coolDownPerStep)
+            if (currentCooldownTime < CrocSc.CrocData.coolDownPerStep)
             {
                 currentCooldownTime += Time.deltaTime;
             }
             else
             {
                 // End Move Cooldown
+                CrocSc.Animator.SetTrigger("Idle");
                 stepped = false;
                 currentCooldownTime = 0;
             }
@@ -210,16 +210,18 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
         // Progress to the next move
         currentTimeUntilMove += Time.deltaTime;
 
-        if (currentTimeUntilMove > CrocSc.EnemyData.timeUntilStep) // Move the Croc
+        if (currentTimeUntilMove > CrocSc.CrocData.timeUntilStep) // Move the Croc
         {
-            // If blocked, swap current direciton
+            // If blocked, swap current direction
             if (!CrocSc.CheckAvailableSpaceFromDirection((int)CrocSc.CurrentDirection))
             {
+                CrocSc.Animator.SetTrigger("Idle");
                 CrocSc.FlipDirection();
                 // TODO: Flip Animation in FlipDirection()
             }
             else
             {
+                CrocSc.Animator.SetTrigger("Move");
                 CrocSc.MoveToSpaceFromDirection((int)CrocSc.CurrentDirection);
                  //TODO: Trigger Animation in method
             }
@@ -234,7 +236,7 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
         if (CrocSc.IsMoving) return;
 
         // Detect if the player is in the space ahead of them based on the current facing directions
-        Vector3 direction = (int)CrocSc.CurrentDirection * -1 * CrocSc.EnemyData.attackDistance * Vector3.right + CrocSc.transform.position;
+        Vector3 direction = (int)CrocSc.CurrentDirection * CrocSc.CrocData.attackDistance * Vector3.right + CrocSc.transform.position;
         if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers))
         {
             CrocSc.ChangeState(CrocSc.AttackState);
@@ -267,12 +269,12 @@ public class LeapingCrocodile_AttackState : EnemyAttackState
 
         yield return new WaitForSeconds(CrocSc.CrocData.attackAtTime);
 
-        var direction = (int)CrocSc.CurrentDirection * -1 * CrocSc.EnemyData.attackDistance * Vector3.right +
+        var direction = (int)CrocSc.CurrentDirection * CrocSc.CrocData.attackDistance * Vector3.right +
                         CrocSc.transform.position;
         var player = CharacterSpaceChecks.ScanAreaForDamageableCharacter
         (direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
 
-        if (player)
+        if (player != null)
         {
             player.GetComponent<IDamageable>().TakeDamage();
             Debug.Log("Damaged Player");
@@ -281,6 +283,7 @@ public class LeapingCrocodile_AttackState : EnemyAttackState
         yield return new WaitForSeconds(CrocSc.CrocData.attackCooldown);
 
         CrocSc.canMove = true;
+        CrocSc.Animator.SetTrigger("Idle");
         CrocSc.ChangeState(CrocSc.MovingState);
     }
 }
