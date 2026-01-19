@@ -47,7 +47,7 @@ namespace GameCharacters
         [SerializeField, ReadOnly] protected MoveDirection currentDirection = MoveDirection.Left;
         public  MoveDirection CurrentDirection => currentDirection;
         /// <summary> Left = 1 | Right = -1 </summary>
-        public enum MoveDirection { Right = -1, Left = 1 }
+        public enum MoveDirection { Right = 1, Left = -1 }
 
         [Header("Checks")]
         [SerializeField, ReadOnly] protected bool isMoving;
@@ -96,13 +96,12 @@ namespace GameCharacters
         /// <summary> Explicitly sets the direction of the enemy with a given parameter </summary>
         public void SetDirection(MoveDirection direction, bool animate = true)
         {
-            currentDirection = direction;
-        
-            //TODO: Set the direction of the character here!
-            StartCoroutine(DirectionRoutine(animate));
+            // currentDirection = direction;
+            
+            StartCoroutine(DirectionRoutine(direction, animate));
         }
 
-        private IEnumerator DirectionRoutine(bool animate)
+        private IEnumerator DirectionRoutine(MoveDirection direction, bool animate)
         {
             isDirecting =  true;
             var t = 0f;
@@ -116,10 +115,13 @@ namespace GameCharacters
                 MoveDirection.Right => 0f,
             };
             
+            currentDirection = direction;
+            
+            // Swapping 
             targetRotation = currentDirection switch
             {
-                MoveDirection.Left => 0f,
-                MoveDirection.Right => 180f,
+                MoveDirection.Left => 180f,
+                MoveDirection.Right => 0f,
             };
             
             rb.freezeRotation = false;
@@ -177,14 +179,12 @@ namespace GameCharacters
         protected override void OnHitStop()
         {
             base.OnHitStop();
-            animator.speed = 0f;
-            
             // TODO: Add SFX + VFX
         }
 
         protected override void OnHitStopEnded()
         {
-            animator.speed = 1f;
+            base.OnHitStopEnded();
         }
     }
 

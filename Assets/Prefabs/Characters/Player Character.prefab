@@ -1295,6 +1295,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 3
       addedObject: {fileID: 1089196389603206266}
+    - targetCorrespondingSourceObject: {fileID: 7916243497448613527, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 8508511117284888399}
     - targetCorrespondingSourceObject: {fileID: 887868863620246925, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       insertIndex: -1
@@ -1535,6 +1539,18 @@ MonoBehaviour:
   boatController: {fileID: 0}
   weight: 1
   canMoveBoat: 1
+--- !u!114 &8508511117284888399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4688641454849519801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d9702e0fe64634bb6e8925deb39da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4896393508746001929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8015907055284463655, guid: 33215788b5a5849508fd602e5dbdeed1,

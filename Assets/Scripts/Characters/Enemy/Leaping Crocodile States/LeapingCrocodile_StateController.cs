@@ -103,7 +103,7 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
             (CrocSc.boatEnterData.targetBoatSide,
             CrocSc.boatEnterData.targetLeftSide);
         
-        CrocSc.SetDirection(CrocSc.boatEnterData.startFacingDirection);
+        CrocSc.SetDirection(CrocSc.boatEnterData.startFacingDirection, false);
         
         _currentEmergeTime = 0f;
 

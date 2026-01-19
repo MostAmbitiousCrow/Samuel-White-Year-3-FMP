@@ -55,7 +55,11 @@ public class Loading_Screen_Controller : MonoBehaviour
     }
     #endregion
 
-    #region 
+    #region
+    /*
+     * TODO: Something has affected the timing of the loading screen transition.
+     * Might be the Game Initiation process.
+    */
     IEnumerator EnterLoadingScreenProcess()
     {
         float t = startTransitionTime;

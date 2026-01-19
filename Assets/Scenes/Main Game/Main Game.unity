@@ -519,17 +519,17 @@ PrefabInstance:
     - target: {fileID: 4418378740344358979, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4586975534813304740, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5058249323113585878, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7697235221224964546, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
@@ -584,7 +584,7 @@ PrefabInstance:
     - target: {fileID: 8220475005256180560, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2047,12 +2047,14 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      TargetSideSpace: 1
-      TargetLeftSide: 1
-      BoardingMoveDirection: 1
-      TargetBoatSpaces: 1
-      TargetSpace: 1
-      TargetBoatSide: 1
+      targetSideSpaces: 0
+      targetSideSpace: 0
+      targetLeftSide: 0
+      startFacingDirection: 1
+      targetBoatSpaces: 0
+      targetSpace: 0
+      targetBoatSide: 0
+      boardingFacingDirection: 1
 --- !u!1 &1032034808
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,12 +2109,14 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      TargetSideSpace: 1
-      TargetLeftSide: 0
-      BoardingMoveDirection: -1
-      TargetBoatSpaces: 1
-      TargetSpace: 2
-      TargetBoatSide: 1
+      targetSideSpaces: 0
+      targetSideSpace: 0
+      targetLeftSide: 0
+      startFacingDirection: 1
+      targetBoatSpaces: 0
+      targetSpace: 0
+      targetBoatSide: 0
+      boardingFacingDirection: 1
 --- !u!1 &1066730249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,57 +2792,57 @@ PrefabInstance:
       propertyPath: boatController
       value: 
       objectReference: {fileID: 191468574}
-    - target: {fileID: 7148727233464969756, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 4688641454849519801, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player Character
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8783307303254613469, guid: e684e1ae00ee24287b3fd56d29f186fc,
+    - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
@@ -2847,7 +2851,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e684e1ae00ee24287b3fd56d29f186fc, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: cdefbb419192e4f26bb14479e7a9c848, type: 3}
 --- !u!1 &2019133117
 GameObject:
   m_ObjectHideFlags: 0
@@ -2960,12 +2964,14 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      TargetSideSpace: 1
-      TargetLeftSide: 0
-      BoardingMoveDirection: -1
-      TargetBoatSpaces: 1
-      TargetSpace: 3
-      TargetBoatSide: 1
+      targetSideSpaces: 0
+      targetSideSpace: 0
+      targetLeftSide: 0
+      startFacingDirection: 1
+      targetBoatSpaces: 0
+      targetSpace: 0
+      targetBoatSide: 0
+      boardingFacingDirection: 1
 --- !u!1001 &2099520124
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -75,8 +75,16 @@ public class GameManager : MonoBehaviour
             // Pause game logic here
             print($"Game Pause State = {_gamePaused = state}");
 
-            if (state) onGamePause?.Invoke();
-            else onGameResume?.Invoke();
+            if (state)
+            {
+                Time.timeScale = 0f;
+                onGamePause?.Invoke();
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                onGameResume?.Invoke();
+            }
         }
 
         public void TogglePauseState()
@@ -84,8 +92,16 @@ public class GameManager : MonoBehaviour
             // Pause game logic here
             print($"Game Pause State = {_gamePaused = !_gamePaused}");
 
-            if (_gamePaused) onGamePause?.Invoke();
-            else onGameResume?.Invoke();
+            if (_gamePaused)
+            {
+                Time.timeScale = 0f;
+                onGamePause?.Invoke();
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                onGameResume?.Invoke();
+            }
         }
 
         #region Game Initialisation

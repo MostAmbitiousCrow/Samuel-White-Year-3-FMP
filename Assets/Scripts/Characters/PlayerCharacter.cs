@@ -162,17 +162,20 @@ namespace GameCharacters
         #endregion
         public override void OnDied()
         {
+            base.OnDied();
             Debug.Log("PLAYER DIED");
 
         } 
 
         public override void OnHealthRestored()
         {
+            base.OnHealthRestored();
             Debug.Log("Player Health Restored");
         }
 
         public override void OnTookDamage()
         {
+            base.OnTookDamage();
             Debug.Log("Player Took Damage");
         }
     }

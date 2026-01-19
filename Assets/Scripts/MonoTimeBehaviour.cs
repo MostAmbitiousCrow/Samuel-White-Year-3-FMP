@@ -3,17 +3,16 @@ using UnityEngine;
 
 public abstract class MonoTimeBehaviour : MonoBehaviour
 {
-    public bool IsHitStopped { get; private set; } = false;
     /// <summary> Coroutine suspension supplied with the check for if the game is paused </summary>
     /// TODO: PauseWait should include HitStop
     public WaitUntil PauseWait { get; } = new(() => !GameManager.GameLogic.GamePaused); // Variable should be in the game manager
     private void Update()
     {
-        if(!GameManager.GameLogic.GamePaused || IsHitStopped) TimeUpdate();
+        if(!GameManager.GameLogic.GamePaused) TimeUpdate();
     }
     private void FixedUpdate()
     {
-        if (!GameManager.GameLogic.GamePaused || IsHitStopped) FixedTimeUpdate();
+        if (!GameManager.GameLogic.GamePaused) FixedTimeUpdate();
     }
 
     /// <summary>
@@ -27,39 +26,49 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     protected virtual void FixedTimeUpdate() { }
 
     #region HitStop
-    public void TriggerHitStop(float stopDuration)
+    public void TriggerHitStop(float stopDuration = .2f)
     {
-        IsHitStopped = true;
-        if (_hitStopRoutine != null) StopCoroutine(_hitStopRoutine);
+        Debug.Log("HitStop Routine Started");
+        // if (_hitStopRoutine != null)
+        // {
+        //     StopCoroutine(_hitStopRoutine);
+        // }
         _hitStopRoutine = StartCoroutine(HitStopRoutine(stopDuration));
-
-        OnHitStop();
     }
 
     public void CancelHitStop()
     {
-        IsHitStopped = false;
-        StopCoroutine(_hitStopRoutine);
+        if (_hitStopRoutine != null) StopCoroutine(_hitStopRoutine);
     }
 
     private Coroutine _hitStopRoutine;
     private IEnumerator HitStopRoutine(float stopDuration)
     {
+        OnHitStop();
+        
         var t = 0f;
         while (t < stopDuration)
         {
-            t += Time.deltaTime;
+            print(t);
+            t += Time.unscaledDeltaTime;
             yield return PauseWait;
         }
-        IsHitStopped = false;
         _hitStopRoutine = null;
-
+        
         OnHitStopEnded();
     }
-    
+
     /// <summary> Is called whenever this characters Hit Stop is triggered </summary>
-    protected virtual void OnHitStop() { }
-    
-    protected virtual void OnHitStopEnded() { }
+    protected virtual void OnHitStop()
+    {
+        Debug.Log("HitStop Started");
+        Time.timeScale = 0f;
+    }
+
+    protected virtual void OnHitStopEnded()
+    {
+        Debug.Log("HitStop Stopped");
+        Time.timeScale = 1f;
+    }
     #endregion
 }
