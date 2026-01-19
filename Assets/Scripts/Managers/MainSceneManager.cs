@@ -87,7 +87,7 @@ public class MainSceneManager : MonoBehaviour
         {
             // Unpause Game
             GameManager.GameLogic.SetPauseState(false);
-            yield return new WaitForSeconds(1f); // TODO: Polish to have the game properly initialised
+            yield return new WaitForSecondsRealtime(1f); // TODO: Polish to have the game properly initialised
             GameManager.GameLogic.InitialiseGame();
         }
 

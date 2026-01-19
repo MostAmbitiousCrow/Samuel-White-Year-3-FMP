@@ -122,60 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1877079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1877080}
-  - component: {fileID: 1877081}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1877080
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877079}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964643116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1877081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 32
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
 --- !u!1001 &64919995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -603,60 +549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf220d8a9599463e9a2f6072f550732, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &196807375
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 196807376}
-  - component: {fileID: 196807377}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &196807376
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196807375}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 65}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964643116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &196807377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196807375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 65
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
 --- !u!114 &197829519 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 616635860390243453, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
@@ -765,7 +657,7 @@ PrefabInstance:
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.size
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
@@ -916,37 +808,37 @@ PrefabInstance:
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[1]
       value: 
-      objectReference: {fileID: 462715417}
+      objectReference: {fileID: 1915979415}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[2]
       value: 
-      objectReference: {fileID: 196807377}
+      objectReference: {fileID: 462715417}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[3]
       value: 
-      objectReference: {fileID: 1066730251}
+      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[4]
       value: 
-      objectReference: {fileID: 516040196}
+      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[5]
       value: 
-      objectReference: {fileID: 1381106120}
+      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[6]
       value: 
-      objectReference: {fileID: 1457588504}
+      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.data[7]
       value: 
-      objectReference: {fileID: 1877081}
+      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: sectionDatas.Array.data[1].CollectibleDatas.Array.data[0]
@@ -1281,60 +1173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 1
   distance: 60
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
---- !u!1 &516040194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 516040195}
-  - component: {fileID: 516040196}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &516040195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516040194}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 74}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964643116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &516040196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516040194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 74
   height: 0
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
@@ -1767,6 +1605,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
+      propertyPath: sectionData.overridedData.targetSpace
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
       propertyPath: sectionData.overridedData.TargetBoatSide
       value: 0
       objectReference: {fileID: 0}
@@ -1777,12 +1620,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
+      propertyPath: sectionData.overridedData.targetLeftSide
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
       propertyPath: sectionData.overridedData.TargetSideSpace
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
+      propertyPath: sectionData.overridedData.targetSideSpace
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
       propertyPath: sectionData.overridedData.TargetBoatSpaces
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.overridedData.targetBoatSpaces
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.overridedData.targetSideSpaces
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.overridedData.startFacingDirection
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
@@ -1809,6 +1677,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
+      propertyPath: distance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
       propertyPath: _globalRiverValues
       value: 
       objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
@@ -1822,6 +1695,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
@@ -1948,31 +1826,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       insertIndex: 19
-      addedObject: {fileID: 462715416}
+      addedObject: {fileID: 1915979414}
     - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       insertIndex: 20
-      addedObject: {fileID: 196807376}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 21
-      addedObject: {fileID: 1066730250}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 22
-      addedObject: {fileID: 516040195}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 23
-      addedObject: {fileID: 1381106119}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 24
-      addedObject: {fileID: 1457588503}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 25
-      addedObject: {fileID: 1877080}
+      addedObject: {fileID: 462715416}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 295c66bc290b44760801d0a032edb696, type: 3}
 --- !u!4 &964643116 stripped
@@ -2047,13 +1905,13 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      targetSideSpaces: 0
+      targetSideSpaces: 1
       targetSideSpace: 0
       targetLeftSide: 0
       startFacingDirection: 1
-      targetBoatSpaces: 0
-      targetSpace: 0
-      targetBoatSide: 0
+      targetBoatSpaces: 1
+      targetSpace: 4
+      targetBoatSide: 1
       boardingFacingDirection: 1
 --- !u!1 &1032034808
 GameObject:
@@ -2109,68 +1967,14 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      targetSideSpaces: 0
-      targetSideSpace: 0
-      targetLeftSide: 0
+      targetSideSpaces: 1
+      targetSideSpace: 1
+      targetLeftSide: 1
       startFacingDirection: 1
-      targetBoatSpaces: 0
-      targetSpace: 0
-      targetBoatSide: 0
+      targetBoatSpaces: 1
+      targetSpace: 1
+      targetBoatSide: 1
       boardingFacingDirection: 1
---- !u!1 &1066730249
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1066730250}
-  - component: {fileID: 1066730251}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1066730250
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066730249}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 70}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964643116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1066730251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066730249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 70
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
 --- !u!1001 &1156140319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2531,114 +2335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1381106118
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1381106119}
-  - component: {fileID: 1381106120}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1381106119
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381106118}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 0, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964643116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1381106120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1381106118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
---- !u!1 &1457588502
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1457588503}
-  - component: {fileID: 1457588504}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1457588503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457588502}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 0, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964643116}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1457588504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457588502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 40
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
 --- !u!114 &1535669555 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
@@ -2774,11 +2470,70 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 8270917355290790417, guid: fd135e6f69ee145359797c6008d5017d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd135e6f69ee145359797c6008d5017d, type: 3}
+--- !u!1 &1915979413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1915979414}
+  - component: {fileID: 1915979415}
+  m_Layer: 0
+  m_Name: Collectible - Gemstone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1915979414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915979413}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.5, y: 0, z: 25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 964643116}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1915979415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915979413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lane: 2
+  distance: 25
+  height: 0
+  enableSnapping: 1
+  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
+  sectionData:
+    collectibleType: 0
+    overrideData: 0
+    overridedData:
+      BankValue: 1
 --- !u!1001 &2008998116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2792,11 +2547,6 @@ PrefabInstance:
       propertyPath: boatController
       value: 
       objectReference: {fileID: 191468574}
-    - target: {fileID: 4688641454849519801, guid: cdefbb419192e4f26bb14479e7a9c848,
-        type: 3}
-      propertyPath: m_Name
-      value: Player Character
-      objectReference: {fileID: 0}
     - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2846,6 +2596,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688641454849519801, guid: cdefbb419192e4f26bb14479e7a9c848,
+        type: 3}
+      propertyPath: m_Name
+      value: Player Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504590823400211186, guid: cdefbb419192e4f26bb14479e7a9c848,
+        type: 3}
+      propertyPath: currentHealth
+      value: 3000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2964,14 +2724,14 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      targetSideSpaces: 0
+      targetSideSpaces: 1
       targetSideSpace: 0
-      targetLeftSide: 0
-      startFacingDirection: 1
-      targetBoatSpaces: 0
-      targetSpace: 0
-      targetBoatSide: 0
-      boardingFacingDirection: 1
+      targetLeftSide: 1
+      startFacingDirection: -1
+      targetBoatSpaces: 1
+      targetSpace: 1
+      targetBoatSide: 1
+      boardingFacingDirection: -1
 --- !u!1001 &2099520124
 PrefabInstance:
   m_ObjectHideFlags: 0

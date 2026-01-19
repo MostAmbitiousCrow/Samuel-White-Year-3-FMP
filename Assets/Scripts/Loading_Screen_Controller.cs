@@ -56,10 +56,6 @@ public class Loading_Screen_Controller : MonoBehaviour
     #endregion
 
     #region
-    /*
-     * TODO: Something has affected the timing of the loading screen transition.
-     * Might be the Game Initiation process.
-    */
     IEnumerator EnterLoadingScreenProcess()
     {
         float t = startTransitionTime;
@@ -74,7 +70,7 @@ public class Loading_Screen_Controller : MonoBehaviour
         {
             // Update Loading Meter Aplha
             _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
-            yield return t -= Time.deltaTime;
+            yield return t -= Time.unscaledDeltaTime;
         }
 
         // Reset Animator Speed and trigger Loading Animation
@@ -99,15 +95,15 @@ public class Loading_Screen_Controller : MonoBehaviour
         while (t < endTransitionTime)
         {
             // Update Loading Meter Aplha
+            Debug.Log($"Closing. Time: {t}. Duration: {endTransitionTime}");
             _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
-            yield return t += Time.deltaTime;
+            yield return t += Time.unscaledDeltaTime;
         }
 
         // Reset speed and bring to inactive
         _transitionAnimator.speed = 1f;
         _transitionAnimator.SetTrigger("Inactive");
-
-        IsTransitioning = false;
+        
         _transitionScreen.SetActive(false);
 
         yield break;
