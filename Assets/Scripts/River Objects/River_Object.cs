@@ -105,7 +105,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
             RiverFlowMovement();
             _distance = GetDistanceToCurrentLane();
             
-            if (_distance < .1f) // TODO Temporary until object pooling is implemented
+            if (_distance < -10f) // TODO Temporary until object pooling is implemented
                 Destroy(gameObject);
         }
     }

@@ -92,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8654578106729643833}
+  - component: {fileID: 5386030746908217459}
   m_Layer: 0
   m_Name: Sewer Environment
   m_TagString: Untagged
@@ -116,6 +117,26 @@ Transform:
   - {fileID: 5670958438555083659}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5386030746908217459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321774252279206036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f6a46b1dcdf4b34af751b9480fde5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sewerObjects:
+  - {fileID: 4823959137005665562}
+  - {fileID: 3599626471909401265}
+  - {fileID: 6358696382302843571}
+  - {fileID: 4225103643598739847}
+  - {fileID: 3425625957654373032}
+  returnDistance: -10
+  resetDistance: 22
 --- !u!1 &4901875249035285721
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,13 +310,15 @@ Transform:
   m_GameObject: {fileID: 7780817927563273251}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.5, z: 30}
-  m_LocalScale: {x: 1.09, y: 1.5, z: 4}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -3.5, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 8507466856798361010}
-  - {fileID: 8081841495582336899}
-  - {fileID: 9034501058554511287}
+  - {fileID: 4823959137005665562}
+  - {fileID: 3599626471909401265}
+  - {fileID: 6358696382302843571}
+  - {fileID: 4225103643598739847}
+  - {fileID: 3425625957654373032}
   m_Father: {fileID: 8654578106729643833}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8198431250109382070
@@ -330,7 +353,7 @@ Transform:
   - {fileID: 2249766255390596150}
   m_Father: {fileID: 5965697856494474467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &8185892060694147673
+--- !u!1001 &2332677191428635996
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -338,93 +361,73 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5670958438555083659}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 3859476735964847300, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
+      propertyPath: m_Name
+      value: Sewer Tunnel Section - 0 (0)
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.5
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -10
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_Name
-      value: Sewer Tunnel (PROTOTYPE).vox-1-Sewer Tunnel - 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 06c74ced7c0eb48229f4dda40a5bdd24, type: 3}
---- !u!4 &8507466856798361010 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 3c64fd84834a54b58b16fb62a2b8c4c1, type: 3}
+--- !u!4 &4823959137005665562 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+  m_CorrespondingSourceObject: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
     type: 3}
-  m_PrefabInstance: {fileID: 8185892060694147673}
+  m_PrefabInstance: {fileID: 2332677191428635996}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8620665358645133416
+--- !u!1001 &4220946413409956597
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -432,93 +435,73 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5670958438555083659}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 3859476735964847300, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: -3
+      propertyPath: m_Name
+      value: Sewer Tunnel Section - 0 (2)
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.5
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 2.8
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
-        type: 3}
-      propertyPath: m_Name
-      value: Sewer Tunnel (PROTOTYPE).vox-1-Sewer Tunnel - 0 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 06c74ced7c0eb48229f4dda40a5bdd24, type: 3}
---- !u!4 &8081841495582336899 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 3c64fd84834a54b58b16fb62a2b8c4c1, type: 3}
+--- !u!4 &6358696382302843571 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 06c74ced7c0eb48229f4dda40a5bdd24,
+  m_CorrespondingSourceObject: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
     type: 3}
-  m_PrefabInstance: {fileID: 8620665358645133416}
+  m_PrefabInstance: {fileID: 4220946413409956597}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8856970395211094108
+--- !u!1001 &5559469876053156590
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -526,89 +509,217 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5670958438555083659}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 3859476735964847300, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
+      propertyPath: m_Name
+      value: Sewer Tunnel Section - 0 (4)
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.75
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 15.6
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 47eeb1bb98f78417e91af5dec8640a6a,
-        type: 3}
-      propertyPath: m_Name
-      value: Sewer Tunnel (PROTOTYPE).vox-0-Sewer Tunnel - 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 47eeb1bb98f78417e91af5dec8640a6a, type: 3}
---- !u!4 &9034501058554511287 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 3c64fd84834a54b58b16fb62a2b8c4c1, type: 3}
+--- !u!4 &3425625957654373032 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47eeb1bb98f78417e91af5dec8640a6a,
+  m_CorrespondingSourceObject: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
     type: 3}
-  m_PrefabInstance: {fileID: 8856970395211094108}
+  m_PrefabInstance: {fileID: 5559469876053156590}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6005833748656562935
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5670958438555083659}
+    m_Modifications:
+    - target: {fileID: 3859476735964847300, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_Name
+      value: Sewer Tunnel Section - 0 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c64fd84834a54b58b16fb62a2b8c4c1, type: 3}
+--- !u!4 &3599626471909401265 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6005833748656562935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6345542935090813377
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5670958438555083659}
+    m_Modifications:
+    - target: {fileID: 3859476735964847300, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_Name
+      value: Sewer Tunnel Section - 0 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c64fd84834a54b58b16fb62a2b8c4c1, type: 3}
+--- !u!4 &4225103643598739847 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7110463413515092038, guid: 3c64fd84834a54b58b16fb62a2b8c4c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6345542935090813377}
   m_PrefabAsset: {fileID: 0}

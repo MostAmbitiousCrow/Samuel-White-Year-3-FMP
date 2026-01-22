@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -29,10 +30,7 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     public void TriggerHitStop(float stopDuration = .2f)
     {
         Debug.Log("HitStop Routine Started");
-        // if (_hitStopRoutine != null)
-        // {
-        //     StopCoroutine(_hitStopRoutine);
-        // }
+        if (_hitStopRoutine != null) StopCoroutine(_hitStopRoutine);
         _hitStopRoutine = StartCoroutine(HitStopRoutine(stopDuration));
     }
 
@@ -46,13 +44,16 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     {
         OnHitStop();
         
-        var t = 0f;
-        while (t < stopDuration)
+        if (stopDuration > 0f)
         {
-            print(t);
-            t += Time.unscaledDeltaTime;
-            yield return PauseWait;
+            var t = 0f;
+            while (t < stopDuration)
+            {
+                t += Time.unscaledDeltaTime;
+                yield return PauseWait;
+            }
         }
+
         _hitStopRoutine = null;
         
         OnHitStopEnded();
@@ -71,4 +72,9 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
         Time.timeScale = 1f;
     }
     #endregion
+
+    private void OnDestroy()
+    {
+        OnHitStopEnded();
+    }
 }
