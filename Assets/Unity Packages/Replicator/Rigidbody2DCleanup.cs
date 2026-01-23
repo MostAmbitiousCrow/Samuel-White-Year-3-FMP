@@ -10,7 +10,7 @@ namespace Replicator {
 			rigidbody2d = GetComponent<Rigidbody2D>();
 		}
 		public void OnRecycle() {
-			rigidbody2d.velocity = Vector2.zero;
+			rigidbody2d.linearVelocity = Vector2.zero;
 			rigidbody2d.angularVelocity = 0f;
 		}
 	}

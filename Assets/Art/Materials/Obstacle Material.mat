@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 10
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -31,8 +31,11 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -46,7 +49,11 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 0.5, b: 0, a: 1}
     - _Color: {r: 1, g: 0.5, b: 0, a: 1}
-    - _Midtone: {r: 0.4117647, g: 0.4117647, b: 0.4117647, a: 1}
-    - _NewMidtone: {r: 1, g: 0.4923132, b: 0, a: 1}
-    - _NewShadow: {r: 0.495283, g: 0.19811322, b: 0, a: 1}
+    - _Highlight: {r: 1, g: 1, b: 1, a: 1}
+    - _Midtone: {r: 0.43137255, g: 0.43137255, b: 0.43137255, a: 1}
+    - _NewHighlight: {r: 1, g: 0.6337449, b: 0, a: 1}
+    - _NewMidtone: {r: 0.9019608, g: 0.375817, b: 0, a: 1}
+    - _NewShadow: {r: 0.45882353, g: 0.19117647, b: 0, a: 1}
+    - _Shadow: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -86,6 +86,15 @@ public class Loading_Screen_Controller : MonoBehaviour
 
     IEnumerator CloseLoadingScreenProcess()
     {
+        // while (!_canvas.worldCamera)
+        // {
+        //     _canvas.worldCamera = Camera.main;
+        //     yield return new WaitForEndOfFrame();
+        // }
+        
+        yield return new WaitUntil(() => _canvas.worldCamera = Camera.main);
+        Debug.Log($"Render Camera was set to: {_canvas.worldCamera}");
+        
         float t = 0f;
 
         // Update Animator Speed and trigger the Close Animation

@@ -75,6 +75,8 @@ public class MainSceneManager : MonoBehaviour
         loadingScreenController.UpdateLoadingMeter(1f);
         async.allowSceneActivation = true;
 
+        yield return new WaitUntil(() => async.isDone);
+
         // End the opening Loading transition
         loadingScreenController.EndLoadingScreen();
         IsLoadingScene = false;

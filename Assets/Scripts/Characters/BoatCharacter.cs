@@ -395,7 +395,7 @@ namespace GameCharacters
             yield return new WaitUntil(() => !isVaulting);
             
             isJumping = true;
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             
             OnJumped();
@@ -423,7 +423,7 @@ namespace GameCharacters
         {
             TriggerHitStop();
             isBouncing = true;
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * bouncePower, ForceMode.Impulse);
 
             if (_waitGroundedRoutine != null) return;

@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using EditorAttributes;
 
 /// <summary>
 /// The scriptable object that references the colours for the game to use.
@@ -6,14 +8,69 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameColours", menuName = "ScriptableObjects/GameSettings/GameColours", order = 1)]
 public class SO_GameColours : ScriptableObject
 {
-    [Header("Character/Object Specific Colours")]
-    public Color PlayerColour = Color.green;
-    public Color EnemyColour = Color.red;
-    public Color ObstacleColour = Color.yellow;
-    public Color GemstoneColour = Color.blue;
-
-    [Header("Game Colours")]
-    public Color ShadowColour = Color.black;
-    public Color MidtoneColour = Color.gray;
-    public Color HighlightColour = Color.white;
+    [SerializeField] public ObjectMaterialColours[] MaterialColours = new ObjectMaterialColours[]
+    {
+        // Global
+        new ObjectMaterialColours()
+        {
+            Name = "Global",
+            HighlightColour = Color.white,
+            MidtoneColour = Color.gray,
+            ShadowColour = Color.black
+        },
+        
+        // Player
+        new ObjectMaterialColours()
+        {
+            Name = "Player",
+            HighlightColour = Color.green,
+            MidtoneColour = Color.green,
+            ShadowColour = Color.green
+        },
+        
+        // Enemies
+        new ObjectMaterialColours()
+        {
+            Name = "Enemies",
+            HighlightColour = Color.red,
+            MidtoneColour = Color.red,
+            ShadowColour = Color.red,
+        },
+        
+        // Obstacles
+        new ObjectMaterialColours()
+        {
+            Name = "Obstacles",
+            HighlightColour = Color.yellow,
+            MidtoneColour = Color.yellow,
+            ShadowColour = Color.yellow,
+        },
+        
+        // Collectibles
+        new ObjectMaterialColours()
+        {
+            Name = "Collectibles",
+            HighlightColour = Color.blue,
+            MidtoneColour = Color.blue,
+            ShadowColour = Color.blue,
+        },
+        
+        // Environment
+        new ObjectMaterialColours()
+        {
+            Name = "Environment",
+            HighlightColour = Color.white,
+            MidtoneColour = Color.gray,
+            ShadowColour = Color.black
+        },
+        
+        // UI
+        new ObjectMaterialColours()
+        {
+            Name = "UI",
+            HighlightColour = Color.white,
+            MidtoneColour = Color.gray,
+            ShadowColour = Color.black
+        }
+    };
 }

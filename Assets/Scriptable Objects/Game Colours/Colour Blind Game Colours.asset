@@ -12,10 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e418f2d7aa51b4dbf4cc2f9cb63f17, type: 3}
   m_Name: Colour Blind Game Colours
   m_EditorClassIdentifier: 
-  PlayerColour: {r: 1, g: 0, b: 0, a: 1}
-  EnemyColour: {r: 0, g: 0.17095137, b: 1, a: 1}
-  ObstacleColour: {r: 0.250155, g: 0.046457358, b: 0.461, a: 1}
-  GemstoneColour: {r: 0.4433962, g: 0.1383121, b: 0, a: 1}
-  ShadowColour: {r: 0, g: 0, b: 0, a: 1}
-  MidtoneColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  HighlightColour: {r: 1, g: 1, b: 1, a: 1}
+  MaterialColours:
+  - Name: Global
+    ShadowColour: {r: 0, g: 0, b: 0, a: 1}
+    MidtoneColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    HighlightColour: {r: 1, g: 1, b: 1, a: 1}
+  - Name: Player
+    ShadowColour: {r: 0, g: 1, b: 0, a: 1}
+    MidtoneColour: {r: 0, g: 1, b: 0, a: 1}
+    HighlightColour: {r: 0, g: 1, b: 0, a: 1}
+  - Name: Enemies
+    ShadowColour: {r: 1, g: 0, b: 0, a: 1}
+    MidtoneColour: {r: 1, g: 0, b: 0, a: 1}
+    HighlightColour: {r: 1, g: 0, b: 0, a: 1}
+  - Name: Obstacles
+    ShadowColour: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    MidtoneColour: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    HighlightColour: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - Name: Collectibles
+    ShadowColour: {r: 0, g: 0, b: 1, a: 1}
+    MidtoneColour: {r: 0, g: 0, b: 1, a: 1}
+    HighlightColour: {r: 0, g: 0, b: 1, a: 1}
+  - Name: Environment
+    ShadowColour: {r: 1, g: 1, b: 1, a: 1}
+    MidtoneColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    HighlightColour: {r: 0, g: 0, b: 0, a: 1}
+  - Name: UI
+    ShadowColour: {r: 0.14453125, g: 0.125, b: 0.25, a: 1}
+    MidtoneColour: {r: 0.29112574, g: 0.2509804, b: 0.5019608, a: 1}
+    HighlightColour: {r: 0.578125, g: 0.5, b: 1, a: 1}
