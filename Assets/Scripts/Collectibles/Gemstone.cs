@@ -61,7 +61,7 @@ public class Gemstone : River_Collectible
         GameManager.GameLogic.AddGemstones(_collectParticlesAmount * Data.BankValue);
 
         _idleParticles.Stop();
-        _isMoving = false; //TODO: Temp
+        isMoving = false; //TODO: Temp
     }
     #endregion
 
@@ -151,7 +151,7 @@ public class Gemstone : River_Collectible
         else
         {
             IsCollected = false;
-            _isMoving = true;
+            isMoving = true;
         }
     }
     #endregion

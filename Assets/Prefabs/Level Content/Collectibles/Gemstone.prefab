@@ -4774,6 +4774,9 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9605,6 +9608,9 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9720,6 +9726,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9828,14 +9837,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAffectedByRiverSpeed: 1
   travelSpeed: 1
-  _currentLane: 0
+  currentLane: 0
   startLane: 1
-  _height: 0
-  _distance: 0
-  CanMove: 0
-  _isMoving: 1
+  height: 0
+  distance: 0
+  canMove: 0
+  isMoving: 0
   isAnimated: 0
   riverObjectAnimator: {fileID: 0}
+  objectPrefab: {fileID: 5979095628691551611}
   _defautlBankValue: 0
   _isCollected: 0
   Data:

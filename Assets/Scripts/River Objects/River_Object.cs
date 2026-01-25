@@ -1,10 +1,11 @@
 using EditorAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Base class of all Objects that will interact with the Sewer River
 /// </summary>
-public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
+public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPooledObject
 {
     [Line(GUIColor.White, 1, 3)]
     [Header("River Object Options")]
@@ -12,14 +13,11 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
     [SerializeField] protected bool isAffectedByRiverSpeed = true;
     [Tooltip("The speed of which this object travels without the influence of the river.")]
     [SerializeField, HideField(nameof(isAffectedByRiverSpeed))] protected float travelSpeed = 1f;
-
-    [Space(10)]
-
-    /// <summary>
-    /// The current lane of the river this object is on
-    /// </summary>
+    
+    [Space]
+    
     [Tooltip("The current lane of the river this object is on")]
-    [SerializeField] protected int _currentLane;
+    [SerializeField] protected int currentLane;
     /// <summary>
     /// The lane this object starts on
     /// </summary>
@@ -29,59 +27,59 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
     /// The current height of this object
     /// </summary>
     [Tooltip("The current height of this object")]
-    [SerializeField] protected float _height = 0f;
+    [SerializeField] protected float height = 0f;
     /// <summary>
     /// The distance of this object to the destination of its lane
     /// </summary>
     [Tooltip("The distance of this object to the destination of its lane")]
-    [SerializeField] protected float _distance = 0f;
-    [Space(10)]
-    public bool CanMove = false;
-    [SerializeField] protected bool _isMoving;
+    [SerializeField] protected float distance = 0f;
+    [Space]
+    public bool canMove = false;
+    public bool isMoving;
 
-    protected Vector3 _currentMoveTarget;
-
+    protected Vector3 CurrentMoveTarget;
+    
     [Header("Components")]
-    [SerializeField] protected bool isAnimated;
-    [SerializeField, ShowField(nameof(isAnimated))] protected River_Object_Animator riverObjectAnimator;
+    [SerializeField] protected bool explodesOnHit;
+    [SerializeField, ShowField(nameof(explodesOnHit))] protected ArtExplode artExploder;
 
     //protected River_Manager riverManager;
 
     #region Space Movement Logic
 
-    public void StartOnLane(int lane, float distance, float height)
+    public void StartOnLane(int lane, float startDistance, float startHeight)
     {
         startLane = lane;
         GoToLane(startLane);
-        SetDistanceAndHeight(distance, height);
+        SetDistanceAndHeight(startDistance, startHeight);
     }
 
     public void MoveToLane(int direction)
     {
-        River_Manager.RiverLane rl = River_Manager.Instance.GetLaneFromDirection(_currentLane, direction);
+        var rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
 
-        _currentLane = rl.ID;
-        _currentMoveTarget = new Vector3(rl.axis.x, rl.axis.y, transform.position.z); //TODO: Add optional movement interpolation
-        _isMoving = true;
+        currentLane = rl.ID;
+        CurrentMoveTarget = new Vector3(rl.axis.x, rl.axis.y, transform.position.z); //TODO: Add optional movement interpolation
+        isMoving = true;
         // print($"Moved {direction} to Space Position: {rl.axis}, ID {rl.ID}");
     }
 
     public void GoToLane(int lane)
     {
-        River_Manager.RiverLane rl = River_Manager.Instance.GetLane(lane);
+        var rl = River_Manager.Instance.GetLane(lane);
 
-        _currentLane = rl.ID;
+        currentLane = rl.ID;
         transform.position = new(rl.axis.x, rl.axis.y, transform.position.z);
     }
 
     public int GetCurrentLane()
     {
-        return _currentLane;
+        return currentLane;
     }
 
     public void SetDistanceAndHeight(float distance, float height)
     {
-        _distance = distance; _height = height;
+        this.distance = distance; this.height = height;
 
         Vector3 t = transform.position;
         transform.position = new(t.x, height, distance);
@@ -89,33 +87,18 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
     #endregion
 
     #region Update Events
-    protected override void TimeUpdate()
-    {
-        OnUpdate();
-    }
     protected override void FixedTimeUpdate()
     {
-        OnFixedUpdate();
-    }
-
-    protected virtual void OnFixedUpdate()
-    {
-        if (_isMoving && CanMove)
-        {
-            RiverFlowMovement();
-            _distance = GetDistanceToCurrentLane();
+        // Do Movement
+        if (!isMoving || !canMove) return;
+        RiverFlowMovement();
+        distance = GetDistanceToCurrentLane();
             
-            if (_distance < -10f) // TODO Temporary until object pooling is implemented
-                Destroy(gameObject);
-        }
+        // Once out of sight, return to pool
+        if (distance < -10f) ReturnToPool();
     }
 
-    protected virtual void OnUpdate()
-    {
-        return;
-    }
-
-    void RiverFlowMovement()
+    private void RiverFlowMovement()
     {
         float speed = isAffectedByRiverSpeed ? River_Manager.Instance.CurrentRiverSpeed : travelSpeed;
 
@@ -125,29 +108,35 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement
     }
     #endregion
 
-    #region Pooling Methods
-
-    public void Spawned()
-    {
-        OnSpawn();
-    }
-
-    protected virtual void OnSpawn() { }
-
-    #endregion
-
-    #region Injection
-    //public void InjectRiverManager(River_Manager manager)
-    //{
-    //    riverManager = manager;
-    //    print($"Injected {manager} into {name}");
-    //}
-    #endregion
-
     #region Math
     protected float GetDistanceToCurrentLane()
     {
-        return transform.position.z - River_Manager.Instance.GetLane(_currentLane).axis.z;
+        return transform.position.z - River_Manager.Instance.GetLane(currentLane).axis.z;
     }
     #endregion
+
+    #region Pooling
+    
+    [Header("Pooling")]
+    [SerializeField] private GameObject objectPrefab;
+
+    public GameObject ObjectPrefab
+    {
+        get => objectPrefab;
+        set => objectPrefab = value;
+    }
+
+    public void ReturnToPool()
+    {
+        ObjectPoolManager.Instance.ReturnToPool(ObjectPrefab, gameObject);
+    }
+
+    public virtual void OnSpawn()
+    {
+        isMoving = true;
+        return;
+    }
+
+    #endregion
+
 }

@@ -44,7 +44,7 @@ public abstract class River_Collectible : River_Object
     protected virtual void Reset()
     {
         IsCollected = false;
-        CanMove = true;
+        canMove = true;
     }
 
     #endregion

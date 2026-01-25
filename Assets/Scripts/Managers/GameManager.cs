@@ -124,6 +124,8 @@ public class GameManager : MonoBehaviour
             {
                 PlayerTransform = FindObjectOfType<PlayerCharacter>().transform // TODO: Maker Cleaner
             };
+            
+            onGameInitialised?.Invoke();
 
             print("Game Initialised, started Game");
             StartGame(); // Start the game upon the game being initialised.// TODO: Move to a stage where the game is started via a countdown/trigger
