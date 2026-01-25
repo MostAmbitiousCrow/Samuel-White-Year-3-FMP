@@ -295,9 +295,6 @@ public class LeapingCrocodile_DefeatedState : EnemyDefeatedState
     public override void OnEnter()
     {
         base.OnEnter();
-
-        // TODO: Add a delay to the enemy being defeated
-        CrocSc.ReturnEnemy();
     }
 
     public override void OnExit()

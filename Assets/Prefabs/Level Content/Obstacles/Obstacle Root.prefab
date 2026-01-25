@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1283754314356393517}
   - component: {fileID: 4089875329097415876}
-  - component: {fileID: 2976940064806932684}
+  - component: {fileID: 4151325652179011707}
   - component: {fileID: 1486993625528279179}
   - component: {fileID: 6112428136379561885}
   m_Layer: 12
@@ -50,17 +50,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAffectedByRiverSpeed: 1
   travelSpeed: 1
-  _currentLane: 0
+  currentLane: 0
   startLane: 1
-  _height: 0
-  _distance: 0
-  CanMove: 0
-  _isMoving: 1
-  isAnimated: 1
-  riverObjectAnimator: {fileID: 2976940064806932684}
+  height: 0
+  distance: 0
+  canMove: 0
+  isMoving: 0
+  explodesOnHit: 0
+  artExploder: {fileID: 0}
+  objectPrefab: {fileID: 4004389689732239133}
   obstacleData:
     ImpactDamage: 1
---- !u!114 &2976940064806932684
+--- !u!114 &4151325652179011707
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,10 +70,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4004389689732239133}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49726d83d5cdf4dafbce6848c31c8ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: dee96011a33474dcab3c64cbe349c864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  art: {fileID: 7340371279494694190}
+  art: []
+  force: 1
+  minMaxAngularVelocity: {x: -5, y: 5}
+  animator: {fileID: 0}
 --- !u!54 &1486993625528279179
 Rigidbody:
   m_ObjectHideFlags: 0

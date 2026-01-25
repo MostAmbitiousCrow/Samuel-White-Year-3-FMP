@@ -127,7 +127,12 @@ public class GameMaterialsManager : MonoBehaviour
     }
 
     #endregion
+    
+    #region Colour Transition
 
+    // TODO: Implement a routine to transition one colour scheme to another!
+
+    #endregion
 
 }
 

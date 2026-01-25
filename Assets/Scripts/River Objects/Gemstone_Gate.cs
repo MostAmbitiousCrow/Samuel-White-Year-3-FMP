@@ -60,20 +60,21 @@ public class Gemstone_Gate : River_Object
     }
 
     #region Override Methods
-    protected override void OnFixedUpdate()
+
+    protected override void FixedTimeUpdate()
     {
-        base.OnFixedUpdate();
-        if (_isConsuming) return; // || SpaceManager == null
-        if (Boat_Space_Manager.Instance.GetDistanceToBoat(_distance) < _distanceUntilConsumption)
+        base.FixedTimeUpdate();
+        if (_isConsuming || !canMove) return; // || SpaceManager == null
+        if (Boat_Space_Manager.Instance.GetDistanceToBoat(distance) < _distanceUntilConsumption)
         {
             StartCoroutine(ConsumeGemstones());
         }
     }
 
-    protected override void OnSpawn()
+    public override void OnSpawn()
     {
         base.OnSpawn();
-        _isMoving = true;
+        isMoving = true;
 
         _art.SetActive(true);
 
@@ -97,7 +98,7 @@ public class Gemstone_Gate : River_Object
 
         print($"{name} Started Consumption");
         _isConsuming = true;
-        _isMoving = false;
+        isMoving = false;
 
         int savedGemstones = playerdata.CurrentGemstones;
 
@@ -221,7 +222,7 @@ public class Gemstone_Gate : River_Object
     void AbsorptionSucceeded()
     {
         print("Absorption Succeeded!");
-        _isMoving = true;
+        isMoving = true;
         _gemRequirementText.SetText(0.ToString());
 
         _art.SetActive(false);
@@ -236,7 +237,7 @@ public class Gemstone_Gate : River_Object
         // Trigger Laser Player Boat Animation here
 
         // TODO: Ideally there should be three ways of ending the game, forcing it to end, killing the player or destroying their boat. This is temporary
-        _isMoving = false;
+        isMoving = false;
         GameManager.GameLogic.EndGame();
     }
     #endregion
