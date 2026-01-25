@@ -68,8 +68,6 @@ namespace GameCharacters
         public CharacterHealth HealthComponent => healthComponent;
         [SerializeField] private Transform stompPosition;
         public Transform StompPosition => stompPosition;
-        [SerializeField] protected Collider characterCollider;
-        public Collider CharacterCollider => characterCollider;
 
         #endregion
         

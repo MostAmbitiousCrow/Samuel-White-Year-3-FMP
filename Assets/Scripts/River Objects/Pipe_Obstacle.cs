@@ -27,7 +27,7 @@ public class Pipe_Obstacle : River_Obstacle
         }  
     }
 
-    public override void OnSpawn()
+    protected override void OnSpawn()
     {
         base.OnSpawn();
         ConnectPipeToSurface();

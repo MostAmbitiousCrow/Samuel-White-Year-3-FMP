@@ -49,7 +49,7 @@ public class Section_Content : MonoBehaviour, IAffectedByRiver
     }
 
     [Header("Debug")]
-    [SerializeField] private bool enableDebug;
+    [SerializeField] bool enableDebug;
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

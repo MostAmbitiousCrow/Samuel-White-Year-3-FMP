@@ -92,11 +92,12 @@ public abstract class BoatEnemyStateController : BoatCharacter
         // TODO: Add any additional initialisation processes here. Likely after enemy pooling
     }
 
-    /// <summary> Returns the enemy back to the pooling system </summary>
-    public virtual void ReturnToPool()
+    /// <summary> Returns the enemy back to the pooling system | NOTE: Pool System Currently not Implemented </summary>
+    public virtual void ReturnEnemy()
     {
+        // TODO: Temporary. Replace to disable the object and return to its River Object Root
         transform.parent = riverObject.transform;
-        riverObject.ReturnToPool();
+        Destroy(riverObject.gameObject);
     }
 
     public override void OnTookDamage()

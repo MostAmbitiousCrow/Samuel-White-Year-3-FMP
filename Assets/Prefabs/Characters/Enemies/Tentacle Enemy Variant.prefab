@@ -59,9 +59,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -174,11 +171,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6419227462993012122, guid: d441f6f7cd1d04bcca0eba886cf78253,
-        type: 3}
-      propertyPath: objectPrefab
-      value: 
-      objectReference: {fileID: 2275750187809480860}
     - target: {fileID: 7654244735121194933, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_Name
@@ -193,12 +185,6 @@ PrefabInstance:
       addedObject: {fileID: 3554278304059050356}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d441f6f7cd1d04bcca0eba886cf78253, type: 3}
---- !u!1 &2275750187809480860 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7654244735121194933, guid: d441f6f7cd1d04bcca0eba886cf78253,
-    type: 3}
-  m_PrefabInstance: {fileID: 8479224445572276009}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4511589262171963809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5417869051682545288, guid: d441f6f7cd1d04bcca0eba886cf78253,

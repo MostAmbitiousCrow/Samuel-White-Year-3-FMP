@@ -8,6 +8,7 @@ public class River_Enemy : River_Object
     [SerializeField] float emergeTriggerDetectRadius = 3f;
     public BoatEnemy_Data EnemyData { get; private set; }
     
+    private Transform BoatTransform { get { return Boat_Space_Manager.Instance.transform; } }
     [SerializeField] BoatEnemyStateController enemyController;
 
     public void OverrideStats(BoatEnemy_Data overrideStats)
@@ -20,30 +21,36 @@ public class River_Enemy : River_Object
         print($"{name} stats were overrided");
     }
 
+    //public void InjectBoatSpaceManager(Boat_Space_Manager bsm)
+    //{
+    //    if (!bsm) Debug.LogError($"Missing Boat Space Manager");
+    //    SpaceManager = bsm;
+    //    _boatTransform = SpaceManager.transform;
+    //}
+
     private void OnEnable()
     {
-        if (!enemyController) return;
         enemyController.gameObject.SetActive(false); //TODO: Adjust this for bat enemies who will spawn with their enemy active
     }
 
-    protected override void FixedTimeUpdate()
+    protected override void OnFixedUpdate()
     {
-        base.FixedTimeUpdate();
+        base.OnFixedUpdate();
         
         // TODO: Detect when close to the players boat
 
-        if(isMoving) //TODO: Something to consider here
+        if(_isMoving) //TODO: Something to consider here
         {
             if (GetDistanceToCurrentLane() < emergeTriggerDetectRadius)
             {
-                isMoving = false;
+                _isMoving = false;
                 enemyController.gameObject.SetActive(true);
                 enemyController.EmergeFromRiver();
             }
         }
         else
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, Boat_Space_Manager.Instance.transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y, BoatTransform.position.z);
         }
 
         return;
@@ -51,7 +58,7 @@ public class River_Enemy : River_Object
 
     #region Pooling Methods
 
-    public override void OnSpawn()
+    protected override void OnSpawn()
     {
         base.OnSpawn();
         return;

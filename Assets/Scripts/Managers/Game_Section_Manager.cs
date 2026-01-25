@@ -2,15 +2,13 @@ using UnityEngine;
 using System.Collections;
 using EditorAttributes;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Controls and stores the flow and order of data from level sections
 /// </summary>
 public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 {
-    [Header("Level Info")]
-    [SerializeField] private GameLevels currentLevel = GameLevels.Sewer;
-    
     [Header("Section Data")]
     public List<Section_Content.SectionData> sectionDatas;
 
@@ -21,29 +19,27 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     /// </summary>
     [SerializeField] bool isHalted;
 
-    #region Section Objects
     [Header("Section Objects")] // TODO: rework to use object pooling!
     [Line(GUIColor.Cyan)]
     [FoldoutGroup("Obstacle Objects", nameof(trashObject), nameof(pipeObject))]
     [SerializeField] Void obstacleGroup;
     [SerializeField, HideProperty] GameObject trashObject;
     [SerializeField, HideProperty] GameObject pipeObject;
-    
+
     [Line(GUIColor.Red)]
     [FoldoutGroup("Enemy Objects", nameof(crocodileObject), nameof(frogObject), nameof(batObject), nameof(tentacleObject))]
     [SerializeField] Void enemyGroup;
     [SerializeField, HideProperty] GameObject crocodileObject, frogObject, batObject, tentacleObject;
-    
+    //[SerializeField, HideProperty] GameObject tentacleObject;
+
     [Line(GUIColor.Yellow)]
     [FoldoutGroup("Collectible Objects", nameof(gemStoneObject), nameof(gemFragmentObject))]
     [SerializeField] Void collectibleGroup;
     [SerializeField, HideProperty] GameObject gemStoneObject;
     [SerializeField, HideProperty] GameObject gemFragmentObject;
-    
+
     [Line(GUIColor.White)]
     [SerializeField] GameObject gemStoneGateObject;
-    #endregion
-
 
     private void OnEnable()
     {
@@ -84,54 +80,62 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             yield break;
         }
 
-        // Spawn Provided Section Data
         for (int i = 0; i < sectionDatas.Count; i++)
         {
             Section_Content.SectionData s = sectionDatas[currentSection];
-            
-            if(s == null) continue;
-            
+
             // Initial Delay
             yield return new WaitForSeconds(sectionDatas[currentSection].initialDelay);
 
+            int c; // Count
+
             #region Spawn Obstacles
-            // TODO: Rework object spawning so that they all start moving after the async is completed
-            
             // Spawn Obstacles
-            int c = s.ObstacleDatas.Count; // Count Obstacles
+            c = s.ObstacleDatas.Count;
             for (int j = 0; j < c; j++)
             {
-                // Get the obstacle data and the pooled obstacle
-                var obstacleData = sectionDatas?[currentSection].ObstacleDatas[j];
-                River_Obstacle obstacle;
+                Section_Obstacle_Object.SectionObstacleData obstacleData = sectionDatas?[currentSection].ObstacleDatas[j].sectionData;
 
-                if (!obstacleData) continue;
+                // Instantiate the selected object type
+                AsyncInstantiateOperation<GameObject> op = default;
 
-                obstacle = obstacleData.sectionData.obstacleType switch
+                if (obstacleData.obstacleType == Section_Obstacle_Object.ObstacleType.TrashPile)
+                    op = InstantiateAsync(trashObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                else if (obstacleData.obstacleType == Section_Obstacle_Object.ObstacleType.SewerPipe)
+                    op = InstantiateAsync(pipeObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+
+                // Wait until the object has been Instantiated
+                yield return new WaitUntil(() => op.isDone);
+
+                GameObject result = op.Result.First();
+
+                // Obtain the items River Component and obtain its alligned obstacle data
+                if (!result.TryGetComponent<River_Obstacle>(out var itemData))
                 {
-                    Section_Obstacle_Object.ObstacleType.TrashPile => ObjectPoolManager.Instance.Spawn<River_Obstacle>(
-                        trashObject),
-                    Section_Obstacle_Object.ObstacleType.SewerPipe => ObjectPoolManager.Instance.Spawn<Pipe_Obstacle>(
-                        pipeObject),
-                };
-
-                if (!obstacle) continue;
-                
-                // Update pipe data if the obstacle is a pipe
-                if (obstacleData.sectionData.obstacleType == Section_Obstacle_Object.ObstacleType.SewerPipe)
-                {
-                    var pipeObstacle = (Pipe_Obstacle)obstacle;
-                    pipeObstacle.PipeData = obstacleData.sectionData.pipeObstacleData;
+                    Debug.LogError("River Component is missing!");
+                    yield break;
                 }
-                
-                // Check if this obstacles data be overridden
-                if (obstacleData.sectionData.overrideData)
+
+                // Override Data (if true)
+                if (obstacleData.overrideData)
                 {
-                    obstacle.OverrideData(obstacleData.sectionData.overridedData);
+                    itemData.OverrideData(obstacleData.overridedData);
                 }
-                
-                // Place the obstacle in the world!
-                PlaceSectionObject(obstacle, obstacleData);
+
+                // Provide Pipe Data if obstacle is a pipe
+                if (obstacleData.obstacleType == Section_Obstacle_Object.ObstacleType.SewerPipe)
+                {
+                    itemData.GetComponent<Pipe_Obstacle>().PipeData = obstacleData.pipeObstacleData;
+                }
+
+                // Inject River_Manager // Scrapped
+                //itemData.InjectRiverManager(riverManager);
+
+                // Place the obstacle in the world
+                PlaceSectionObject(itemData, sectionDatas[currentSection].ObstacleDatas[j]);
+
+                // Trigger Spawned Method
+                itemData.Spawned();
 
                 yield return null;
             }
@@ -142,30 +146,51 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             c = s.EnemyDatas.Count;
             for (int j = 0; j < c; j++)
             {
-                // Get the obstacle data and the pooled obstacle
-                var enemyData = sectionDatas?[currentSection].EnemyDatas[j];
-                River_Enemy enemy;
+                var enemyData = sectionDatas?[currentSection].EnemyDatas[j].sectionData;
 
-                if (!enemyData) continue;
+                // Instantiate the selected object type
+                AsyncInstantiateOperation<GameObject> op = default;
 
-                enemy = enemyData.sectionData.enemyType switch
+                // Leaping Crocodile
+                if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Crocodile)
+                    op = InstantiateAsync(crocodileObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                // Freaky Frog
+                if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Frog)
+                    op = InstantiateAsync(frogObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                // Flying Bat
+                if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Bat)
+                    op = InstantiateAsync(batObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                // Tentacle
+                else if (enemyData.enemyType == Section_Enemy_Object.EnemyType.Tentacle)
+                    op = InstantiateAsync(tentacleObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+
+                // Wait until the object has been Instantiated
+                yield return new WaitUntil(() => op.isDone);
+
+                GameObject result = op.Result.First();
+
+                // Obtain the items River Component and obtain its alligned enemy data
+                if (!result.TryGetComponent<River_Enemy>(out var itemData))
                 {
-                    Section_Enemy_Object.EnemyType.Crocodile => ObjectPoolManager.Instance.Spawn<River_Enemy>(crocodileObject),
-                    Section_Enemy_Object.EnemyType.Frog => ObjectPoolManager.Instance.Spawn<River_Enemy>(frogObject),
-                    Section_Enemy_Object.EnemyType.Bat => ObjectPoolManager.Instance.Spawn<River_Enemy>(batObject),
-                    Section_Enemy_Object.EnemyType.Tentacle => ObjectPoolManager.Instance.Spawn<River_Enemy>(tentacleObject),
-                };
-
-                if (!enemy) continue;
-                
-                // Check if this enemies data will be overridden
-                if (enemyData.sectionData.overrideData)
-                {
-                    enemy.OverrideStats(enemyData.sectionData.overridedData);
+                    Debug.LogError($"{result.name}s River Component is missing!");
+                    continue;
                 }
-                
-                // Place the obstacle in the world!
-                PlaceSectionObject(enemy, enemyData);
+
+                // Override Data (if true)
+                if (enemyData.overrideData)
+                {
+                    itemData.OverrideStats(enemyData.overridedData);
+                }
+
+                // Inject River_Manager and Boat Space Manager // Scrapped
+                //itemData.InjectRiverManager(riverManager);
+                //itemData.InjectBoatSpaceManager(boatManager);
+
+                // Place the enemy in the world
+                PlaceSectionObject(itemData, sectionDatas[currentSection].EnemyDatas[j]);
+
+                // Trigger Spawned Method
+                itemData.Spawned();
 
                 yield return null;
             }
@@ -176,58 +201,83 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             c = s.CollectibleDatas.Count;
             for (int j = 0; j < c; j++)
             {
-                // Get the Collectible data and the pooled Collectibles
-                var collectibleData = sectionDatas?[currentSection].CollectibleDatas[j];
-                River_Collectible collectible;
+                Section_Collectible_Object.SectionCollectibleData collectibleData = sectionDatas?[currentSection].CollectibleDatas[j].sectionData;
 
-                if (!collectibleData) continue;
+                // Instantiate the selected object type
+                AsyncInstantiateOperation<GameObject> op = default;
 
-                collectible = collectibleData.sectionData.collectibleType switch
+                if (collectibleData.collectibleType == Section_Collectible_Object.CollectibleType.Gemstone)
+                    op = InstantiateAsync(gemStoneObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+                else if (collectibleData.collectibleType == Section_Collectible_Object.CollectibleType.GemstoneFragment)
+                    op = InstantiateAsync(gemFragmentObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
+
+                // Wait until the object has been Instantiated
+                yield return new WaitUntil(() => op.isDone);
+
+                GameObject result = op.Result.First();
+
+                // Obtain the items River Component and obtain its alligned collectible data
+                if (!result.TryGetComponent<River_Collectible>(out var itemData))
                 {
-                    Section_Collectible_Object.CollectibleType.Gemstone => ObjectPoolManager.Instance.Spawn<River_Collectible>(gemStoneObject),
-                    Section_Collectible_Object.CollectibleType.GemstoneFragment => ObjectPoolManager.Instance.Spawn<River_Collectible>(gemFragmentObject),
-                };
-
-                if (!collectible) continue;
-                
-                // Check if this enemies data will be overridden
-                if (collectibleData.sectionData.overrideData)
-                {
-                    collectible.OverrideData(collectibleData.sectionData.overridedData);
+                    Debug.LogError("River Component is missing!");
+                    continue;
                 }
-                
-                // Place the obstacle in the world!
-                PlaceSectionObject(collectible, collectibleData);
+
+                // Override Data (if true)
+                if (collectibleData.overrideData)
+                {
+                    itemData.OverrideData(collectibleData.overridedData);
+                }
+
+                // Inject River_Manager // Scrapped
+                //itemData.InjectRiverManager(riverManager);
+
+                // Place the collectible in the world
+                PlaceSectionObject(itemData, sectionDatas[currentSection].CollectibleDatas[j]);
+
+                // Trigger Spawned Method
+                itemData.Spawned();
 
                 yield return null;
             }
             #endregion
 
-            //TODO: Maybe somehow involve this with the obstacles?
             #region Spawn Gemstone Gates
             c = s.GemstoneGateDatas.Count;
             for (int j = 0; j < c; j++)
             {
-                // Get the Gate data and the pooled Gemstone Gates
-                var gateData = sectionDatas?[currentSection].GemstoneGateDatas[j];
-                Gemstone_Gate gemstoneGate;
+                Section_Gemstone_Gate.SectionGemstoneGateData gateData = sectionDatas?[currentSection].GemstoneGateDatas[j].sectionData;
 
-                if (!gateData) continue;
+                AsyncInstantiateOperation<GameObject> op = default;
+                op = InstantiateAsync(gemStoneGateObject, new Vector3(100f, 100f, 100f), Quaternion.identity);
 
-                gemstoneGate = ObjectPoolManager.Instance.Spawn<Gemstone_Gate>(gemStoneGateObject);
+                // Wait until the object has been Instantiated
+                yield return new WaitUntil(() => op.isDone);
 
-                if (!gemstoneGate) continue;
-                
-                // Check if this enemies data will be overridden
-                if (gateData.sectionData.overrideData)
+                GameObject result = op.Result.First();
+
+                // Obtain the items River Component and obtain its alligned collectible data
+                if (!result.TryGetComponent<Gemstone_Gate>(out var itemData))
                 {
-                    gemstoneGate.OverrideData(gateData.sectionData.overridedData);
+                    Debug.LogError("River Component is missing!");
+                    continue;
                 }
-                
-                // Place the obstacle in the world!
-                PlaceSectionObject(gemstoneGate, gateData);
 
-                yield return null;
+                // Override Data (if true)
+                if (gateData.overrideData)
+                {
+                    itemData.OverrideData(gateData.overridedData);
+                }
+
+                // Inject River_Manager and Boat_Space_Manager
+                //itemData.InjectRiverManager(riverManager);
+                //itemData.InjectBoatSpaceManager(boatManager);
+
+                // Place the collectible in the world
+                PlaceSectionObject(itemData, sectionDatas[currentSection].GemstoneGateDatas[j]);
+
+                // Trigger Spawned Method
+                itemData.Spawned();
             }
             #endregion
 
@@ -246,13 +296,10 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     /// <summary>
     /// Places the River Object based on the positioning data provided by the Section Builder Object
     /// </summary>
-    private void PlaceSectionObject(River_Object ro, Section_Builder_Object sbo)
+    void PlaceSectionObject(River_Object ro, Section_Builder_Object sbo)
     {
-        ro.canMove = true;
-        ro.isMoving = true;
         ro.StartOnLane(sbo.Lane, sbo.Distance + riverManager.RiverObjectSpawnDistance, sbo.Height);
-
-        Debug.Log($"{ro.name} was placed");
+        ro.CanMove = true;
     }
     #endregion
 
@@ -272,9 +319,4 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
         boatManager = bsm;
     }
     #endregion
-}
-
-public enum GameLevels
-{
-    Sewer, Forest, GemstoneCavern
 }

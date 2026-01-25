@@ -267,16 +267,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6419227462993012122, guid: d441f6f7cd1d04bcca0eba886cf78253,
-        type: 3}
-      propertyPath: objectPrefab
-      value: 
-      objectReference: {fileID: 3777125169220723089}
-    - target: {fileID: 6419227462993012122, guid: d441f6f7cd1d04bcca0eba886cf78253,
-        type: 3}
-      propertyPath: enemyController
-      value: 
-      objectReference: {fileID: 975833707667684665}
     - target: {fileID: 7654244735121194933, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_Name
@@ -313,7 +303,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 6796596338187034148}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3777125169220723089}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ade90b53687e455f8f39bc18caac3f0, type: 3}
@@ -373,7 +363,6 @@ MonoBehaviour:
   animator: {fileID: 8620681408576664016}
   healthComponent: {fileID: 4474887987069178}
   stompPosition: {fileID: 7100771862509231846}
-  characterCollider: {fileID: 9187696660757960072}
   isDirecting: 0
   rotationCurve:
     serializedVersion: 2
@@ -453,12 +442,6 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 6796596338187034148}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3777125169220723089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7654244735121194933, guid: d441f6f7cd1d04bcca0eba886cf78253,
-    type: 3}
-  m_PrefabInstance: {fileID: 6796596338187034148}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &6509662859039186153 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 289545105970184909, guid: d441f6f7cd1d04bcca0eba886cf78253,
@@ -474,12 +457,6 @@ Transform:
 --- !u!95 &8620681408576664016 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3022069612496646132, guid: d441f6f7cd1d04bcca0eba886cf78253,
-    type: 3}
-  m_PrefabInstance: {fileID: 6796596338187034148}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &9187696660757960072 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 2437323928954112940, guid: d441f6f7cd1d04bcca0eba886cf78253,
     type: 3}
   m_PrefabInstance: {fileID: 6796596338187034148}
   m_PrefabAsset: {fileID: 0}
