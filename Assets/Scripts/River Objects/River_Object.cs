@@ -117,18 +117,11 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     #region Pooling
     
-    [Header("Pooling")]
-    [SerializeField] private GameObject objectPrefab;
-
-    public GameObject ObjectPrefab
-    {
-        get => objectPrefab;
-        set => objectPrefab = value;
-    }
+    public int PoolObjectID { get; set; }
 
     public void ReturnToPool()
     {
-        ObjectPoolManager.Instance.ReturnToPool(ObjectPrefab, gameObject);
+        ObjectPoolManager.Instance.ReturnToPool(PoolObjectID, gameObject);
     }
 
     public virtual void OnSpawn()

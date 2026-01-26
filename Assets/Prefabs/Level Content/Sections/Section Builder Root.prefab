@@ -48,6 +48,7 @@ MonoBehaviour:
   distance: 0
   height: 0
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0
@@ -174,8 +175,9 @@ MonoBehaviour:
   distance: 0
   height: 3
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -231,6 +233,7 @@ MonoBehaviour:
   distance: 20
   height: 0
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
     overrideData: 1
     overridedData:
@@ -283,6 +286,7 @@ MonoBehaviour:
   distance: 5
   height: 0
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
     collectibleType: 0
     overrideData: 0
@@ -336,6 +340,7 @@ MonoBehaviour:
   distance: 25
   height: 0
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0
@@ -393,8 +398,9 @@ MonoBehaviour:
   distance: 0
   height: 5
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -450,13 +456,20 @@ MonoBehaviour:
   distance: 10
   height: 0
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
     enemyType: 0
     silhouetteAlwaysVisible: 1
     overrideData: 0
     overridedData:
-      EmergeTime: 3
-      health: 1
+      targetSideSpaces: 0
+      targetSideSpace: 0
+      targetLeftSide: 0
+      startFacingDirection: 1
+      targetBoatSpaces: 0
+      targetSpace: 0
+      targetBoatSide: 0
+      boardingFacingDirection: 1
 --- !u!1 &7682165827213847943
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +518,7 @@ MonoBehaviour:
   distance: 10
   height: 0
   enableSnapping: 1
+  _globalRiverValues: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0

@@ -236,6 +236,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Section Builder Root (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2888650534647860149, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle - SewerPipe
+      objectReference: {fileID: 0}
     - target: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: _globalRiverValues
@@ -328,6 +333,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6359040131299024528, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle - SewerPipe
       objectReference: {fileID: 0}
     - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
@@ -731,7 +741,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -1045,41 +1055,6 @@ PrefabInstance:
       objectReference: {fileID: 652477583}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
-      propertyPath: sectionDatas.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[0].postDelay
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[1].postDelay
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[0].initialDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[1].initialDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[0].EnemyDatas.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[1].EnemyDatas.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
       propertyPath: 'sectionDatas.Array.data[0].EnemyDatas.Array.data[0]'
       value: 
       objectReference: {fileID: 428912129}
@@ -1100,11 +1075,6 @@ PrefabInstance:
       objectReference: {fileID: 1012998922}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
-      propertyPath: sectionDatas.Array.data[0].ObstacleDatas.Array.size
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
       propertyPath: 'sectionDatas.Array.data[1].EnemyDatas.Array.data[0]'
       value: 
       objectReference: {fileID: 1391942890}
@@ -1123,16 +1093,6 @@ PrefabInstance:
       propertyPath: 'sectionDatas.Array.data[1].EnemyDatas.Array.data[3]'
       value: 
       objectReference: {fileID: 244935984}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[1].ObstacleDatas.Array.size
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[0].CollectibleDatas.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: 'sectionDatas.Array.data[0].ObstacleDatas.Array.data[0]'
@@ -1185,11 +1145,6 @@ PrefabInstance:
       objectReference: {fileID: 857127275}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
-      propertyPath: sectionDatas.Array.data[1].CollectibleDatas.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
       propertyPath: 'sectionDatas.Array.data[1].ObstacleDatas.Array.data[0]'
       value: 
       objectReference: {fileID: 1573117431}
@@ -1240,11 +1195,6 @@ PrefabInstance:
       objectReference: {fileID: 903228427}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
-      propertyPath: sectionDatas.Array.data[0].GemstoneGateDatas.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
       propertyPath: 'sectionDatas.Array.data[0].ObstacleDatas.Array.data[10]'
       value: 
       objectReference: {fileID: 139296599}
@@ -1263,11 +1213,6 @@ PrefabInstance:
       propertyPath: 'sectionDatas.Array.data[0].ObstacleDatas.Array.data[13]'
       value: 
       objectReference: {fileID: 366764326}
-    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
-        type: 3}
-      propertyPath: sectionDatas.Array.data[1].GemstoneGateDatas.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: 'sectionDatas.Array.data[1].ObstacleDatas.Array.data[10]'
@@ -1539,7 +1484,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -1597,7 +1542,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -1839,7 +1784,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -2492,6 +2437,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Section Builder Root
       objectReference: {fileID: 0}
+    - target: {fileID: 2888650534647860149, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle - SewerPipe
+      objectReference: {fileID: 0}
     - target: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: _globalRiverValues
@@ -2520,6 +2470,111 @@ PrefabInstance:
       propertyPath: riverManager
       value: 
       objectReference: {fileID: 652477583}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.EnemyDatas.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.EnemyDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1032034810}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.EnemyDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2031344984}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.EnemyDatas.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1012998922}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.ObstacleDatas.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: sectionData.CollectibleDatas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 257214288}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1198249196}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[3]'
+      value: 
+      objectReference: {fileID: 260618609}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2019133119}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1535669555}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[6]'
+      value: 
+      objectReference: {fileID: 852566838}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[7]'
+      value: 
+      objectReference: {fileID: 696566310}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[8]'
+      value: 
+      objectReference: {fileID: 341344328}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[9]'
+      value: 
+      objectReference: {fileID: 857127275}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[10]'
+      value: 
+      objectReference: {fileID: 139296599}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[11]'
+      value: 
+      objectReference: {fileID: 1227483509}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[12]'
+      value: 
+      objectReference: {fileID: 939300910}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[13]'
+      value: 
+      objectReference: {fileID: 366764326}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.CollectibleDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1915979415}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.CollectibleDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 462715417}
     - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2584,6 +2639,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6359040131299024528, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_Name
+      value: Obstacle - SewerPipe
       objectReference: {fileID: 0}
     - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
@@ -2854,7 +2914,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -2912,7 +2972,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -3430,7 +3490,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -3899,7 +3959,7 @@ MonoBehaviour:
   enableSnapping: 1
   _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   sectionData:
-    obstacleType: 1
+    obstacleType: 2
     overrideData: 0
     overridedData:
       ImpactDamage: 1

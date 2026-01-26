@@ -36,6 +36,6 @@ public class EnemyDefeatedState : EnemyState
         _time += Time.deltaTime;
         if (_time > _deathDuration) Sc.ReturnToPool();
         
-        Debug.Log($"{Sc.name} is defeated: {_time}");
+        // Debug.Log($"{Sc.name} is defeated: {_time}");
     }
 }

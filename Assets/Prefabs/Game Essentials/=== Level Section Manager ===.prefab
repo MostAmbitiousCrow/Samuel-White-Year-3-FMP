@@ -45,25 +45,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 0
-  sectionDatas: []
-  currentSection: 0
-  isHalted: 0
-  trashObject: {fileID: 5108305477657122800, guid: 077c94ada29504e05bbd07ae4d92836a,
-    type: 3}
-  pipeObject: {fileID: 6371561984097207738, guid: 3e6fa97e5332945c690becd114d9f4d2,
-    type: 3}
-  crocodileObject: {fileID: 5152343893800515093, guid: cff26a08a6665ae46b8f112d310be71a,
-    type: 3}
-  frogObject: {fileID: 7933356781185806215, guid: c247d66483865174d92ec1d292f8372e,
-    type: 3}
-  batObject: {fileID: 3777125169220723089, guid: fbe0f235c2e06b24bb2345aea20265b4,
-    type: 3}
-  tentacleObject: {fileID: 2275750187809480860, guid: 3eb0a4cdaec71e9449eff333e8c1d3b2,
-    type: 3}
-  gemStoneObject: {fileID: 5979095628691551611, guid: b56b33f6abb424e87831cba4eb8b1f43,
-    type: 3}
-  gemFragmentObject: {fileID: 0}
-  gemStoneGateObject: {fileID: 1244398510228997170, guid: a2c5d3c9fab684335a49a07d60368a79,
-    type: 3}
+  sectionDatas:
+  - initialDelay: 1
+    postDelay: 2
+    ObstacleDatas:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    EnemyDatas:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    CollectibleDatas:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    GemstoneGateDatas:
+    - {fileID: 0}
+  - initialDelay: 1
+    postDelay: 2
+    ObstacleDatas:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    EnemyDatas:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    CollectibleDatas:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    GemstoneGateDatas:
+    - {fileID: 0}
+  currentSectionIndex: 0
+  trashObjectID: 4
+  wideTrashObjectID: 5
+  pipeObjectID: 6
+  crocodileObjectID: 0
+  frogObjectID: 1
+  batObject: 2
+  tentacleObject: 3
+  gemStoneObject: 8
+  gemFragmentObject: 9
+  gemStoneGateObjectID: 7
   riverManager: {fileID: 0}
   boatManager: {fileID: 0}

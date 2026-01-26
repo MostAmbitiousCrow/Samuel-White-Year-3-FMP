@@ -47,7 +47,7 @@ public class ArtExplode : MonoBehaviour
         var centerZ = totalZ / art.Length;
         
         var center = new Vector3(centerX, centerY, centerZ);
-        Debug.Log($"{name} exploded artwork at: {center}");
+        // Debug.Log($"{name} exploded artwork at: {center}");
         
         return  center;
     }

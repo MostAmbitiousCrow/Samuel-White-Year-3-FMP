@@ -28,7 +28,7 @@ public class Section_Obstacle_Object : Section_Builder_Object
 
     public enum ObstacleType
     {
-        TrashPile, SewerPipe
+        TrashPile, WideTrashPile, SewerPipe
     }
 
     public override void Register(Section_Content section)

@@ -27,7 +27,7 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] private List<PoolItem> itemsToPool;
     
     // Note: Uses a Prefab (Key) to obtain its specific Pool (Value)
-    private Dictionary<GameObject, ObjectPool<GameObject>> _poolDictionary = new Dictionary<GameObject, ObjectPool<GameObject>>();
+    private readonly Dictionary<int, ObjectPool<GameObject>> _poolDictionary = new Dictionary<int, ObjectPool<GameObject>>();
     
     public bool IsPoolReady { get; private set; }
 
@@ -51,6 +51,7 @@ public class ObjectPoolManager : MonoBehaviour
     private IEnumerator CreatePoolsRoutine()
     {
         IsPoolReady = false;
+        var id = 0;
 
         // List through each pool items
         foreach (var item in itemsToPool)
@@ -75,7 +76,8 @@ public class ObjectPoolManager : MonoBehaviour
                 maxSize: item.amount
             );
 
-            _poolDictionary.Add(item.prefab, newPool);
+            _poolDictionary.Add(id, newPool);
+            id++;
             
             if (item.amount < 1) yield break;
             
@@ -106,15 +108,15 @@ public class ObjectPoolManager : MonoBehaviour
 
     // https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters
     /// <summary> Spawns an object from the pool and returns the specific component requested. </summary>
-    public T Spawn<T>(GameObject type, Vector3 position, Quaternion rotation) where T : IPooledObject // T stands for 'type', so it can be basically anything :D
+    public T Spawn<T>(int id, Vector3 position, Quaternion rotation) where T : IPooledObject // T stands for 'type', so it can be basically anything :D
     {
-        if (!IsPoolReady || !_poolDictionary.ContainsKey(type))
+        if (!IsPoolReady || !_poolDictionary.ContainsKey(id))
         {
-            Debug.LogError($"Pool for {type} not found or not ready!");
+            Debug.LogError($"Pool for {id} not found or not ready!");
         }
 
-        // Get object type from the Unity Pool
-        GameObject obj = _poolDictionary[type].Get();
+        // Get object id from the Unity Pool
+        GameObject obj = _poolDictionary[id].Get();
         
         // Set the specified position
         obj.transform.SetPositionAndRotation(position, rotation);
@@ -123,24 +125,24 @@ public class ObjectPoolManager : MonoBehaviour
         return obj.GetComponent<T>();
     }
     
-    public T Spawn<T>(GameObject type) where T : IPooledObject
+    public T Spawn<T>(int id) where T : IPooledObject
     {
-        if (!IsPoolReady || !_poolDictionary.ContainsKey(type))
+        if (!IsPoolReady || !_poolDictionary.ContainsKey(id))
         {
-            Debug.LogError($"Pool for {type} not found or not ready!");
+            Debug.LogError($"Pool for {id} not found or not ready!");
         }
 
-        // Get object type from the Unity Pool
-        GameObject obj = _poolDictionary[type].Get();
+        // Get object id from the Unity Pool
+        GameObject obj = _poolDictionary[id].Get();
 
         // Return the specific component
         return obj.GetComponent<T>();
     }
 
     /// <summary> Returns an object back to its specific pool. </summary>
-    public void ReturnToPool(GameObject type, GameObject instance)
+    public void ReturnToPool(int id, GameObject instance)
     {
-        if (_poolDictionary.TryGetValue(type, out var pool))
+        if (_poolDictionary.TryGetValue(id, out var pool))
         {
             pool.Release(instance);
         }

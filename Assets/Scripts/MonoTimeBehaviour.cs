@@ -29,7 +29,7 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     #region HitStop
     public void TriggerHitStop(float stopDuration = .2f)
     {
-        Debug.Log("HitStop Routine Started");
+        // Debug.Log("HitStop Routine Started");
         if (_hitStopRoutine != null) StopCoroutine(_hitStopRoutine);
         _hitStopRoutine = StartCoroutine(HitStopRoutine(stopDuration));
     }
@@ -62,13 +62,13 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     /// <summary> Is called whenever this characters Hit Stop is triggered </summary>
     protected virtual void OnHitStop()
     {
-        Debug.Log("HitStop Started");
+        // Debug.Log("HitStop Started");
         Time.timeScale = 0f;
     }
 
     protected virtual void OnHitStopEnded()
     {
-        Debug.Log("HitStop Stopped");
+        // Debug.Log("HitStop Stopped");
         Time.timeScale = 1f;
     }
     #endregion
