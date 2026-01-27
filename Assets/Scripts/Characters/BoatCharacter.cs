@@ -45,6 +45,8 @@ namespace GameCharacters
         protected SpaceData TargetedSpace;
         /// <summary> The space on the boat this character was previously at before the next targeted space </summary>
         protected SpaceData PreviousSpace;
+        /// <summary> The character to damage upon finishing a movement action </summary>
+        protected Character TargetedCharacter;
 
         [Space]
 
@@ -112,15 +114,12 @@ namespace GameCharacters
         public void VaultToSide(SpaceData spaceData, bool isHeavy)
         {
             // Check if the character can access that space
-            if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
-            {
-                if (!isVaulting && !isMoving && canVault)
-                {
-                    TargetSpace(spaceData);
-                    isVaulting = true;
-                    isVaultingHeavily = isHeavy;
-                }
-            }
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
+                return;
+            if (isVaulting || isMoving || !canVault) return;
+            TargetSpace(spaceData);
+            isVaulting = true;
+            isVaultingHeavily = isHeavy;
         }
 
         /// <summary>
@@ -129,15 +128,13 @@ namespace GameCharacters
         public void VaultToSide(SpaceData spaceData, bool isHeavy, Character victim)
         {
             // Check if the character can access that space
-            if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
-            {
-                if (!isVaulting && !isMoving && canVault)
-                {
-                    TargetSpace(spaceData);
-                    isVaulting = true;
-                    isVaultingHeavily = isHeavy;
-                }
-            }
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
+                return;
+            if (isVaulting || isMoving || !canVault) return;
+            TargetSpace(spaceData);
+            isVaulting = true;
+            isVaultingHeavily = isHeavy;
+            TargetedCharacter = victim;
         }
 
         /// <summary> Sends the character directly to the position of the specified space on a given side </summary>
@@ -369,6 +366,10 @@ namespace GameCharacters
                     isVaultingHeavily = false;
                     boatInteractor.ImpactBoat(TargetedSpace);
                 }
+
+                if (!TargetedCharacter) return;
+                TargetedCharacter.GetComponent<IDamageable>().TakeDamage(DamageType.Stomp);
+                TargetedCharacter =  null;
             }
         }
         #endregion

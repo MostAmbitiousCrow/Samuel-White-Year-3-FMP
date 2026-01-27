@@ -1183,6 +1183,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
+      propertyPath: renderers.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: invincibilityDuration
+      value: 3.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: 'renderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4800290718151246292}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: 'renderers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2577193126666963375}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: 'renderers.Array.data[2]'
+      value: 
+      objectReference: {fileID: 3413111404494117562}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: 'renderers.Array.data[3]'
+      value: 
+      objectReference: {fileID: 7597905453009733776}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: 'renderers.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6788933213332688039}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: 'renderers.Array.data[5]'
+      value: 
+      objectReference: {fileID: 5851045934451647015}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: doInvincibilityAnimation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

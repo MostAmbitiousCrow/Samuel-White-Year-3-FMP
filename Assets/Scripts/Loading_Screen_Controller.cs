@@ -121,6 +121,7 @@ public class Loading_Screen_Controller : MonoBehaviour
 
     public void UpdateLoadingMeter(float amount)
     {
+        return; // TODO: Disabling until Canvas Material problem is fixed... 
         _loadingMeter.value = amount;
         amount = Mathf.Round(amount * 100f);
         _loadingText.SetText($"{amount}%");

@@ -24,12 +24,13 @@ public class River_Obstacle : River_Object
     }
 
     // When collided with an object (player or enemy), damage it and destroy this obstacle
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (IsHit) return;
-        print($"{name} hit: {other}");
+        print($"{name} hit: {other.name}");
 
-        other.GetComponent<IDamageable>().TakeDamage(amount: obstacleData.ImpactDamage);
+        if (other.TryGetComponent<IDamageable>(out var character))
+            character.TakeDamage(amount: obstacleData.ImpactDamage);
         IsHit = true;
 
         if (explodesOnHit) artExploder.ExplodeArt();

@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using EditorAttributes;
-using UnityEngine.Serialization;
+
 
 namespace GameCharacters
 {
@@ -80,19 +79,17 @@ namespace GameCharacters
         [Tooltip("Determines if this character is currently rotating towards a direction")]
         [SerializeField, ReadOnly] private bool isDirecting;
         /// <summary> Determines if this current is currently rotating towards a direction </summary>
-        public bool IsDirecting { get { return isDirecting; } }
+        public bool IsDirecting => isDirecting;
 
         [SerializeField] private AnimationCurve rotationCurve; 
 
         /// <summary> Reverses the current direction of the enemy </summary>
         public void FlipDirection()
         {
-            // TODO: Flip the enemy character art to face current direction (see SetDirection())
             switch (currentDirection)
             {
                 case MoveDirection.Left: SetDirection(MoveDirection.Right); break;
                 case MoveDirection.Right: SetDirection(MoveDirection.Left); break;
-                default: break;
             }
         }
 
@@ -109,19 +106,17 @@ namespace GameCharacters
             isDirecting =  true;
             var t = 0f;
 
-            float currentRotation, targetRotation;
-
             // Switch Expression :D
-            currentRotation = currentDirection switch
+            var currentRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
                 MoveDirection.Right => 0f,
             };
             
             currentDirection = direction;
-            
+
             // Swapping 
-            targetRotation = currentDirection switch
+            var targetRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
                 MoveDirection.Right => 0f,
@@ -167,7 +162,6 @@ namespace GameCharacters
         public virtual void OnDied()
         {
             characterCollider.enabled = false;
-            rb.isKinematic = true;
             animator.SetTrigger("Died");
             TriggerHitStop(.5f);
         }

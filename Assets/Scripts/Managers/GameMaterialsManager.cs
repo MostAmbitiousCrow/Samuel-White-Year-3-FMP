@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameMaterialsManager : MonoBehaviour
 {
+    // Cached Shader Property IDs
+    private static readonly int NewHighlight = Shader.PropertyToID(HighlightString);
+    private static readonly int NewMidtone = Shader.PropertyToID(MidtoneString);
+    private static readonly int NewShadow = Shader.PropertyToID(ShadowString);
+
     [Header("Materials")]
     [SerializeField] private Material[] materials = new Material[8];
     [Space]
@@ -25,13 +30,20 @@ public class GameMaterialsManager : MonoBehaviour
         Global, Player, Enemy, Obstacle, Collectible, Boat, Environment, UI
     }
     
-    [Header("Detection Colours")]
-    public ObjectMaterialColours DetectColours = new ObjectMaterialColours()
+    public ObjectMaterialColours detectColours = new ObjectMaterialColours()
     {
         HighlightColour = Color.white,
         MidtoneColour = Color.gray,
         ShadowColour = Color.black
     };
+
+    private void Start()
+    {
+        ResetColours();
+        if (enableRainbowMode) ToggleRainbowMode();
+        
+        GameManager.SceneManager.onLevelLoaded += ResetColours;
+    }
 
     [Button]
     public void ResetColours()
@@ -42,40 +54,45 @@ public class GameMaterialsManager : MonoBehaviour
     public void UpdateMaterials(SO_GameColours colours)
     {
         currentColours = colours;
-        ObjectMaterialColours col;
 
         for (var i = 0; i < colours.MaterialColours.Length; i++)
         {
             UpdateMaterial(i, colours.MaterialColours[i]);
         }
-        print(colours.MaterialColours.Length);
+
+        UpdateSkybox(colours.MaterialColours[5].ShadowColour); // Environment Colours
     }
 
     public void UpdateMaterial(ObjectTypes objectType, ObjectMaterialColours colour)
     {
         var i = (int)objectType;
         
-        materials[i].SetColor(HighlightString, colour.HighlightColour);
-        materials[i].SetColor(MidtoneString, colour.MidtoneColour);
-        materials[i].SetColor(ShadowString, colour.ShadowColour);
+        materials[i].SetColor(NewHighlight, colour.HighlightColour);
+        materials[i].SetColor(NewMidtone, colour.MidtoneColour);
+        materials[i].SetColor(NewShadow, colour.ShadowColour);
         
         Debug.Log($"Updated Material {i}");
     }
 
     public void UpdateMaterial(int id, ObjectMaterialColours colour)
     {
-        materials[id].SetColor(HighlightString, colour.HighlightColour);
-        materials[id].SetColor(MidtoneString, colour.MidtoneColour);
-        materials[id].SetColor(ShadowString, colour.ShadowColour);
+        materials[id].SetColor(NewHighlight, colour.HighlightColour);
+        materials[id].SetColor(NewMidtone, colour.MidtoneColour);
+        materials[id].SetColor(NewShadow, colour.ShadowColour);
         
         Debug.Log($"Updated Material {id}");
     }
 
     public void UpdateMaterial(Material mat, ObjectMaterialColours colour)
     {
-        mat.SetColor(HighlightString, colour.HighlightColour);
-        mat.SetColor(MidtoneString, colour.MidtoneColour);
-        mat.SetColor(ShadowString, colour.ShadowColour);
+        mat.SetColor(NewHighlight, colour.HighlightColour);
+        mat.SetColor(NewMidtone, colour.MidtoneColour);
+        mat.SetColor(NewShadow, colour.ShadowColour);
+    }
+
+    public void UpdateSkybox(Color colour)
+    {
+        if (Camera.main != null) Camera.main.backgroundColor = colour;
     }
 
     #region Rainbow Mode
@@ -117,6 +134,8 @@ public class GameMaterialsManager : MonoBehaviour
         
             UpdateMaterial(mat, rainbowCol);
         }
+
+        if (Camera.main != null) UpdateSkybox(ShiftHue(Camera.main.backgroundColor, hueOffset));
     }
     
     private Color ShiftHue(Color original, float offset)

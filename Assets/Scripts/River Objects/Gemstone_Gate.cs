@@ -3,7 +3,6 @@ using System.Collections;
 using EditorAttributes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Gemstone_Gate : River_Object
 {
@@ -85,11 +84,11 @@ public class Gemstone_Gate : River_Object
     #region Consume Gemstones Process
     private ParticleSystem.Particle[] particles;
 
-    IEnumerator ConsumeGemstones() //TODO: WIP
+    private IEnumerator ConsumeGemstones() //TODO: WIP
     {
-        GameManager.MainGameLogic.PlayerData playerdata = GameManager.GameLogic.playerData;
+        var logicPlayerData = GameManager.GameLogic.playerData;
 
-        if (playerdata.PlayerTransform == null)
+        if (logicPlayerData.PlayerTransform == null)
         {
             Debug.LogWarning("Missing Player Transform component, Cancelled Gemstone Gate Consumption Event");
             AbsorptionSucceeded(); // Callback
@@ -100,11 +99,11 @@ public class Gemstone_Gate : River_Object
         _isConsuming = true;
         isMoving = false;
 
-        int savedGemstones = playerdata.CurrentGemstones;
+        int savedGemstones = logicPlayerData.CurrentGemstones;
 
         if (savedGemstones <= 0) AbsorptionFailed();
 
-        _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
+        _gemstoneParticles.transform.position = logicPlayerData.PlayerTransform.position;
 
         ParticleSystem.EmissionModule emission = _gemstoneParticles.emission;
         emission.rateOverTime = data.GemRequirement;
@@ -160,7 +159,7 @@ public class Gemstone_Gate : River_Object
                     }
                 }
             }
-            _gemstoneParticles.transform.position = playerdata.PlayerTransform.position;
+            _gemstoneParticles.transform.position = logicPlayerData.PlayerTransform.position;
             _gemstoneParticles.SetParticles(particles, aliveCount);
             _gemstoneParticles.Simulate(Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate(), withChildren: true, restart: false, fixedTimeStep: false);
             yield return new Animation_Frame_Rate_Manager.WaitForTick();
@@ -175,7 +174,7 @@ public class Gemstone_Gate : River_Object
     }
     #endregion
 
-    IEnumerator EmitParticlesOverTime(int amount, float time, float multiplierPerEmit = 1f)
+    private IEnumerator EmitParticlesOverTime(int amount, float time, float multiplierPerEmit = 1f)
     {
         int count = 0;
         float t = time;
@@ -200,11 +199,11 @@ public class Gemstone_Gate : River_Object
 
             yield return new WaitForSeconds(t);
             t = Mathf.Round((t *= multiplierPerEmit) * 1000f) / 1000f;
-            print(t);
+            // print(t);
         }
     }
 
-    IEnumerator ExplodeWall()
+    private IEnumerator ExplodeWall()
     {
         float t = 0f;
 
@@ -219,7 +218,8 @@ public class Gemstone_Gate : River_Object
     }
 
     #region Absorption Events
-    void AbsorptionSucceeded()
+
+    private void AbsorptionSucceeded()
     {
         print("Absorption Succeeded!");
         isMoving = true;
@@ -230,7 +230,7 @@ public class Gemstone_Gate : River_Object
         // StartCoroutine(ExplodeWall()); //TODO
     }
 
-    void AbsorptionFailed()
+    private void AbsorptionFailed()
     {
         print("Absorption Failed...");
         // Trigger Freeze Time, except for this object, here

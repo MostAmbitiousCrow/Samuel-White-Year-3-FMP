@@ -8,7 +8,7 @@ public class ArtExplode : MonoBehaviour
     [Title("Art Explode")]
     [SerializeField] private Rigidbody[] art;
 
-    private readonly List<Vector3> _artPositions = new List<Vector3>();
+    [SerializeField] private List<Vector3> _artPositions = new List<Vector3>();
     [SerializeField] private float force = 10f;
     [SerializeField, MinMaxSlider(-5f, 5f, true)] private Vector2 minMaxAngularVelocity = new Vector2(-5f, 5f);
     [Space]
@@ -24,11 +24,13 @@ public class ArtExplode : MonoBehaviour
     {
         if(animator) animator.enabled = true;
 
-        for (int i = 0; i < art.Length; i++)
-        {
-            art[i].isKinematic = true;
-            art[i].transform.localPosition = _artPositions[i];
-        }
+        // TODO: Remove, doesn't work... Problem: Limbs won't reset at the correct position due to character rotation
+        // for (int i = 0; i < art.Length; i++)
+        // {
+        //     art[i].isKinematic = true;
+        //     art[i].position = _artPositions[i];
+        // }
+        // Debug.Log($"{gameObject} Art Reset");
     }
 
     public void ExplodeArt()
