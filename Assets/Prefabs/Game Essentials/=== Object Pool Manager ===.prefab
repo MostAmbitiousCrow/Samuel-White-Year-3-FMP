@@ -76,14 +76,14 @@ MonoBehaviour:
     prefab: {fileID: 6371561984097207738, guid: 3e6fa97e5332945c690becd114d9f4d2,
       type: 3}
     amount: 24
-  - name: Gemstone Gate
-    prefab: {fileID: 1244398510228997170, guid: a2c5d3c9fab684335a49a07d60368a79,
-      type: 3}
-    amount: 12
   - name: Gemstone
     prefab: {fileID: 5979095628691551611, guid: b56b33f6abb424e87831cba4eb8b1f43,
       type: 3}
     amount: 24
+  - name: Gemstone Gate
+    prefab: {fileID: 1244398510228997170, guid: a2c5d3c9fab684335a49a07d60368a79,
+      type: 3}
+    amount: 12
 --- !u!1 &8792921571689654686
 GameObject:
   m_ObjectHideFlags: 0

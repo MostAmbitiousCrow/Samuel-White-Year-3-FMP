@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using EditorAttributes;
+using UnityEngine.Serialization;
 
 public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 {
@@ -20,9 +21,6 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
 
     [Header("Section Info")]
     [Min(0)][SerializeField] private int currentSectionIndex = 0;
-    
-    // Tracked last object in segment
-    private River_Object _lastSpawnedObject; 
 
     #region Section Objects & Look-up
     [Header("Section Objects")]
@@ -47,7 +45,9 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     [Line(GUIColor.White)]
     [SerializeField] private int gemStoneGateObjectID;
 
-    private float _furthestDistance;
+    // Tracked last object in segment
+    [SerializeField, ReadOnly] private River_Object lastSpawnedObject;
+    [SerializeField, ReadOnly] private float furthestDistance;
     #endregion
 
     #region Injection Dependencies
@@ -104,7 +104,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
         StartCoroutine(SpawnSectionRoutine());
     }
 
-    IEnumerator SpawnSectionRoutine()
+    private IEnumerator SpawnSectionRoutine()
     {
         // Spawn Sections
         while (currentSectionIndex < sectionDatas.Count)
@@ -117,12 +117,13 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
                 currentSectionIndex++;
                 continue;
             }
-
+            
+            lastSpawnedObject = null;
+            furthestDistance = 0;
+            
             // Initial delay
             if (data.initialDelay > 0) yield return new WaitForSeconds(data.initialDelay);
             
-            _lastSpawnedObject = null; 
-
             // Spawn objects
             SpawnObjects(data.ObstacleDatas);
             SpawnObjects(data.EnemyDatas);
@@ -130,8 +131,8 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             SpawnGates(data.GemstoneGateDatas);
             
             // Wait until the specific object that was last spawned is disabled (returned to pool) //TODO: Currently broken???
-            if (_lastSpawnedObject != null) 
-                yield return new WaitUntil(() => !_lastSpawnedObject.gameObject.activeSelf);
+            if (lastSpawnedObject != null) 
+                yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
             else Debug.LogWarning($"Section {currentSectionIndex} had no objects.");
 
             // Delay
@@ -185,7 +186,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
         // Override object data
         if (data)
         {
-            Debug.Log($"Spawning: {data}");
+            Debug.Log($"Spawning: {pooledObject}, {data}");
             switch (pooledObject)
             {
                 case River_Obstacle ro:
@@ -219,17 +220,17 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     {
         ro.canMove = true;
         ro.isMoving = true;
-        
-        float spawnDist = riverManager != null ? riverManager.RiverObjectSpawnDistance : 50f;
+
+        float spawnDist = sbo.Distance;
         
         // Store the distance and object, as to detect the furthest object in this section
-        if (spawnDist > _furthestDistance)
+        if (spawnDist > furthestDistance)
         {
-            _lastSpawnedObject = ro;
-            _furthestDistance = spawnDist;
+            lastSpawnedObject = ro;
+            furthestDistance = spawnDist;
         }
         
-        ro.StartOnLane(sbo.Lane, sbo.Distance + spawnDist, sbo.Height);
+        ro.StartOnLane(sbo.Lane, sbo.Distance + riverManager.RiverObjectSpawnDistance, sbo.Height);
     }
 
     #endregion

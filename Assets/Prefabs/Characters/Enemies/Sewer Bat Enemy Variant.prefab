@@ -212,6 +212,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 31e2427df705dfa4f9c80fb8a173764a,
         type: 2}
+    - target: {fileID: 4645540006734176207, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.19999999
+      objectReference: {fileID: 0}
     - target: {fileID: 5417869051682545288, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -281,6 +286,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sewer Bat Enemy Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876201890639153814, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

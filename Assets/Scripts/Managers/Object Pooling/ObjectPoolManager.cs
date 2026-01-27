@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -13,6 +12,17 @@ public class ObjectPoolManager : MonoBehaviour
     [Tooltip("Initialises the pool upon loading. No trigger required.")]
     [SerializeField] private bool autoStart = true;
 
+    public enum PoolableObject
+    {
+        // Enemies
+        Crocodile, Frog, Bat, Tentacle,
+        // Obstacles
+        Trash, WideTrash, Pipe,
+        // Collectibles
+        Gemstone, Fragment,
+        // Gate
+        GemstoneGate
+    }
     
     // Poolable items
     [Serializable]
@@ -27,7 +37,7 @@ public class ObjectPoolManager : MonoBehaviour
     [SerializeField] private List<PoolItem> itemsToPool;
     
     // Note: Uses a Prefab (Key) to obtain its specific Pool (Value)
-    private readonly Dictionary<int, ObjectPool<GameObject>> _poolDictionary = new Dictionary<int, ObjectPool<GameObject>>();
+    private Dictionary<int, ObjectPool<GameObject>> _poolDictionary = new Dictionary<int, ObjectPool<GameObject>>();
     
     public bool IsPoolReady { get; private set; }
 
@@ -45,10 +55,10 @@ public class ObjectPoolManager : MonoBehaviour
     public void InitializePools()
     {
         if (IsPoolReady) return;
-        StartCoroutine(CreatePoolsRoutine());
+        CreatePoolsRoutine();
     }
 
-    private IEnumerator CreatePoolsRoutine()
+    private void CreatePoolsRoutine()
     {
         IsPoolReady = false;
         var id = 0;
@@ -75,23 +85,11 @@ public class ObjectPoolManager : MonoBehaviour
                 defaultCapacity: item.amount,
                 maxSize: item.amount
             );
-
+            
             _poolDictionary.Add(id, newPool);
             id++;
             
-            if (item.amount < 1) yield break;
-            
-            // Create the objects, release to its registered pool
-            var op = InstantiateAsync(item.prefab, item.amount, objectFolder, Vector3.one * 1000, Quaternion.identity);
-            yield return new WaitUntil(() => op.isDone);
-
-            foreach (var instance in op.Result)
-            {
-                // Release (Adding) the created objects to the pool
-                newPool.Release(instance); 
-            }
-            
-            Debug.Log($"{item.name} Pool Created.");
+            Debug.Log($"{item.name} Pool Created. Count = {newPool.CountAll}");
         }
 
         IsPoolReady = true;
@@ -108,36 +106,23 @@ public class ObjectPoolManager : MonoBehaviour
 
     // https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/generics/constraints-on-type-parameters
     /// <summary> Spawns an object from the pool and returns the specific component requested. </summary>
-    public T Spawn<T>(int id, Vector3 position, Quaternion rotation) where T : IPooledObject // T stands for 'type', so it can be basically anything :D
-    {
-        if (!IsPoolReady || !_poolDictionary.ContainsKey(id))
-        {
-            Debug.LogError($"Pool for {id} not found or not ready!");
-        }
-
-        // Get object id from the Unity Pool
-        GameObject obj = _poolDictionary[id].Get();
-        
-        // Set the specified position
-        obj.transform.SetPositionAndRotation(position, rotation);
-
-        // Return the specific component
-        return obj.GetComponent<T>();
-    }
-    
     public T Spawn<T>(int id) where T : IPooledObject
     {
         if (!IsPoolReady || !_poolDictionary.ContainsKey(id))
         {
             Debug.LogError($"Pool for {id} not found or not ready!");
+            return default;
         }
 
-        // Get object id from the Unity Pool
         GameObject obj = _poolDictionary[id].Get();
 
-        // Return the specific component
+        if (!obj.TryGetComponent(out River_Object ro)) return obj.GetComponent<T>();
+        ro.PoolObjectID = id;
+        ro.OnSpawn();
+
         return obj.GetComponent<T>();
     }
+
 
     /// <summary> Returns an object back to its specific pool. </summary>
     public void ReturnToPool(int id, GameObject instance)

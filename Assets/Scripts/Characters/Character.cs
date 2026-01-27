@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using EditorAttributes;
@@ -165,6 +166,8 @@ namespace GameCharacters
         /// </summary>
         public virtual void OnDied()
         {
+            characterCollider.enabled = false;
+            rb.isKinematic = true;
             animator.SetTrigger("Died");
             TriggerHitStop(.5f);
         }
@@ -174,7 +177,7 @@ namespace GameCharacters
         /// </summary>
         public virtual void OnHealthRestored()
         {
-            
+            characterCollider.enabled = true;
         }
         #endregion
 

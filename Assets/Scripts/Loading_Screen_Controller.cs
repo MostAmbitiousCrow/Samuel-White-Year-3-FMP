@@ -93,7 +93,7 @@ public class Loading_Screen_Controller : MonoBehaviour
         // }
         
         yield return new WaitUntil(() => _canvas.worldCamera = Camera.main);
-        Debug.Log($"Render Camera was set to: {_canvas.worldCamera}");
+        // Debug.Log($"Render Camera was set to: {_canvas.worldCamera}");
         
         float t = 0f;
 
@@ -104,7 +104,7 @@ public class Loading_Screen_Controller : MonoBehaviour
         while (t < endTransitionTime)
         {
             // Update Loading Meter Aplha
-            Debug.Log($"Closing. Time: {t}. Duration: {endTransitionTime}");
+            // Debug.Log($"Closing. Time: {t}. Duration: {endTransitionTime}");
             _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
             yield return t += Time.unscaledDeltaTime;
         }

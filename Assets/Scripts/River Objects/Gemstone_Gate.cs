@@ -3,18 +3,17 @@ using System.Collections;
 using EditorAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Gemstone_Gate : River_Object
 {
     [Header("Components")]
     [Tooltip("The voxels forming the gate that will explode")]
-    [SerializeField] Transform[] _gateBlocks;
-    [SerializeField] GameObject _art; // TODO: Temporary. Replace once an explosion animation is implemented
+    [SerializeField] private Transform[] gateBlocks;
+    [SerializeField] private GameObject art; // TODO: Temporary. Replace once an explosion animation is implemented
 
     [Header("Stats")]
-    /// <summary>
-    /// The distance of the gate to the players boat until the gate begins consuming the players gemstones
-    /// </summary>
+    [Tooltip("The distance of the gate to the players boat until the gate begins consuming the players gemstones")]
     [SerializeField] float _distanceUntilConsumption = 10f;
     [Space(10)]
     [SerializeField] float _explodeDelay = .45f;
@@ -56,7 +55,7 @@ public class Gemstone_Gate : River_Object
     public void OverrideData(GemstoneGateData overridedData)
     {
         data = overridedData;
-        print($"{name} stats were overrided");
+        // print($"{name} stats were overrided");
     }
 
     #region Override Methods
@@ -75,8 +74,9 @@ public class Gemstone_Gate : River_Object
     {
         base.OnSpawn();
         isMoving = true;
+        _isConsuming = false;
 
-        _art.SetActive(true);
+        art.SetActive(true);
 
         _gemRequirementText.SetText(data.GemRequirement.ToString());
     }
@@ -225,7 +225,7 @@ public class Gemstone_Gate : River_Object
         isMoving = true;
         _gemRequirementText.SetText(0.ToString());
 
-        _art.SetActive(false);
+        art.SetActive(false);
 
         // StartCoroutine(ExplodeWall()); //TODO
     }

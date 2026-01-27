@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
 using Random = UnityEngine.Random;
@@ -6,15 +7,28 @@ public class ArtExplode : MonoBehaviour
 {
     [Title("Art Explode")]
     [SerializeField] private Rigidbody[] art;
+
+    private readonly List<Vector3> _artPositions = new List<Vector3>();
     [SerializeField] private float force = 10f;
     [SerializeField, MinMaxSlider(-5f, 5f, true)] private Vector2 minMaxAngularVelocity = new Vector2(-5f, 5f);
     [Space]
     [SerializeField] private Animator animator;
 
+    private void Awake()
+    {
+        if (art.Length <= 0) return;
+        foreach (var r in art) _artPositions.Add(r.transform.localPosition);
+    }
+
     private void OnEnable()
     {
         if(animator) animator.enabled = true;
-        foreach (var r in art) r.isKinematic = true;
+
+        for (int i = 0; i < art.Length; i++)
+        {
+            art[i].isKinematic = true;
+            art[i].transform.localPosition = _artPositions[i];
+        }
     }
 
     public void ExplodeArt()

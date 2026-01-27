@@ -52,7 +52,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     {
         CurrentState?.OnExit();
         CurrentState = newState;
-        print($"New State: {CurrentState}");
+        // print($"New State: {CurrentState}");
         CurrentState.OnEnter();
     }
     

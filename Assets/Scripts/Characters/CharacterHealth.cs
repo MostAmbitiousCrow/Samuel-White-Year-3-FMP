@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using EditorAttributes;
 using UnityEngine;
@@ -23,6 +24,11 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     [SerializeField, ShowField(nameof(showEvents))] private UnityEvent healthRestoredEvent;
     [SerializeField, ShowField(nameof(showEvents))] private UnityEvent tookDamageEvent;
     #endregion
+
+    private void OnEnable()
+    {
+        RestoreHealth();
+    }
 
     public void Die()
     {

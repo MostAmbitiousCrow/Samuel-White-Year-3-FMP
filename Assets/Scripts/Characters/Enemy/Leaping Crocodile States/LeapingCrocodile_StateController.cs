@@ -49,7 +49,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     /// <summary> Emerges the enemy from the River </summary>
     public override void EmergeFromRiver()
     {
-        Debug.Log($"{name} has emerged!");
+        // Debug.Log($"{name} has emerged!");
         
         ChangeState(EmergeState);
     }
