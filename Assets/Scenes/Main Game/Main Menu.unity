@@ -949,31 +949,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3596142984103768082, guid: 26e9bd77e3009a94bb650ba693bd4c56,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3596142984103768082, guid: 26e9bd77e3009a94bb650ba693bd4c56,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3596142984103768082, guid: 26e9bd77e3009a94bb650ba693bd4c56,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3596142984103768082, guid: 26e9bd77e3009a94bb650ba693bd4c56,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3596142984103768082, guid: 26e9bd77e3009a94bb650ba693bd4c56,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3623447992599329381, guid: 26e9bd77e3009a94bb650ba693bd4c56,
         type: 3}
       propertyPath: m_Camera
@@ -992,7 +967,7 @@ PrefabInstance:
     - target: {fileID: 6330947700692478751, guid: 26e9bd77e3009a94bb650ba693bd4c56,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 168.00003
+      value: 168.00006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
