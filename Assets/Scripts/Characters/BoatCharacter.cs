@@ -69,7 +69,7 @@ namespace GameCharacters
             if (currentSpace != null) currentSpace.isOccupied = false;
 
             // First Time Targeting space null prevention
-            if (currentSpace.t == null) currentSpace = targetSpace;
+            currentSpace ??= targetSpace;
             
             PreviousSpace = currentSpace;
             
@@ -101,12 +101,11 @@ namespace GameCharacters
         {
             var sd = Boat_Space_Manager.Instance.GetSpaceFromDirection(currentSpace.sideID, currentSpace.spaceID, direction);
 
-            if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd) && !isVaulting && canMove)
-            {
-                // print($"Moving to Space: {sd.spaceID}");
-                TargetSpace(sd);
-                isMoving = true;
-            }
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd) ||
+                isVaulting || !canMove) return;
+            // print($"Moving to Space: {sd.spaceID}");
+            TargetSpace(sd);
+            isMoving = true;
             // else print($"Couldn't access space: {sd.spaceID}");
         }
 
@@ -146,7 +145,7 @@ namespace GameCharacters
                 TargetSpace(sd);
 
                 if (isOnBoat) transform.localPosition = sd.t.localPosition;
-                else rb.MovePosition(sd.t.position);
+                else transform.position = sd.t.position;
             }
 
         }
@@ -159,7 +158,7 @@ namespace GameCharacters
             {
                 // TODO: Consider this. Character might be off the boat if they're going to a side space
                 if (isOnBoat) transform.localPosition = sd.t.localPosition;
-                else rb.MovePosition(sd.t.position);
+                else transform.position = sd.t.position;
                 
                 TargetSpace(sd);
                 rb.isKinematic = true;
@@ -176,7 +175,7 @@ namespace GameCharacters
 
                 // TODO: Consider this. Character might be off the boat if they're going to a side space
                 if (isOnBoat) transform.localPosition = sd.t.localPosition;
-                else rb.MovePosition(sd.t.position);
+                else transform.position = sd.t.position;
             }
         }
         
@@ -189,7 +188,7 @@ namespace GameCharacters
 
                 // TODO: Consider this. Character might be off the boat if they're going to a side space
                 if (isOnBoat) transform.localPosition = sd.t.localPosition;
-                else rb.MovePosition(sd.t.position);
+                else transform.position = sd.t.position;
             }
         }
 
@@ -401,7 +400,7 @@ namespace GameCharacters
             
             OnJumped();
             
-            if (_waitGroundedRoutine != null) yield break;
+            if (_waitGroundedRoutine != null) StopCoroutine(_waitGroundedRoutine);
             _waitGroundedRoutine = StartCoroutine(WaitUntilGroundedRoutine());
         }
 
@@ -438,16 +437,9 @@ namespace GameCharacters
             yield return PauseWait; // Time Behaviour Pause
             yield return new WaitForSeconds(.1f);
             yield return new WaitUntil(() => isGrounded);
-
-            // Unnecessary?
-            if (isJumping)
-            {
-                isJumping = false;
-            }
-            if (isBouncing)
-            {
-                isBouncing = false;
-            }
+            
+            isJumping = false;
+            isBouncing = false;
 
             if (isVaultingHeavily && canInteractWithBoat)
             {
@@ -480,6 +472,20 @@ namespace GameCharacters
             if (goToCurrentSpace) MoveToSpace(currentSpace.sideID, currentSpace.spaceID);
         }
         #endregion
+        
+        public void ResetCharacter()
+        {
+            ExitBoat(false);
+
+            currentSpace = null;
+            
+            isJumping = false;
+            isMoving = false;
+            isBouncing = false;
+            
+            // Reset Position
+            // transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
     }
 }
 

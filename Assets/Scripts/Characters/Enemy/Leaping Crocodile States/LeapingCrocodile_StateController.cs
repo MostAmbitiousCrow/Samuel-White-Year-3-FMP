@@ -49,7 +49,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     /// <summary> Emerges the enemy from the River </summary>
     public override void EmergeFromRiver()
     {
-        // Debug.Log($"{name} has emerged!");
+        base.EmergeFromRiver();
         
         ChangeState(EmergeState);
     }
@@ -99,14 +99,14 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
     {
         base.OnEnter();
         
-        CrocSc.GoToSideSpace
-            (CrocSc.boatEnterData.targetBoatSide,
-            CrocSc.boatEnterData.targetLeftSide);
+        CrocSc.canAccessOuterBoatSides = true;
+        CrocSc.canAccessBoatSpaces = true;
         
+        // Go To Side Space on the Boat
         CrocSc.SetDirection(CrocSc.boatEnterData.startFacingDirection, false);
+        CrocSc.GoToSideSpace(CrocSc.boatEnterData.targetBoatSide, CrocSc.boatEnterData.targetLeftSide);
         
         _currentEmergeTime = 0f;
-
         CrocSc.EnterBoat(false);
         
         CrocSc.Animator.SetTrigger("Emerge");
@@ -140,6 +140,9 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
         base.OnExit();
         // Revoke access to outer sides after they've landed on the boat
         CrocSc.canAccessOuterBoatSides = false;
+        CrocSc.canAccessBoatSpaces = true;
+        
+        CrocSc.Animator.SetTrigger("Idle");
 
         // Set the direction of the enemy upon landing on the boat
         CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection);

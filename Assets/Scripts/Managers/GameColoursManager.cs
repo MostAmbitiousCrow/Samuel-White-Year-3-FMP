@@ -37,12 +37,12 @@ namespace GameColours
             ShadowColour = Color.black
         };
     
-        private void Start()
+        private void Awake()
         {
             ResetColours();
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
             
-            GameManager.SceneManager.onLevelLoaded += ResetColours;
+            // GameManager.SceneManager.onLevelLoaded += ResetColours;
         }
     
         private void OnEnable()
@@ -91,7 +91,7 @@ namespace GameColours
             materials[id].SetColor(NewMidtone, colour.MidtoneColour);
             materials[id].SetColor(NewShadow, colour.ShadowColour);
             
-            Debug.Log($"Updated Material {id}");
+            // Debug.Log($"Updated Material {id}");
         }
     
         public void UpdateMaterial(Material mat, ObjectMaterialColours colour)

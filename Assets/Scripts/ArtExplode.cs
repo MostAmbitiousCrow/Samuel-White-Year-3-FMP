@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ArtExplode : MonoBehaviour
@@ -8,7 +9,7 @@ public class ArtExplode : MonoBehaviour
     [Title("Art Explode")]
     [SerializeField] private Rigidbody[] art;
 
-    [SerializeField] private List<Vector3> _artPositions = new List<Vector3>();
+    [SerializeField] private List<Vector3> artPositions = new List<Vector3>();
     [SerializeField] private float force = 10f;
     [SerializeField, MinMaxSlider(-5f, 5f, true)] private Vector2 minMaxAngularVelocity = new Vector2(-5f, 5f);
     [Space]
@@ -17,20 +18,25 @@ public class ArtExplode : MonoBehaviour
     private void Awake()
     {
         if (art.Length <= 0) return;
-        foreach (var r in art) _artPositions.Add(r.transform.localPosition);
+        foreach (var r in art) artPositions.Add(r.transform.localPosition);
     }
 
     private void OnEnable()
     {
         if(animator) animator.enabled = true;
-
-        // TODO: Remove, doesn't work... Problem: Limbs won't reset at the correct position due to character rotation
-        // for (int i = 0; i < art.Length; i++)
+        
+        // foreach (var r in art)
         // {
-        //     art[i].isKinematic = true;
-        //     art[i].position = _artPositions[i];
+        //     r.isKinematic = true;
         // }
-        // Debug.Log($"{gameObject} Art Reset");
+        
+        // TODO: Remove, doesn't work... Problem: Limbs won't reset at the correct position due to character rotation
+        for (int i = 0; i < art.Length; i++)
+        {
+            art[i].isKinematic = true;
+            art[i].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
+        Debug.Log($"{gameObject} Art Reset");
     }
 
     public void ExplodeArt()

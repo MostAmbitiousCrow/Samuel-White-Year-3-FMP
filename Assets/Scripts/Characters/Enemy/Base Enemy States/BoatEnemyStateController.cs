@@ -81,7 +81,10 @@ public abstract class BoatEnemyStateController : BoatCharacter
     #endregion
 
     /// <summary> Emerges the enemy from the River </summary>
-    public abstract void EmergeFromRiver();
+    public virtual void EmergeFromRiver()
+    {
+        ResetCharacter();
+    }
 
     /// <summary> Method to call upon this enemy appearing in the level. Additional data can be provided </summary>
     public virtual void InitialiseEnemy(BoatEnemy_Data data)

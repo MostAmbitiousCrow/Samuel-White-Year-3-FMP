@@ -14,8 +14,8 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     public bool IsDead => isDead;
     [Space]
     [SerializeField] private float invincibilityDuration = .25f;
-    [SerializeField, ReadOnly] private bool isInvincible;
-    public bool IsInvincible => isInvincible;
+
+    public bool IsInvincible { get; set; }
 
     [Space] 
     [SerializeField] private bool showEvents;
@@ -48,7 +48,7 @@ public class CharacterHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(DamageType type = DamageType.Standard, int amount = 1)
     {
-        if (isInvincible || isDead) return;
+        if (IsInvincible || isDead) return;
         
         currentHealth -= amount;
         if (CurrentHealth <= 0) Die();
@@ -61,7 +61,7 @@ public class CharacterHealth : MonoBehaviour, IDamageable
 
     private IEnumerator DamageInvincibilityRoutine()
     {
-        isInvincible = true;
+        IsInvincible = true;
         if (doInvincibilityAnimation)
         {
             float t = 0f;
@@ -93,6 +93,6 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         }
         else yield return new WaitForSeconds(invincibilityDuration);
 
-        isInvincible = false;
+        IsInvincible = false;
     }
 }

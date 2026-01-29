@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using EditorAttributes;
+using Game;
 
 namespace GameCharacters
 {
@@ -50,6 +51,9 @@ namespace GameCharacters
             _vaultHeavyAction?.Enable();
 
             if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
+            HealthComponent.IsInvincible = GameSettingsManager.DoPlayerInvincibility;
+
+            GameSettingsManager.GameplayChanged += AssignInvincibility;
         }
 
         private void OnDisable()
@@ -59,6 +63,8 @@ namespace GameCharacters
             _vaultHeavyAction?.Disable();
 
             if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
+            
+            GameSettingsManager.GameplayChanged -= AssignInvincibility;
         }
 
         protected override void TimeUpdate()
@@ -94,7 +100,7 @@ namespace GameCharacters
             
             // Handle movement logic here
             var direction = Mathf.RoundToInt(_moveAction.ReadValue<Vector2>().x);
-            if (direction == 0) return;
+            if (Mathf.Approximately(direction, 0)) return; // TODO: Test if this works on controller
 
             // Note: Inverting the direction since the order of the boat spaces are flipped...
 
@@ -131,7 +137,6 @@ namespace GameCharacters
                 }
                 
                 // coyoteTriggered = true;
-                return;
             }
             else
             {
@@ -139,7 +144,7 @@ namespace GameCharacters
 
                 // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
                 var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                    (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true, false);
+                    (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true, true);
                 if (bc)
                 {
                     VaultToSide(newSpace, isHeavy, bc); // TODO: Modify to scan for damageable characters with the Character component
@@ -164,6 +169,7 @@ namespace GameCharacters
         #endregion
         public override void OnDied()
         {
+            if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnDied();
             Debug.Log("PLAYER DIED");
 
@@ -177,8 +183,14 @@ namespace GameCharacters
 
         public override void OnTookDamage()
         {
+            if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnTookDamage();
             Debug.Log("Player Took Damage");
+        }
+
+        private void AssignInvincibility()
+        {
+            HealthComponent.IsInvincible = GameSettingsManager.DoPlayerInvincibility;
         }
     }
     

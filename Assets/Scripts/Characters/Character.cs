@@ -84,24 +84,42 @@ namespace GameCharacters
         [SerializeField] private AnimationCurve rotationCurve; 
 
         /// <summary> Reverses the current direction of the enemy </summary>
-        public void FlipDirection()
+        public void FlipDirection(bool animate = true)
         {
             switch (currentDirection)
             {
-                case MoveDirection.Left: SetDirection(MoveDirection.Right); break;
-                case MoveDirection.Right: SetDirection(MoveDirection.Left); break;
+                case MoveDirection.Left: SetDirection(MoveDirection.Right, animate); break;
+                case MoveDirection.Right: SetDirection(MoveDirection.Left, animate); break;
             }
         }
 
         /// <summary> Explicitly sets the direction of the enemy with a given parameter </summary>
         public void SetDirection(MoveDirection direction, bool animate = true)
         {
-            // currentDirection = direction;
+            if (animate) StartCoroutine(DirectionRoutine(direction));
+            else
+            {
+                // Previous Rotation
+                var currentRotation = currentDirection switch
+                {
+                    MoveDirection.Left => 180f,
+                    MoveDirection.Right => 0f,
+                };
             
-            StartCoroutine(DirectionRoutine(direction, animate));
+                currentDirection = direction;
+
+                // New Direction
+                var targetRotation = currentDirection switch
+                {
+                    MoveDirection.Left => 180f,
+                    MoveDirection.Right => 0f,
+                };
+                
+                transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
+            }
         }
 
-        private IEnumerator DirectionRoutine(MoveDirection direction, bool animate)
+        private IEnumerator DirectionRoutine(MoveDirection direction, bool animate = true)
         {
             isDirecting =  true;
             var t = 0f;
@@ -128,17 +146,20 @@ namespace GameCharacters
             {
                 while(t < 1f)
                 {
-                    rb.MoveRotation(Quaternion.Euler
-                    (0f, 
-                        Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t)),
-                    0f));
+                    // rb.MoveRotation(Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t)), 0f));
+                    // t += Time.fixedDeltaTime;
+                    
+                    transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t)), 0f);
                     t += Time.deltaTime;
+                    
+                    Debug.Log($"Is Rotating: {t}");
+                    
                     yield return PauseWait;
                 }
             }
             
-            rb.MoveRotation(Quaternion.Euler
-            (0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 1f));
+            // rb.MoveRotation(Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f));
+            transform.rotation =  Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
             
             rb.freezeRotation = true;
             

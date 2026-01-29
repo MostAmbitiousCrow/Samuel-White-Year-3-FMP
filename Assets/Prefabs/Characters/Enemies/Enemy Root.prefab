@@ -5141,7 +5141,7 @@ GameObject:
   m_Layer: 7
   m_Name: ': Enemy Character'
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5180,7 +5180,6 @@ MonoBehaviour:
   maxHealth: 1
   isDead: 0
   invincibilityDuration: 0.25
-  isInvincible: 0
   showEvents: 0
   deathEvent:
     m_PersistentCalls:
@@ -10217,7 +10216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4645540006734176207
 Transform:
   m_ObjectHideFlags: 0

@@ -44,7 +44,6 @@ public class River_Obstacle : River_Object
     public override void OnSpawn()
     {
         base.OnSpawn();
-        return;
     }
 
     #endregion

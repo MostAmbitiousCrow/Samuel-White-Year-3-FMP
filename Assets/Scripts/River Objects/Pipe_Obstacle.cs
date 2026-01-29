@@ -19,7 +19,7 @@ public class Pipe_Obstacle : River_Obstacle
         }
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         foreach (var item in _pipes)
         {
@@ -27,14 +27,15 @@ public class Pipe_Obstacle : River_Obstacle
         }  
     }
 
-    public override void OnSpawn()
+    public void OverridePipeData(Pipe_Obstacle_Data overridedData)
     {
-        base.OnSpawn();
+        PipeData = overridedData;
         ConnectPipeToSurface();
     }
-    void ConnectPipeToSurface()
+    
+    private void ConnectPipeToSurface()
     {
-        //// Set rotation based on pipe connection direction
+        // Set rotation based on pipe connection direction
         transform.localRotation = Quaternion.Euler(0, 0, (int)PipeData.pipeConnection * 90);
 
         // Calculate hitbox center and size

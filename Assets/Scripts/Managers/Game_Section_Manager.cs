@@ -180,7 +180,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
         // Assign Pipe Data
         if (pooledObject is Pipe_Obstacle pipe && data is Section_Obstacle_Object obstacleData)
         {
-            pipe.PipeData = obstacleData.sectionData.pipeObstacleData;
+            pipe.OverridePipeData(obstacleData.sectionData.pipeObstacleData);
         }
 
         // Override object data

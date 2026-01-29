@@ -34,12 +34,10 @@ public class River_Enemy : River_Object
 
         if(isMoving) //TODO: Something to consider here
         {
-            if (GetDistanceToCurrentLane() < emergeTriggerDetectRadius)
-            {
-                isMoving = false;
-                enemyController.gameObject.SetActive(true);
-                enemyController.EmergeFromRiver();
-            }
+            if (!(GetDistanceToCurrentLane() < emergeTriggerDetectRadius)) return;
+            isMoving = false;
+            enemyController.gameObject.SetActive(true);
+            enemyController.EmergeFromRiver();
         }
         else
         {
