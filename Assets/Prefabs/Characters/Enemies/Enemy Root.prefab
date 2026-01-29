@@ -5179,6 +5179,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 1
   isDead: 0
+  invincibilityDuration: 0.25
   isInvincible: 0
   showEvents: 0
   deathEvent:
@@ -5226,6 +5227,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  doInvincibilityAnimation: 0
+  renderers: []
 --- !u!54 &5584600842973260837
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10153,7 +10156,7 @@ GameObject:
   m_Layer: 12
   m_Name: Enemy Root
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

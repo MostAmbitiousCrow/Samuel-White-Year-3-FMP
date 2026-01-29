@@ -1,6 +1,5 @@
-using System;
 using UnityEngine;
-using EditorAttributes;
+using GameColours;
 
 /// <summary>
 /// The scriptable object that references the colours for the game to use.

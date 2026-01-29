@@ -1,7 +1,9 @@
+using System;
 using EditorAttributes;
 using Game;
 using UnityEngine;
 using UnityEngine.UI;
+using Void = EditorAttributes.Void;
 
 public class SettingsMenuContentNavigator : ScreenContentNavigator
 {
@@ -25,18 +27,13 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     #region Settings
     #region Gameplay Settings
     
-    private void Start()
+    private void Awake()
     {
-        if (invincibilityToggle == null)
-        {
-            invincibilityToggle = GetComponentInChildren<Toggle>(true);
-            if (invincibilityToggle == null)
-            {
-                Debug.Log("[invincibilityToggle] Could not find any Toggle component on the GameObject.", gameObject);
-                return;
-            }
-        }
+        UpdateToggles();
+    }
 
+    private void OnEnable()
+    {
         UpdateToggles();
     }
 
@@ -47,20 +44,20 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
         invincibilityToggle.onValueChanged.AddListener(OnPlayerInvincibilityValueChange);
         
         dyslexicToggle.isOn = GameSettingsManager.DoDyslexiaFont;
-        invincibilityToggle.onValueChanged.RemoveAllListeners();
-        invincibilityToggle.onValueChanged.AddListener(OnDyslexicFontValueChange);
+        dyslexicToggle.onValueChanged.RemoveAllListeners();
+        dyslexicToggle.onValueChanged.AddListener(OnDyslexicFontValueChange);
         
         fovToggle.isOn = GameSettingsManager.DoFovSliding;
-        invincibilityToggle.onValueChanged.RemoveAllListeners();
-        invincibilityToggle.onValueChanged.AddListener(OnFovSlideValueChange);
+        fovToggle.onValueChanged.RemoveAllListeners();
+        fovToggle.onValueChanged.AddListener(OnFovSlideValueChange);
         
         screenShakeToggle.isOn = GameSettingsManager.DoScreenShake;
-        invincibilityToggle.onValueChanged.RemoveAllListeners();
-        invincibilityToggle.onValueChanged.AddListener(OnScreenShakeValueChange);
+        screenShakeToggle.onValueChanged.RemoveAllListeners();
+        screenShakeToggle.onValueChanged.AddListener(OnScreenShakeValueChange);
         
         rainbowModeToggle.isOn = GameSettingsManager.DoRainbowMode;
-        invincibilityToggle.onValueChanged.RemoveAllListeners();
-        invincibilityToggle.onValueChanged.AddListener(OnRainbowModeValueChange);
+        rainbowModeToggle.onValueChanged.RemoveAllListeners();
+        rainbowModeToggle.onValueChanged.AddListener(OnRainbowModeValueChange);
     }
 
     public void OnPlayerInvincibilityValueChange(bool value)
@@ -71,6 +68,7 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     public void OnDyslexicFontValueChange(bool value)
     {
         GameSettingsManager.DoDyslexiaFont = value;
+        Debug.Log("Dyslexic font changed");
     }
     
     public void OnFovSlideValueChange(bool value)

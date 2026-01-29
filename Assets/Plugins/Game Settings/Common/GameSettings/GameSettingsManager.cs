@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using CarterGames.Assets.AudioManager;
-using UnityEngine.Audio;
+using TMPro;
 
 namespace Game
 {
-	public static class GameSettingsManager
+	public class GameSettingsManager : MonoBehaviour
 	{
+		public static GameSettingsManager Instance;
+
+		[Header("Fonts")]
+		public TMP_FontAsset pixelFont, dyslexicFont;
+
+		private void Awake()
+		{
+			Instance = this;
+		}
+
 		private static readonly Vector2 MinScreenSize = new Vector2(1024, 768);
 
 		// ------------------------------------------------------------------------------------------------------------
@@ -350,7 +359,8 @@ namespace Game
 				PlayerPrefs.Save();
 				GameplayChanged?.Invoke();
 			}
-		}
+		} 
+		
 		/// <summary> Determines whether to activate the stylised Rainbow Mode </summary>
         public static bool DoRainbowMode
         {

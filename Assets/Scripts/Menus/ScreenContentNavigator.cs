@@ -25,4 +25,9 @@ public class ScreenContentNavigator : MonoBehaviour
         
         EventSystem.current.SetSelectedGameObject(pages[currentPage].enterObject.gameObject);
     }
+
+    private void OnEnable()
+    {
+        OpenPage(currentPage);
+    }
 }
