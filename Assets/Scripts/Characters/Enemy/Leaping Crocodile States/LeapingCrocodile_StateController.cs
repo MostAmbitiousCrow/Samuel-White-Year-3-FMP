@@ -145,7 +145,11 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
         CrocSc.Animator.SetTrigger("Idle");
 
         // Set the direction of the enemy upon landing on the boat
-        CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection);
+        // TODO:
+        // This doesn't work with the way ground detection works... Exit is getting triggered before the croc
+        // Reaches the ground
+        
+        // CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, false);
     }
 
     public override void OnHurt()

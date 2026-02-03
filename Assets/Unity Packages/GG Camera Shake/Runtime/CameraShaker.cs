@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
 namespace CameraShake
 {
@@ -40,6 +41,9 @@ namespace CameraShake
         /// </summary>
         public void RegisterShake(ICameraShake shake)
         {
+            // TODO: Prevent shakes in the games settings
+            if (!GameSettingsManager.DoScreenShake) return;
+            
             shake.Initialize(cameraTransform.position,
                 cameraTransform.rotation);
             activeShakes.Add(shake);

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using CameraShake;
 using UnityEngine;
 using EditorAttributes;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ArtExplode : MonoBehaviour
@@ -49,6 +49,8 @@ public class ArtExplode : MonoBehaviour
             r.angularVelocity = GetRandomRotation();
             r.AddExplosionForce(force, pos, 2f, force, ForceMode.Impulse);
         }
+        
+        CameraShaker.Presets.Explosion3D(); // TODO: Add a preset for art explosions
     }
 
     private Vector3 CalculateCenter()

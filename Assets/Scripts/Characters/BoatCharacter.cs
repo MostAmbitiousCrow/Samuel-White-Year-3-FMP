@@ -1,4 +1,5 @@
 using System.Collections;
+using CameraShake;
 using EditorAttributes;
 using UnityEngine;
 using static Boat_Space_Manager.BoatSide;
@@ -417,10 +418,13 @@ namespace GameCharacters
             rb.isKinematic = true; // TODO: Consider
             animator.SetTrigger("Landed");
             //TODO: Add landed SFX and VFX
+            
+            CameraShaker.Presets.ShortShake3D();
         }
 
         public void TriggerBounce()
         {
+            CameraShaker.Presets.ShortShake3D();
             TriggerHitStop();
             isBouncing = true;
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -482,9 +486,6 @@ namespace GameCharacters
             isJumping = false;
             isMoving = false;
             isBouncing = false;
-            
-            // Reset Position
-            // transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using CameraShake;
 using UnityEngine;
 using EditorAttributes;
 
@@ -94,18 +95,13 @@ namespace GameCharacters
         }
 
         /// <summary> Explicitly sets the direction of the enemy with a given parameter </summary>
-        public void SetDirection(MoveDirection direction, bool animate = true)
+        public void SetDirection(MoveDirection direction, bool animate = true, float duration = 2f)
         {
-            if (animate) StartCoroutine(DirectionRoutine(direction));
+            // Debug.Log($"{gameObject.name} Rotation Was Set. Animating = {animate}");
+            
+            if (animate && !isDirecting) StartCoroutine(DirectionRoutine(direction));
             else
             {
-                // Previous Rotation
-                var currentRotation = currentDirection switch
-                {
-                    MoveDirection.Left => 180f,
-                    MoveDirection.Right => 0f,
-                };
-            
                 currentDirection = direction;
 
                 // New Direction
@@ -115,11 +111,11 @@ namespace GameCharacters
                     MoveDirection.Right => 0f,
                 };
                 
-                transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
+                rb.MoveRotation(Quaternion.Euler(0f, targetRotation, 0f));
             }
         }
 
-        private IEnumerator DirectionRoutine(MoveDirection direction, bool animate = true)
+        private IEnumerator DirectionRoutine(MoveDirection direction, float duration = 2f)
         {
             isDirecting =  true;
             var t = 0f;
@@ -128,7 +124,7 @@ namespace GameCharacters
             var currentRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
-                MoveDirection.Right => 0f,
+                MoveDirection.Right => -0f,
             };
             
             currentDirection = direction;
@@ -141,25 +137,18 @@ namespace GameCharacters
             };
             
             rb.freezeRotation = false;
-
-            if (animate)
-            {
-                while(t < 1f)
-                {
-                    // rb.MoveRotation(Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t)), 0f));
-                    // t += Time.fixedDeltaTime;
-                    
-                    transform.rotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t)), 0f);
-                    t += Time.deltaTime;
-                    
-                    Debug.Log($"Is Rotating: {t}");
-                    
-                    yield return PauseWait;
-                }
-            }
             
-            // rb.MoveRotation(Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f));
-            transform.rotation =  Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
+            while (t < duration)
+            {
+                float lerpT = rotationCurve.Evaluate(t / duration);
+
+                rb.MoveRotation(Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, lerpT), 0f));
+
+                t += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            rb.MoveRotation(Quaternion.Euler(0f, targetRotation, 0f));
             
             rb.freezeRotation = true;
             
@@ -175,6 +164,7 @@ namespace GameCharacters
         {
             animator.SetTrigger("TookDamage");
             TriggerHitStop(.1f);
+            CameraShaker.Presets.Explosion3D(4f);
         }
 
         /// <summary>
@@ -184,7 +174,10 @@ namespace GameCharacters
         {
             characterCollider.enabled = false;
             animator.SetTrigger("Died");
+            
+            // Do Effects
             TriggerHitStop(.5f);
+            CameraShaker.Presets.Explosion3D(12f);
         }
 
         /// <summary>
