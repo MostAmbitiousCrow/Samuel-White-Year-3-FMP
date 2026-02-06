@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using EditorAttributes;
-using UnityEngine.Serialization;
+using UnityEngine.Splines;
 
 public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 {
@@ -59,7 +59,10 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm) => boatManager = bsm;
     #endregion
 
-    private void Awake() => InitializePrefabLookup();
+    private void Awake()
+    {
+        InitializePrefabLookup();
+    }
 
     private void OnEnable() => GameManager.GameLogic.onGameStarted += StartSpawning;
     private void OnDisable() => GameManager.GameLogic.onGameStarted -= StartSpawning;

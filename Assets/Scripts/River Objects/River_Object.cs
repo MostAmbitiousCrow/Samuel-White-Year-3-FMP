@@ -58,8 +58,9 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     {
         var rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
 
+        var pos = rl.transform.position;
         currentLane = rl.ID;
-        CurrentMoveTarget = new Vector3(rl.axis.x, rl.axis.y, transform.position.z); //TODO: Add optional movement interpolation
+        CurrentMoveTarget = new Vector3(pos.x, pos.y, transform.position.z); //TODO: Add optional movement interpolation
         isMoving = true;
         // print($"Moved {direction} to Space Position: {rl.axis}, ID {rl.ID}");
     }
@@ -68,8 +69,9 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     {
         var rl = River_Manager.Instance.GetLane(lane);
 
+        var pos = rl.transform.position;
         currentLane = rl.ID;
-        transform.position = new(rl.axis.x, rl.axis.y, transform.position.z);
+        transform.position = new(pos.x, pos.y, transform.position.z);
     }
 
     public int GetCurrentLane()
@@ -111,7 +113,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     #region Math
     protected float GetDistanceToCurrentLane()
     {
-        return transform.position.z - River_Manager.Instance.GetLane(currentLane).axis.z;
+        return transform.position.z - River_Manager.Instance.GetLane(currentLane).transform.position.z;
     }
     #endregion
 

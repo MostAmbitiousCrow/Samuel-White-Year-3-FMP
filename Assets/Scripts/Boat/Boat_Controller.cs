@@ -50,7 +50,8 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         River_Manager.RiverLane rl = River_Manager.Instance.GetLaneFromDirection(_currentLane, direction);
 
         _currentLane = rl.ID;
-        _currentMoveTarget = new Vector3(rl.axis.x, rl.axis.y, transform.position.z); //TODO: Add movement interpolation
+        var pos = rl.transform.position;
+        _currentMoveTarget = new Vector3(pos.x, pos.y, transform.position.z); //TODO: Add movement interpolation
         _isMoving = true;
     }
 
@@ -58,8 +59,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     {
         River_Manager.RiverLane rl = River_Manager.Instance.GetLane(lane);
 
+        var pos = rl.transform.position;
         _currentLane = rl.ID;
-        transform.position = new(rl.axis.x, rl.axis.y, transform.position.z);
+        transform.position = new(pos.x, pos.y, transform.position.z);
     }
 
     public int GetCurrentLane()

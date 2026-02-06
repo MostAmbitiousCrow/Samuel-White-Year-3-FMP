@@ -6,7 +6,7 @@ using EditorAttributes;
 public class Section_Content : MonoBehaviour, IAffectedByRiver
 {
     [Header("Data")]
-    [SerializeField] River_Manager riverManager;
+    [SerializeField] private River_Manager riverManager;
 
     [Serializable]
     public class SectionData

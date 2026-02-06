@@ -35,15 +35,25 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 
     void SnapToLane()
     {
-        if (enableSnapping && _globalRiverValues != null) 
+        if (enableSnapping && _globalRiverValues != null)
+        {
             transform.position = new((Lane - 1) * _globalRiverValues.riverLaneDistance, Height, Distance);
+
+            River_Manager.Instance.AssignToCurve(Distance, lane, out Vector3 pos, out Quaternion rot);
+            transform.SetPositionAndRotation(pos, rot);
+        }
+    }
+
+    private void CurveOffset()
+    {
+
     }
 
     /// <summary>
     /// Called to retrieve or assign object data from the provided Section_Content.
     /// Override this method in derived classes to implement custom data handling logic.
     /// </summary>
-    /// <param name="sc">The Section_Content containing relevant data for this object.</param>
+    /// <param name = "sc" > The Section_Content containing relevant data for this object.</param>
 
     public abstract void Register(Section_Content section);
 

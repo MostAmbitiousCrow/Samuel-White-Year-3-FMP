@@ -1,12 +1,19 @@
-using System.Collections.Generic;
-using UnityEngine;
 using EditorAttributes;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEngine;
+using UnityEngine.Splines;
 
 public class River_Manager : MonoBehaviour
 {
     #region Variables
+    [Header("Components")]
+    [SerializeField] private SplineContainer worldSplineContainer;
+    public SplineContainer WorldSplineContainer => worldSplineContainer;
+
+    [Header("River Stats")]
     public float RiverFlowSpeed { get { return _riverFlowSpeed; } }
     [Tooltip("The current speed of the rivers flow. Affects the rivers animation.")]
     [SerializeField] float _riverFlowSpeed = 5f;
@@ -32,7 +39,7 @@ public class River_Manager : MonoBehaviour
     public class RiverLane
     {
         public int ID;
-        public Vector3 axis;
+        public Transform transform;
     }
     public List<RiverLane> RiverLanes;
     public List<IAffectedByRiver> riverInfluencedObjects = new();
@@ -60,7 +67,7 @@ public class River_Manager : MonoBehaviour
 
         for (int i = 0; i < _lanesParent.childCount; i++)
         {
-            RiverLane rl = new() { axis = _lanesParent.GetChild(i).position, ID = i };
+            RiverLane rl = new() { transform = _lanesParent.GetChild(i).transform, ID = i };
             RiverLanes.Add(rl);
         }
         print($"Updated River Lanes to {RiverLanes.Count} lanes");
@@ -243,6 +250,9 @@ public class River_Manager : MonoBehaviour
     }
     #endregion
 
+    [Header("Temp")]
+    [SerializeField, Range(0f, 1f)] float evaluation;
+
     private void OnValidate()
     {
         if (RiverLanes == null || _globalRiverValues == null)
@@ -254,8 +264,67 @@ public class River_Manager : MonoBehaviour
         int i = -1;
         foreach (var item in RiverLanes)
         {
-            item.axis = (Vector3.right * i) * _globalRiverValues.riverLaneDistance;
+            // Get the position of the spline
+            var splinePos = worldSplineContainer.EvaluatePosition(evaluation);
+
+            // Get the directions
+            var splineTangent = worldSplineContainer.EvaluateTangent(evaluation);
+            var splineUp = worldSplineContainer.EvaluateUpVector(Mathf.Repeat(evaluation, 1f));
+
+            var rot = Quaternion.LookRotation(splineTangent, splineUp);
+
+            var pos = (item.transform.right * i) * _globalRiverValues.riverLaneDistance + new Vector3(splinePos.x, splinePos.y, splinePos.z);
+
+            item.transform.SetPositionAndRotation(pos, rot);
             i++;
         }
     }
+
+    #region Curve Evaluations
+    public Vector3 EvaluatePositionOnCurve(float evaluation)
+    {
+        var splinePos = worldSplineContainer.EvaluatePosition(Mathf.Repeat(evaluation, 1f));
+
+        return new Vector3(splinePos.x, splinePos.y, splinePos.z);
+    }
+
+    public Quaternion EvaluateRotationOnCurve(float evaluation)
+    {
+        // Get the directions
+        var splineTangent = worldSplineContainer.EvaluateTangent(Mathf.Repeat(evaluation, 1f));
+        var splineUp = worldSplineContainer.EvaluateUpVector(Mathf.Repeat(evaluation, 1f));
+
+        var rot = Quaternion.LookRotation(splineTangent, splineUp);
+        return rot;
+    }
+
+    public void ProgressOnCurve(float speed, float currentProgress, int lane, out float updatedProgress, 
+        out Vector3 newPosition, out Quaternion newRotation)
+    {
+        var length = worldSplineContainer.CalculateLength();
+
+        currentProgress += (speed * Time.deltaTime) / length;
+
+        worldSplineContainer.Evaluate(currentProgress, out float3 position, out float3 tangent, out float3 upVector);
+
+        updatedProgress = currentProgress;
+        newPosition = new Vector3(position.x, position.y, position.z);
+        newRotation = Quaternion.LookRotation(tangent, upVector);
+    }
+
+    public void AssignToCurve(float currentProgress, int lane, out Vector3 newPosition, out Quaternion newRotation)
+    {
+        worldSplineContainer.Evaluate(currentProgress, out float3 position, out float3 tangent, out float3 upVector);
+
+        newPosition = new Vector3(position.x, position.y, position.z);
+        newRotation = Quaternion.LookRotation(tangent, upVector);
+    }
+
+    public float GetProgressFromDistance(float distance)
+    {
+        var length = worldSplineContainer.CalculateLength();
+
+        return distance / length;
+    }
+    #endregion
 }
