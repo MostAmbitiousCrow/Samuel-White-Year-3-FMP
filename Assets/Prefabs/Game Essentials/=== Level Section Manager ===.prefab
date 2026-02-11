@@ -1,407 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &222574323601850240
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2842521170357124797}
-  - component: {fileID: 574465436261958405}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2842521170357124797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222574323601850240}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 60}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &574465436261958405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222574323601850240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 60
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
---- !u!1 &505602159303475688
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2728585838816632186}
-  - component: {fileID: 4062575747587819259}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2728585838816632186
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505602159303475688}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4062575747587819259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505602159303475688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 40
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &1285444446154645913
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2788520240031818188}
-  - component: {fileID: 8350696527353352947}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2788520240031818188
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285444446154645913}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 5, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8350696527353352947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285444446154645913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 5
-  height: 5
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 2
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &1880243023863280296
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2876054080553804775}
-  - component: {fileID: 7472082898354361890}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2876054080553804775
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1880243023863280296}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 5, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7472082898354361890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1880243023863280296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 5
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 2
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &2111760744847167272
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3660307289210055474}
-  - component: {fileID: 8095831728754065084}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3660307289210055474
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111760744847167272}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8095831728754065084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111760744847167272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
---- !u!1 &3158364372781756594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5628058149498016141}
-  - component: {fileID: 8454976879869624533}
-  m_Layer: 0
-  m_Name: Enemy - Crocodile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5628058149498016141
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3158364372781756594}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: 50}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8454976879869624533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3158364372781756594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 50
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    enemyType: 0
-    silhouetteAlwaysVisible: 1
-    overrideData: 1
-    overridedData:
-      targetSideSpaces: 1
-      targetSideSpace: 0
-      targetLeftSide: 0
-      startFacingDirection: 1
-      targetBoatSpaces: 1
-      targetSpace: 4
-      targetBoatSide: 1
-      boardingFacingDirection: 1
---- !u!1 &3918065516054647811
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5050317772280110784}
-  - component: {fileID: 6561769102024021078}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5050317772280110784
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3918065516054647811}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6561769102024021078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3918065516054647811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 55
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
 --- !u!1 &4199037100368548076
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4575107226786804615}
-  - {fileID: 8687732020069463128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1228340096938242610
@@ -453,59 +50,14 @@ MonoBehaviour:
   - initialDelay: 1
     postDelay: 2
     ObstacleDatas:
-    - {fileID: 8650018179146457966}
-    - {fileID: 8350696527353352947}
-    - {fileID: 6109175833342142718}
-    - {fileID: 8493122383229703671}
-    - {fileID: 2210785293981922150}
-    - {fileID: 4694761337656118096}
-    - {fileID: 6281951119268493586}
-    - {fileID: 8541464779356686682}
-    - {fileID: 6561769102024021078}
-    - {fileID: 5709437056298971080}
     - {fileID: 1396154934516620467}
     - {fileID: 2017955341277432389}
-    - {fileID: 5528406188063612997}
-    - {fileID: 6935327041915122074}
     EnemyDatas:
     - {fileID: 5480585393141294930}
-    - {fileID: 3616642204399905066}
-    - {fileID: 8041695054124322764}
-    - {fileID: 9054122516252296961}
     CollectibleDatas:
     - {fileID: 6054692687254740790}
-    - {fileID: 6965072666801703901}
-    - {fileID: 906971183509526598}
     GemstoneGateDatas:
     - {fileID: 3718280114018415838}
-  - initialDelay: 1
-    postDelay: 2
-    ObstacleDatas:
-    - {fileID: 4603809400615330993}
-    - {fileID: 8580400740237016145}
-    - {fileID: 1380119069364563745}
-    - {fileID: 8702333838253590624}
-    - {fileID: 7472082898354361890}
-    - {fileID: 488686078871391375}
-    - {fileID: 2649802063467824593}
-    - {fileID: 4062575747587819259}
-    - {fileID: 3088873413471994934}
-    - {fileID: 9012201882354642456}
-    - {fileID: 9176720053183155954}
-    - {fileID: 5648125558320885506}
-    - {fileID: 817356969813714842}
-    - {fileID: 2868853183906002501}
-    EnemyDatas:
-    - {fileID: 856245328311246989}
-    - {fileID: 9169251499300497760}
-    - {fileID: 2978327454327785432}
-    - {fileID: 8454976879869624533}
-    CollectibleDatas:
-    - {fileID: 1434848506124474601}
-    - {fileID: 8095831728754065084}
-    - {fileID: 574465436261958405}
-    GemstoneGateDatas:
-    - {fileID: 8392160927918764801}
   currentSectionIndex: 0
   trashObjectID: 4
   wideTrashObjectID: 5
@@ -521,118 +73,6 @@ MonoBehaviour:
   furthestDistance: 0
   riverManager: {fileID: 0}
   boatManager: {fileID: 0}
---- !u!1 &4637874078535965113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4857766503126927926}
-  - component: {fileID: 906971183509526598}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4857766503126927926
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4637874078535965113}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 60}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &906971183509526598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4637874078535965113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 60
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
---- !u!1 &4751630339147029148
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3623539061199256126}
-  - component: {fileID: 2649802063467824593}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3623539061199256126
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4751630339147029148}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 35}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2649802063467824593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4751630339147029148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 35
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
 --- !u!1 &5120937794314393819
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,8 +98,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5120937794314393819}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 55}
+  m_LocalRotation: {x: -0, y: 0.011806243, z: -0, w: 0.9999303}
+  m_LocalPosition: {x: 6.186122, y: 0, z: 99.14929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -678,542 +118,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 1
-  distance: 55
+  distance: 100
   height: 4
   enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
+  globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &5403559743151292830
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6556473030846307417}
-  - component: {fileID: 9169251499300497760}
-  m_Layer: 0
-  m_Name: Enemy - Crocodile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6556473030846307417
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5403559743151292830}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9169251499300497760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5403559743151292830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 25
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    enemyType: 0
-    silhouetteAlwaysVisible: 1
-    overrideData: 1
-    overridedData:
-      targetSideSpaces: 1
-      targetSideSpace: 1
-      targetLeftSide: 1
-      startFacingDirection: 1
-      targetBoatSpaces: 1
-      targetSpace: 1
-      targetBoatSide: 1
-      boardingFacingDirection: 1
---- !u!1 &5609003908766538655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4584531964083426782}
-  - component: {fileID: 8702333838253590624}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4584531964083426782
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5609003908766538655}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 4, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8702333838253590624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5609003908766538655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 4
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 0
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &5661072875268881436
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8286791368683495323}
-  - component: {fileID: 9054122516252296961}
-  m_Layer: 0
-  m_Name: Enemy - Crocodile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8286791368683495323
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5661072875268881436}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: 50}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9054122516252296961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5661072875268881436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 50
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    enemyType: 0
-    silhouetteAlwaysVisible: 1
-    overrideData: 1
-    overridedData:
-      targetSideSpaces: 1
-      targetSideSpace: 0
-      targetLeftSide: 0
-      startFacingDirection: 1
-      targetBoatSpaces: 1
-      targetSpace: 4
-      targetBoatSide: 1
-      boardingFacingDirection: 1
---- !u!1 &5681907836429482998
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 305157091000356477}
-  - component: {fileID: 8541464779356686682}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &305157091000356477
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5681907836429482998}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8541464779356686682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5681907836429482998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 40
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &6404241294288656343
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3136345615799347329}
-  - component: {fileID: 2978327454327785432}
-  m_Layer: 0
-  m_Name: Enemy - Crocodile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3136345615799347329
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404241294288656343}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 50}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2978327454327785432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404241294288656343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 50
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    enemyType: 0
-    silhouetteAlwaysVisible: 1
-    overrideData: 1
-    overridedData:
-      targetSideSpaces: 1
-      targetSideSpace: 0
-      targetLeftSide: 1
-      startFacingDirection: -1
-      targetBoatSpaces: 1
-      targetSpace: 1
-      targetBoatSide: 1
-      boardingFacingDirection: -1
---- !u!1 &6459318841044699947
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1961344217554336197}
-  - component: {fileID: 6965072666801703901}
-  m_Layer: 0
-  m_Name: Collectible - Gemstone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1961344217554336197
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6459318841044699947}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6965072666801703901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6459318841044699947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    collectibleType: 0
-    overrideData: 0
-    overridedData:
-      BankValue: 1
---- !u!1 &6628716110648311708
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5333743528208345923}
-  - component: {fileID: 8493122383229703671}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5333743528208345923
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6628716110648311708}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 4, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8493122383229703671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6628716110648311708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 4
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 0
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &6686275084684632932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6351226845568576556}
-  - component: {fileID: 9012201882354642456}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6351226845568576556
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6686275084684632932}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: 55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9012201882354642456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6686275084684632932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 55
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &6838465967187373400
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5963752555942535271}
-  - component: {fileID: 6281951119268493586}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5963752555942535271
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6838465967187373400}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 35}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6281951119268493586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6838465967187373400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 35
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
     overrideData: 0
     overridedData:
       ImpactDamage: 1
@@ -1246,8 +157,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7646837024075008974}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 17}
+  m_LocalRotation: {x: -0, y: 0.018959355, z: -0, w: 0.9998203}
+  m_LocalPosition: {x: 1.7542038, y: 0, z: -0.74838257}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1266,10 +177,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 1
-  distance: 17
+  distance: 0
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
+  globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0
@@ -1279,977 +191,6 @@ MonoBehaviour:
       pipeConnection: 1
       distancePerPipe: 1.6
       amount: 5
---- !u!1 &7838574927441161686
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 183752710623171744}
-  - component: {fileID: 5648125558320885506}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &183752710623171744
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7838574927441161686}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5648125558320885506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7838574927441161686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 17
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &8034321682105597594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2611524634161195525}
-  - component: {fileID: 8041695054124322764}
-  m_Layer: 0
-  m_Name: Enemy - Crocodile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2611524634161195525
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8034321682105597594}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 50}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8041695054124322764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8034321682105597594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 50
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    enemyType: 0
-    silhouetteAlwaysVisible: 1
-    overrideData: 1
-    overridedData:
-      targetSideSpaces: 1
-      targetSideSpace: 0
-      targetLeftSide: 1
-      startFacingDirection: -1
-      targetBoatSpaces: 1
-      targetSpace: 1
-      targetBoatSide: 1
-      boardingFacingDirection: -1
---- !u!1 &8736759313251900425
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2970974667001005222}
-  - component: {fileID: 9176720053183155954}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2970974667001005222
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8736759313251900425}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9176720053183155954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8736759313251900425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 1
-  distance: 55
-  height: 4
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &8939192545665751581
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8953280369526353653}
-  - component: {fileID: 5709437056298971080}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8953280369526353653
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8939192545665751581}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: 55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5709437056298971080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8939192545665751581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 55
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &9063946118825523320
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8559424256786538557}
-  - component: {fileID: 3616642204399905066}
-  m_Layer: 0
-  m_Name: Enemy - Crocodile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8559424256786538557
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9063946118825523320}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 0, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3616642204399905066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9063946118825523320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 25
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    enemyType: 0
-    silhouetteAlwaysVisible: 1
-    overrideData: 1
-    overridedData:
-      targetSideSpaces: 1
-      targetSideSpace: 1
-      targetLeftSide: 1
-      startFacingDirection: 1
-      targetBoatSpaces: 1
-      targetSpace: 1
-      targetBoatSide: 1
-      boardingFacingDirection: 1
---- !u!1 &9084610570604933083
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5630206431279031498}
-  - component: {fileID: 3088873413471994934}
-  m_Layer: 0
-  m_Name: Obstacle - TrashPile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5630206431279031498
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9084610570604933083}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 0, z: 55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3088873413471994934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9084610570604933083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 55
-  height: 0
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 0
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &9092164928768235745
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 735706013038924004}
-  - component: {fileID: 2210785293981922150}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &735706013038924004
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9092164928768235745}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 5, z: 25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4575107226786804615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2210785293981922150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9092164928768235745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 2
-  distance: 25
-  height: 5
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 2
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1 &9216001017133176936
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 494384108305630415}
-  - component: {fileID: 8580400740237016145}
-  m_Layer: 0
-  m_Name: Obstacle - SewerPipe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &494384108305630415
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9216001017133176936}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: 5, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8687732020069463128}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8580400740237016145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9216001017133176936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lane: 0
-  distance: 5
-  height: 5
-  enableSnapping: 1
-  _globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
-  sectionData:
-    obstacleType: 2
-    overrideData: 0
-    overridedData:
-      ImpactDamage: 1
-    pipeObstacleData:
-      pipeConnection: 2
-      distancePerPipe: 1.6
-      amount: 5
---- !u!1001 &2883965167334127138
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5586224624923079610}
-    m_Modifications:
-    - target: {fileID: 201578214979091923, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1141048769559380071, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 1172295034797517961, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1599593555759347915, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720906431794451091, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 2545152674117145016, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overrideData
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.TargetSpace
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.targetSpace
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.TargetBoatSide
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.TargetLeftSide
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.targetLeftSide
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.TargetSideSpace
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.targetSideSpace
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.TargetBoatSpaces
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.targetBoatSpaces
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.targetSideSpaces
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.startFacingDirection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.overridedData.BoardingMoveDirection
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2730210995621811144, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_Name
-      value: Section Builder Root (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2888650534647860149, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_Name
-      value: Obstacle - SewerPipe
-      objectReference: {fileID: 0}
-    - target: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 4261194632730990851, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: distance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.EnemyDatas.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.EnemyDatas.Array.data[1]'
-      value: 
-      objectReference: {fileID: 9169251499300497760}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.EnemyDatas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 2978327454327785432}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.EnemyDatas.Array.data[3]'
-      value: 
-      objectReference: {fileID: 8454976879869624533}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.ObstacleDatas.Array.size
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: sectionData.CollectibleDatas.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8580400740237016145}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 1380119069364563745}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[3]'
-      value: 
-      objectReference: {fileID: 8702333838253590624}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[4]'
-      value: 
-      objectReference: {fileID: 7472082898354361890}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[5]'
-      value: 
-      objectReference: {fileID: 488686078871391375}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[6]'
-      value: 
-      objectReference: {fileID: 2649802063467824593}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[7]'
-      value: 
-      objectReference: {fileID: 4062575747587819259}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[8]'
-      value: 
-      objectReference: {fileID: 3088873413471994934}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[9]'
-      value: 
-      objectReference: {fileID: 9012201882354642456}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[10]'
-      value: 
-      objectReference: {fileID: 9176720053183155954}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[11]'
-      value: 
-      objectReference: {fileID: 5648125558320885506}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[12]'
-      value: 
-      objectReference: {fileID: 817356969813714842}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[13]'
-      value: 
-      objectReference: {fileID: 2868853183906002501}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.CollectibleDatas.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8095831728754065084}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.CollectibleDatas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 574465436261958405}
-    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5867496102379055383, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6359040131299024528, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_Name
-      value: Obstacle - SewerPipe
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: distance
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: _globalRiverValues
-      value: 
-      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
-        type: 2}
-    - target: {fileID: 7235556668447845005, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 494384108305630415}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 4584531964083426782}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 2876054080553804775}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 6
-      addedObject: {fileID: 3623539061199256126}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 2728585838816632186}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 8
-      addedObject: {fileID: 5630206431279031498}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 9
-      addedObject: {fileID: 6351226845568576556}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 10
-      addedObject: {fileID: 2970974667001005222}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 11
-      addedObject: {fileID: 183752710623171744}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 15
-      addedObject: {fileID: 6556473030846307417}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 16
-      addedObject: {fileID: 3136345615799347329}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 17
-      addedObject: {fileID: 5628058149498016141}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 19
-      addedObject: {fileID: 3660307289210055474}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 20
-      addedObject: {fileID: 2842521170357124797}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 295c66bc290b44760801d0a032edb696, type: 3}
---- !u!114 &488686078871391375 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &817356969813714842 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2545152674117145016, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &856245328311246989 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1380119069364563745 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4261194632730990851, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1434848506124474601 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2868853183906002501 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1141048769559380071, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4603809400615330993 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1720906431794451091, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8392160927918764801 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dced1abfc944439d949b3886bee8659, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &8687732020069463128 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 2883965167334127138}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8064516452599280125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2276,8 +217,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1599593555759347915, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.186122
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599593555759347915, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
       propertyPath: m_LocalPosition.z
-      value: 100
+      value: 99.14929
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599593555759347915, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999303
+      objectReference: {fileID: 0}
+    - target: {fileID: 1599593555759347915, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.011806243
       objectReference: {fileID: 0}
     - target: {fileID: 1720906431794451091, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
@@ -2288,6 +244,12 @@ PrefabInstance:
     - target: {fileID: 2545152674117145016, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: _globalRiverValues
+      value: 
+      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
+        type: 2}
+    - target: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: globalRiverValues
       value: 
       objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
         type: 2}
@@ -2387,8 +349,14 @@ PrefabInstance:
     - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: distance
-      value: 10
+      value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: globalRiverValues
+      value: 
+      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
+        type: 2}
     - target: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: _globalRiverValues
@@ -2397,79 +365,35 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
+      propertyPath: globalRiverValues
+      value: 
+      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
+        type: 2}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
       propertyPath: sectionData.EnemyDatas.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
-      propertyPath: 'sectionData.EnemyDatas.Array.data[1]'
-      value: 
-      objectReference: {fileID: 3616642204399905066}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.EnemyDatas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 8041695054124322764}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.EnemyDatas.Array.data[3]'
-      value: 
-      objectReference: {fileID: 9054122516252296961}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
       propertyPath: sectionData.ObstacleDatas.Array.size
-      value: 14
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: sectionData.CollectibleDatas.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: 'sectionData.ObstacleDatas.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1396154934516620467}
     - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: 'sectionData.ObstacleDatas.Array.data[1]'
       value: 
-      objectReference: {fileID: 8350696527353352947}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 6109175833342142718}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[3]'
-      value: 
-      objectReference: {fileID: 8493122383229703671}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[4]'
-      value: 
-      objectReference: {fileID: 2210785293981922150}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[5]'
-      value: 
-      objectReference: {fileID: 4694761337656118096}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[6]'
-      value: 
-      objectReference: {fileID: 6281951119268493586}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[7]'
-      value: 
-      objectReference: {fileID: 8541464779356686682}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[8]'
-      value: 
-      objectReference: {fileID: 6561769102024021078}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[9]'
-      value: 
-      objectReference: {fileID: 5709437056298971080}
+      objectReference: {fileID: 2017955341277432389}
     - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: 'sectionData.ObstacleDatas.Array.data[10]'
@@ -2480,35 +404,35 @@ PrefabInstance:
       propertyPath: 'sectionData.ObstacleDatas.Array.data[11]'
       value: 
       objectReference: {fileID: 2017955341277432389}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[12]'
-      value: 
-      objectReference: {fileID: 5528406188063612997}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.ObstacleDatas.Array.data[13]'
-      value: 
-      objectReference: {fileID: 6935327041915122074}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.CollectibleDatas.Array.data[1]'
-      value: 
-      objectReference: {fileID: 6965072666801703901}
-    - target: {fileID: 4329461565803888504, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      propertyPath: 'sectionData.CollectibleDatas.Array.data[2]'
-      value: 
-      objectReference: {fileID: 906971183509526598}
     - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.5
+      value: -5.9418993
       objectReference: {fileID: 0}
     - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 17.64098
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99970216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.024404969
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298553034587403494, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
@@ -2570,11 +494,47 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle - SewerPipe
       objectReference: {fileID: 0}
+    - target: {fileID: 6369917451240687647, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.171003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369917451240687647, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.225883
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369917451240687647, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9997459
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369917451240687647, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369917451240687647, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.02254171
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369917451240687647, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: distance
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
+        type: 3}
+      propertyPath: globalRiverValues
+      value: 
+      objectReference: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268,
+        type: 2}
     - target: {fileID: 6661693478039078179, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
       propertyPath: _globalRiverValues
@@ -2587,64 +547,21 @@ PrefabInstance:
       value: -8.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7682165827213847943, guid: 295c66bc290b44760801d0a032edb696, type: 3}
+    - {fileID: 6167215962816250551, guid: 295c66bc290b44760801d0a032edb696, type: 3}
+    - {fileID: 843829769449658046, guid: 295c66bc290b44760801d0a032edb696, type: 3}
+    - {fileID: 2888650534647860149, guid: 295c66bc290b44760801d0a032edb696, type: 3}
+    - {fileID: 6359040131299024528, guid: 295c66bc290b44760801d0a032edb696, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 2788520240031818188}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 5333743528208345923}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 735706013038924004}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 6
-      addedObject: {fileID: 5963752555942535271}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 7
-      addedObject: {fileID: 305157091000356477}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 8
-      addedObject: {fileID: 5050317772280110784}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 9
-      addedObject: {fileID: 8953280369526353653}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 10
+      insertIndex: 0
       addedObject: {fileID: 5955574803660377737}
     - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
         type: 3}
-      insertIndex: 11
+      insertIndex: 1
       addedObject: {fileID: 2964972879959167667}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 15
-      addedObject: {fileID: 8559424256786538557}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 16
-      addedObject: {fileID: 2611524634161195525}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 17
-      addedObject: {fileID: 8286791368683495323}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 19
-      addedObject: {fileID: 1961344217554336197}
-    - targetCorrespondingSourceObject: {fileID: 5806513433302663802, guid: 295c66bc290b44760801d0a032edb696,
-        type: 3}
-      insertIndex: 20
-      addedObject: {fileID: 4857766503126927926}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 295c66bc290b44760801d0a032edb696, type: 3}
 --- !u!114 &3718280114018415838 stripped
@@ -2665,18 +582,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8064516452599280125}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4694761337656118096 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3372578660937775789, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 8064516452599280125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5480585393141294930 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2586220247129822895, guid: 295c66bc290b44760801d0a032edb696,
@@ -2689,18 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5528406188063612997 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2545152674117145016, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 8064516452599280125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6054692687254740790 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4317962581328293579, guid: 295c66bc290b44760801d0a032edb696,
@@ -2711,41 +604,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2efdfa27b2d684316a90f3989f405dc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6109175833342142718 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4261194632730990851, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 8064516452599280125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6935327041915122074 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1141048769559380071, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 8064516452599280125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8650018179146457966 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1720906431794451091, guid: 295c66bc290b44760801d0a032edb696,
-    type: 3}
-  m_PrefabInstance: {fileID: 8064516452599280125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

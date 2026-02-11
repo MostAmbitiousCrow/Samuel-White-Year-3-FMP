@@ -874,7 +874,7 @@ PrefabInstance:
     - target: {fileID: 3354172598740019625, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_Constraints
-      value: 112
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
@@ -1574,8 +1574,9 @@ MonoBehaviour:
   isVaulting: 0
   isVaultingHeavily: 0
   canJump: 1
-  jumpPower: 10
+  jumpPower: 15
   isJumping: 0
+  gravity: -25
   isBouncing: 0
   bouncePower: 5
   currentSpace:

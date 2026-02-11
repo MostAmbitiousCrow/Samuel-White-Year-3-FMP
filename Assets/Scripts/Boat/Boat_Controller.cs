@@ -1,14 +1,18 @@
+using EditorAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static Boat_Space_Manager.BoatSide;
 
 public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamageable
 {
+    [Line(GUIColor.Green)]
     [Header("Boat Settings")]
     public float steerSpeed = 1;
     public AnimationCurve SteerInterpolationCurve;
+    [FormerlySerializedAs("_currentLane")]
     [Space(10)]
     [Tooltip("The current lane of the boat the character is standing on")]
-    [SerializeField] int _currentLane;
+    [SerializeField, ReadOnly] private int currentLane;
     [Tooltip("What lane should this object start on? (if applicable)")]
     public int startLane = 1;
     [Space(10)]
@@ -19,13 +23,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     [Space(10)]
     [SerializeField] bool _isMoving;
     public bool IsMoving { get { return _isMoving; } }
+    
     private Vector3 _currentMoveTarget;
-
-    [Header("Components")]
-    [SerializeField] private Rigidbody rb;
-
-    //private River_Manager riverManager;
-    //[SerializeField] private Boat_Space_Manager boatSpaceManager;
+    private Vector3 _startMovePosition;
+    private float _moveElapsed;
+    [SerializeField] private float steerDuration = 0.35f;
 
     private void Start()
     {
@@ -41,56 +43,68 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         Vector3 localPos = transform.InverseTransformPoint(spaceTransform.position);
 
         float steerDirection = Mathf.Sign(localPos.x);
-        
-        MoveToLane(Mathf.RoundToInt(steerDirection));
+
+        if (Mathf.Abs(steerDirection) > 0.01f)
+        {
+            MoveToLane((int)steerDirection);
+        }
+
+        Debug.Log("Boat was steered!");
     }
 
     public void MoveToLane(int direction)
     {
-        River_Manager.RiverLane rl = River_Manager.Instance.GetLaneFromDirection(_currentLane, direction);
+        River_Manager.RiverLane rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
+        if (rl == null) return;
 
-        _currentLane = rl.ID;
-        var pos = rl.transform.position;
-        _currentMoveTarget = new Vector3(pos.x, pos.y, transform.position.z); //TODO: Add movement interpolation
+        currentLane = rl.ID;
+
+        Vector3 lanePos = rl.transform.localPosition;
+
+        // IMPORTANT:
+        // Use CURRENT position as new start (allows mid-steer blending)
+        _startMovePosition = transform.localPosition;
+        _currentMoveTarget = new Vector3(lanePos.x, lanePos.y, transform.localPosition.z);
+
+        _moveElapsed = 0f;
         _isMoving = true;
     }
+
+
 
     public void GoToLane(int lane)
     {
         River_Manager.RiverLane rl = River_Manager.Instance.GetLane(lane);
 
-        var pos = rl.transform.position;
-        _currentLane = rl.ID;
-        transform.position = new(pos.x, pos.y, transform.position.z);
+        var pos = rl.transform.localPosition;
+        currentLane = rl.ID;
+        transform.localPosition = new(pos.x, pos.y, transform.localPosition.z);
     }
 
     public int GetCurrentLane()
     {
-        return _currentLane;
+        return currentLane;
     }
 
     #region Movement
-    protected override void FixedTimeUpdate()
+    protected override void TimeUpdate()
     {
-        //if (GameManager.GameLogic.GamePaused) return;
-
         if (_isMoving) SteerMovement();
     }
-
-    /// <summary>
-    /// The interpolation of the steering movement
-    /// </summary>
-    void SteerMovement()
+    
+    private void SteerMovement()
     {
-        if (_currentMoveTarget != null)
-        {
-            Vector3 newPosition = Vector3.MoveTowards(rb.position, _currentMoveTarget, steerSpeed * Time.fixedDeltaTime * GameManager.GameLogic.GamePauseInt);
-            rb.MovePosition(newPosition);
-            if (rb.position.sqrMagnitude == newPosition.sqrMagnitude)
-            {
-                _isMoving = false;
-            }
-        }
+        _moveElapsed += Time.deltaTime / Mathf.Max(steerDuration, 0.0001f);
+
+        float t = Mathf.Clamp01(_moveElapsed);
+        float curvedT = SteerInterpolationCurve?.Evaluate(t) ?? t;
+
+        Vector3 newPosition = Vector3.Lerp(_startMovePosition, _currentMoveTarget, curvedT);
+        transform.localPosition = newPosition;
+
+        if (!(t >= 1f)) return;
+        transform.localPosition = _currentMoveTarget;
+        _isMoving = false;
     }
     #endregion
 

@@ -11,7 +11,7 @@ public class Character_Boat_Interactor : MonoBehaviour
     [SerializeField] bool canMoveBoat;
 
 
-    void OnEnable()
+    private void OnEnable()
     {
         if (boatController == null)
         {
@@ -22,17 +22,6 @@ public class Character_Boat_Interactor : MonoBehaviour
 
     public void ImpactBoat(SpaceData spaceData)
     {
-        //TODO: Move the boat in the direction of the side of the boat the character is stood on
-        // int count = Boat_Space_Manager.Instance.SpaceCount;
-        // if (space == count - 2) // Steer Left
-        // {
-        //     boatController.SteerBoat(canMoveBoat ? 1 : 0, weight);
-        // }
-        // else if (space == 1) // Steer Right
-        // {
-        //     boatController.SteerBoat(canMoveBoat ? -1 : 0, weight);
-        // }
-        
         if (!canMoveBoat) return;
         
         boatController.SteerBoat(spaceData, weight);

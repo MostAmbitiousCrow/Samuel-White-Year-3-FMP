@@ -14,38 +14,63 @@ public class GameCameraFocuser : MonoBehaviour
 
     [SerializeField, ReadOnly] private Vector3 originPosition;
     
+    [Header("Smoothing")]
+    [SerializeField] private float smoothTime = 0.25f;
+
+    private float _currentXVelocity;
+    private float _currentXOffset;
+
+    
     private void Awake()
     {
-        if (playerTransform != null)
+        if (playerTransform == null)
         {
             var p = FindFirstObjectByType<PlayerCharacter>();
-            playerTransform = p.transform;
+            if (p) playerTransform = p.transform;
         }
 
-        if (boatTransform != null)
+
+        if (boatTransform == null)
         {
             var b = FindFirstObjectByType<Boat_Controller>();
             boatTransform = b.transform;
         }
         
         // Store origin position
-        originPosition = transform.position;
+        originPosition = transform.localPosition;
     }
 
     private void LateUpdate()
     {
-        var boatLean = LeanToTarget(boatTransform, boatFollowStrength);
-        var playerLean = LeanToTarget(playerTransform, playerFollowStrength);
-        transform.position = originPosition + boatLean + playerLean;
-        
-        if (lookAtTarget) transform.LookAt(lookAtTarget);
+        float boatLean = GetTargetLean(boatTransform, boatFollowStrength);
+        float playerLean = GetTargetLean(playerTransform, playerFollowStrength);
+
+        float targetX = boatLean + playerLean;
+
+        // Smooth toward target
+        _currentXOffset = Mathf.SmoothDamp(
+            _currentXOffset,
+            targetX,
+            ref _currentXVelocity,
+            smoothTime
+        );
+
+        transform.localPosition = originPosition + new Vector3(_currentXOffset, 0f, 0f);
+
+        if (lookAtTarget)
+            transform.LookAt(lookAtTarget, transform.up);
     }
 
-    private Vector3 LeanToTarget(Transform target, float strength)
+
+    private float GetTargetLean(Transform target, float strength)
     {
-        var leanVector = Vector3.Lerp(Vector3.zero, target.position, strength); // TODO: Future proof for tunnel switches
-        return leanVector;
+        if (!target) return 0f;
+
+        Vector3 localTargetPos = transform.parent.InverseTransformPoint(target.position);
+        return localTargetPos.x * strength;
     }
+
+
 
     /// <summary>
     /// forces the camera position to a given side 

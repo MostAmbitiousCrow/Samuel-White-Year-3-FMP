@@ -74,6 +74,8 @@ namespace GameCharacters
             OnLightVault();
             OnHeavyVault();
             
+            base.TimeUpdate();
+            
             //TODO: Temporary way of triggering the players bounce, for testing purposes. Remove on Build
             if (Input.GetKeyDown(KeyCode.Alpha0))
                 TriggerBounce();
@@ -101,8 +103,6 @@ namespace GameCharacters
             // Handle movement logic here
             var direction = Mathf.RoundToInt(_moveAction.ReadValue<Vector2>().x);
             if (Mathf.Approximately(direction, 0)) return; // TODO: Test if this works on controller
-
-            // Note: Inverting the direction since the order of the boat spaces are flipped...
 
             if (!isMoving || isMoving && coyoteTriggered) MoveToSpaceFromDirection(Mathf.RoundToInt(direction));
         }

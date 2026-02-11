@@ -42,8 +42,8 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     [Header("Components")]
     [SerializeField] protected bool explodesOnHit;
     [SerializeField, ShowField(nameof(explodesOnHit))] protected ArtExplode artExploder;
-
-    //protected River_Manager riverManager;
+    [Space]
+    [SerializeField] protected River_Manager riverManager;
 
     #region Space Movement Logic
 
@@ -84,7 +84,11 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         this.distance = distance; this.height = height;
 
         Vector3 t = transform.position;
-        transform.position = new(t.x, height, distance);
+        
+        River_Manager.Instance.AssignToCurveSection(distance, currentLane, out Vector3 pos, out Quaternion rot);
+
+        pos += transform.right * ((currentLane - 1) * riverManager.GlobalRiverValues.riverLaneDistance); //TODO: Assign this to AssignToCurveSection
+        transform.SetPositionAndRotation(pos, rot);
     }
     #endregion
 
@@ -105,7 +109,8 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         float speed = isAffectedByRiverSpeed ? River_Manager.Instance.CurrentRiverSpeed : travelSpeed;
 
         // Move the object forwards
-        Vector3 travelDirection = Time.fixedDeltaTime * speed * Vector3.back;
+        Vector3 travelDirection = Time.fixedDeltaTime * speed * 
+            River_Manager.Instance.GetLane(currentLane).transform.forward;
         transform.Translate(travelDirection, Space.World); // Move along the river in world space
     }
     #endregion

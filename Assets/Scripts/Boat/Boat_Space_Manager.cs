@@ -252,7 +252,7 @@ public class Boat_Space_Manager : MonoBehaviour
                 float zOffset = (localIndex - (boatSpaceCount - 1) / 2f) * spacing;
 
                 Vector3 pos = data.t.localPosition;
-                pos.z = 0f;
+                // pos.z = 0f;
                 pos.x = zOffset; // keep centered on the boat
                 pos.y = .5f;
 
@@ -263,12 +263,12 @@ public class Boat_Space_Manager : MonoBehaviour
             // Side Spaces
             float sideOffset = globalRiverValues.boatSideSpaceDistance;
 
-            bs.spaceDatas.First().t.localPosition =
-                new Vector3(sideOffset, 0, bs.spaceDatas[^1].t.localPosition.z);
+            Transform first = bs.spaceDatas.First().t;
+            first.localPosition = new Vector3(sideOffset, 0, bs.spaceDatas[^1].t.localPosition.z);
             bs.spaceDatas.Last().insideBoat = false;
 
-            bs.spaceDatas.Last().t.localPosition =
-                new Vector3(-sideOffset, 0, bs.spaceDatas[1].t.localPosition.z);
+            Transform last = bs.spaceDatas.Last().t;
+            last.localPosition = new Vector3(-sideOffset, 0, last.localPosition.z);
             bs.spaceDatas.Last().insideBoat = false;
         }
 

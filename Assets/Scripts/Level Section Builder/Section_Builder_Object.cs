@@ -1,6 +1,7 @@
 using System;
 using EditorAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 {
@@ -19,12 +20,20 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
     [SerializeField] bool enableSnapping = true;
 
     [Header("Data")]
-    [SerializeField] GlobalRiverValues _globalRiverValues;
+    [SerializeField] private GlobalRiverValues globalRiverValues;
+
+    [SerializeField] private River_Manager riverManager;
 
     public void DrawGizmos()
     {
         SnapToLane();
         AdditionalDebug();
+    }
+
+    public void InjectRiverManager(GlobalRiverValues globalRiverValues, River_Manager riverManager)
+    {
+        this.globalRiverValues = globalRiverValues;
+        this.riverManager = riverManager;
     }
 
     protected void DrawItem(Color color, Vector3 scaleVector)
@@ -33,15 +42,15 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
         Gizmos.DrawCube(transform.position, scaleVector);
     }
 
-    void SnapToLane()
+    private void SnapToLane()
     {
-        if (enableSnapping && _globalRiverValues != null)
-        {
-            transform.position = new((Lane - 1) * _globalRiverValues.riverLaneDistance, Height, Distance);
+        if (!enableSnapping || globalRiverValues == null) return;
+        // transform.position = new((Lane - 1) * globalRiverValues.riverLaneDistance, Height, Distance);
 
-            River_Manager.Instance.AssignToCurve(Distance, lane, out Vector3 pos, out Quaternion rot);
-            transform.SetPositionAndRotation(pos, rot);
-        }
+        riverManager.AssignToCurveSection(Distance, lane, out Vector3 pos, out Quaternion rot);
+
+        pos += (transform.right * (lane - 1)) * globalRiverValues.riverLaneDistance; //TODO: Assign this to AssignToCurveSection
+        transform.SetPositionAndRotation(pos, rot);
     }
 
     private void CurveOffset()

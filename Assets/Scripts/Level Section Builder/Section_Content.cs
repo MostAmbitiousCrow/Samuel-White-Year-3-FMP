@@ -7,6 +7,7 @@ public class Section_Content : MonoBehaviour, IAffectedByRiver
 {
     [Header("Data")]
     [SerializeField] private River_Manager riverManager;
+    [SerializeField] private GlobalRiverValues globalRiverValues;
 
     [Serializable]
     public class SectionData
@@ -40,7 +41,14 @@ public class Section_Content : MonoBehaviour, IAffectedByRiver
         sectionData.GemstoneGateDatas.Clear();
 
         foreach (var sbo in GetComponentsInChildren<Section_Builder_Object>())
+        {
             sbo.Register(this);
+            if (!globalRiverValues || !riverManager)
+            {
+                Debug.LogWarning("Missing Global River Values or River Manager");
+            }
+            sbo.InjectRiverManager(globalRiverValues, riverManager);
+        }
     }
 
     public void InjectRiverManager(River_Manager manager)
