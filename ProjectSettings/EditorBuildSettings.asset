@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Game/Main Menu.unity
     guid: ead7104e0f2c5084fb6a2819cc51fe04
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Game/Main Game.unity
     guid: c712d48278173b44cbbf9abcb91349a0
+  - enabled: 1
+    path: Assets/Scenes/Test Scenes/Spline Movement Test.unity
+    guid: 32973e0af8b0f654da56764d45d9488d
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 921f311abf6d1452495d15aab60bc67d,
       type: 2}

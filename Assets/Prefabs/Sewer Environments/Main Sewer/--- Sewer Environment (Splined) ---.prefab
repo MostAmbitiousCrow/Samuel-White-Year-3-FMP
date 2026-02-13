@@ -308,6 +308,11 @@ PrefabInstance:
       propertyPath: m_LightProbeUsage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2273321700366807130, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2815542669433262609, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
       propertyPath: m_Mesh
@@ -317,6 +322,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sewer Environment Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851918463570684194, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 4584077047951747105, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
@@ -333,6 +343,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7642491345973053027, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
+      objectReference: {fileID: 0}
     - target: {fileID: 8703204522040648342, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
       propertyPath: m_CastShadows
@@ -342,6 +357,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LightProbeUsage
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703204522040648342, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9164661756454127889, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 9205371419675397465, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
@@ -421,6 +446,11 @@ PrefabInstance:
     - target: {fileID: 9208853530214507711, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
       propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208853530214507711, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
