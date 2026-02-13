@@ -879,7 +879,7 @@ PrefabInstance:
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.7542038
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
@@ -889,27 +889,27 @@ PrefabInstance:
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.74838257
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9998203
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.018959355
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
@@ -1578,7 +1578,7 @@ MonoBehaviour:
   isJumping: 0
   gravity: -25
   isBouncing: 0
-  bouncePower: 5
+  bouncePower: 7.5
   currentSpace:
     t: {fileID: 0}
     spaceID: 0

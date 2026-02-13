@@ -1005,8 +1005,9 @@ MonoBehaviour:
   isVaulting: 0
   isVaultingHeavily: 0
   canJump: 1
-  jumpPower: 12
+  jumpPower: 24
   isJumping: 0
+  gravity: -25
   isBouncing: 0
   bouncePower: 5
   currentSpace:

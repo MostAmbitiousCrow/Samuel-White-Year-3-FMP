@@ -8,7 +8,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     [Line(GUIColor.Green)]
     [Header("Boat Settings")]
     public float steerSpeed = 1;
-    public AnimationCurve SteerInterpolationCurve;
+    public AnimationCurve steerInterpolationCurve;
     [FormerlySerializedAs("_currentLane")]
     [Space(10)]
     [Tooltip("The current lane of the boat the character is standing on")]
@@ -17,17 +17,33 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     public int startLane = 1;
     [Space(10)]
     [Tooltip("The duration of the stun after hitting an obstacle")]
-    [SerializeField] float stunDuration = 1.5f;
+    [SerializeField] private float stunDuration = 1.5f;
     [Tooltip("How much of the current boats speed is decreased when an obstacle is hit")]
-    [SerializeField] float stunSlowMultiplier = .5f;
+    [SerializeField] private float stunSlowMultiplier = .5f;
+    [FormerlySerializedAs("_isMoving")]
     [Space(10)]
-    [SerializeField] bool _isMoving;
-    public bool IsMoving { get { return _isMoving; } }
-    
+    [SerializeField, ReadOnly] private bool isMoving;
+    public bool IsMoving => isMoving;
+
     private Vector3 _currentMoveTarget;
     private Vector3 _startMovePosition;
     private float _moveElapsed;
     [SerializeField] private float steerDuration = 0.35f;
+
+    private int _direction = 0;
+
+    [Header("Roll Settings")] 
+    [SerializeField] private float rollAmount = 7.5f;
+    [SerializeField] private AnimationCurve rollCurve;
+    
+    [Header("Spline Movement")]
+    [SerializeField] private RiverSplineObject riverSplineObject;
+    public RiverSplineObject RiverSplineObject => riverSplineObject;
+
+    private void Awake()
+    {
+        // TODO: Obtain River Spline Object Reference
+    }
 
     private void Start()
     {
@@ -42,12 +58,19 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         Transform spaceTransform = spaceData.t;
         Vector3 localPos = transform.InverseTransformPoint(spaceTransform.position);
 
-        float steerDirection = Mathf.Sign(localPos.x);
+        _direction = Mathf.RoundToInt(Mathf.Sign(localPos.x));
 
-        if (Mathf.Abs(steerDirection) > 0.01f)
+        if (_direction != 0)
         {
-            MoveToLane((int)steerDirection);
+            MoveToLane(_direction);
         }
+        
+        // float steerDirection = Mathf.Sign(localPos.x);
+        //
+        // if (Mathf.Abs(steerDirection) > 0.01f)
+        // {
+        //     MoveToLane((int)steerDirection);
+        // }
 
         Debug.Log("Boat was steered!");
     }
@@ -67,11 +90,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         _currentMoveTarget = new Vector3(lanePos.x, lanePos.y, transform.localPosition.z);
 
         _moveElapsed = 0f;
-        _isMoving = true;
+        isMoving = true;
     }
-
-
-
+    
     public void GoToLane(int lane)
     {
         River_Manager.RiverLane rl = River_Manager.Instance.GetLane(lane);
@@ -89,7 +110,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     #region Movement
     protected override void TimeUpdate()
     {
-        if (_isMoving) SteerMovement();
+        if (isMoving) SteerMovement();
     }
     
     private void SteerMovement()
@@ -97,14 +118,26 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         _moveElapsed += Time.deltaTime / Mathf.Max(steerDuration, 0.0001f);
 
         float t = Mathf.Clamp01(_moveElapsed);
-        float curvedT = SteerInterpolationCurve?.Evaluate(t) ?? t;
+        float steerT = steerInterpolationCurve?.Evaluate(t) ?? t;
 
-        Vector3 newPosition = Vector3.Lerp(_startMovePosition, _currentMoveTarget, curvedT);
+        // Move the boat
+        Vector3 newPosition = Vector3.Lerp(_startMovePosition, _currentMoveTarget, steerT);
         transform.localPosition = newPosition;
+        
+        float rollT = rollCurve.Evaluate(_moveElapsed);
+        // Roll the boat!
+        float roll = _direction > 0? 
+            Mathf.Lerp(-15f, 0f, rollT) // Roll Left
+            : 
+            Mathf.Lerp(15f, 0f, rollT); // Roll Right
+        transform.localRotation = Quaternion.Euler(0f, 0f, roll);
 
+        // Set the boat to its move target once travel time has ended
         if (!(t >= 1f)) return;
         transform.localPosition = _currentMoveTarget;
-        _isMoving = false;
+        transform.localRotation = Quaternion.identity;
+
+        isMoving = false;
     }
     #endregion
 

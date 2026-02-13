@@ -116,15 +116,15 @@ public class LeapingCrocodile_EmergeState : EnemyEmergeState
     {
         if (_currentEmergeTime > CrocSc.EmergeDelay)
         {
-            if (!CrocSc.isJumping)
+            if (!CrocSc.isJumping && CrocSc.IsGrounded)
             {
                 // Trigger leap and move towards 
                 CrocSc.TriggerJump();
-                CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection);
+                CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, true);
                 CrocSc.MoveToSpace(CrocSc.boatEnterData.targetSideSpace, CrocSc.boatEnterData.targetSpace);
             }
             // When the Crocodile has landed on the boat, patrol
-            if (CrocSc.IsGrounded)
+            else
             {
                 CrocSc.ChangeState(CrocSc.MovingState);
             }

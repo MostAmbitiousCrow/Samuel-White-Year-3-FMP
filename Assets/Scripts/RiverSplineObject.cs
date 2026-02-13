@@ -12,6 +12,7 @@ public class RiverSplineObject : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private River_Manager riverManager;
     [SerializeField] private SplineAnimate splineAnimate;
+    public SplineAnimate SplineAnimate => splineAnimate;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class RiverSplineObject : MonoBehaviour
 
     private void UpdateSpeed()
     {
-        splineAnimate.MaxSpeed = riverManager.CurrentRiverSpeed;
+        // TODO: Recalculating this causes the object to get sent forwards / backwards. Fix this!
+        splineAnimate.MaxSpeed = riverManager.currentRiverSpeed;
     }
 }

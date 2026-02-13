@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CarterGames.Assets.AudioManager.Logging;
 using EditorAttributes;
+using UnityEngine.Rendering;
 using UnityEngine.Splines;
+using Void = EditorAttributes.Void;
 
 public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 {
@@ -54,6 +58,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     [Header("Managers")]
     [SerializeField] private River_Manager riverManager;
     [SerializeField] private Boat_Space_Manager boatManager;
+    [SerializeField] private Boat_Controller boatController;
 
     public void InjectRiverManager(River_Manager manager) => riverManager = manager;
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm) => boatManager = bsm;
@@ -61,6 +66,10 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
 
     private void Awake()
     {
+        if (riverManager == null) riverManager = FindFirstObjectByType<River_Manager>();
+        if (boatManager == null) boatManager = FindFirstObjectByType<Boat_Space_Manager>();
+        if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
+        
         InitializePrefabLookup();
     }
 
@@ -176,6 +185,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     private void SpawnAndInitialize(int id, Section_Builder_Object data)
     {
         // Get the object from the object pool, with a given ID
+        if (ObjectPoolManager.Instance == null) Debug.LogError("Object Pool Manager is missing!");
         var pooledObject = ObjectPoolManager.Instance.Spawn<River_Object>(id);
         
         if (!pooledObject) return;
@@ -208,7 +218,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     }
 
     // Get the specific type from this object type
-    private System.Enum GetTypeKey(Section_Builder_Object item)
+    private Enum GetTypeKey(Section_Builder_Object item)
     {
         return item switch
         {
@@ -233,7 +243,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             furthestDistance = spawnDist;
         }
         
-        ro.StartOnLane(sbo.Lane, sbo.Distance + riverManager.RiverObjectSpawnDistance, sbo.Height);
+        ro.StartOnLane(sbo.Lane, sbo.Distance + riverManager.riverObjectSpawnDistance, sbo.Height);
     }
 
     #endregion

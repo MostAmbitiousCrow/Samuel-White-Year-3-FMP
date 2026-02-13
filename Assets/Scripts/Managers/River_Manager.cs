@@ -13,31 +13,32 @@ public class River_Manager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private SplineContainer worldSplineContainer;
     public SplineContainer WorldSplineContainer => worldSplineContainer;
+    [SerializeField] private Boat_Controller boatController;
+    public Boat_Controller BoatController => boatController;
 
     [Header("River Stats")]
-    public float RiverFlowSpeed => riverFlowSpeed;
 
     [Tooltip("The current speed of the rivers flow. Affects the rivers animation.")]
-    [SerializeField]
-    private float riverFlowSpeed
+    [SerializeField] private float riverFlowSpeed;
+
+    public float RiverFlowSpeed
     {
         get => riverFlowSpeed;
-        
-        set 
+        set
         {
             riverFlowSpeed = value;
             OnRiverSpeedUpdate?.Invoke();
         }
     }
-
+    
     [Tooltip("The min/max values of the levels of speed the river can reach")]
-    [MinMaxSlider(0, 50)] public Vector2Int MinMaxSpeed = new(0, 50);
+    [MinMaxSlider(0, 50)] public Vector2Int minMaxSpeed = new(0, 50);
     /// <summary> The default speed of the river. Default value is: 1 </summary>
     public int startingRiverSpeed = 50;
     /// <summary> The speed of the river shared across river objects </summary>
-    public int CurrentRiverSpeed { get; private set; } = 5;
+    public int currentRiverSpeed = 5;
     /// <summary> The minimum amount of distance river objects can spawn in the z axis </summary>
-    public int RiverObjectSpawnDistance { get; private set; } = 45;
+    public int riverObjectSpawnDistance = 45;
     /// <summary> Is the river currently paused? </summary>
     public bool IsPaused { get; private set; } = false;
     /// <summary> Is the river currently speeding up or slowing down? </summary>
@@ -70,6 +71,8 @@ public class River_Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        
+        if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
         UpdateSpaceDatas();
         ResetRiver();
     }
@@ -149,87 +152,90 @@ public class River_Manager : MonoBehaviour
     #region River Modification
     [Header("Animation")]
     [Tooltip("The curve representing the slow down transition")] // Don't know any other way to describe it :sob
-    [SerializeField] AnimationCurve slowCurve;
+    [SerializeField] private AnimationCurve slowCurve;
 
     [Tooltip("The curve representing the speed up transition")] // Don't know any other way to describe it :sob
-    [SerializeField] AnimationCurve speedCurve;
+    [SerializeField] private AnimationCurve speedCurve;
 
+    [Button]
+    public void DevSlowDownRiver()
+    {
+        currentRiverSpeed -= 10;
+        RiverFlowSpeed = currentRiverSpeed * 10f;
+    }
+    
     /// <summary> The method to slow down the global river speed </summary>
     /// <param name="amount"></param>
     /// <param name="multiplier"></param>
     public void SlowDownRiver(int amount = 1, float multiplier = 10f)
     {
-        int targetSpeed = CurrentRiverSpeed - amount;
-        CurrentRiverSpeed = targetSpeed;
+        int targetSpeed = currentRiverSpeed - amount;
+        currentRiverSpeed = targetSpeed;
 
-        if (targetSpeed < MinMaxSpeed.x) // If target speed is less than the min speed value
+        if (targetSpeed < minMaxSpeed.x) // If target speed is less than the min speed value
         {
             print("River speed has reached minimum speed");
             return;
         }
-        OnRiverSpeedUpdate.Invoke();
-        speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, true, multiplier));
+        OnRiverSpeedUpdate?.Invoke();
+        _speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, true, multiplier));
     }
 
+    [Button]
+    public void DevSpeedUpRiver()
+    {
+        currentRiverSpeed += 10;
+        RiverFlowSpeed = currentRiverSpeed * 10f;
+    }
     /// <summary> The method to speed up the global river speed </summary>
     public void SpeedUpRiver(int amount = 1, float multiplier = 5f)
     {
-        int targetSpeed = CurrentRiverSpeed + amount;
+        int targetSpeed = currentRiverSpeed + amount;
 
-        if (targetSpeed > MinMaxSpeed.y) // If target speed is less than the max speed value
+        if (targetSpeed > minMaxSpeed.y)
         {
             print("River speed has reached maximum speed!");
             return;
         }
-        CurrentRiverSpeed = targetSpeed;
 
-        OnRiverSpeedUpdate.Invoke();
-        speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, false, multiplier));
+        if (_speedRoutine != null)
+        {
+            StopCoroutine(_speedRoutine);
+        }
+
+        currentRiverSpeed = targetSpeed;
+
+        IsTransitioning = true;
+
+        OnRiverSpeedUpdate?.Invoke();
+        _speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, false, multiplier));
     }
 
-    private Coroutine speedRoutine;
-    private IEnumerator RiverSpeedIncreaseRoutine(int targetspeed, bool decrease, float multiplier)
-    {
-        float startSpeed = CurrentRiverSpeed;
 
+    private Coroutine _speedRoutine;
+    private IEnumerator RiverSpeedIncreaseRoutine(int targetSpeed, bool decrease, float multiplier)
+    {
+        float startSpeed = RiverFlowSpeed;
         float t = 0f;
 
-        if (decrease)
+        while (t < 1f)
         {
-            yield return new WaitUntil(() => !IsTransitioning); // Wait until the fast routine has finished before slowing down
-
-            t = 1f;
-
-            while (t > 0f) // Slowing down
+            if (!IsPaused)
             {
-                yield return new WaitUntil(() => !IsPaused); // Wait if paused
-                
-                t -= Time.deltaTime * multiplier * GameManager.GameLogic.GamePauseInt;
-
-                riverFlowSpeed = Mathf.Lerp(targetspeed, startSpeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
-                yield return null;
-            }
-            IsTransitioning = false;
-        }
-        else
-        {
-            yield return new WaitUntil(() => !IsTransitioning); // Wait until the slow routine has finished before speeding up
-
-            t = 0f;
-
-            while (t < 1f) // Speeding up
-            {
-                yield return new WaitUntil(() => !IsPaused); // Wait if paused
-
                 t += Time.deltaTime * multiplier * GameManager.GameLogic.GamePauseInt;
+                t = Mathf.Clamp01(t);
 
-                riverFlowSpeed = Mathf.Lerp(startSpeed, targetspeed, Mathf.Round(slowCurve.Evaluate(t) * 100f) / 100f);
-                yield return null;
+                float curveValue = slowCurve?.Evaluate(t) ?? t;
+                RiverFlowSpeed = Mathf.Lerp(startSpeed, targetSpeed, curveValue);
             }
-            IsTransitioning = false;
+
+            yield return null;
         }
-        riverFlowSpeed = targetspeed;
+
+        RiverFlowSpeed = targetSpeed;
+        IsTransitioning = false;
     }
+
 
     /// <summary> Completely stops the speed of the river with optional smoothing </summary>
     public void PauseRiver(bool smoothing = false, float smoothAmount = 1f) //TODO
@@ -248,8 +254,8 @@ public class River_Manager : MonoBehaviour
     /// <summary> Completely resets all changes made to the river to their default value and stops any speed transitions </summary>
     public void ResetRiver()
     {
-        if (speedRoutine != null) StopCoroutine(speedRoutine);
-        CurrentRiverSpeed = startingRiverSpeed;
+        if (_speedRoutine != null) StopCoroutine(_speedRoutine);
+        currentRiverSpeed = startingRiverSpeed;
     }
     #endregion
 
@@ -303,7 +309,16 @@ public class River_Manager : MonoBehaviour
         return rot;
     }
 
-    public void ProgressOnCurve(float speed, float currentProgress, int lane, out float updatedProgress, 
+    /// <summary>
+    /// Progresses the object on the world spline using delta time
+    /// </summary>
+    /// <param name="speed"> The speed of the object</param>
+    /// <param name="currentProgress"> The current progress of the object on the spline</param>
+    /// <param name="lane"> The current lane this object is on</param>
+    /// <param name="updatedProgress">The new progress of the object on the spline</param>
+    /// <param name="newPosition"> The output position of the object</param>
+    /// <param name="newRotation"> The output rotation of the object</param>
+    public void ProgressOnWorldSpline(float speed, float currentProgress, int lane, out float updatedProgress, 
         out Vector3 newPosition, out Quaternion newRotation)
     {
         var length = worldSplineContainer.CalculateLength();
@@ -317,7 +332,14 @@ public class River_Manager : MonoBehaviour
         newRotation = Quaternion.LookRotation(tangent, upVector);
     }
 
-    public void AssignToCurve(float currentProgress, int lane, out Vector3 newPosition, out Quaternion newRotation)
+    /// <summary>
+    /// Moves the object to the position on the world spline.
+    /// </summary>
+    /// <param name="currentProgress"> The current progress of the object on the spline</param>
+    /// <param name="lane"> The current lane this object is on</param>
+    /// <param name="newPosition"> The output position on the spline</param>
+    /// <param name="newRotation"> The output rotation on the spline</param>
+    public void AssignToWorldSpline(float currentProgress, int lane, out Vector3 newPosition, out Quaternion newRotation) // Note: Idk if this even does anything...
     {
         worldSplineContainer.Evaluate(currentProgress, out float3 position, out float3 tangent, out float3 upVector);
 
@@ -325,7 +347,7 @@ public class River_Manager : MonoBehaviour
         newRotation = Quaternion.LookRotation(tangent, upVector);
     }
     
-    public void AssignToCurveSection(float currentProgress, int lane, out Vector3 newPosition, out Quaternion newRotation)
+    public void AssignToCurveSection(float currentProgress, int lane, out Vector3 newPosition, out Quaternion newRotation, bool useBoatOffset = false)
     {
         // Mf does this even make a difference???
         int splineCount = worldSplineContainer.Splines.Count;
@@ -349,8 +371,7 @@ public class River_Manager : MonoBehaviour
         {
             if (remainingDistance <= splineLengths[i])
             {
-                targetSplineIndex = i;
-                break;
+                targetSplineIndex = i; break;
             }
             remainingDistance -= splineLengths[i];
         }
@@ -359,10 +380,12 @@ public class River_Manager : MonoBehaviour
         float t = SplineUtility.GetNormalizedInterpolation(worldSplineContainer.Splines[targetSplineIndex],
             remainingDistance, PathIndexUnit.Distance);
 
-        worldSplineContainer.Evaluate(targetSplineIndex, t, out float3 position, out float3 tangent,
-            out float3 upVector);
+        float boatOffset = useBoatOffset? boatController.RiverSplineObject.SplineAnimate.NormalizedTime : 0f;
+        worldSplineContainer.Evaluate(targetSplineIndex, Mathf.Repeat(t + boatOffset, 1f),
+            out float3 position, out float3 tangent, out float3 upVector);
     
-        newPosition = new Vector3(position.x, position.y, position.z);
+        newPosition = lane == 0 ? new Vector3(position.x, position.y, position.z)
+            : new Vector3(position.x * lane, position.y, position.z);
         newRotation = Quaternion.LookRotation(tangent, upVector);
     }
     #endregion

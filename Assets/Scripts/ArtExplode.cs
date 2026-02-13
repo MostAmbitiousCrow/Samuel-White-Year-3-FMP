@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CameraShake;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using EditorAttributes;
 using Random = UnityEngine.Random;
@@ -49,7 +50,8 @@ public class ArtExplode : MonoBehaviour
             r.angularVelocity = GetRandomRotation();
             r.AddExplosionForce(force, pos, 2f, force, ForceMode.Impulse);
         }
-        
+
+        AudioManager.Play("metal-pipe-falling-sound-effect-2e7e563a-1930-49e5-be28-f684fb738bec");
         CameraShaker.Presets.Explosion3D(); // TODO: Add a preset for art explosions
     }
 

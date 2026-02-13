@@ -50,6 +50,7 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
         riverManager.AssignToCurveSection(Distance, lane, out Vector3 pos, out Quaternion rot);
 
         pos += (transform.right * (lane - 1)) * globalRiverValues.riverLaneDistance; //TODO: Assign this to AssignToCurveSection
+        pos += Vector3.up * height;
         transform.SetPositionAndRotation(pos, rot);
     }
 

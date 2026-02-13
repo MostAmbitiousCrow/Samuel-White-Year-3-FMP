@@ -186,8 +186,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldSplineContainer: {fileID: 0}
-  _riverFlowSpeed: 5
-  MinMaxSpeed: {x: 0, y: 5}
+  boatController: {fileID: 0}
+  minMaxSpeed: {x: 0, y: 50}
+  startingRiverSpeed: 50
+  currentRiverSpeed: 5
+  riverObjectSpawnDistance: 100
   lanesParent: {fileID: 3663419595711803000}
   globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   RiverLanes:

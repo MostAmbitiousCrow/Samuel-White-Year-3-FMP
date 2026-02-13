@@ -85,10 +85,10 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
         Vector3 t = transform.position;
         
-        River_Manager.Instance.AssignToCurveSection(distance, currentLane, out Vector3 pos, out Quaternion rot);
+        River_Manager.Instance.AssignToCurveSection(distance, currentLane, out Vector3 pos, out Quaternion rot, true);
 
-        pos += transform.right * ((currentLane - 1) * riverManager.GlobalRiverValues.riverLaneDistance); //TODO: Assign this to AssignToCurveSection
-        transform.SetPositionAndRotation(pos, rot);
+        pos += transform.right * ((currentLane - 1) * River_Manager.Instance.GlobalRiverValues.riverLaneDistance); //TODO: Assign this to AssignToCurveSection
+        transform.SetPositionAndRotation(pos + Vector3.up * height, rot);
     }
     #endregion
 
@@ -97,16 +97,16 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     {
         // Do Movement
         if (!isMoving || !canMove) return;
-        RiverFlowMovement();
-        distance = GetDistanceToCurrentLane();
+        // RiverFlowMovement(); // TODO: Might not actually need this if objects will be stationary...
+        distance = GetDistanceToBoat();
             
         // Once out of sight, return to pool
         if (distance < -10f) ReturnToPool();
     }
 
-    private void RiverFlowMovement()
+    private void RiverFlowMovement() // TODO: Probably remove if objects will be stationary
     {
-        float speed = isAffectedByRiverSpeed ? River_Manager.Instance.CurrentRiverSpeed : travelSpeed;
+        float speed = isAffectedByRiverSpeed ? River_Manager.Instance.currentRiverSpeed : travelSpeed;
 
         // Move the object forwards
         Vector3 travelDirection = Time.fixedDeltaTime * speed * 
@@ -116,9 +116,9 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     #endregion
 
     #region Math
-    protected float GetDistanceToCurrentLane()
+    protected float GetDistanceToBoat()
     {
-        return transform.position.z - River_Manager.Instance.GetLane(currentLane).transform.position.z;
+        return Vector3.Distance(transform.position, River_Manager.Instance.BoatController.transform.position);
     }
     #endregion
 

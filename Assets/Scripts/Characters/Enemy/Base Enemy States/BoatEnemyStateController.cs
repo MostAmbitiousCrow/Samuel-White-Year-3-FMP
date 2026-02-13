@@ -69,6 +69,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
 
     protected override void TimeUpdate()
     {
+        base.TimeUpdate();
         CurrentState.UpdateState();
     }
 

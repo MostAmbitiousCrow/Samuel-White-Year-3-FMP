@@ -221,7 +221,7 @@ public class Gemstone_Gate : River_Object
 
     private void AbsorptionSucceeded()
     {
-        print("Absorption Succeeded!");
+        // print("Absorption Succeeded!"); // TODO: Fix
         isMoving = true;
         _gemRequirementText.SetText(0.ToString());
 

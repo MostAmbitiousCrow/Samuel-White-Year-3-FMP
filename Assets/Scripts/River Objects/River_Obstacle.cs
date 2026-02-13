@@ -1,19 +1,19 @@
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(Rigidbody))]
 // Collider will only register enemies, the player and their boat
-[RequireComponent(typeof(BoxCollider))]
 /// <summary>
 /// Base class for obstacles. Derives from the River_Object class.
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
 public class River_Obstacle : River_Object
 {
-    [EditorAttributes.Line(EditorAttributes.GUIColor.Cyan, 1, 3)]
-    [Header("Obstacle Stats")]
     /// <summary>
     /// Overrided Stats Data
     /// </summary>
+    [EditorAttributes.Line(EditorAttributes.GUIColor.Cyan, 1, 3)]
+    [Header("Obstacle Stats")]
     public ObstacleData obstacleData; //TODO can be private
     public bool IsHit { get; private set; }
 
@@ -34,6 +34,8 @@ public class River_Obstacle : River_Object
         IsHit = true;
 
         if (explodesOnHit) artExploder.ExplodeArt();
+
+        Invoke(nameof(ReturnToPool), 3f);
     }
 
     // TODO: Add animation / Sink or destroy obstacle after damaging something
@@ -44,6 +46,7 @@ public class River_Obstacle : River_Object
     public override void OnSpawn()
     {
         base.OnSpawn();
+        IsHit = false;
     }
 
     #endregion

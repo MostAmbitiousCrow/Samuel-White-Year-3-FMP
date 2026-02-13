@@ -159,6 +159,24 @@ namespace GameCharacters
         }
         #endregion
 
+        protected override void OnVaulted()
+        {
+            base.OnVaulted();
+            if (isVaultingHeavily) TriggerHitStop(.1f);
+        }
+        
+        protected override void OnJumped()
+        {
+            base.OnJumped();
+            if (isVaultingHeavily) TriggerHitStop(.1f);
+        }
+
+        protected override void OnLanded()
+        {
+            base.OnLanded();
+            if (isVaultingHeavily) TriggerHitStop(.1f);
+        }
+
         #region Gemstone Events
 
         private void GemstoneCollected(int amount)

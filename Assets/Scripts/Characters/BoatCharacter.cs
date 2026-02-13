@@ -33,12 +33,14 @@ namespace GameCharacters
         
         [SerializeField] private float gravity = -25f;
 
-        private float verticalVelocity;
-        private float currentY;
+        private float _verticalVelocity;
+        private float _currentY;
         
         [Header("Head Bounce")]
         [ReadOnly] public bool isBouncing = false;
         [SerializeField] protected float bouncePower = 5f;
+        private float _timeSinceLastBounce;
+        private bool _canBounce;
 
         [Header("Space Information")]
         [Tooltip("The current space on the boat this character is on")]
@@ -208,7 +210,7 @@ namespace GameCharacters
         protected override void TimeUpdate()
         {
             base.TimeUpdate();
-            if (!currentSpace?.t) return;
+            if (!currentSpace?.t || HealthComponent.IsDead) return;
 
             VerticalMovement();
 
@@ -225,11 +227,14 @@ namespace GameCharacters
                 StayOnCurrentSpace();
             }
 
-            // if (isGrounded)
-            // {
-            //     currentY = 0f;
-            // }
-            
+            if (isGrounded)
+            {
+                _currentY = 0f;
+            }
+
+            // Reset Bounce Cooldown
+            if (_timeSinceLastBounce - Time.time < .5f) _canBounce = true;
+
         }
         #endregion
 
@@ -243,7 +248,7 @@ namespace GameCharacters
 
             transform.localPosition = new Vector3(
                 basePos.x,
-                basePos.y + currentY,
+                basePos.y + _currentY,
                 basePos.z
             );
         }
@@ -265,7 +270,7 @@ namespace GameCharacters
 
                 transform.localPosition = new Vector3(
                     basePos.x,
-                    basePos.y + currentY,
+                    basePos.y + _currentY,
                     basePos.z
                 );
             }
@@ -278,7 +283,7 @@ namespace GameCharacters
 
                 transform.localPosition = new Vector3(
                     basePos.x,
-                    basePos.y + currentY,
+                    basePos.y + _currentY,
                     basePos.z
                 );
             }
@@ -298,13 +303,18 @@ namespace GameCharacters
 
                 Vector3 pos = Vector3.Lerp(PreviousSpace.t.localPosition, TargetedSpace.t.localPosition, t);
 
-                transform.localPosition = new Vector3(pos.x, pos.y + currentY, pos.z);
+                transform.localPosition = new Vector3(pos.x, pos.y + _currentY, pos.z);
             }
             else
             {
                 isVaulting = false;
                 VaultTimeElapsed = 0f;
-                transform.localPosition = TargetedSpace.t.localPosition;
+                transform.localPosition = TargetedSpace.t.localPosition + Vector3.up * _currentY;
+
+                if (!isJumping) OnVaulted(); // Prevent clashing hit-stop with the player
+                
+                if (TargetedCharacter != null) TargetedCharacter.GetComponent<IDamageable>().TakeDamage();
+                TargetedCharacter = null;
 
                 if (!isVaultingHeavily || !canInteractWithBoat) return;
                 
@@ -323,17 +333,33 @@ namespace GameCharacters
             }
         }
 
+        protected virtual void OnVaulted()
+        {
+            animator.SetTrigger("Vaulted"); //TODO: add "Vault Landed" animation!
+        }
+
         #endregion
 
         private void VerticalMovement()
         {
             if (isGrounded) return;
-            verticalVelocity += gravity * Time.deltaTime;
-            currentY += verticalVelocity * Time.deltaTime;
+            // Do Gravity (fall)
+            _verticalVelocity += gravity * Time.deltaTime;
+            _currentY += _verticalVelocity * Time.deltaTime;
 
-            if (!(currentY <= 0f)) return;
-            currentY = 0f;
-            verticalVelocity = 0f;
+            // Damage any Characters below!
+            var character = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+            (StompPosition.position, Vector3.one, StompPosition.rotation, TargetableCharacterLayers, true);
+            if (character != null)
+            {
+                character.GetComponent<IDamageable>().TakeDamage();
+                TriggerBounce();
+            }
+
+            // Detect Landing
+            if (!(_currentY <= 0f)) return;
+            _currentY = 0f;
+            _verticalVelocity = 0f;
             isGrounded = true;
             OnLanded();
         }
@@ -341,27 +367,13 @@ namespace GameCharacters
         public void TriggerJump()
         {
             if (!isGrounded) return;
-
-            isGrounded = false;
-            verticalVelocity = jumpPower;
-            currentY = 0f;
-
-            OnJumped();
-        }
-
-        private IEnumerator JumpWaitRoutine()
-        {
-            yield return PauseWait; // Time Behaviour Pause
-            yield return new WaitUntil(() => !isVaulting);
             
             isJumping = true;
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            
+            isGrounded = false;
+            _verticalVelocity = jumpPower;
+            _currentY = 0f;
+
             OnJumped();
-            
-            if (_waitGroundedRoutine != null) StopCoroutine(_waitGroundedRoutine);
-            _waitGroundedRoutine = StartCoroutine(WaitUntilGroundedRoutine());
         }
 
         /// <summary> Is called before the character jumps </summary>
@@ -371,22 +383,31 @@ namespace GameCharacters
             
             if (isVaultingHeavily) boatInteractor.ImpactBoat(TargetedSpace);
             //TODO: Add Jump SFX and VFX
+            
+            print($"{gameObject.name} Jumped!");
         }
 
         /// <summary> Called whenever this character lands </summary>
         protected virtual void OnLanded()
         {
-            rb.isKinematic = true; // TODO: Consider
+            isJumping = false;
+            isBouncing = false;
+            // rb.isKinematic = true; // TODO: Consider
             animator.SetTrigger("Landed");
             //TODO: Add landed SFX and VFX
-            
-            CameraShaker.Presets.ShortShake3D();
+
+            if (isVaultingHeavily) CameraShaker.Presets.Explosion3D();
+            else CameraShaker.Presets.ShortShake3D();
         }
 
         public void TriggerBounce()
         {
             isGrounded = false;
-            verticalVelocity = bouncePower;
+            _verticalVelocity = bouncePower;
+            isBouncing = true;
+            _canBounce = false;
+
+            _timeSinceLastBounce = Time.time;
         }
 
         

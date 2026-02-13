@@ -131,10 +131,10 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
 
     void RecalculateProgression() //TODO
     {
-        if (_riverManager.CurrentRiverSpeed <= _speedUntilProgress) IsReversing = false;
+        if (_riverManager.currentRiverSpeed <= _speedUntilProgress) IsReversing = false;
         else IsReversing = true;
 
-        _progressSpeed = (_riverManager.MinMaxSpeed.y - _speedUntilProgress) - _riverManager.CurrentRiverSpeed;
+        _progressSpeed = (_riverManager.minMaxSpeed.y - _speedUntilProgress) - _riverManager.currentRiverSpeed;
 
     }
 

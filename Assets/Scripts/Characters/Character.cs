@@ -1,5 +1,4 @@
 using System.Collections;
-using CameraShake;
 using UnityEngine;
 using EditorAttributes;
 
@@ -53,7 +52,7 @@ namespace GameCharacters
         [Header("Checks")]
         [SerializeField, ReadOnly] protected bool isMoving;
         public bool IsMoving => isMoving;
-        [SerializeField, ReadOnly] protected bool isGrounded;
+        [SerializeField, ReadOnly] protected bool isGrounded = true;
         public bool IsGrounded => isGrounded;
         [Space]
         [SerializeField] private LayerMask targetableCharacterLayers;
@@ -95,13 +94,19 @@ namespace GameCharacters
         }
 
         /// <summary> Explicitly sets the direction of the enemy with a given parameter </summary>
-        public void SetDirection(MoveDirection direction, bool animate = true, float duration = 2f)
+        public void SetDirection(MoveDirection direction, bool animate)
         {
-            // Debug.Log($"{gameObject.name} Rotation Was Set. Animating = {animate}");
-            
-            if (animate && !isDirecting) StartCoroutine(DirectionRoutine(direction));
+            if (animate) StartCoroutine(DirectionRoutine(direction));
             else
             {
+                isDirecting = true;
+                // Previous Rotation
+                var currentRotation = currentDirection switch
+                {
+                    MoveDirection.Left => 180f,
+                    MoveDirection.Right => 0f,
+                };
+            
                 currentDirection = direction;
 
                 // New Direction
@@ -111,11 +116,13 @@ namespace GameCharacters
                     MoveDirection.Right => 0f,
                 };
                 
-                rb.MoveRotation(Quaternion.Euler(0f, targetRotation, 0f));
+                transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
+                print("Direction: " + direction);
+                isDirecting = false;
             }
         }
 
-        private IEnumerator DirectionRoutine(MoveDirection direction, float duration = 2f)
+        private IEnumerator DirectionRoutine(MoveDirection direction, bool animate = true)
         {
             isDirecting =  true;
             var t = 0f;
@@ -124,7 +131,7 @@ namespace GameCharacters
             var currentRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
-                MoveDirection.Right => -0f,
+                MoveDirection.Right => 0f
             };
             
             currentDirection = direction;
@@ -133,25 +140,27 @@ namespace GameCharacters
             var targetRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
-                MoveDirection.Right => 0f,
+                MoveDirection.Right => 0f
             };
             
             rb.freezeRotation = false;
-            
-            while (t < duration)
+
+            if (animate)
             {
-                float lerpT = rotationCurve.Evaluate(t / duration);
-
-                rb.MoveRotation(Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, lerpT), 0f));
-
-                t += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                while(t < 1f)
+                {
+                    float y = Mathf.Lerp(currentRotation, targetRotation, rotationCurve.Evaluate(t));
+                    transform.localRotation = Quaternion.Euler(0f, y, 0f);
+                    t += Time.deltaTime;
+                    
+                    // Debug.Log($"Is Rotating. Rotation = {y}. Time = {t}");
+                    
+                    yield return PauseWait;
+                }
             }
-
-            rb.MoveRotation(Quaternion.Euler(0f, targetRotation, 0f));
+            transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
             
             rb.freezeRotation = true;
-            
             isDirecting = false;
         }
         #endregion
@@ -164,7 +173,6 @@ namespace GameCharacters
         {
             animator.SetTrigger("TookDamage");
             TriggerHitStop(.1f);
-            CameraShaker.Presets.Explosion3D(4f);
         }
 
         /// <summary>
@@ -174,10 +182,8 @@ namespace GameCharacters
         {
             characterCollider.enabled = false;
             animator.SetTrigger("Died");
-            
-            // Do Effects
             TriggerHitStop(.5f);
-            CameraShaker.Presets.Explosion3D(12f);
+            print($"{name} Died!");
         }
 
         /// <summary>
