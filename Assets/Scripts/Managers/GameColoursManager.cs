@@ -27,7 +27,7 @@ namespace GameColours
     
         public enum ObjectTypes
         {
-            Global, Player, Enemy, Obstacle, Collectible, Boat, Environment, UI
+            Global, Player, Enemy, Obstacle, Collectible, Boat, Environment, UI, Transition
         }
         
         public ObjectMaterialColours detectColours = new ObjectMaterialColours()
@@ -37,7 +37,7 @@ namespace GameColours
             ShadowColour = Color.black
         };
     
-        private void Awake()
+        private void Start()
         {
             ResetColours();
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
@@ -91,7 +91,7 @@ namespace GameColours
             materials[id].SetColor(NewMidtone, colour.MidtoneColour);
             materials[id].SetColor(NewShadow, colour.ShadowColour);
             
-            // Debug.Log($"Updated Material {id}");
+            Debug.Log($"Updated Material {id}");
         }
     
         public void UpdateMaterial(Material mat, ObjectMaterialColours colour)
@@ -166,7 +166,7 @@ namespace GameColours
     [Serializable]
     public class ObjectMaterialColours
     {
-        [ReadOnly] public string Name = "Material Name";
+        public string Name = "Material Name";
         public Color ShadowColour = Color.black;
         public Color MidtoneColour = Color.gray;
         public Color HighlightColour = Color.white;

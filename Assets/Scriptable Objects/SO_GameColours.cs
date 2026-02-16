@@ -70,6 +70,15 @@ public class SO_GameColours : ScriptableObject
             HighlightColour = Color.white,
             MidtoneColour = Color.gray,
             ShadowColour = Color.black
+        },
+
+        // Transition
+        new ObjectMaterialColours()
+        {
+            Name = "Transition",
+            HighlightColour = Color.white,
+            MidtoneColour = Color.gray,
+            ShadowColour = Color.black
         }
     };
 }

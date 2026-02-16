@@ -98,6 +98,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 676f4887cedfd470299c2fd3f6da0ffc, type: 2}
   - {fileID: 2100000, guid: 3f3e5b11cf1144770beda8a1fc85b50d, type: 2}
   - {fileID: 2100000, guid: e6b0c5ad71495431194920a2d9f6a99c, type: 2}
+  - {fileID: 2100000, guid: 349526843462b4efb8ee44ab308ba831, type: 2}
   defaultColours: {fileID: 11400000, guid: 1d001ab45a140c74096257270f495b07, type: 2}
   detectColours:
     Name: Material Name
@@ -322,27 +323,27 @@ PrefabInstance:
     - target: {fileID: 8441763133737556198, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8441763133737556198, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8441763133737556198, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8441763133737556198, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8441763133737556198, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 8586990623540378794, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
@@ -372,7 +373,7 @@ PrefabInstance:
     - target: {fileID: 8723448724803538573, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
