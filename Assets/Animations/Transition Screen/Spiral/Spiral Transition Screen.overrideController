@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Spiral Transition Screen
+  m_Controller: {fileID: 9100000, guid: c0eb10af118510c4e9d5dc57fced7636, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7146ac27f6239444e84c6bdf8ebd2cb7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8153de3e3e90f43ae9c738f1dbcd7aa8, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e4e1375f622581849be95d48da58e081, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e890faca8cdc94d8f940b0894d48130b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6953b2907bd03a34a9ee07b0c31048c8, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2f035e184f5d347dfb918359063cd39d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 614898d9cd816f648ba043c7a607e251, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f3482795e23ad4b30a2ec91f2df2348f, type: 2}
