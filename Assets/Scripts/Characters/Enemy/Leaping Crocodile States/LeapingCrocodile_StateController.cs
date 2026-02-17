@@ -243,8 +243,10 @@ public class LeapingCrocodile_MovingState : EnemyMovingState
         if (CrocSc.IsMoving) return;
 
         // Detect if the player is in the space ahead of them based on the current facing directions
-        Vector3 direction = (int)CrocSc.CurrentDirection * CrocSc.CrocData.attackDistance * Vector3.right + CrocSc.transform.position;
-        if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers))
+        // Vector3 direction = (int)CrocSc.CurrentDirection * CrocSc.CrocData.attackDistance * Vector3.right + CrocSc.transform.position;
+        var space = Boat_Space_Manager.Instance.GetSpaceFromDirection(CrocSc.CurrentSpace.sideID,
+            CrocSc.CurrentSpace.spaceID, (int)CrocSc.CurrentDirection);
+        if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(space.t.position, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers))
         {
             CrocSc.ChangeState(CrocSc.AttackState);
         }
@@ -276,10 +278,12 @@ public class LeapingCrocodile_AttackState : EnemyAttackState
 
         yield return new WaitForSeconds(CrocSc.CrocData.attackAtTime);
 
-        var direction = (int)CrocSc.CurrentDirection * CrocSc.CrocData.attackDistance * Vector3.right +
-                        CrocSc.transform.position;
+        // var direction = (int)CrocSc.CurrentDirection * CrocSc.CrocData.attackDistance * Vector3.right +
+        //                 CrocSc.transform.position;
+        var space = Boat_Space_Manager.Instance.GetSpaceFromDirection(CrocSc.CurrentSpace.sideID,
+            CrocSc.CurrentSpace.spaceID, (int)CrocSc.CurrentDirection);
         var player = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-        (direction, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
+        (space.t.position, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
 
         if (player != null)
         {

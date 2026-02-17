@@ -30,6 +30,7 @@ public class TextUpdater : MonoBehaviour
             GameSettingsManager.Instance.dyslexicFont : GameSettingsManager.Instance.pixelFont;
 
         // Set text colour as the global highlight colour
+        if (GameColoursManager.CurrentColours == null) return;
         textMesh.color = GameColoursManager.CurrentColours.MaterialColours[0].HighlightColour;
     }
 }

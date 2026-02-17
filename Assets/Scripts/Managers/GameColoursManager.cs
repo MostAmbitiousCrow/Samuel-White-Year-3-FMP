@@ -37,7 +37,7 @@ namespace GameColours
             ShadowColour = Color.black
         };
     
-        private void Start()
+        private void Awake()
         {
             ResetColours();
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
@@ -123,7 +123,7 @@ namespace GameColours
         private void CycleRainbow()
         {
             // Use Time.time to get a continuously increasing value for the hue
-            var hueOffset = (Time.time * 0.25f) % 1f;
+            var hueOffset = (Time.realtimeSinceStartup * 0.25f) % 1f;
     
             for (var i = 0; i < materials.Length; i++)
             {

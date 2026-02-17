@@ -33,6 +33,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     /// </summary>
     [Tooltip("The distance of this object to the destination of its lane")]
     [SerializeField] protected float distance = 0f;
+    [SerializeField] private float startDistance;
     [Space]
     public bool canMove = false;
     public bool isMoving;
@@ -79,17 +80,24 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         return currentLane;
     }
 
-    public void SetDistanceAndHeight(float distance, float height)
+    public void SetDistanceAndHeight(float offsetFromBoat, float height)
     {
-        this.distance = distance; this.height = height;
+        float spawnDistance =
+            River_Manager.Instance.BoatController.RiverSplineObject.DistanceTravelled
+            + offsetFromBoat;
 
-        Vector3 t = transform.position;
-        
-        River_Manager.Instance.AssignToCurveSection(distance, currentLane, out Vector3 pos, out Quaternion rot, true);
+        startDistance = spawnDistance;
+        this.height = height;
 
-        pos += transform.right * ((currentLane - 1) * River_Manager.Instance.GlobalRiverValues.riverLaneDistance); //TODO: Assign this to AssignToCurveSection
+        River_Manager.Instance.AssignToCurveSection(
+            spawnDistance,
+            currentLane,
+            out Vector3 pos,
+            out Quaternion rot);
+
         transform.SetPositionAndRotation(pos + Vector3.up * height, rot);
     }
+
     #endregion
 
     #region Update Events
@@ -101,7 +109,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         distance = GetDistanceToBoat();
             
         // Once out of sight, return to pool
-        if (distance < -10f) ReturnToPool();
+        if (distance < -50f) ReturnToPool();
     }
 
     private void RiverFlowMovement() // TODO: Probably remove if objects will be stationary
@@ -118,8 +126,9 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     #region Math
     protected float GetDistanceToBoat()
     {
-        return Vector3.Distance(transform.position, River_Manager.Instance.BoatController.transform.position);
+        return startDistance - River_Manager.Instance.BoatController.RiverSplineObject.DistanceTravelled;
     }
+
     #endregion
 
     #region Pooling

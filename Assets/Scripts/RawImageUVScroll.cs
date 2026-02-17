@@ -18,7 +18,7 @@ public class RawImageUVScroll : MonoBehaviour
 
     private void Update()
     {
-        rawImage.uvRect = new Rect(UVScrolling.UVScroll(rawImage.rectTransform.sizeDelta, scrollSpeed,
+        rawImage.uvRect = new Rect(UVScrolling.UVScrollUnscaled(rawImage.rectTransform.sizeDelta, scrollSpeed,
             scrollDirection), rawImage.uvRect.size);
     }
 }

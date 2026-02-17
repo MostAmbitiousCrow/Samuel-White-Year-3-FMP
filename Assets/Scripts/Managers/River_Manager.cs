@@ -72,6 +72,7 @@ public class River_Manager : MonoBehaviour
     {
         Instance = this;
         
+        UpdateSplineLengths();
         if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
         UpdateSpaceDatas();
         ResetRiver();
@@ -289,9 +290,31 @@ public class River_Manager : MonoBehaviour
             item.transform.SetPositionAndRotation(pos, rot);
             i++;
         }
+
+        UpdateSplineLengths();
     }
 
     #region Curve Evaluations
+
+    private float[] _splineLengths;
+    /// <summary>The total length of the World Spline Container. </summary>
+    public static float SplineTotalLength;
+
+    /// <summary>Update the SplineTotalLength value based on the length of the current World Spline Container #</summary>
+    private void UpdateSplineLengths()
+    {
+        int count = worldSplineContainer.Splines.Count;
+        _splineLengths = new float[count];
+        SplineTotalLength = 0f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float length = worldSplineContainer.CalculateLength(i);
+            _splineLengths[i] = length;
+            SplineTotalLength += length;
+        }
+    }
+    
     public Vector3 EvaluatePositionOnCurve(float evaluation)
     {
         var splinePos = worldSplineContainer.EvaluatePosition(Mathf.Repeat(evaluation, 1f));
@@ -347,46 +370,51 @@ public class River_Manager : MonoBehaviour
         newRotation = Quaternion.LookRotation(tangent, upVector);
     }
     
-    public void AssignToCurveSection(float currentProgress, int lane, out Vector3 newPosition, out Quaternion newRotation, bool useBoatOffset = false)
+    public void AssignToCurveSection(
+        float distanceFromStart,
+        int lane,
+        out Vector3 newPosition,
+        out Quaternion newRotation)
     {
-        // Mf does this even make a difference???
-        int splineCount = worldSplineContainer.Splines.Count;
-        float totalLength = 0f;
-        float[] splineLengths = new float[splineCount];
-        
-        // Calculate the total length
-        for (int i = 0; i < splineCount; i++)
-        {
-            float length = worldSplineContainer.CalculateLength(i);
-            splineLengths[i] = length;
-            totalLength += length;
-        }
+        // Wrap distance along looping spline
+        float wrappedDistance = Mathf.Repeat(distanceFromStart, SplineTotalLength);
 
-        // Clamp distance to total length
-        float remainingDistance = Mathf.Clamp(currentProgress, 0f, totalLength);
+        // Find which spline segment this falls on
+        int splineIndex = 0;
 
-        // Find which spline contains this distance
-        int targetSplineIndex = 0;
-        for (int i = 0; i < splineCount; i++)
+        for (int i = 0; i < _splineLengths.Length; i++)
         {
-            if (remainingDistance <= splineLengths[i])
+            if (wrappedDistance <= _splineLengths[i])
             {
-                targetSplineIndex = i; break;
+                splineIndex = i;
+                break;
             }
-            remainingDistance -= splineLengths[i];
+
+            wrappedDistance -= _splineLengths[i];
         }
 
-        // Convert remaining distance to normalized t for that spline
-        float t = SplineUtility.GetNormalizedInterpolation(worldSplineContainer.Splines[targetSplineIndex],
-            remainingDistance, PathIndexUnit.Distance);
+        // Convert distance → normalized t
+        float t = SplineUtility.GetNormalizedInterpolation(
+            worldSplineContainer.Splines[splineIndex],
+            wrappedDistance,
+            PathIndexUnit.Distance);
 
-        float boatOffset = useBoatOffset? boatController.RiverSplineObject.SplineAnimate.NormalizedTime : 0f;
-        worldSplineContainer.Evaluate(targetSplineIndex, Mathf.Repeat(t + boatOffset, 1f),
-            out float3 position, out float3 tangent, out float3 upVector);
-    
-        newPosition = lane == 0 ? new Vector3(position.x, position.y, position.z)
-            : new Vector3(position.x * lane, position.y, position.z);
-        newRotation = Quaternion.LookRotation(tangent, upVector);
+        // Evaluate position & rotation
+        worldSplineContainer.Evaluate(
+            splineIndex,
+            t,
+            out float3 pos,
+            out float3 tangent,
+            out float3 up);
+
+        // lane offset
+        Vector3 right = Vector3.Cross(up, tangent).normalized;
+        Vector3 laneOffset = right * ((lane - 1) * globalRiverValues.riverLaneDistance);
+
+        newPosition = (Vector3)pos + laneOffset;
+        newRotation = Quaternion.LookRotation(tangent, up);
     }
+
+
     #endregion
 }

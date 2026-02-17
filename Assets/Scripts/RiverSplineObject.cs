@@ -1,41 +1,27 @@
 using UnityEngine;
-using EditorAttributes;
-using UnityEngine.Splines;
 
-/// <summary>
-/// The base script for all objects that are following the Global River Spline
-/// </summary>
-[RequireComponent(typeof(SplineAnimate))]
 public class RiverSplineObject : MonoBehaviour
 {
-    [Line(GUIColor.White)]
-    [Header("Dependencies")]
-    [SerializeField] private River_Manager riverManager;
-    [SerializeField] private SplineAnimate splineAnimate;
-    public SplineAnimate SplineAnimate => splineAnimate;
+    [SerializeField, Range(0, 2)] private int lane = 0;
+    [SerializeField] private float speedMultiplier = 1f;
 
-    private void Awake()
-    {
-        if (riverManager == null) riverManager = FindFirstObjectByType<River_Manager>();
-        if (splineAnimate != null) return;
-        if (gameObject.TryGetComponent<SplineAnimate>(out var animate))
-            splineAnimate = animate;
-        else Debug.LogError($"{gameObject.name} requires a SplineAnimate component");
-    }
+    [SerializeField] private float distanceOnSpline = 0f;
+    public float DistanceOnSpline => distanceOnSpline;
+    [SerializeField] private float distanceTravelled = 0f;
+    public float DistanceTravelled => distanceTravelled;
 
-    private void OnEnable()
+    private void Update()
     {
-        riverManager.OnRiverSpeedUpdate += UpdateSpeed;
-    }
+        if (River_Manager.Instance.IsPaused) return;
 
-    private void OnDisable()
-    {
-        riverManager.OnRiverSpeedUpdate -= UpdateSpeed;
-    }
+        float speed = River_Manager.Instance.currentRiverSpeed * speedMultiplier;
 
-    private void UpdateSpeed()
-    {
-        // TODO: Recalculating this causes the object to get sent forwards / backwards. Fix this!
-        splineAnimate.MaxSpeed = riverManager.currentRiverSpeed;
+        // move forward
+        distanceTravelled += speed * Time.deltaTime;
+        distanceOnSpline +=  speed * Time.deltaTime;
+        distanceOnSpline %= River_Manager.SplineTotalLength; // Modulo to loop forever!
+
+        River_Manager.Instance.AssignToCurveSection(distanceTravelled, lane, out Vector3 pos, out Quaternion rot);
+        transform.SetPositionAndRotation(pos, rot);
     }
 }

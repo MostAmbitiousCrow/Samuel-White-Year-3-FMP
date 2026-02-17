@@ -46,6 +46,7 @@ namespace GameCharacters
         [Tooltip("The current space on the boat this character is on")]
         [SerializeField, ReadOnly] protected SpaceData currentSpace;
         public SpaceData CurrentSpace => currentSpace;
+        
         [ReadOnly] public bool isOnBoat;
 
         /* Variables for lerping target space movement */

@@ -3,9 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CarterGames.Assets.AudioManager.Logging;
 using EditorAttributes;
-using UnityEngine.Rendering;
 using UnityEngine.Splines;
 using Void = EditorAttributes.Void;
 
