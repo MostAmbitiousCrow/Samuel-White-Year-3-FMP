@@ -393,7 +393,7 @@ public class River_Manager : MonoBehaviour
             wrappedDistance -= _splineLengths[i];
         }
 
-        // Convert distance → normalized t
+        // Convert distance to normalized t
         float t = SplineUtility.GetNormalizedInterpolation(
             worldSplineContainer.Splines[splineIndex],
             wrappedDistance,

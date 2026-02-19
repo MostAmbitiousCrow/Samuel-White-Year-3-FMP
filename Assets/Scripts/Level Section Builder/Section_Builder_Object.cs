@@ -44,7 +44,7 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 
     private void SnapToLane()
     {
-        if (!enableSnapping || globalRiverValues == null) return;
+        if (!enableSnapping || globalRiverValues == null || riverManager == null) return;
         // transform.position = new((Lane - 1) * globalRiverValues.riverLaneDistance, Height, Distance);
 
         riverManager.AssignToCurveSection(Distance, lane, out Vector3 pos, out Quaternion rot);

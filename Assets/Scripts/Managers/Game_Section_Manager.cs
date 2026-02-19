@@ -9,22 +9,16 @@ using Void = EditorAttributes.Void;
 
 public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 {
-    [Header("Level Info")]
-    [SerializeField] private GameLevels currentLevel = GameLevels.Sewer;
-    
-    // Temp
-    public enum GameLevels
-    {
-        Sewer, Forest
-    }
-    
+    public delegate void SectionLoaded();
+    public static SectionLoaded OnSectionLoaded;
+
+    #region Section Objects & Look-up
     [Header("Section Data")]
     public List<Section_Content.SectionData> sectionDatas;
 
     [Header("Section Info")]
     [Min(0)][SerializeField] private int currentSectionIndex = 0;
-
-    #region Section Objects & Look-up
+    
     [Header("Section Objects")]
     private readonly Dictionary<System.Enum, int> _prefabLookup = new Dictionary<System.Enum, int>();
 
@@ -62,37 +56,41 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm) => boatManager = bsm;
     #endregion
 
-    private void Awake()
-    {
-        if (riverManager == null) riverManager = FindFirstObjectByType<River_Manager>();
-        if (boatManager == null) boatManager = FindFirstObjectByType<Boat_Space_Manager>();
-        if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
-        
-        InitializePrefabLookup();
-    }
+    #region  Initialisation
 
-    private void OnEnable() => GameManager.GameLogic.onGameStarted += StartSpawning;
-    private void OnDisable() => GameManager.GameLogic.onGameStarted -= StartSpawning;
+        private void Awake()
+        {
+            if (riverManager == null) riverManager = FindFirstObjectByType<River_Manager>();
+            if (boatManager == null) boatManager = FindFirstObjectByType<Boat_Space_Manager>();
+            if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
+            
+            InitializePrefabLookup();
+        }
+    
+        private void OnEnable() => GameLevelManager.OnLevelLoaded += StartSpawning;
+        private void OnDisable() => GameLevelManager.OnLevelLoaded -= StartSpawning;
+    
+        private void InitializePrefabLookup()
+        {
+            // Obstacles
+            _prefabLookup.Add(Section_Obstacle_Object.ObstacleType.TrashPile, trashObjectID);
+            _prefabLookup.Add(Section_Obstacle_Object.ObstacleType.WideTrashPile, wideTrashObjectID);
+            _prefabLookup.Add(Section_Obstacle_Object.ObstacleType.SewerPipe, pipeObjectID);
+    
+            // Enemies
+            _prefabLookup.Add(Section_Enemy_Object.EnemyType.Crocodile, crocodileObjectID);
+            _prefabLookup.Add(Section_Enemy_Object.EnemyType.Frog, frogObjectID);
+            _prefabLookup.Add(Section_Enemy_Object.EnemyType.Bat, batObject);
+            _prefabLookup.Add(Section_Enemy_Object.EnemyType.Tentacle, tentacleObject);
+    
+            // Collectibles
+            _prefabLookup.Add(Section_Collectible_Object.CollectibleType.Gemstone, gemStoneObject);
+            _prefabLookup.Add(Section_Collectible_Object.CollectibleType.GemstoneFragment, gemFragmentObject);
+            
+            // Gemstone gates don't have an alt, skipping
+        }
 
-    private void InitializePrefabLookup()
-    {
-        // Obstacles
-        _prefabLookup.Add(Section_Obstacle_Object.ObstacleType.TrashPile, trashObjectID);
-        _prefabLookup.Add(Section_Obstacle_Object.ObstacleType.WideTrashPile, wideTrashObjectID);
-        _prefabLookup.Add(Section_Obstacle_Object.ObstacleType.SewerPipe, pipeObjectID);
-
-        // Enemies
-        _prefabLookup.Add(Section_Enemy_Object.EnemyType.Crocodile, crocodileObjectID);
-        _prefabLookup.Add(Section_Enemy_Object.EnemyType.Frog, frogObjectID);
-        _prefabLookup.Add(Section_Enemy_Object.EnemyType.Bat, batObject);
-        _prefabLookup.Add(Section_Enemy_Object.EnemyType.Tentacle, tentacleObject);
-
-        // Collectibles
-        _prefabLookup.Add(Section_Collectible_Object.CollectibleType.Gemstone, gemStoneObject);
-        _prefabLookup.Add(Section_Collectible_Object.CollectibleType.GemstoneFragment, gemFragmentObject);
-        
-        // Gemstone gates don't have an alt, skipping
-    }
+    #endregion
 
     [Button]
     public void GetSectionDatas()
@@ -100,16 +98,21 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
         sectionDatas.Clear();
         foreach (Transform child in transform)
         {
-            if (child.TryGetComponent(out Section_Content content))
-            {
-                sectionDatas.Add(content.sectionData);
-            }
+            if (child.TryGetComponent(out Section_Content content)) sectionDatas.Add(content.sectionData);
         }
+    }
+
+    public void AssignNewLevelData(LevelData levelData)
+    {
+        // Get the level data component and obtain its sections
+        sectionDatas = levelData.Sections;
+        Debug.Log($"Assigned new Level Data to Section Manager");
     }
 
     [Button]
     public void StartSpawning()
     {
+        Debug.Log("Starting Spawning Objects");
         StopAllCoroutines();
         StartCoroutine(SpawnSectionRoutine());
     }
@@ -140,7 +143,6 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             SpawnObjects(data.CollectibleDatas);
             SpawnGates(data.GemstoneGateDatas);
             
-            // Wait until the specific object that was last spawned is disabled (returned to pool) //TODO: Currently broken???
             if (lastSpawnedObject != null) 
                 yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
             else Debug.LogWarning($"Section {currentSectionIndex} had no objects.");
@@ -166,7 +168,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             if (!item) continue;
             
             // Determine the Enum type dynamically to find the prefab
-            System.Enum typeKey = GetTypeKey(item);
+            Enum typeKey = GetTypeKey(item);
             if (typeKey != null && _prefabLookup.TryGetValue(typeKey, out int id)) 
                 SpawnAndInitialize(id, item);
         }

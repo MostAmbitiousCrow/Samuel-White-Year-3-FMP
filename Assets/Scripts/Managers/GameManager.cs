@@ -54,6 +54,12 @@ public class GameManager : MonoBehaviour
         if(GameLogic.GameStarted)
         GameLogic.InitialiseGame();
     }
+    
+    [Button]
+    public void DEVStartGame()
+    {
+        GameLogic.StartGame();
+    }
 
     #region Main Game Logic
     public class MainGameLogic
@@ -117,29 +123,28 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            LevelManager = FindObjectOfType<GameLevelManager>();
+            LevelManager = FindFirstObjectByType<GameLevelManager>();
 
             // Logic to initalise the main game scene before starting the game
             playerData = new()
             {
-                PlayerTransform = FindObjectOfType<PlayerCharacter>().transform // TODO: Maker Cleaner
+                PlayerTransform = FindFirstObjectByType<PlayerCharacter>().transform // TODO: Maker Cleaner
             };
             
             onGameInitialised?.Invoke();
 
             print("Game Initialised, started Game");
-            StartGame(); // Start the game upon the game being initialised.// TODO: Move to a stage where the game is started via a countdown/trigger
+            StartGame(); // Start the game upon the game being initialised.
         }
 
-        public delegate void OnGameStarted();
-        public OnGameStarted onGameStarted;
+        public Action OnGameStarted;
         public void StartGame()
         {
             // Logic to start the main game after it has been initialised
             _gameStarted = true;
 
             // Invoke subscribed methods
-            onGameStarted?.Invoke();
+            OnGameStarted?.Invoke();
 
             Debug.Log("Game Started");
         }

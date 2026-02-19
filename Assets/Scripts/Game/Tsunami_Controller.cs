@@ -56,12 +56,12 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
     }
     private void OnEnable()
     {
-        GameManager.GameLogic.onGameStarted += StartProgressing;
+        GameManager.GameLogic.OnGameStarted += StartProgressing;
         _riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
     }
     private void OnDisable()
     {
-        GameManager.GameLogic.onGameStarted -= StartProgressing;
+        GameManager.GameLogic.OnGameStarted -= StartProgressing;
         _riverManager.OnRiverSpeedUpdate -= OnRiverUpdated;
     }
     #endregion

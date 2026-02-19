@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5586224624923079610}
   - component: {fileID: 1228340096938242610}
   m_Layer: 0
-  m_Name: === Level Section Manager ===
+  m_Name: === Game Section Manager ===
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c4d2cdcf57d4622862ed546a12aae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 0
   sectionDatas:
   - initialDelay: 1
     postDelay: 2
@@ -73,6 +72,7 @@ MonoBehaviour:
   furthestDistance: 0
   riverManager: {fileID: 0}
   boatManager: {fileID: 0}
+  boatController: {fileID: 0}
 --- !u!1 &5120937794314393819
 GameObject:
   m_ObjectHideFlags: 0

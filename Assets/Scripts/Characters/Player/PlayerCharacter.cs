@@ -104,7 +104,11 @@ namespace GameCharacters
             var direction = Mathf.RoundToInt(_moveAction.ReadValue<Vector2>().x);
             if (Mathf.Approximately(direction, 0)) return; // TODO: Test if this works on controller
 
-            if (!isMoving || isMoving && coyoteTriggered) MoveToSpaceFromDirection(Mathf.RoundToInt(direction));
+            MoveDirection = direction;
+            if (!isMoving) MoveToSpaceFromDirection(Mathf.RoundToInt(MoveDirection));
+            if (!isVaulting) return;
+            print("Yeah");
+            WillMove = true;
         }
 
         /// <summary>
@@ -112,50 +116,36 @@ namespace GameCharacters
         /// </summary>
         private void OnLightVault()
         {
-            if (_vaultLightAction.WasPressedThisFrame()) PerformVault(false);
-            if (_vaultLightAction.WasPerformedThisFrame()) TriggerJump();
+            if (_vaultLightAction.WasPressedThisFrame())
+            {
+                WillVault = true;
+                PerformVault(false);
+            }
+            VaultPostProcess();
         }
 
         private void OnHeavyVault()
         {
-            if (_vaultHeavyAction.WasPressedThisFrame()) PerformVault(true);
-            if (_vaultHeavyAction.WasPerformedThisFrame()) TriggerJump();
+            if (_vaultHeavyAction.WasPressedThisFrame())
+            {
+                WillVault = true;
+                PerformVault(true);
+            }
+            VaultPostProcess();
         }
 
-        private void PerformVault(bool isHeavy)
+
+        // Bonus process stuff after a heavy or light vault
+        private void VaultPostProcess()
         {
-            if (GameManager.GameLogic.GamePaused) return;
-
-            if (isVaulting)
-            {
-                //TODO: Trigger Jump Upon Landing Logic Here
-                
-                // Trigger Jump if Vault Button is held
-                if (isHeavy ? _vaultHeavyAction.WasPerformedThisFrame() : _vaultLightAction.WasPerformedThisFrame())
-                {
-                    TriggerJump();
-                }
-                
-                // coyoteTriggered = true;
-            }
-            else
-            {
-                var newSpace = Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(currentSpace.sideID, currentSpace.spaceID);
-
-                // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
-                var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                    (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true, true);
-                if (bc)
-                {
-                    VaultToSide(newSpace, isHeavy, bc); // TODO: Modify to scan for damageable characters with the Character component
-                }
-                else
-                {
-                    VaultToSide(newSpace, isHeavy);
-                }
-                //TODO: Implement vaulting animation here?
-            }
-            // print($"Performed Vault. Heavy Vault = {isHeavy}");
+            if (!isVaulting) return;
+            //TODO: Trigger Jump Upon Landing Logic Here
+            
+            // Trigger Jump if Vault Button is held
+            if (_vaultHeavyAction.WasPerformedThisFrame() 
+                || 
+                _vaultLightAction.WasPerformedThisFrame()) WillJump = true;
+            if (WillJump) TriggerJump();
         }
         #endregion
 

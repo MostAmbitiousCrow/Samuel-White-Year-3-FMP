@@ -22,6 +22,12 @@ namespace GameCharacters
         [ReadOnly, ShowField(nameof(canVault))] public bool isVaulting;
         [ReadOnly, ShowField(nameof(canVault))] public bool isVaultingHeavily;
 
+        [Header("Coyote Inputs")]
+        [SerializeField] protected bool WillMove = false;
+        [SerializeField] protected int MoveDirection;
+        [SerializeField] protected bool WillVault = false;
+        [SerializeField] protected bool WillJump = false;
+
         protected float VaultTimeElapsed = 0f;
 
         [Header("Jump Movement")]
@@ -130,9 +136,7 @@ namespace GameCharacters
             isVaultingHeavily = isHeavy;
         }
 
-        /// <summary>
-        /// Vault to the side with a provided space data with an additional character to attack upon landing
-        /// </summary>
+        /// <summary> Vault to the side with a provided space data with an additional character to attack upon landing </summary>
         public void VaultToSide(SpaceData spaceData, bool isHeavy, Character victim)
         {
             // Check if the character can access that space
@@ -278,6 +282,7 @@ namespace GameCharacters
             else
             {
                 isMoving = false;
+                // WillMove = false;
                 MovementTimeElapsed = 0f;
 
                 Vector3 basePos = TargetedSpace.t.localPosition;
@@ -287,12 +292,34 @@ namespace GameCharacters
                     basePos.y + _currentY,
                     basePos.z
                 );
+
+                // Coyote input for vaulting after moving
+                if (WillVault) PerformVault(isVaultingHeavily);
             }
 
             MovementTimeElapsed += Time.deltaTime / groundedMovementTime;
         }
 
+        protected void PerformVault(bool isHeavy)
+        {
+            if (GameManager.GameLogic.GamePaused) return;
+            
+            var newSpace = Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(currentSpace.sideID, currentSpace.spaceID);
 
+            // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
+            var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+                (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true, true);
+            if (bc)
+            {
+                VaultToSide(newSpace, isHeavy, bc); // TODO: Modify to scan for damageable characters with the Character component
+            }
+            else
+            {
+                VaultToSide(newSpace, isHeavy);
+            }
+            //TODO: Implement vaulting animation here?
+            // print($"Performed Vault. Heavy Vault = {isHeavy}");
+        }
 
         protected virtual void VaultMovement()
         {
@@ -309,10 +336,22 @@ namespace GameCharacters
             else
             {
                 isVaulting = false;
+                WillVault = false;
+                
                 VaultTimeElapsed = 0f;
                 transform.localPosition = TargetedSpace.t.localPosition + Vector3.up * _currentY;
 
+                // TODO: Update this to trigger with context whether they were grounded on the player
                 if (!isJumping) OnVaulted(); // Prevent clashing hit-stop with the player
+                
+                // Coyote input for movement after a vault
+                if (WillMove)
+                {
+                    MoveToSpaceFromDirection(MoveDirection);
+                    WillMove = false;
+                    print("No");
+                }
+                if (WillJump) TriggerJump();
                 
                 if (TargetedCharacter != null) TargetedCharacter.GetComponent<IDamageable>().TakeDamage();
                 TargetedCharacter = null;
@@ -367,8 +406,9 @@ namespace GameCharacters
 
         public void TriggerJump()
         {
+            WillJump = false;
             if (!isGrounded) return;
-            
+
             isJumping = true;
             isGrounded = false;
             _verticalVelocity = jumpPower;

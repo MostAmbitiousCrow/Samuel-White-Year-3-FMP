@@ -14,14 +14,13 @@ public class Section_Enemy_Object : Section_Builder_Object
         public bool silhouetteAlwaysVisible = true;
 
         // Override Stats?
-        public bool overrideData;
+        public bool overrideData = true;
         [ShowField(nameof(overrideData))] public BoatEnemy_Data overridedData;
     }
-
-    [Line(GUIColor.Red)]
     /// <summary>
     /// The data of the enemy shared with the Game_Section_Manager and Section_Builder
     /// </summary>
+    [Line(GUIColor.Red)]
     public SectionEnemyData sectionData;
 
     public enum EnemyType
