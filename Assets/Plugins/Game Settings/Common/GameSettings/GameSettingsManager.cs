@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Audio;
 
 namespace Game
 {
@@ -11,7 +12,11 @@ namespace Game
 		[Header("Fonts")]
 		public TMP_FontAsset pixelFont, dyslexicFont;
 
-		private void Awake()
+		[Header("Audio Mixers")]
+        public AudioMixer mainAudioMixer;
+		public AudioMixer musicAudioMixer;
+
+        private void Awake()
 		{
 			Instance = this;
 		}

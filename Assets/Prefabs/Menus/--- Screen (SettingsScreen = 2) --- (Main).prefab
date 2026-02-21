@@ -90,7 +90,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2819427801690039005
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1145,7 +1145,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 178535097797347449}
   m_HandleRect: {fileID: 5496078110408788653}
   m_Direction: 2
-  m_Value: 0.9999593
+  m_Value: 1.0000407
   m_Size: 0.9975
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4826,6 +4826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetElement: {fileID: 3086395518070217633}
   volumeType: 0
+  volumeTypeText: {fileID: 6082043002064907490}
 --- !u!114 &3086395518070217633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5221,6 +5222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetElement: {fileID: 3443266144328608649}
   volumeType: 2
+  volumeTypeText: {fileID: 0}
 --- !u!114 &3443266144328608649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8152,7 +8154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1998732269969514411
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9371,6 +9373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetElement: {fileID: 7585830320935700746}
   volumeType: 1
+  volumeTypeText: {fileID: 0}
 --- !u!114 &7585830320935700746
 MonoBehaviour:
   m_ObjectHideFlags: 0

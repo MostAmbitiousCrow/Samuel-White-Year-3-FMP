@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using EditorAttributes;
 using Game;
+using UnityEngine.Audio;
 
 namespace GameCharacters
 {
@@ -166,7 +167,7 @@ namespace GameCharacters
             base.OnMoved();
             AudioManager.PlayGroup(Group.Player_Dash);
         }
-        
+
         protected override void OnJumped()
         {
             base.OnJumped();

@@ -22,6 +22,7 @@
  */
 
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace CarterGames.Assets.AudioManager
 {
@@ -229,8 +230,6 @@ namespace CarterGames.Assets.AudioManager
             return player;
         }
         
-        
-        
         /// <summary>
         /// Plays the audio clip requested.
         /// </summary>
@@ -246,8 +245,19 @@ namespace CarterGames.Assets.AudioManager
             player.Play();
             return player;
         }
-        
-        
+
+        // NOTE: Carter for some reason decided to not play any audio through a mixer group, despite collecting references for it...
+        public static AudioPlayer PlayGroup(string request, AudioMixerGroup group, params IEditModule[] edits)
+        {
+            if (Settings.PlayAudioState == PlayState.Disabled) return null;
+
+            var player = PrepareGroupBase(request, edits);
+            if (group) player.Source.Source.outputAudioMixerGroup = group;
+            player.Play();
+            return player;
+        }
+
+
         /// <summary>
         /// Plays the audio clip requested.
         /// </summary>
