@@ -17,8 +17,8 @@ MonoBehaviour:
     type: 3}
   sourceInstancePrefab: {fileID: 2444215560086890528, guid: 57cbaaf6882b313429e179a430fc3183,
     type: 3}
-  clipAudioMixer: {fileID: 0}
-  audioPoolInitSize: 5
+  clipAudioMixer: {fileID: 24300002, guid: bc074bad2bcae8d47866a94f883f1390, type: 2}
+  audioPoolInitSize: 10
   useGlobalVariance: 1
   volumeVarianceOffset: 0.1
   pitchVarianceOffset: 0.1

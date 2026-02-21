@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 293144031985408536}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 17, y: 0, z: -4.9979763}
+  m_LocalPosition: {x: 17, y: 0, z: -24.985487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 0
-  distance: 5
+  distance: 25
   height: 0
   enableSnapping: 1
   globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
@@ -115,7 +115,7 @@ MonoBehaviour:
     CollectibleDatas:
     - {fileID: 1047250809455774211}
     GemstoneGateDatas:
-    - {fileID: 630064723317516503}
+    - {fileID: 0}
   levelSplineContainer: {fileID: 5554757992595847671}
 --- !u!1 &2202935672199176962
 GameObject:
@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 2202935672199176962}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -9.98687}
+  m_LocalPosition: {x: -17, y: 0, z: -24.985487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c4e5eb16e7449089932e0f2978c104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lane: 1
-  distance: 10
+  lane: 2
+  distance: 25
   height: 0
   enableSnapping: 1
   globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
@@ -170,15 +170,15 @@ MonoBehaviour:
   sectionData:
     enemyType: 0
     silhouetteAlwaysVisible: 1
-    overrideData: 0
+    overrideData: 1
     overridedData:
-      targetSideSpaces: 0
+      targetSideSpaces: 1
       targetSideSpace: 0
-      targetLeftSide: 0
-      startFacingDirection: 1
-      targetBoatSpaces: 0
+      targetLeftSide: 1
+      startFacingDirection: -1
+      targetBoatSpaces: 1
       targetSpace: 0
-      targetBoatSide: 0
+      targetBoatSide: 1
       boardingFacingDirection: 1
 --- !u!1 &2246390769648899306
 GameObject:
@@ -236,7 +236,7 @@ MonoBehaviour:
     overridedData:
       ImpactDamage: 1
     pipeObstacleData:
-      pipeConnection: 0
+      pipeConnection: 1
       distancePerPipe: 1.6
       amount: 5
 --- !u!1 &2547296719349152617
@@ -357,7 +357,7 @@ MonoBehaviour:
       pipeConnection: 1
       distancePerPipe: 1.6
       amount: 5
---- !u!1 &4472845517031044386
+--- !u!1 &4069551232385063412
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -365,52 +365,57 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8880911675502182763}
-  - component: {fileID: 630064723317516503}
+  - component: {fileID: 4242217422193986469}
+  - component: {fileID: 1895108233543463777}
   m_Layer: 0
-  m_Name: ---Gemstone Gate---(20)
+  m_Name: Obstacle - TrashPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8880911675502182763
+--- !u!4 &4242217422193986469
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4472845517031044386}
+  m_GameObject: {fileID: 4069551232385063412}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -19.990746}
+  m_LocalPosition: {x: -17, y: 0, z: -44.997646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3394329647314062363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &630064723317516503
+--- !u!114 &1895108233543463777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4472845517031044386}
+  m_GameObject: {fileID: 4069551232385063412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dced1abfc944439d949b3886bee8659, type: 3}
+  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lane: 1
-  distance: 50
+  lane: 2
+  distance: 45
   height: 0
   enableSnapping: 1
   globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   riverManager: {fileID: 0}
   sectionData:
-    overrideData: 1
+    obstacleType: 0
+    overrideData: 0
     overridedData:
-      GemRequirement: 20
+      ImpactDamage: 1
+    pipeObstacleData:
+      pipeConnection: 1
+      distancePerPipe: 1.6
+      amount: 5
 --- !u!1 &5763749662255659374
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,9 +642,9 @@ Transform:
   - {fileID: 530371316284430217}
   - {fileID: 3282950688196887029}
   - {fileID: 6843162026371127683}
+  - {fileID: 4242217422193986469}
   - {fileID: 7214588453516658994}
   - {fileID: 7150212677681405739}
-  - {fileID: 8880911675502182763}
   m_Father: {fileID: 3459971361836873398}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &406542334472670444
@@ -665,12 +670,12 @@ MonoBehaviour:
     - {fileID: 2997041502846899225}
     - {fileID: 8742387215504648535}
     - {fileID: 6339345566075048209}
+    - {fileID: 1895108233543463777}
     EnemyDatas:
     - {fileID: 6436652227502215874}
     CollectibleDatas:
     - {fileID: 1047250809455774211}
-    GemstoneGateDatas:
-    - {fileID: 630064723317516503}
+    GemstoneGateDatas: []
   enableDebug: 1
 --- !u!1 &8131720657716592247
 GameObject:
@@ -698,7 +703,7 @@ Transform:
   m_GameObject: {fileID: 8131720657716592247}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -17, y: 3, z: 0}
+  m_LocalPosition: {x: -17, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -718,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 2
   distance: 0
-  height: 3
+  height: 5
   enableSnapping: 1
   globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   riverManager: {fileID: 0}
@@ -728,6 +733,6 @@ MonoBehaviour:
     overridedData:
       ImpactDamage: 1
     pipeObstacleData:
-      pipeConnection: 3
+      pipeConnection: 1
       distancePerPipe: 1.6
       amount: 5

@@ -1,3 +1,4 @@
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using EditorAttributes;
@@ -152,19 +153,40 @@ namespace GameCharacters
         protected override void OnVaulted()
         {
             base.OnVaulted();
-            if (isVaultingHeavily) TriggerHitStop(.1f);
+            if (isVaultingHeavily)
+            {
+                TriggerHitStop(.1f);
+                AudioManager.PlayGroup(Group.Player_Vaulted_Heavy);
+            }
+            else AudioManager.PlayGroup(Group.Player_Vaulted);
+        }
+
+        protected override void OnMoved()
+        {
+            base.OnMoved();
+            AudioManager.PlayGroup(Group.Player_Dash);
         }
         
         protected override void OnJumped()
         {
             base.OnJumped();
-            if (isVaultingHeavily) TriggerHitStop(.1f);
+            if (isVaultingHeavily)
+            {
+                TriggerHitStop(.1f);
+                AudioManager.PlayGroup(Group.Player_Vaulted_Heavy);
+            }
+            else AudioManager.PlayGroup(Group.Player_Vaulted);
         }
 
         protected override void OnLanded()
         {
             base.OnLanded();
-            if (isVaultingHeavily) TriggerHitStop(.1f);
+            if (isVaultingHeavily)
+            {
+                TriggerHitStop(.1f);
+                AudioManager.PlayGroup(Group.Player_Landed_Heavy);
+            }
+            else AudioManager.PlayGroup(Group.Player_Vaulted_Landed);
         }
 
         #region Gemstone Events
@@ -179,8 +201,9 @@ namespace GameCharacters
         {
             if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnDied();
-            Debug.Log("PLAYER DIED");
 
+            AudioManager.PlayGroup(Group.Player_Death);
+            Debug.Log("PLAYER DIED");
         } 
 
         public override void OnHealthRestored()
@@ -193,6 +216,8 @@ namespace GameCharacters
         {
             if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnTookDamage();
+            
+            AudioManager.PlayGroup(Group.Player_Hurt);
             Debug.Log("Player Took Damage");
         }
 

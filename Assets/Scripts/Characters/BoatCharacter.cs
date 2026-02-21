@@ -108,6 +108,7 @@ namespace GameCharacters
             {
                 TargetSpace(sd);
                 isMoving = true;
+                OnMoved();
             }
         }
 
@@ -121,7 +122,13 @@ namespace GameCharacters
             // print($"Moving to Space: {sd.spaceID}");
             TargetSpace(sd);
             isMoving = true;
+            OnMoved();
             // else print($"Couldn't access space: {sd.spaceID}");
+        }
+
+        protected virtual void OnMoved()
+        {
+            
         }
 
         /// <summary> Vaults the character to a given side and space </summary>
