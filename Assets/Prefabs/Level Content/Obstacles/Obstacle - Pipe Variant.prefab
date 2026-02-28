@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.6
+      value: 12.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -135,7 +135,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.2
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -303,7 +303,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -387,7 +387,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.8
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -471,7 +471,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.2
+      value: 9.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -555,7 +555,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.4
+      value: 3.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -639,7 +639,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.6
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -723,7 +723,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.4
+      value: 11.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -807,7 +807,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 28.8
+      value: 14.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933e964f1f35a4ab79533bd26b2a5f38,
         type: 3}
@@ -1053,11 +1053,12 @@ MonoBehaviour:
   startLane: 2
   height: 0
   distance: 0
+  startDistance: 0
   canMove: 0
   isMoving: 0
-  isAnimated: 0
-  riverObjectAnimator: {fileID: 0}
-  objectPrefab: {fileID: 6371561984097207738}
+  explodesOnHit: 0
+  artExploder: {fileID: 0}
+  riverManager: {fileID: 0}
   obstacleData:
     ImpactDamage: 1
   PipeData:
