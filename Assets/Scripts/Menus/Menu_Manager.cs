@@ -1,9 +1,10 @@
 using EditorAttributes;
 using System.Linq;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Menu_Transition_Controller))]
 public abstract class Menu_Manager : MonoBehaviour // By Samuel White
 {
@@ -32,18 +33,20 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
     */
 
     #region Variables
-    [Header("Components")]
-    [SerializeField] protected AudioSource _audioSource;
-    [SerializeField] protected Canvas _canvas;
 
+    [Header("Components")] 
+    [SerializeField] protected InspectorAudioClipPlayer navigationAudio;
+    [SerializeField] protected InspectorAudioClipPlayer backAudio, enterAudio, selectAudio;
+    [SerializeField] protected Canvas canvas;
+    
     [Header("Transition Components")]
     //[SerializeField] Settings_Menu_Manager settingsMenuManager;
-    [SerializeField] protected Menu_Transition_Controller _transitionArtController;
+    [SerializeField] protected Menu_Transition_Controller transitionArtController;
 
     [Header("Menu Data")]
     [SerializeField, ReadOnly] protected MenuScreenContent[] screenDatas;
     [SerializeField, ReadOnly] protected int currentScreen;
-    [SerializeField] protected int _startScreen;
+    [SerializeField] protected int startScreen;
 
     #endregion
 
@@ -88,9 +91,9 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
         foreach (var item in screenDatas)
             item.ScreenRoot.SetActive(false);
 
-        screenDatas[_startScreen].ScreenRoot.SetActive(true);
+        screenDatas[startScreen].ScreenRoot.SetActive(true);
 
-        currentScreen = _startScreen;
+        currentScreen = startScreen;
         EventSystem.current.SetSelectedGameObject(screenDatas[currentScreen].EnterButton.gameObject);
     }
 
@@ -98,7 +101,7 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
 
     public void InvokeScreen(int type)
     {
-        _transitionArtController.TriggerTransition(type, currentScreen);
+        transitionArtController.TriggerTransition(type, currentScreen);
     }
 
     protected virtual void ToggleScreen(int openingScreen, int closingScreen)
@@ -137,7 +140,7 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
     protected void ScreenOpened(int screen)
     {
         MenuScreenContent sd = screenDatas[currentScreen];
-        if (sd.EnterSFX) _audioSource.PlayOneShot(sd.EnterSFX);
+        enterAudio.Play();
         ToggleInput(false);
         sd.TriggerEvent.Invoke();
     }
@@ -145,7 +148,7 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
     protected void ScreenClosed(int screen)
     {
         MenuScreenContent sd =  screenDatas[currentScreen];
-        if (sd.ExitSFX) _audioSource.PlayOneShot(sd.ExitSFX);
+        if (transitionArtController.DoTransitionAnimation) backAudio.Play();
         ToggleInput(true);
     }
     #endregion

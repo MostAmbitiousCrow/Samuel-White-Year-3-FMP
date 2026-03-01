@@ -2322,6 +2322,906 @@ MonoBehaviour:
         metaData:
           category: 
           tags: []
+    - key: Bat_Alert-85b43d66-54d4-48c2-bc3a-a115dab8c527
+      value:
+        key: Bat_Alert
+        id: Bat_Alert-85b43d66-54d4-48c2-bc3a-a115dab8c527
+        defaultKey: Bat_Alert-85b43d66-54d4-48c2-bc3a-a115dab8c527
+        value: {fileID: 8300000, guid: 9776e9a4f2ab243428193f484425fc98, type: 3}
+        path: Assets/Sounds/Bat_Alert.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Bat
+    - key: Bat_Crash-a08fd795-1b6f-4e08-9252-c0e2615a5303
+      value:
+        key: Bat_Crash
+        id: Bat_Crash-a08fd795-1b6f-4e08-9252-c0e2615a5303
+        defaultKey: Bat_Crash-a08fd795-1b6f-4e08-9252-c0e2615a5303
+        value: {fileID: 8300000, guid: 632b54033daef4c19ba52931edde0f9f, type: 3}
+        path: Assets/Sounds/Bat_Crash.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Bat
+          - Enemy
+    - key: Bat_Dive-31cd021f-f48c-4bdf-ad08-ad9653cf9233
+      value:
+        key: Bat_Dive
+        id: Bat_Dive-31cd021f-f48c-4bdf-ad08-ad9653cf9233
+        defaultKey: Bat_Dive-31cd021f-f48c-4bdf-ad08-ad9653cf9233
+        value: {fileID: 8300000, guid: 99be1538257b34543969ec0097289b89, type: 3}
+        path: Assets/Sounds/Bat_Dive.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Bat
+    - key: Bat_Flappin-0fd35919-775e-4a0c-b39e-15c2b7fc8999
+      value:
+        key: Bat_Flappin
+        id: Bat_Flappin-0fd35919-775e-4a0c-b39e-15c2b7fc8999
+        defaultKey: Bat_Flappin-0fd35919-775e-4a0c-b39e-15c2b7fc8999
+        value: {fileID: 8300000, guid: ea82ed58c8b364036b3437b49b266362, type: 3}
+        path: Assets/Sounds/Bat_Flappin.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Bat
+    - key: Bat_Hit-54b97bc2-6ffd-48bc-b937-6a5c0a456f34
+      value:
+        key: Bat_Hit
+        id: Bat_Hit-54b97bc2-6ffd-48bc-b937-6a5c0a456f34
+        defaultKey: Bat_Hit-54b97bc2-6ffd-48bc-b937-6a5c0a456f34
+        value: {fileID: 8300000, guid: 2911823abbe1d49ce9e476ba93d8d4c5, type: 3}
+        path: Assets/Sounds/Bat_Hit.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Bat
+    - key: Boat_Faster-c3cf1d85-fd01-4bc4-9cda-dff0b6b1eb6e
+      value:
+        key: Boat_Faster
+        id: Boat_Faster-c3cf1d85-fd01-4bc4-9cda-dff0b6b1eb6e
+        defaultKey: Boat_Faster-c3cf1d85-fd01-4bc4-9cda-dff0b6b1eb6e
+        value: {fileID: 8300000, guid: 68e45d17ec368445c80ff69944f1fd52, type: 3}
+        path: Assets/Sounds/Boat_Faster.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Boat
+    - key: Boat_Slowed-48f2af3d-a067-433f-8d63-d0f461034fcf
+      value:
+        key: Boat_Slowed
+        id: Boat_Slowed-48f2af3d-a067-433f-8d63-d0f461034fcf
+        defaultKey: Boat_Slowed-48f2af3d-a067-433f-8d63-d0f461034fcf
+        value: {fileID: 8300000, guid: e9740a431e7ff48e1ae6d769463f888a, type: 3}
+        path: Assets/Sounds/Boat_Slowed.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Boat
+    - key: Boat_Steer0-53ae6eec-1083-432c-9532-6b9a5a4b1b8f
+      value:
+        key: Boat_Steer0
+        id: Boat_Steer0-53ae6eec-1083-432c-9532-6b9a5a4b1b8f
+        defaultKey: Boat_Steer0-53ae6eec-1083-432c-9532-6b9a5a4b1b8f
+        value: {fileID: 8300000, guid: 8dc016bcb29c2463db0c6a1a870ae218, type: 3}
+        path: Assets/Sounds/Boat_Steer0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Boat
+    - key: Boat_Steer1-81bbc79b-58d8-4ec9-884c-56bc6847dadb
+      value:
+        key: Boat_Steer1
+        id: Boat_Steer1-81bbc79b-58d8-4ec9-884c-56bc6847dadb
+        defaultKey: Boat_Steer1-81bbc79b-58d8-4ec9-884c-56bc6847dadb
+        value: {fileID: 8300000, guid: 62dc6cda7de834413b324d3ea7bd8653, type: 3}
+        path: Assets/Sounds/Boat_Steer1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Boat
+    - key: Crash-1ae278e1-3f0a-4b63-866e-46b6003b6ca5
+      value:
+        key: Crash
+        id: Crash-1ae278e1-3f0a-4b63-866e-46b6003b6ca5
+        defaultKey: Crash-1ae278e1-3f0a-4b63-866e-46b6003b6ca5
+        value: {fileID: 8300000, guid: e1869fffa7d7a47ea88c21cc98136df2, type: 3}
+        path: Assets/Sounds/Crash.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Misc
+    - key: Croc_Attack-ae29141c-d3b4-4382-88d9-d33b8d0f1136
+      value:
+        key: Croc_Attack
+        id: Croc_Attack-ae29141c-d3b4-4382-88d9-d33b8d0f1136
+        defaultKey: Croc_Attack-ae29141c-d3b4-4382-88d9-d33b8d0f1136
+        value: {fileID: 8300000, guid: 38138143873114983af1f341b2752971, type: 3}
+        path: Assets/Sounds/Croc_Attack.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Crocodile
+    - key: Croc_Land-38676194-b2c6-4f7b-818d-0a95be7a7f66
+      value:
+        key: Croc_Land
+        id: Croc_Land-38676194-b2c6-4f7b-818d-0a95be7a7f66
+        defaultKey: Croc_Land-38676194-b2c6-4f7b-818d-0a95be7a7f66
+        value: {fileID: 8300000, guid: 1ffd1d7746d904a13aa4e0f7f2cb5760, type: 3}
+        path: Assets/Sounds/Croc_Land.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Crocodile
+    - key: Croc_Leap-c9fbc655-81e8-483a-b79a-bf6c587a4826
+      value:
+        key: Croc_Leap
+        id: Croc_Leap-c9fbc655-81e8-483a-b79a-bf6c587a4826
+        defaultKey: Croc_Leap-c9fbc655-81e8-483a-b79a-bf6c587a4826
+        value: {fileID: 8300000, guid: fb45f71368fa24c0ea08d57f003ca40b, type: 3}
+        path: Assets/Sounds/Croc_Leap.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Crocodile
+    - key: Croc_Step_0-de5f1d81-2046-4fd6-83d8-077b6edb53f1
+      value:
+        key: Croc_Step_0
+        id: Croc_Step_0-de5f1d81-2046-4fd6-83d8-077b6edb53f1
+        defaultKey: Croc_Step_0-de5f1d81-2046-4fd6-83d8-077b6edb53f1
+        value: {fileID: 8300000, guid: c2066094a3556457d9948f32fc5313b8, type: 3}
+        path: Assets/Sounds/Croc_Step_0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Crocodile
+    - key: Croc_Step_1-28a8c524-40cf-4cf0-93b0-220805ca9775
+      value:
+        key: Croc_Step_1
+        id: Croc_Step_1-28a8c524-40cf-4cf0-93b0-220805ca9775
+        defaultKey: Croc_Step_1-28a8c524-40cf-4cf0-93b0-220805ca9775
+        value: {fileID: 8300000, guid: f72cc03c28df4432f85e38375134a246, type: 3}
+        path: Assets/Sounds/Croc_Step_1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Crocodile
+    - key: Explode-696a004c-e8d3-4a7a-880b-07a1df0f9e97
+      value:
+        key: Explode
+        id: Explode-696a004c-e8d3-4a7a-880b-07a1df0f9e97
+        defaultKey: Explode-696a004c-e8d3-4a7a-880b-07a1df0f9e97
+        value: {fileID: 8300000, guid: 197698712b61c4a86a5a832dc4c1deaf, type: 3}
+        path: Assets/Sounds/Explode.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Misc
+    - key: Flushed-44939b4f-0998-40fc-87cb-151d62c4ba7e
+      value:
+        key: Flushed
+        id: Flushed-44939b4f-0998-40fc-87cb-151d62c4ba7e
+        defaultKey: Flushed-44939b4f-0998-40fc-87cb-151d62c4ba7e
+        value: {fileID: 8300000, guid: d5c72019e17e7431bb09e9f3afe108fb, type: 3}
+        path: Assets/Sounds/Flushed.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Misc
+    - key: Forward-57735aa1-fa08-473d-9aa6-bc39fcb085be
+      value:
+        key: Forward
+        id: Forward-57735aa1-fa08-473d-9aa6-bc39fcb085be
+        defaultKey: Forward-57735aa1-fa08-473d-9aa6-bc39fcb085be
+        value: {fileID: 8300000, guid: ee50b57857b9f418fb5328b81603f1c1, type: 3}
+        path: Assets/Sounds/Forward.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Misc
+    - key: Frog_Cast_0-12c37b00-746b-4e52-a699-43450343f69d
+      value:
+        key: Frog_Cast_0
+        id: Frog_Cast_0-12c37b00-746b-4e52-a699-43450343f69d
+        defaultKey: Frog_Cast_0-12c37b00-746b-4e52-a699-43450343f69d
+        value: {fileID: 8300000, guid: a1028e4989e674ff29ba11a970dd0959, type: 3}
+        path: Assets/Sounds/Frog_Cast_0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Frog_Cast_1-4f2b3bc0-f38f-4a08-b116-9649ed66bf91
+      value:
+        key: Frog_Cast_1
+        id: Frog_Cast_1-4f2b3bc0-f38f-4a08-b116-9649ed66bf91
+        defaultKey: Frog_Cast_1-4f2b3bc0-f38f-4a08-b116-9649ed66bf91
+        value: {fileID: 8300000, guid: 16ea03b0c5279452fb7504c7ed50695c, type: 3}
+        path: Assets/Sounds/Frog_Cast_1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Frog_Casted-35f78786-11d2-43a4-aa66-1c8cf5e8952c
+      value:
+        key: Frog_Casted
+        id: Frog_Casted-35f78786-11d2-43a4-aa66-1c8cf5e8952c
+        defaultKey: Frog_Casted-35f78786-11d2-43a4-aa66-1c8cf5e8952c
+        value: {fileID: 8300000, guid: bbf9eb3d28f1b488dacfae35dea3c8fb, type: 3}
+        path: Assets/Sounds/Frog_Casted.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Frog_Emerge-222e0115-6a4b-4f22-aadb-fd3c066a0c30
+      value:
+        key: Frog_Emerge
+        id: Frog_Emerge-222e0115-6a4b-4f22-aadb-fd3c066a0c30
+        defaultKey: Frog_Emerge-222e0115-6a4b-4f22-aadb-fd3c066a0c30
+        value: {fileID: 8300000, guid: f9b40e6d993784de8b4d2c2255ad70bb, type: 3}
+        path: Assets/Sounds/Frog_Emerge.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Frog_Hit-d5bfcc7a-6531-4c6a-b216-5f8473b55f63
+      value:
+        key: Frog_Hit
+        id: Frog_Hit-d5bfcc7a-6531-4c6a-b216-5f8473b55f63
+        defaultKey: Frog_Hit-d5bfcc7a-6531-4c6a-b216-5f8473b55f63
+        value: {fileID: 8300000, guid: 3e97299d1fe2746a9a93c44f19803eef, type: 3}
+        path: Assets/Sounds/Frog_Hit.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Frog_Hurt-4f01d53a-ca57-464f-808b-2817c443616d
+      value:
+        key: Frog_Hurt
+        id: Frog_Hurt-4f01d53a-ca57-464f-808b-2817c443616d
+        defaultKey: Frog_Hurt-4f01d53a-ca57-464f-808b-2817c443616d
+        value: {fileID: 8300000, guid: 1d63d351f91624c33b6f69f0afaa66d2, type: 3}
+        path: Assets/Sounds/Frog_Hurt.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Frog_Prep-c639b3b3-546f-45ef-9c24-a7e24551b5e8
+      value:
+        key: Frog_Prep
+        id: Frog_Prep-c639b3b3-546f-45ef-9c24-a7e24551b5e8
+        defaultKey: Frog_Prep-c639b3b3-546f-45ef-9c24-a7e24551b5e8
+        value: {fileID: 8300000, guid: 517088d88b3634abc93e009f6b918cfc, type: 3}
+        path: Assets/Sounds/Frog_Prep.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Frog
+    - key: Gem_Collect-e9163acf-b393-4083-9668-48c6bdc384bd
+      value:
+        key: Gem_Collect
+        id: Gem_Collect-e9163acf-b393-4083-9668-48c6bdc384bd
+        defaultKey: Gem_Collect-e9163acf-b393-4083-9668-48c6bdc384bd
+        value: {fileID: 8300000, guid: 40e0e148013ca412d810fcd914543f70, type: 3}
+        path: Assets/Sounds/Gem_Collect.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Collectible
+    - key: Gem_Smash-53f1f226-0bbc-4a31-a51e-d6cd51de935e
+      value:
+        key: Gem_Smash
+        id: Gem_Smash-53f1f226-0bbc-4a31-a51e-d6cd51de935e
+        defaultKey: Gem_Smash-53f1f226-0bbc-4a31-a51e-d6cd51de935e
+        value: {fileID: 8300000, guid: 4338f70800807481a8aedd49bbbcae8a, type: 3}
+        path: Assets/Sounds/Gem_Smash.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Collectible
+    - key: Plyr_Dash_0-92e6663b-14ec-461f-93b1-02736fb338f0
+      value:
+        key: Plyr_Dash_0
+        id: Plyr_Dash_0-92e6663b-14ec-461f-93b1-02736fb338f0
+        defaultKey: Plyr_Dash_0-92e6663b-14ec-461f-93b1-02736fb338f0
+        value: {fileID: 8300000, guid: b7f306ea0322b4be8bece7b152b81584, type: 3}
+        path: Assets/Sounds/Plyr_Dash_0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Dash_1-f2f60371-bc10-41de-a186-393f403b4298
+      value:
+        key: Plyr_Dash_1
+        id: Plyr_Dash_1-f2f60371-bc10-41de-a186-393f403b4298
+        defaultKey: Plyr_Dash_1-f2f60371-bc10-41de-a186-393f403b4298
+        value: {fileID: 8300000, guid: 0e2434b0ea17745ef975419b21fc0ea8, type: 3}
+        path: Assets/Sounds/Plyr_Dash_1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Died-7e0e490c-5f71-4a4f-abcd-ca2177cdeff2
+      value:
+        key: Plyr_Died
+        id: Plyr_Died-7e0e490c-5f71-4a4f-abcd-ca2177cdeff2
+        defaultKey: Plyr_Died-7e0e490c-5f71-4a4f-abcd-ca2177cdeff2
+        value: {fileID: 8300000, guid: 6de3f8ae1359149478e51b4dddac835b, type: 3}
+        path: Assets/Sounds/Plyr_Died.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Hurt-876a34cf-ef7c-4c2c-b4df-0c9655d9a916
+      value:
+        key: Plyr_Hurt
+        id: Plyr_Hurt-876a34cf-ef7c-4c2c-b4df-0c9655d9a916
+        defaultKey: Plyr_Hurt-876a34cf-ef7c-4c2c-b4df-0c9655d9a916
+        value: {fileID: 8300000, guid: 466588fa11b80412f94047e72a6b3b41, type: 3}
+        path: Assets/Sounds/Plyr_Hurt.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Jump_0-24fdbc63-0711-44ca-b802-a5ec3b4e5826
+      value:
+        key: Plyr_Jump_0
+        id: Plyr_Jump_0-24fdbc63-0711-44ca-b802-a5ec3b4e5826
+        defaultKey: Plyr_Jump_0-24fdbc63-0711-44ca-b802-a5ec3b4e5826
+        value: {fileID: 8300000, guid: 003b54181b7544d2b921959678f6fd84, type: 3}
+        path: Assets/Sounds/Plyr_Jump_0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Jump_1-720301af-7028-480e-bc3b-b073d3d0fa14
+      value:
+        key: Plyr_Jump_1
+        id: Plyr_Jump_1-720301af-7028-480e-bc3b-b073d3d0fa14
+        defaultKey: Plyr_Jump_1-720301af-7028-480e-bc3b-b073d3d0fa14
+        value: {fileID: 8300000, guid: 592a5e702b7ca477bad961219e3ade29, type: 3}
+        path: Assets/Sounds/Plyr_Jump_1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Land_0-a956c563-64cf-4580-b0c6-3d38e94d7b87
+      value:
+        key: Plyr_Land_0
+        id: Plyr_Land_0-a956c563-64cf-4580-b0c6-3d38e94d7b87
+        defaultKey: Plyr_Land_0-a956c563-64cf-4580-b0c6-3d38e94d7b87
+        value: {fileID: 8300000, guid: f4d60f173528f47a19727b3783749e9d, type: 3}
+        path: Assets/Sounds/Plyr_Land_0.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Land_1-2b148f15-b9e3-459d-ba17-fa087bc277a9
+      value:
+        key: Plyr_Land_1
+        id: Plyr_Land_1-2b148f15-b9e3-459d-ba17-fa087bc277a9
+        defaultKey: Plyr_Land_1-2b148f15-b9e3-459d-ba17-fa087bc277a9
+        value: {fileID: 8300000, guid: 7b5bff4dad9b647e2a8c7e7993db4458, type: 3}
+        path: Assets/Sounds/Plyr_Land_1.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Plyr_Vault-8b5d59ad-8c0a-4ef1-8689-6d0252b99f49
+      value:
+        key: Plyr_Vault
+        id: Plyr_Vault-8b5d59ad-8c0a-4ef1-8689-6d0252b99f49
+        defaultKey: Plyr_Vault-8b5d59ad-8c0a-4ef1-8689-6d0252b99f49
+        value: {fileID: 8300000, guid: a815c844764144a459c507aa153654a3, type: 3}
+        path: Assets/Sounds/Plyr_Vault.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Player
+    - key: Squid_Erupt-2aba276c-864e-4357-9f29-ee666e4658bb
+      value:
+        key: Squid_Erupt
+        id: Squid_Erupt-2aba276c-864e-4357-9f29-ee666e4658bb
+        defaultKey: Squid_Erupt-2aba276c-864e-4357-9f29-ee666e4658bb
+        value: {fileID: 8300000, guid: 778508264481b4b678562f40417668c3, type: 3}
+        path: Assets/Sounds/Squid_Erupt.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Tentacle
+    - key: Squid_Exit-f6406e9b-79f2-4757-833b-c6431c454bc0
+      value:
+        key: Squid_Exit
+        id: Squid_Exit-f6406e9b-79f2-4757-833b-c6431c454bc0
+        defaultKey: Squid_Exit-f6406e9b-79f2-4757-833b-c6431c454bc0
+        value: {fileID: 8300000, guid: 7691924f40f5a4f65b474ca807c1205a, type: 3}
+        path: Assets/Sounds/Squid_Exit.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Tentacle
+    - key: Squid_Hurt-9609e7ca-b83c-4a32-996f-904bd787a339
+      value:
+        key: Squid_Hurt
+        id: Squid_Hurt-9609e7ca-b83c-4a32-996f-904bd787a339
+        defaultKey: Squid_Hurt-9609e7ca-b83c-4a32-996f-904bd787a339
+        value: {fileID: 8300000, guid: 1573953abecc644d0b7b2881e670d2e6, type: 3}
+        path: Assets/Sounds/Squid_Hurt.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Enemy
+          - Tentacle
+    - key: Stomped-23ecb8ed-5005-48b1-99c3-8908ca0a3f2e
+      value:
+        key: Stomped
+        id: Stomped-23ecb8ed-5005-48b1-99c3-8908ca0a3f2e
+        defaultKey: Stomped-23ecb8ed-5005-48b1-99c3-8908ca0a3f2e
+        value: {fileID: 8300000, guid: 7dc31f212f48f4ef18b0d870c46abeb5, type: 3}
+        path: Assets/Sounds/Stomped.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - Misc
+    - key: UI_Back-08946bf5-78a3-42a2-a807-2ff21aeedc60
+      value:
+        key: UI_Back
+        id: UI_Back-08946bf5-78a3-42a2-a807-2ff21aeedc60
+        defaultKey: UI_Back-08946bf5-78a3-42a2-a807-2ff21aeedc60
+        value: {fileID: 8300000, guid: f701ad7823655452e821b946a2202a9b, type: 3}
+        path: Assets/Sounds/UI_Back.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - UI
+    - key: UI_Enter-fd710602-1957-4b6e-892c-ec2bc1ca9643
+      value:
+        key: UI_Enter
+        id: UI_Enter-fd710602-1957-4b6e-892c-ec2bc1ca9643
+        defaultKey: UI_Enter-fd710602-1957-4b6e-892c-ec2bc1ca9643
+        value: {fileID: 8300000, guid: e77bd485d0be84a52b28b420cefbd0b9, type: 3}
+        path: Assets/Sounds/UI_Enter.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - UI
+    - key: UI_Navigate-156bb326-aec4-483c-95d1-e24fcb14242f
+      value:
+        key: UI_Navigate
+        id: UI_Navigate-156bb326-aec4-483c-95d1-e24fcb14242f
+        defaultKey: UI_Navigate-156bb326-aec4-483c-95d1-e24fcb14242f
+        value: {fileID: 8300000, guid: 57ac121e1be1a4aacae1c5ac1e57b65f, type: 3}
+        path: Assets/Sounds/UI_Navigate.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - UI
+    - key: UI_Select-60dbdbd2-725e-4d61-afb8-ed482edc9ab1
+      value:
+        key: UI_Select
+        id: UI_Select-60dbdbd2-725e-4d61-afb8-ed482edc9ab1
+        defaultKey: UI_Select-60dbdbd2-725e-4d61-afb8-ed482edc9ab1
+        value: {fileID: 8300000, guid: 413151c81493643b6ab98767adb19a98, type: 3}
+        path: Assets/Sounds/UI_Select.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags:
+          - UI
   groups:
     list:
     - key: 06b86d15-6c2b-4f89-9e54-1caf4f4856e9
@@ -2450,6 +3350,13 @@ MonoBehaviour:
         - Crocodile_Roar_2-c115c011-5c2b-41bd-937e-6809db341370
         - Crocodile_Roar_3-e0ff5c81-541b-49f4-968e-06cd5041af6e
         - Crocodile_Roar_4-57bd4e61-59e3-4d3c-b39c-ffb6179f4353
+    - key: 8a96c5bd-8c24-4622-b4c5-c782edc40af4
+      value:
+        groupName: Plyr_Dash
+        groupPlayMode: 0
+        clipNames:
+        - Plyr_Dash_0-92e6663b-14ec-461f-93b1-02736fb338f0
+        - Plyr_Dash_1-f2f60371-bc10-41de-a186-393f403b4298
   mixers:
     list:
     - key: 8a58fc35-dd70-4491-8d33-204a2fddb8b1
@@ -2469,3 +3376,5 @@ MonoBehaviour:
   - Music
   - Boat
   - Misc
+  - Collectible
+  - UI

@@ -1,10 +1,16 @@
 using System.Collections;
+using CarterGames.Assets.AudioManager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Loading_Screen_Controller : MonoBehaviour
 {
+    private static readonly int Close = Animator.StringToHash("Close");
+    private static readonly int Inactive = Animator.StringToHash("Inactive");
+    private static readonly int Enter = Animator.StringToHash("Enter");
+    private static readonly int Loading = Animator.StringToHash("Loading");
+
     [Header("Components")]
     [SerializeField] Canvas _canvas;
     [SerializeField] CanvasScaler _canvasScaler;
@@ -62,9 +68,12 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         // Update Animator Speed and trigger the Enter Animation
         _transitionAnimator.speed = 1f / startTransitionTime;
-        _transitionAnimator.SetTrigger("Enter");
+        _transitionAnimator.SetTrigger(Enter);
 
         _loadingMeterGroup.alpha = 0f;
+        
+        // Play Enter SFX
+        AudioManager.Play(Clip.Flushed);
 
         while (t > 0f)
         {
@@ -75,7 +84,7 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         // Reset Animator Speed and trigger Loading Animation
         _transitionAnimator.speed = 1f;
-        _transitionAnimator.SetTrigger("Loading");
+        _transitionAnimator.SetTrigger(Loading);
 
         UpdateLoadingMeter(0f);
         _loadingMeterGroup.alpha = 1f;
@@ -86,12 +95,6 @@ public class Loading_Screen_Controller : MonoBehaviour
 
     IEnumerator CloseLoadingScreenProcess()
     {
-        // while (!_canvas.worldCamera)
-        // {
-        //     _canvas.worldCamera = Camera.main;
-        //     yield return new WaitForEndOfFrame();
-        // }
-        
         yield return new WaitUntil(() => _canvas.worldCamera = Camera.main);
         // Debug.Log($"Render Camera was set to: {_canvas.worldCamera}");
         
@@ -99,11 +102,14 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         // Update Animator Speed and trigger the Close Animation
         _transitionAnimator.speed = 1f / endTransitionTime;
-        _transitionAnimator.SetTrigger("Close");
+        _transitionAnimator.SetTrigger(Close);
+
+        // Play Exit SFX
+        AudioManager.Play(Clip.Forward);
 
         while (t < endTransitionTime)
         {
-            // Update Loading Meter Aplha
+            // Update Loading Meter Alpha
             // Debug.Log($"Closing. Time: {t}. Duration: {endTransitionTime}");
             _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
             yield return t += Time.unscaledDeltaTime;
@@ -111,7 +117,7 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         // Reset speed and bring to inactive
         _transitionAnimator.speed = 1f;
-        _transitionAnimator.SetTrigger("Inactive");
+        _transitionAnimator.SetTrigger(Inactive);
         
         _transitionScreen.SetActive(false);
 
@@ -126,10 +132,4 @@ public class Loading_Screen_Controller : MonoBehaviour
         amount = Mathf.Round(amount * 100f);
         _loadingText.SetText($"{amount}%");
     }
-
-    //void UpdateFadeTransition(float prog, float timeRef)
-    //{
-    //    Color pCol = Color.Lerp(Color.black, Color.clear, Mathf.InverseLerp(0, timeRef, prog));
-    //    _loadingFadeTransition.color = pCol;
-    //}
 }

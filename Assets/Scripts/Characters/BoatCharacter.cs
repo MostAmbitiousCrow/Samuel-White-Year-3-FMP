@@ -104,28 +104,39 @@ namespace GameCharacters
             {
                 return;
             }
-            if (!isVaulting && canMove)
-            {
-                TargetSpace(sd);
-                isMoving = true;
-                OnMoved();
-            }
+
+            if (isVaulting || !canMove) return;
+            TargetSpace(sd);
+            isMoving = true;
+            OnMove();
         }
 
         /// <summary> Moves the character to a space on the boat via a given direction </summary>
         public void MoveToSpaceFromDirection(int direction)
         {
             var sd = Boat_Space_Manager.Instance.GetSpaceFromDirection(currentSpace.sideID, currentSpace.spaceID, direction);
+            SetDirection((MoveDirection)direction, false);
 
             if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd) ||
                 isVaulting || !canMove) return;
             // print($"Moving to Space: {sd.spaceID}");
             TargetSpace(sd);
             isMoving = true;
-            OnMoved();
+            OnMove();
             // else print($"Couldn't access space: {sd.spaceID}");
         }
 
+        /// <summary>
+        /// Called whenever the character has started a move
+        /// </summary>
+        protected virtual void OnMove()
+        {
+            animator.SetTrigger("Move");
+        }
+
+        /// <summary>
+        /// Called whenever the character has finished a move
+        /// </summary>
         protected virtual void OnMoved()
         {
             
@@ -141,6 +152,9 @@ namespace GameCharacters
             TargetSpace(spaceData);
             isVaulting = true;
             isVaultingHeavily = isHeavy;
+            
+            // Trigger the OnVault Method for Animations + Sounds
+            OnVault();
         }
 
         /// <summary> Vault to the side with a provided space data with an additional character to attack upon landing </summary>
@@ -154,6 +168,9 @@ namespace GameCharacters
             isVaulting = true;
             isVaultingHeavily = isHeavy;
             TargetedCharacter = victim;
+            
+            // Trigger the OnVault Method for Animations + Sounds
+            OnVault();
         }
 
         /// <summary> Sends the character directly to the position of the specified space on a given side </summary>
@@ -300,6 +317,9 @@ namespace GameCharacters
                     basePos.z
                 );
 
+                // Trigger Finished Move Method
+                OnMoved();
+
                 // Coyote input for vaulting after moving
                 if (WillVault) PerformVault(isVaultingHeavily);
             }
@@ -324,8 +344,6 @@ namespace GameCharacters
             {
                 VaultToSide(newSpace, isHeavy);
             }
-            //TODO: Implement vaulting animation here?
-            // print($"Performed Vault. Heavy Vault = {isHeavy}");
         }
 
         protected virtual void VaultMovement()
@@ -380,6 +398,12 @@ namespace GameCharacters
             }
         }
 
+        protected virtual void OnVault()
+        {
+            //TODO: Flip the direction of the character based on the side of the boat they're vaulting from
+            animator.SetTrigger("Vault");
+        }
+
         protected virtual void OnVaulted()
         {
             animator.SetTrigger("Vaulted"); //TODO: add "Vault Landed" animation!
@@ -393,6 +417,9 @@ namespace GameCharacters
             // Do Gravity (fall)
             _verticalVelocity += gravity * Time.deltaTime;
             _currentY += _verticalVelocity * Time.deltaTime;
+            
+            // Set Vertical Falling Animation Parameter
+            animator.SetFloat("Vertical Velocity", _verticalVelocity);
 
             // Damage any Characters below!
             var character = CharacterSpaceChecks.ScanAreaForDamageableCharacter
@@ -408,6 +435,7 @@ namespace GameCharacters
             _currentY = 0f;
             _verticalVelocity = 0f;
             isGrounded = true;
+            
             OnLanded();
         }
 
@@ -428,6 +456,7 @@ namespace GameCharacters
         protected virtual void OnJumped()
         {
             animator.SetTrigger("Jump");
+            animator.SetBool("Grounded", isGrounded);
             
             if (isVaultingHeavily) boatInteractor.ImpactBoat(TargetedSpace);
             //TODO: Add Jump SFX and VFX
@@ -442,6 +471,7 @@ namespace GameCharacters
             isBouncing = false;
             // rb.isKinematic = true; // TODO: Consider
             animator.SetTrigger("Landed");
+            animator.SetBool("Grounded", isGrounded);
             //TODO: Add landed SFX and VFX
 
             if (isVaultingHeavily) CameraShaker.Presets.Explosion3D();
@@ -451,6 +481,7 @@ namespace GameCharacters
         public void TriggerBounce()
         {
             isGrounded = false;
+            animator.SetBool("Grounded", isGrounded);
             _verticalVelocity = bouncePower;
             isBouncing = true;
             _canBounce = false;

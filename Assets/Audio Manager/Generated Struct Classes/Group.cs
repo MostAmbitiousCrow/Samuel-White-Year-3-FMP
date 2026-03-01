@@ -16,5 +16,6 @@ namespace CarterGames.Assets.AudioManager
         public static readonly string Player_Vaulted = "4eb3bae3-03bd-45da-a78b-3aa26dd3cb5e";
         public static readonly string Crocodile_Death = "5a48346c-0143-4f57-b5c9-b076f971a7df";
         public static readonly string Crocodile_Roar = "4f742aac-1e43-4e52-939f-96a3a4673f0a";
+        public static readonly string Plyr_Dash = "8a96c5bd-8c24-4622-b4c5-c782edc40af4";
     }
 }

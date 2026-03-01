@@ -39,7 +39,7 @@ public class Menu_Manager_Main : Menu_Manager
     #region Quit Game
     public void QuitGame()
     {
-        if (Application.platform == RuntimePlatform.WebGLPlayer || _transitionArtController.IsTransitioning) return;
+        if (Application.platform == RuntimePlatform.WebGLPlayer || transitionArtController.IsTransitioning) return;
         
         Application.Quit(); // Quit the game
         Debug.Log("Player has quit the game.");
@@ -49,7 +49,7 @@ public class Menu_Manager_Main : Menu_Manager
     #region Game Initialisation
     public void PlayGame()
     {
-        if (_transitionArtController.IsTransitioning) return;
+        if (transitionArtController.IsTransitioning) return;
         
         Debug.Log("Play Game Button triggered");
         ToggleInput(false);

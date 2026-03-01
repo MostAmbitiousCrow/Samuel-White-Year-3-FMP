@@ -40,7 +40,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3544349734965596464
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -54,6 +54,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -117,6 +118,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -277,7 +281,7 @@ PrefabInstance:
     - target: {fileID: 5585866629737306578, guid: 54d812501b1e94ebbbdc3c1cdc3b765b,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Leaping Crocodile Variant
+      value: Enemy Leaping Crocodile (Unused - From Root)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -410,6 +414,7 @@ MonoBehaviour:
   animator: {fileID: 3544349734965596464}
   healthComponent: {fileID: 5448958138379311665}
   stompPosition: {fileID: 5049880677501770008}
+  characterCollider: {fileID: 0}
   isDirecting: 0
   rotationCurve:
     serializedVersion: 2
@@ -463,9 +468,14 @@ MonoBehaviour:
     m_RotationOrder: 4
   isVaulting: 0
   isVaultingHeavily: 0
+  WillMove: 0
+  MoveDirection: 0
+  WillVault: 0
+  WillJump: 0
   canJump: 1
   jumpPower: 12
   isJumping: 0
+  gravity: -25
   isBouncing: 0
   bouncePower: 5
   currentSpace:
@@ -494,6 +504,7 @@ MonoBehaviour:
   riverObject: {fileID: 0}
   eruptParticles: {fileID: 0}
   splashParticles: {fileID: 0}
+  crocData: {fileID: 0}
 --- !u!4 &5920297951796586186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5721508184256927586, guid: 54d812501b1e94ebbbdc3c1cdc3b765b,

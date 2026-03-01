@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using EditorAttributes;
 using Game;
-using UnityEngine.Audio;
 
 namespace GameCharacters
 {
@@ -151,21 +150,27 @@ namespace GameCharacters
         }
         #endregion
 
+        protected override void OnVault()
+        {
+            base.OnVault();
+            AudioManager.Play(Clip.Plyr_Vault);
+        }
+
         protected override void OnVaulted()
         {
             base.OnVaulted();
             if (isVaultingHeavily)
             {
                 TriggerHitStop(.1f);
-                AudioManager.PlayGroup(Group.Player_Vaulted_Heavy);
+                AudioManager.Play(Clip.Plyr_Land_1); // TODO: needs a new sfx for heavy vaulting
             }
-            else AudioManager.PlayGroup(Group.Player_Vaulted);
+            else AudioManager.Play(Clip.Plyr_Land_0);
         }
 
         protected override void OnMoved()
         {
             base.OnMoved();
-            AudioManager.PlayGroup(Group.Player_Dash);
+            AudioManager.PlayGroup(Group.Plyr_Dash);
         }
 
         protected override void OnJumped()
@@ -174,9 +179,9 @@ namespace GameCharacters
             if (isVaultingHeavily)
             {
                 TriggerHitStop(.1f);
-                AudioManager.PlayGroup(Group.Player_Vaulted_Heavy);
+                AudioManager.Play(Clip.Plyr_Jump_1); // Heavy Jump
             }
-            else AudioManager.PlayGroup(Group.Player_Vaulted);
+            else AudioManager.Play(Clip.Plyr_Jump_0); // Light Jump
         }
 
         protected override void OnLanded()
@@ -185,9 +190,9 @@ namespace GameCharacters
             if (isVaultingHeavily)
             {
                 TriggerHitStop(.1f);
-                AudioManager.PlayGroup(Group.Player_Landed_Heavy);
+                AudioManager.Play(Clip.Plyr_Land_1);
             }
-            else AudioManager.PlayGroup(Group.Player_Vaulted_Landed);
+            else AudioManager.Play(Clip.Plyr_Land_0);
         }
 
         #region Gemstone Events
@@ -203,7 +208,7 @@ namespace GameCharacters
             if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnDied();
 
-            AudioManager.PlayGroup(Group.Player_Death);
+            AudioManager.Play(Clip.Plyr_Died);
             Debug.Log("PLAYER DIED");
         } 
 
@@ -217,8 +222,8 @@ namespace GameCharacters
         {
             if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnTookDamage();
-            
-            AudioManager.PlayGroup(Group.Player_Hurt);
+
+            AudioManager.Play(Clip.Plyr_Hurt);
             Debug.Log("Player Took Damage");
         }
 

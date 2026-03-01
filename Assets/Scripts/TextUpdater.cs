@@ -7,9 +7,10 @@ public class TextUpdater : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMesh;
     
-    private void Awake()
+    private void Start()
     {
         textMesh = GetComponentInChildren<TextMeshProUGUI>();
+        ActivateFont();
     }
 
     private void OnEnable()
@@ -25,7 +26,7 @@ public class TextUpdater : MonoBehaviour
 
     private void ActivateFont()
     {
-        if (!textMesh || !GameSettingsManager.Instance) return;
+        if (!textMesh) textMesh = GetComponentInChildren<TextMeshProUGUI>();
         textMesh.font = GameSettingsManager.DoDyslexiaFont? 
             GameSettingsManager.Instance.dyslexicFont : GameSettingsManager.Instance.pixelFont;
 

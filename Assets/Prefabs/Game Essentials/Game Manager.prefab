@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pixelFont: {fileID: 11400000, guid: 92cd7d873ffaa4b4387b49019b82cc38, type: 2}
   dyslexicFont: {fileID: 11400000, guid: 2bc456cf43e05e444b893b3a96de88b7, type: 2}
+  mainAudioMixer: {fileID: 0}
+  musicAudioMixer: {fileID: 0}
 --- !u!1 &7150755775306100488
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +226,11 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: 389c50fc6fb58408496abebe1ef87bf8, type: 2}
+    - target: {fileID: 2719010797586138158, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5630238477471662179, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_PlaneDistance
@@ -242,17 +249,17 @@ PrefabInstance:
     - target: {fileID: 5847672704283660500, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5847672704283660500, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5847672704283660500, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 560.0826
       objectReference: {fileID: 0}
     - target: {fileID: 6087985637557641204, guid: 7b56c7cc705f1d14aa9d0880c3fceb4e,
         type: 3}

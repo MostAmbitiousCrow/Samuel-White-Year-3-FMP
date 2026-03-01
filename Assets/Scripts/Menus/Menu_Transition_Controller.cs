@@ -21,6 +21,7 @@ public class Menu_Transition_Controller : MonoBehaviour
     [SerializeField] bool _isTransitioning;
     [Space]
     [SerializeField] bool _doTransitionAnimation;
+    public bool DoTransitionAnimation => _doTransitionAnimation;
     [Space]
     [SerializeField, ShowField(nameof(_doTransitionAnimation))] float _transitionStartTime = .1f;
     [SerializeField, ShowField(nameof(_doTransitionAnimation))] float _transitionWaitTime = .3f;

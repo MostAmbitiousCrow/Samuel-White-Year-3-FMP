@@ -379,5 +379,10 @@ namespace Game
         }
 		#endregion
 		// ------------------------------------------------------------------------------------------------------------
+		#region Dev
+
+		public static bool AllowExternalLinks = true;
+
+		#endregion
 	}
 }

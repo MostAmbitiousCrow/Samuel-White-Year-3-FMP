@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class Menu_Manager_Pause : Menu_Manager
 {
-
     [Button("Sort Pause Screens")]
     public void SortScreens()
     {
@@ -25,23 +24,21 @@ public class Menu_Manager_Pause : Menu_Manager
     {
         SortScreens();
 
-        if (!_audioSource) _audioSource = GetComponent<AudioSource>();
-
         foreach (var item in screenDatas)
             item.ScreenRoot.SetActive(false);
 
-        if (screenDatas.Length > _startScreen)
-            screenDatas[_startScreen].ScreenRoot.SetActive(true);
+        if (screenDatas.Length > startScreen)
+            screenDatas[startScreen].ScreenRoot.SetActive(true);
         else
             Debug.LogError("Start screen index out of range!");
-        screenDatas[_startScreen].ScreenRoot.SetActive(true);
+        screenDatas[startScreen].ScreenRoot.SetActive(true);
 
-        currentScreen = _startScreen;
+        currentScreen = startScreen;
         //GameManager.Instance.CurrentEventSystem.SetSelectedGameObject(screenDatas[currentScreen].EnterButton.gameObject);
         EventSystem.current.SetSelectedGameObject(screenDatas[currentScreen].EnterButton.gameObject);
 
 
-        _canvas.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);
         GameManager.GameLogic.onGameResume += ClosePauseMenu;
         GameManager.GameLogic.onGamePause += ShowPauseMenu;
     }
@@ -99,13 +96,13 @@ public class Menu_Manager_Pause : Menu_Manager
 
     void ShowPauseMenu()
     {
-        _canvas.gameObject.SetActive(true);
+        canvas.gameObject.SetActive(true);
         
     }
 
     void ClosePauseMenu()
     {
-        _canvas.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);
     }
 
     protected override void ToggleScreen(int openingScreen, int closingScreen)

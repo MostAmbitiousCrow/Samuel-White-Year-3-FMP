@@ -96,6 +96,7 @@ namespace GameCharacters
         /// <summary> Explicitly sets the direction of the enemy with a given parameter </summary>
         public void SetDirection(MoveDirection direction, bool animate)
         {
+            if (direction == currentDirection) return;
             if (animate) StartCoroutine(DirectionRoutine(direction));
             else
             {
