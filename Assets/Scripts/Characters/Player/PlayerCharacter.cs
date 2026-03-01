@@ -71,7 +71,7 @@ namespace GameCharacters
         protected override void TimeUpdate()
         {
             // Insert player actions here
-            OnMove();
+            MoveInput();
             OnLightVault();
             OnHeavyVault();
             
@@ -96,7 +96,7 @@ namespace GameCharacters
                 Time.timeScale = 4f;
         }
 
-        private void OnMove()
+        private void MoveInput()
         {
             //TODO: Rework to allow the player to simply hold down the move button to continue moving in that direction or tap to move a single space
             // Additionally, fix the issue where the player is able to trigger the move event when pressing and releasing an additional key (or perhaps rework movement to use buttons instead?)
@@ -120,6 +120,7 @@ namespace GameCharacters
             if (_vaultLightAction.WasPressedThisFrame())
             {
                 WillVault = true;
+                isVaultingHeavily = false;
                 PerformVault(false);
             }
             VaultPostProcess();
@@ -130,6 +131,7 @@ namespace GameCharacters
             if (_vaultHeavyAction.WasPressedThisFrame())
             {
                 WillVault = true;
+                isVaultingHeavily = true;
                 PerformVault(true);
             }
             VaultPostProcess();
@@ -146,7 +148,7 @@ namespace GameCharacters
             if (_vaultHeavyAction.WasPerformedThisFrame() 
                 || 
                 _vaultLightAction.WasPerformedThisFrame()) WillJump = true;
-            if (WillJump) TriggerJump();
+            if (WillJump) TriggerJump(); //TODO: Jump is still broken and won't trigger upon vaulting
         }
         #endregion
 
@@ -167,10 +169,15 @@ namespace GameCharacters
             else AudioManager.Play(Clip.Plyr_Land_0);
         }
 
+        protected override void OnMove()
+        {
+            base.OnMove();
+            AudioManager.PlayGroup(Group.Plyr_Dash);
+        }
+
         protected override void OnMoved()
         {
             base.OnMoved();
-            AudioManager.PlayGroup(Group.Plyr_Dash);
         }
 
         protected override void OnJumped()

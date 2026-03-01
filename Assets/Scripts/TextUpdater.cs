@@ -7,10 +7,9 @@ public class TextUpdater : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMesh;
     
-    private void Start()
+    private void Awake()
     {
-        textMesh = GetComponentInChildren<TextMeshProUGUI>();
-        ActivateFont();
+        textMesh = GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -26,8 +25,9 @@ public class TextUpdater : MonoBehaviour
 
     private void ActivateFont()
     {
-        if (!textMesh) textMesh = GetComponentInChildren<TextMeshProUGUI>();
-        textMesh.font = GameSettingsManager.DoDyslexiaFont? 
+        if (textMesh == null) textMesh = GetComponent<TextMeshProUGUI>();
+        textMesh.font = 
+            GameSettingsManager.DoDyslexiaFont? 
             GameSettingsManager.Instance.dyslexicFont : GameSettingsManager.Instance.pixelFont;
 
         // Set text colour as the global highlight colour
