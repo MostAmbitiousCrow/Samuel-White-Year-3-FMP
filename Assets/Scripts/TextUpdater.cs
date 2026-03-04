@@ -26,6 +26,12 @@ public class TextUpdater : MonoBehaviour
     private void ActivateFont()
     {
         if (textMesh == null) textMesh = GetComponent<TextMeshProUGUI>();
+        if (GameSettingsManager.Instance == null)
+        {
+            Debug.Log("Game Settings Instance is Missing");
+            return;
+        }
+        
         textMesh.font = 
             GameSettingsManager.DoDyslexiaFont? 
             GameSettingsManager.Instance.dyslexicFont : GameSettingsManager.Instance.pixelFont;

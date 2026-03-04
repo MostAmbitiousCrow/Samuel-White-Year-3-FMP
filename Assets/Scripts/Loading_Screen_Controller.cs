@@ -46,7 +46,7 @@ public class Loading_Screen_Controller : MonoBehaviour
     //    //_canvasScaler.referenceResolution = gameSettings.TargetAspectResolution.resolution; // Not necessary
     //}
 
-    #region 
+    #region Loading
     public void StartLoadingScreen()
     {
         IsTransitioning = true;
@@ -61,7 +61,7 @@ public class Loading_Screen_Controller : MonoBehaviour
     }
     #endregion
 
-    #region
+    #region Loading Routine
     IEnumerator EnterLoadingScreenProcess()
     {
         float t = startTransitionTime;
