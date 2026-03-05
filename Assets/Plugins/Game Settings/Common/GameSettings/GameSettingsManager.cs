@@ -18,7 +18,14 @@ namespace Game
 
         private void Awake()
 		{
+			if (Instance) 
+			{
+				Debug.Log("Game Settings Manager already exists, deleting new Game Settings Manager");
+				Destroy(gameObject);
+				return;
+			}
 			Instance = this;
+			DontDestroyOnLoad(this);
 		}
 
 		private static readonly Vector2 MinScreenSize = new Vector2(1024, 768);

@@ -122,7 +122,7 @@ namespace GameCharacters
             // print($"Moving to Space: {sd.spaceID}");
             TargetSpace(sd);
             isMoving = true;
-            animator.SetBool("Moving", true);
+
             OnMove();
             // else print($"Couldn't access space: {sd.spaceID}");
 
@@ -131,7 +131,8 @@ namespace GameCharacters
         /// <summary> Called whenever the character has started a move </summary>
         protected virtual void OnMove()
         {
-            
+            animator.SetBool("Moving", true);
+            animator.SetTrigger("Moved");
         }
 
         /// <summary> Called whenever the character has finished a move </summary>
