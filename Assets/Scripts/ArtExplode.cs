@@ -32,10 +32,10 @@ public class ArtExplode : MonoBehaviour
         // }
         
         // TODO: Remove, doesn't work... Problem: Limbs won't reset at the correct position due to character rotation
-        for (int i = 0; i < art.Length; i++)
+        foreach (var t in art)
         {
-            art[i].isKinematic = true;
-            art[i].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            t.isKinematic = true;
+            t.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
         Debug.Log($"{gameObject} Art Reset");
     }
@@ -51,7 +51,7 @@ public class ArtExplode : MonoBehaviour
             r.AddExplosionForce(force, pos, 2f, force, ForceMode.Impulse);
         }
 
-        AudioManager.Play("metal-pipe-falling-sound-effect-2e7e563a-1930-49e5-be28-f684fb738bec");
+        AudioManager.PlayGroup(Group.ExplodeCombined);
         CameraShaker.Presets.Explosion3D(); // TODO: Add a preset for art explosions
     }
 

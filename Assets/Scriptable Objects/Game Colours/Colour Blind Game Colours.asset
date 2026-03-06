@@ -18,9 +18,9 @@ MonoBehaviour:
     MidtoneColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     HighlightColour: {r: 1, g: 1, b: 1, a: 1}
   - Name: Player
-    ShadowColour: {r: 0, g: 1, b: 0, a: 1}
-    MidtoneColour: {r: 0, g: 1, b: 0, a: 1}
-    HighlightColour: {r: 0, g: 1, b: 0, a: 1}
+    ShadowColour: {r: 0, g: 0, b: 1, a: 1}
+    MidtoneColour: {r: 0, g: 0, b: 1, a: 1}
+    HighlightColour: {r: 0, g: 0, b: 1, a: 1}
   - Name: Enemies
     ShadowColour: {r: 1, g: 0, b: 0, a: 1}
     MidtoneColour: {r: 1, g: 0, b: 0, a: 1}

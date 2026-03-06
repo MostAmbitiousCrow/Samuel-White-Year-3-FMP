@@ -105,7 +105,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""name"": ""Vault"",
                     ""type"": ""Value"",
                     ""id"": ""d43fde6e-a426-42bd-a0fd-2dac81f4f8bf"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": true
@@ -114,7 +114,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""name"": ""VaultHeavy"",
                     ""type"": ""Value"",
                     ""id"": ""816bc734-6658-4132-87bc-f508ba6d28e1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": true
@@ -396,6 +396,17 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f4551c75-ec34-4933-9ebd-71e865f78277"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vault"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6a2b4ac0-90c1-49dd-8984-a59104b68606"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -445,6 +456,17 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
+                    ""action"": ""Vault"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d83663d-9607-4638-9b49-0a40655244af"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Vault"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -517,6 +539,28 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f1d57de0-aa8e-4f39-9c21-a5376ac50b2f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VaultHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6460a650-c20a-419c-a761-611ca06d7d94"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VaultHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""d7d71c95-de55-4500-b342-260c0e999a73"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -566,6 +610,17 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
+                    ""action"": ""VaultHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5c29012-a457-499c-aa2a-7ab4e01b65a6"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""VaultHeavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

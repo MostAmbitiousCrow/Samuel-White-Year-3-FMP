@@ -7,9 +7,10 @@ public class TextUpdater : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMesh;
     
-    private void Awake()
+    private void Start()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
+        ActivateFont();
     }
 
     private void OnEnable()

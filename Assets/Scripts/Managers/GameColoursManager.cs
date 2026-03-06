@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using EditorAttributes;
 using Game;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace GameColours
         private static readonly int NewShadow = Shader.PropertyToID(ShadowString);
     
         [Header("Materials")]
-        [SerializeField] private Material[] materials = new Material[8];
+        [SerializeField] private List<Material> materials = new();
         [Space]
         public static SO_GameColours CurrentColours;
         [SerializeField] private SO_GameColours defaultColours;
@@ -105,6 +106,18 @@ namespace GameColours
         {
             if (Camera.main != null) Camera.main.backgroundColor = colour;
         }
+
+        public void AddMaterial(Material mat)
+        {
+            materials.Add(mat);
+            Debug.Log($"Added {mat.name}");
+        }
+
+        public void RemoveMaterial(Material mat)
+        {
+            materials.Remove(mat);
+            Debug.Log($"Removed {mat.name}");
+        }
     
         #region Rainbow Mode
         private void SetRainbowMode(bool state)
@@ -125,7 +138,7 @@ namespace GameColours
             // Use Time.time to get a continuously increasing value for the hue
             var hueOffset = (Time.realtimeSinceStartup * 0.25f) % 1f;
     
-            for (var i = 0; i < materials.Length; i++)
+            for (var i = 0; i < materials.Count; i++)
             {
                 var mat = materials[i];
             
