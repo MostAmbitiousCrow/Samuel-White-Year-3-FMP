@@ -470,7 +470,7 @@ protected virtual void VaultMovement()
             if (isVaultingHeavily) boatInteractor.ImpactBoat(TargetedSpace);
             //TODO: Add Jump SFX and VFX
             
-            print($"{gameObject.name} Jumped!");
+            // print($"{gameObject.name} Jumped!");
         }
 
         /// <summary> Called whenever this character lands </summary>

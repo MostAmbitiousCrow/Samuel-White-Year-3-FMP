@@ -106,11 +106,11 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
 
     protected virtual void ToggleScreen(int openingScreen, int closingScreen)
     {
-        print("Here are the current Screen Datas:");
-        foreach (var item in screenDatas)
-        {
-            Debug.Log(item);
-        }
+        // print("Here are the current Screen Datas:");
+        // foreach (var item in screenDatas)
+        // {
+        //     Debug.Log(item);
+        // }
 
         MenuScreenContent OpeningScreen = screenDatas[openingScreen];
         MenuScreenContent ClosingScreen = screenDatas[closingScreen];

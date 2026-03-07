@@ -92,7 +92,7 @@ namespace GameColours
             materials[id].SetColor(NewMidtone, colour.MidtoneColour);
             materials[id].SetColor(NewShadow, colour.ShadowColour);
             
-            Debug.Log($"Updated Material {id}");
+            // Debug.Log($"Updated Material {id}");
         }
     
         public void UpdateMaterial(Material mat, ObjectMaterialColours colour)
@@ -110,13 +110,13 @@ namespace GameColours
         public void AddMaterial(Material mat)
         {
             materials.Add(mat);
-            Debug.Log($"Added {mat.name}");
+            // Debug.Log($"Added {mat.name}");
         }
 
         public void RemoveMaterial(Material mat)
         {
             materials.Remove(mat);
-            Debug.Log($"Removed {mat.name}");
+            // Debug.Log($"Removed {mat.name}");
         }
     
         #region Rainbow Mode

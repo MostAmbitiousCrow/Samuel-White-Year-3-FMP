@@ -118,7 +118,7 @@ namespace GameCharacters
                 };
                 
                 transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
-                print("Direction: " + direction);
+                // print("Direction: " + direction);
                 isDirecting = false;
             }
         }

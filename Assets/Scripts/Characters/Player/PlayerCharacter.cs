@@ -1,3 +1,4 @@
+using System;
 using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,6 +28,17 @@ namespace GameCharacters
         private InputAction _moveAction;
         private InputAction _vaultLightAction;
         private InputAction _vaultHeavyAction;
+        
+        #region Input Listeners
+
+        // public delegate void PlayerMoved();
+        public static event Action OnPlayerMoved;
+        // public delegate void PlayerVaulted();
+        public static event Action OnPlayerVaulted;
+        // public delegate void PlayerJumped();
+        public static event Action OnPlayerJumped;
+
+        #endregion
 
         private void Awake()
         {
@@ -106,9 +118,13 @@ namespace GameCharacters
             if (Mathf.Approximately(direction, 0)) return; // TODO: Test if this works on controller
 
             MoveDirection = direction;
-            if (!isMoving) MoveToSpaceFromDirection(Mathf.RoundToInt(MoveDirection));
+            if (!isMoving)
+            {
+                MoveToSpaceFromDirection(Mathf.RoundToInt(MoveDirection)); 
+                // Trigger OnPlayerMoved listeners. Used for the Tutorial Section.
+                OnPlayerMoved?.Invoke();
+            }
             if (!isVaulting) return;
-            print("Yeah");
             WillMove = true;
         }
 
@@ -148,7 +164,10 @@ namespace GameCharacters
             if (_vaultHeavyAction.WasPerformedThisFrame() 
                 || 
                 _vaultLightAction.WasPerformedThisFrame()) WillJump = true;
-            if (WillJump) TriggerJump(); //TODO: Jump is still broken and won't trigger upon vaulting
+            
+            if (!WillJump) return;
+            TriggerJump(); //TODO: Jump is still broken and won't trigger upon vaulting
+
         }
         #endregion
 
@@ -156,6 +175,9 @@ namespace GameCharacters
         {
             base.OnVault();
             AudioManager.Play(Clip.Plyr_Vault);
+            
+            // Trigger OnPlayerVaulted listeners. Used for the Tutorial Section.
+            OnPlayerVaulted?.Invoke();
         }
 
         protected override void OnVaulted()
@@ -189,6 +211,9 @@ namespace GameCharacters
                 AudioManager.Play(Clip.Plyr_Jump_1); // Heavy Jump
             }
             else AudioManager.Play(Clip.Plyr_Jump_0); // Light Jump
+            
+            // Trigger OnPlayerJumped listeners. Used for the Tutorial Section.
+            OnPlayerJumped?.Invoke();
         }
 
         protected override void OnLanded()

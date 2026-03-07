@@ -1,3 +1,4 @@
+using System;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -5,6 +6,7 @@ using static Boat_Space_Manager.BoatSide;
 
 public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamageable
 {
+    #region Variables
     [Line(GUIColor.Green)]
     [Header("Boat Settings")]
     public float steerSpeed = 1;
@@ -39,6 +41,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     [Header("Spline Movement")]
     [SerializeField] private RiverSplineObject riverSplineObject;
     public RiverSplineObject RiverSplineObject => riverSplineObject;
+
+    #region Event Listeners
+    public static event Action OnBoatMoved;
+    #endregion
+    #endregion
 
     private void Awake()
     {
@@ -91,6 +98,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
 
         _moveElapsed = 0f;
         isMoving = true;
+        
+        // Trigger OnBoatMoved listeners
+        OnBoatMoved?.Invoke();
     }
     
     public void GoToLane(int lane)

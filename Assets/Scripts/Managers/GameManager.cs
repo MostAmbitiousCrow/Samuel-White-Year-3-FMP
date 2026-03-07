@@ -133,8 +133,18 @@ public class GameManager : MonoBehaviour
             
             onGameInitialised?.Invoke();
 
-            print("Game Initialised, started Game");
-            StartGame(); // Start the game upon the game being initialised.
+            // If the tutorial object exists in the scene, start the tutorial!
+            if (TutorialSectionReader.TutorialObject)
+            {
+                TutorialSectionReader.StartTutorial.Invoke();
+            }
+            // Otherwise, start the game
+            else
+            {
+                print("Game Initialised, started Game");
+                StartGame();
+            }
+
         }
 
         public Action OnGameStarted;
@@ -149,8 +159,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Started");
         }
 
-        public delegate void OnGameEnded();
-        public OnGameEnded onGameEnded;
+        public delegate void GameEnded();
+        public GameEnded OnGameEnded;
         /// <summary> Method that ends the current game session. </summary>
         public void EndGame()
         {
@@ -158,7 +168,7 @@ public class GameManager : MonoBehaviour
             _gameStarted = false;
 
             // Invoke subscribed methods
-            onGameEnded?.Invoke();
+            OnGameEnded?.Invoke();
 
             Debug.Log("Game Ended");
         }
