@@ -18,7 +18,7 @@ public class MainSceneManager : MonoBehaviour
 
     public enum GameScenes
     {
-        MainMenu = 0, MainGame = 1, DemoCompleteScreen = 3
+        MainMenu = 0, MainGame = 1, DemoCompleteScreen = 2
     }
 
     [SerializeField] GameScenes currentScene = GameScenes.MainMenu;

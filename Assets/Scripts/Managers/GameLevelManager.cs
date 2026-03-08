@@ -14,9 +14,10 @@ public class GameLevelManager : MonoBehaviour
     private void Awake()
     {
         _sectionManager = FindFirstObjectByType<Game_Section_Manager>();
-        if (_sectionManager == null) Debug.LogError("No Game Section Manager was found!");
+        if (!_sectionManager) Debug.LogError("No Game Section Manager was found!");
         
         GameManager.GameLogic.OnGameStarted += InitialiseFirstLevel;
+        LevelCount = levels.Length;
     }
 
     private void OnEnable()
@@ -56,9 +57,11 @@ public class GameLevelManager : MonoBehaviour
     /// <summary> Loads a specified level </summary>
     public void LoadLevel(int level)
     {
-        if (level < 0 || level > LevelCount) 
-        { Debug.LogWarning("Unable to load level less than 0 or greater than the current level count."); return; }
-        
+        if (level < 0) { Debug.LogWarning("Unable to load level less than 0."); return; }
+
+        // Complete the game once all levels have been completed
+        if (level > LevelCount-1) { GameManager.GameLogic.CompleteGame(); return; }
+
         // Assign the new current level ID
         CurrentLevel = level;
         
@@ -88,13 +91,16 @@ public class GameLevelManager : MonoBehaviour
     /// <summary> Loads the previous level based on the current level </summary>
     public void LoadPreviousLevel()
     {
-        LoadLevel(CurrentLevel--);
+        CurrentLevel--;
+        if (CurrentLevel < 1) {CurrentLevel = 0; return;}
+        LoadLevel(CurrentLevel);
     }
 
     /// <summary> Loads the next level based on the current level </summary>
     public void LoadNextLevel()
     {
-        LoadLevel(CurrentLevel++);
+        CurrentLevel++;
+        LoadLevel(CurrentLevel);
     }
     #endregion
 }

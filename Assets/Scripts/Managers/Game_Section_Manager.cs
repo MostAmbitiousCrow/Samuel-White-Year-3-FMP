@@ -51,6 +51,7 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
     [SerializeField] private River_Manager riverManager;
     [SerializeField] private Boat_Space_Manager boatManager;
     [SerializeField] private Boat_Controller boatController;
+    [SerializeField] private GameLevelManager gameLevelManager;
 
     public void InjectRiverManager(River_Manager manager) => riverManager = manager;
     public void InjectBoatSpaceManager(Boat_Space_Manager bsm) => boatManager = bsm;
@@ -60,9 +61,10 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
 
         private void Awake()
         {
-            if (riverManager == null) riverManager = FindFirstObjectByType<River_Manager>();
-            if (boatManager == null) boatManager = FindFirstObjectByType<Boat_Space_Manager>();
-            if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
+            if (!riverManager) riverManager = FindFirstObjectByType<River_Manager>();
+            if (!boatManager) boatManager = FindFirstObjectByType<Boat_Space_Manager>();
+            if (!boatController) boatController = FindFirstObjectByType<Boat_Controller>();
+            if (!gameLevelManager) gameLevelManager =  FindFirstObjectByType<GameLevelManager>();
             
             InitializePrefabLookup();
         }
@@ -152,7 +154,8 @@ public class Game_Section_Manager : MonoBehaviour, IAffectedByRiver, ITargetsBoa
             
             currentSectionIndex++;
         }
-
+        
+        gameLevelManager.LoadNextLevel();
         Debug.Log("All Sections Spawned and Completed.");
     }
 

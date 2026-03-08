@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.onLevelLoaded += Wait;
-        //SetEventSystem();
-        StartCoroutine(Uhh());
+        SceneManager.onLevelLoaded += SetEventSystem;
+        SetEventSystem();
+        // StartCoroutine(Uhh());
         GameLogic.InitialiseGame(); //TODO: Temp
     }
 
@@ -177,6 +177,18 @@ public class GameManager : MonoBehaviour
         {
             // TODO: Reset game content here
         }
+
+        public delegate void GameCompleted();
+        public GameCompleted OnGameCompleted;
+        /// <summary> Method to call when the game has been completed. Typically if the player has beaten all levels. </summary>
+        public void CompleteGame()
+        {
+            OnGameCompleted?.Invoke();
+            Debug.Log("Game Completed");
+            
+            // TODO: Decide on a proper game complete thing... This is just temporary for the demo
+            SceneManager.LoadScene(MainSceneManager.GameScenes.DemoCompleteScreen);
+        }
         #endregion
 
         #region Player
@@ -220,7 +232,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game Settings
-    public partial class GameUserSettings
+    public class GameUserSettings
     {
         public delegate void SettingsUpdated(GameSettings gameSettings);
         public SettingsUpdated onSettingsUpdated;
@@ -241,7 +253,7 @@ public class GameManager : MonoBehaviour
 
         if (!currentEventSystem)
         {
-            Debug.LogWarning($"Failed to set new event system");
+            Debug.LogWarning("Failed to set new event system");
         }
         else
         {
@@ -249,13 +261,13 @@ public class GameManager : MonoBehaviour
             EventSystem.current = currentEventSystem;
         }
     }
-    void Wait()
-    {
-        StartCoroutine(Uhh());
-    }
-    IEnumerator Uhh()
-    {
-        yield return new WaitForSeconds(1f);
-        SetEventSystem();
-    }
+    // void Wait()
+    // {
+    //     StartCoroutine(Uhh());
+    // }
+    // IEnumerator Uhh()
+    // {
+    //     yield return new WaitForSeconds(1f);
+    //     SetEventSystem();
+    // }
 }
