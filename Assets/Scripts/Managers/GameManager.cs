@@ -4,6 +4,7 @@ using System.Collections;
 using GameCharacters;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 /// <summary> Main source of management for the game. Always exists. </summary>
 [RequireComponent(typeof(MainSceneManager))]
@@ -18,8 +19,8 @@ public class GameManager : MonoBehaviour
 
     public static MainGameLogic GameLogic { get; private set; } = new();
 
-    public EventSystem CurrentEventSystem { get { return _currentEventSystem; } }
-    [SerializeField] EventSystem _currentEventSystem;
+    public EventSystem CurrentEventSystem => currentEventSystem;
+    [SerializeField] private EventSystem currentEventSystem;
     private void Awake()
     {
         if (Instance) 
@@ -51,8 +52,7 @@ public class GameManager : MonoBehaviour
     [Button]
     public void DEVInitialiseGame()
     {
-        if(GameLogic.GameStarted)
-        GameLogic.InitialiseGame();
+        if(GameLogic.GameStarted) GameLogic.InitialiseGame();
     }
     
     [Button]
@@ -65,16 +65,16 @@ public class GameManager : MonoBehaviour
     public class MainGameLogic
     {
         /// <summary> Checker if the game is paused </summary>
-        public bool GamePaused { get { return _gamePaused; } }
+        public bool GamePaused => _gamePaused;
         [SerializeField] bool _gamePaused;
-        public int GamePauseInt { get { return GamePaused ? 0 : 1; } }
-        
+        public int GamePauseInt => GamePaused ? 0 : 1;
+
         /// <summary> Delegate for whenever the game is paused </summary>
-        public delegate void OnGamePause();
-        public OnGamePause onGamePause;
+        public delegate void GamePause();
+        public GamePause OnGamePaused;
+        public delegate void GameResume();
         /// <summary> Delegate for whenever the game is resumed </summary>
-        public delegate void OnGameResume();
-        public OnGameResume onGameResume;
+        public GameResume OnGameResume;
 
         public void SetPauseState(bool state)
         {
@@ -84,12 +84,12 @@ public class GameManager : MonoBehaviour
             if (state)
             {
                 Time.timeScale = 0f;
-                onGamePause?.Invoke();
+                OnGamePaused?.Invoke();
             }
             else
             {
                 Time.timeScale = 1f;
-                onGameResume?.Invoke();
+                OnGameResume?.Invoke();
             }
         }
 
@@ -101,12 +101,12 @@ public class GameManager : MonoBehaviour
             if (_gamePaused)
             {
                 Time.timeScale = 0f;
-                onGamePause?.Invoke();
+                OnGamePaused?.Invoke();
             }
             else
             {
                 Time.timeScale = 1f;
-                onGameResume?.Invoke();
+                OnGameResume?.Invoke();
             }
         }
 
@@ -166,7 +166,6 @@ public class GameManager : MonoBehaviour
         {
             // Logic to end the main game after it has started
             _gameStarted = false;
-
             // Invoke subscribed methods
             OnGameEnded?.Invoke();
 
@@ -238,16 +237,16 @@ public class GameManager : MonoBehaviour
 
     public void SetEventSystem()
     {
-        _currentEventSystem = FindObjectOfType<EventSystem>();
+        currentEventSystem = FindFirstObjectByType<EventSystem>();
 
-        if (!_currentEventSystem)
+        if (!currentEventSystem)
         {
             Debug.LogWarning($"Failed to set new event system");
         }
         else
         {
-            Debug.Log($"New Event System {_currentEventSystem}");
-            EventSystem.current = _currentEventSystem;
+            Debug.Log($"New Event System {currentEventSystem}");
+            EventSystem.current = currentEventSystem;
         }
     }
     void Wait()

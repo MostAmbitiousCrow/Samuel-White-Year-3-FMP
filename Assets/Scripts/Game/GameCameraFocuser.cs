@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameCameraFocuser : MonoBehaviour
 {
-    [SerializeField] private Camera camera;
+    [SerializeField] private new Camera camera;
     
     [Header("Targets")]
     [SerializeField] private Transform playerTransform;
@@ -27,7 +27,7 @@ public class GameCameraFocuser : MonoBehaviour
     [SerializeField] private Vector2 fovSlideRange = new (60f, 120f);
 
     
-    private void Awake()
+    private void Start()
     {
         if (playerTransform == null)
         {
@@ -40,9 +40,12 @@ public class GameCameraFocuser : MonoBehaviour
             boatTransform = b.transform;
         }
         if (camera == null) camera = Camera.main;
-        
+
+        _slideValue = fovSlideRange.x;
+        UpdateFOV();
         // Store origin position
         originPosition = transform.localPosition;
+        if (camera != null) camera.fieldOfView = _targetFOV;
     }
 
     private void OnEnable()
@@ -127,8 +130,5 @@ public class GameCameraFocuser : MonoBehaviour
         
         _targetFOV = Mathf.Lerp(fovSlideRange.x, fovSlideRange.y, t);
     }
-
     #endregion
-
-
 }

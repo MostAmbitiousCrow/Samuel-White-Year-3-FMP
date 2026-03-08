@@ -25,58 +25,63 @@ public class ArtExplode : MonoBehaviour
     private void OnEnable()
     {
         if(animator) animator.enabled = true;
-        
-        // foreach (var r in art)
-        // {
-        //     r.isKinematic = true;
-        // }
-        
-        // TODO: Remove, doesn't work... Problem: Limbs won't reset at the correct position due to character rotation
-        foreach (var t in art)
+
+        for (int i = 0; i < art.Length; i++)
         {
-            t.isKinematic = true;
-            t.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            art[i].isKinematic = true;
+            art[i].transform.localPosition = artPositions[i];
+            art[i].transform.localRotation = Quaternion.identity;
         }
+
         Debug.Log($"{gameObject} Art Reset");
     }
 
     public void ExplodeArt()
     {
         if(animator) animator.enabled = false;
-        var pos = CalculateCenter();
+        // var center = CalculateCenter();
         foreach (var r in art)
         {
             r.isKinematic = false;
+            r.linearVelocity = Vector3.zero;
             r.angularVelocity = GetRandomRotation();
-            r.AddExplosionForce(force, pos, 2f, force, ForceMode.Impulse);
+        
+            r.AddExplosionForce(force, transform.position, 8f, force, ForceMode.Impulse);
         }
 
         AudioManager.PlayGroup(Group.ExplodeCombined);
         CameraShaker.Presets.Explosion3D(); // TODO: Add a preset for art explosions
+        
+        // Set timer to freeze the art so it doesn't keep falling out of the world
+        Invoke(nameof(FreezeArt), 3f);
     }
 
-    private Vector3 CalculateCenter()
+    private void FreezeArt()
     {
-        var totalX = 0f;
-        var totalY = 0f;
-        var totalZ = 0f;
-        
-        foreach (var item in art)
-        {
-            totalX += item.position.x;
-            totalY += item.position.y;
-            totalZ += item.position.z;
-        }
-        
-        var centerX = totalX / art.Length;
-        var centerY = totalY / art.Length;
-        var centerZ = totalZ / art.Length;
-        
-        var center = new Vector3(centerX, centerY, centerZ);
-        // Debug.Log($"{name} exploded artwork at: {center}");
-        
-        return  center;
+        foreach (var r in art) r.isKinematic = true;
     }
+
+    // private Vector3 CalculateCenter()
+    // {
+    //     var totalX = 0f;
+    //     var totalY = 0f;
+    //     var totalZ = 0f;
+    //     
+    //     foreach (var item in art)
+    //     {
+    //         totalX += item.position.x;
+    //         totalY += item.position.y;
+    //         totalZ += item.position.z;
+    //     }
+    //     
+    //     var centerX = totalX / art.Length;
+    //     var centerY = totalY / art.Length;
+    //     var centerZ = totalZ / art.Length;
+    //     
+    //     var center = new Vector3(centerX, centerY, centerZ);
+    //     
+    //     return  center;
+    // }
 
     private Vector3 GetRandomRotation()
     {

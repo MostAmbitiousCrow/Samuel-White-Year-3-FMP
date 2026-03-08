@@ -182,6 +182,7 @@ namespace GameCharacters
         public virtual void OnDied()
         {
             characterCollider.enabled = false;
+            rb.isKinematic = true;
             animator.SetTrigger("Died");
             TriggerHitStop(.5f);
             print($"{name} Died!");

@@ -39,26 +39,26 @@ public class Menu_Manager_Pause : Menu_Manager
 
 
         canvas.gameObject.SetActive(false);
-        GameManager.GameLogic.onGameResume += ClosePauseMenu;
-        GameManager.GameLogic.onGamePause += ShowPauseMenu;
+        GameManager.GameLogic.OnGameResume += ClosePauseMenu;
+        GameManager.GameLogic.OnGamePaused += ShowPauseMenu;
     }
 
     private void OnEnable()
     {
-        GameManager.GameLogic.onGameResume += ClosePauseMenu;
-        GameManager.GameLogic.onGamePause += ShowPauseMenu;
+        GameManager.GameLogic.OnGameResume += ClosePauseMenu;
+        GameManager.GameLogic.OnGamePaused += ShowPauseMenu;
     }
 
     private void OnDisable()
     {
-        GameManager.GameLogic.onGameResume -= ClosePauseMenu;
-        GameManager.GameLogic.onGamePause -= ShowPauseMenu;
+        GameManager.GameLogic.OnGameResume -= ClosePauseMenu;
+        GameManager.GameLogic.OnGamePaused -= ShowPauseMenu;
     }
 
     private void OnDestroy()
     {
-		GameManager.GameLogic.onGameResume -= ClosePauseMenu;
-		GameManager.GameLogic.onGamePause -= ShowPauseMenu;
+		GameManager.GameLogic.OnGameResume -= ClosePauseMenu;
+		GameManager.GameLogic.OnGamePaused -= ShowPauseMenu;
 	}
 
 #if UNITY_EDITOR

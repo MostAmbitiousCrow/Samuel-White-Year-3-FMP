@@ -2268,6 +2268,16 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3486434472546275155}
+    - target: {fileID: 6101593708383208750, guid: 56e4f0a86a3edbc4fb12c9526cd1be0a,
+        type: 3}
+      propertyPath: m_Size
+      value: 0.9974999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6101593708383208750, guid: 56e4f0a86a3edbc4fb12c9526cd1be0a,
+        type: 3}
+      propertyPath: m_Value
+      value: 1.0000407
+      objectReference: {fileID: 0}
     - target: {fileID: 7397797100803499161, guid: 56e4f0a86a3edbc4fb12c9526cd1be0a,
         type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target

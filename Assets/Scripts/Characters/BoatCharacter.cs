@@ -263,8 +263,14 @@ namespace GameCharacters
 
             // Reset Bounce Cooldown
             if (_timeSinceLastBounce - Time.time < .5f) _canBounce = true;
-
         }
+
+        protected override void FixedTimeUpdate()
+        {
+            base.FixedTimeUpdate();
+            if (!currentSpace?.t || HealthComponent.IsDead) return;
+        }
+
         #endregion
 
         #region Movement Updates

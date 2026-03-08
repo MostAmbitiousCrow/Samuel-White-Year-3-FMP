@@ -37,6 +37,8 @@ namespace GameCharacters
         public static event Action OnPlayerVaulted;
         // public delegate void PlayerJumped();
         public static event Action OnPlayerJumped;
+        
+        public static event Action OnPlayerDied;
 
         #endregion
 
@@ -239,10 +241,27 @@ namespace GameCharacters
         {
             if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnDied();
-
-            AudioManager.Play(Clip.Plyr_Died);
+            
+            TriggerHitStop(2); // TODO: Get a timed reference or something to delay the End Game Logic and the Death SFX
+            MusicManager.Instance.PauseMusic();
+            OnPlayerDied?.Invoke();
             Debug.Log("PLAYER DIED");
+                
+            // Wait for the hitstop to end to trigger the death event
+            Invoke(nameof(DeathEvent), 0.1f);
         } 
+        
+        private void DeathEvent()
+        {
+            // Explode artwork and play death sound 
+            if (TryGetComponent<ArtExplode>(out var explode)) explode.ExplodeArt();
+            AudioManager.Play(Clip.Plyr_Died);
+            
+            // End the game after dying! Wait four seconds before doing so
+            // GameManager.Instance.Invoke(nameof(GameManager.GameLogic.EndGame), 4f);
+            GameManager.GameLogic.EndGame();
+            Debug.Log("PLAYER DIED. ENDED GAME");
+        }
 
         public override void OnHealthRestored()
         {
