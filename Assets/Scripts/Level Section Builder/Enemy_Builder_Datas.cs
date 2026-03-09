@@ -32,7 +32,7 @@ public class BoatEnemy_Data
     public bool targetBoatSpaces;
     
     [Tooltip("The space on the boat to target")]
-    [ShowField(nameof(targetBoatSpaces)), Range(0, 4)] public int targetSpace;
+    [ShowField(nameof(targetBoatSpaces)), Range(0, 5)] public int targetSpace;
     
     [Tooltip("The side of the boat to target")]
     [ShowField(nameof(targetBoatSpaces)), Range(0, 1)] public int targetBoatSide;

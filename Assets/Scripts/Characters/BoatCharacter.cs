@@ -37,7 +37,7 @@ namespace GameCharacters
         
         protected float JumpTimeElapsed = 0f;
         
-        [SerializeField] private float gravity = -25f;
+        [SerializeField] protected float gravity = -25f;
 
         private float _verticalVelocity;
         private float _currentY;

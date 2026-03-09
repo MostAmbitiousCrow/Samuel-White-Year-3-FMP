@@ -126,6 +126,66 @@ PrefabInstance:
       propertyPath: enemyController
       value: 
       objectReference: {fileID: 926936195405476851}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: showEvents
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: invincibilityDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: doInvincibilityAnimation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 926936195405476851}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDied
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: tookDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 926936195405476851}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: healthRestoredEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 926936195405476851}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: tookDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnTookDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: healthRestoredEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnHealthRestored
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FreakyFrog_StateController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: tookDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FreakyFrog_StateController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: healthRestoredEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FreakyFrog_StateController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7654244735121194933, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_Name
@@ -284,21 +344,44 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  canVault: 0
-  vaultTime: 0.5
+  canVault: 1
+  vaultTime: 1
   vaultCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   isVaulting: 0
   isVaultingHeavily: 0
-  canJump: 0
+  WillMove: 0
+  MoveDirection: 0
+  WillVault: 0
+  WillJump: 0
+  canJump: 1
   jumpPower: 10
   isJumping: 0
+  gravity: -25
   isBouncing: 0
-  bouncePower: 5
+  bouncePower: 0
   currentSpace:
     t: {fileID: 0}
     spaceID: 0
@@ -307,7 +390,7 @@ MonoBehaviour:
     isOccupied: 0
   isOnBoat: 0
   canAccessOuterBoatSides: 1
-  canAccessBoatSpaces: 0
+  canAccessBoatSpaces: 1
   canInteractWithBoat: 0
   boatInteractor: {fileID: 0}
   isErupting: 0
