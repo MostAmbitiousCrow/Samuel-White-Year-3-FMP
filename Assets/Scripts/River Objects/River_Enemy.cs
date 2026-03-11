@@ -10,6 +10,12 @@ public class River_Enemy : River_Object
     
     [SerializeField] BoatEnemyStateController enemyController;
 
+    private Transform _targetSide;
+
+    [Header("Components")] 
+    [SerializeField] private GameObject art;
+    [SerializeField] private ParticleSystem emergingPs, emergedPs;
+
     public void OverrideData(BoatEnemy_Data data)
     {
         EnemyData = data;
@@ -23,28 +29,33 @@ public class River_Enemy : River_Object
     private void OnEnable()
     {
         if (!enemyController) return;
+        enemyController.SetDirection(enemyController.boatEnterData.startFacingDirection, false);
         enemyController.gameObject.SetActive(false); //TODO: Adjust this for bat enemies who will spawn with their enemy active
+        
+        // Set the target side for the Enemy Silhouette to follow
+        var space = Boat_Space_Manager.Instance.GetSideSpace
+            (enemyController.boatEnterData.targetSideSpace, enemyController.boatEnterData.targetLeftSide);
+        _targetSide = space.t;
+        
+        art.SetActive(true);
+        emergingPs.Play();
     }
 
-    protected override void FixedTimeUpdate()
+    protected override void TimeUpdate()
     {
-        base.FixedTimeUpdate();
+        base.TimeUpdate();
+
+        if (!isMoving) return;
         
-        // TODO: Detect when close to the players boat
-
-        if(isMoving) //TODO: Something to consider here
-        {
-            if (!(GetDistanceToBoat() < emergeTriggerDetectRadius)) return;
-            isMoving = false;
-            enemyController.gameObject.SetActive(true);
-            enemyController.EmergeFromRiver();
-        }
-        else
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, Boat_Space_Manager.Instance.transform.position.z);
-        }
-
-        return;
+        if (!(GetDistanceToBoat() < emergeTriggerDetectRadius)) return;
+        if (_targetSide) transform.position = _targetSide.position;
+        isMoving = false;
+        enemyController.gameObject.SetActive(true);
+        enemyController.EmergeFromRiver();
+            
+        art.SetActive(false);
+        emergingPs.Stop();
+        emergedPs.Play();
     }
 
     #region Pooling Methods
@@ -63,22 +74,3 @@ public class River_Enemy : River_Object
         Gizmos.DrawWireSphere(transform.position, emergeTriggerDetectRadius);
     }
 }
-
-///// <summary>
-///// Override data for the enemy from creating levels
-///// </summary>
-//[Serializable]
-//public class EnemyData
-//{
-//    //public float EmergeTime = 3f;
-//    public int health = 1;
-//    //public bool FollowsBoat = false;
-
-//    public int TargetSpace;
-//    public int TargetBoatSide;
-//    [Space]
-//    [Tooltip("")]
-//    public int TargetSideSpace;
-//    [Tooltip("Should the enemy target the left side space of the boat")]
-//    public bool TargetLeftSide;
-//}

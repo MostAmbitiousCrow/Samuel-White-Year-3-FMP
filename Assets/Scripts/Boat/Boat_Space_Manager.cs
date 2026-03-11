@@ -80,7 +80,6 @@ public class Boat_Space_Manager : MonoBehaviour
 
     private void OnValidate()
     {
-        Instance = this;
         SpaceCount = boatSides[0].spaceDatas.Count;
         UpdateSpaceDatas();
     }

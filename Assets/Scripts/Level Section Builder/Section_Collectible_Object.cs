@@ -15,10 +15,11 @@ public class Section_Collectible_Object : SectionBuilderObject
         public bool overrideData;
         [EditorAttributes.ShowField(nameof(overrideData))] public CollectibleData overridedData;
     }
+        /// <summary>
+        /// The data of the collectible shared with the Game_Section_Manager and Section_Builder
+        /// </summary>
     [EditorAttributes.Line(EditorAttributes.GUIColor.Yellow)]
-    /// <summary>
-    /// The data of the collectible shared with the Game_Section_Manager and Section_Builder
-    /// </summary>
+
     public SectionCollectibleData sectionData;
 
     public enum CollectibleType

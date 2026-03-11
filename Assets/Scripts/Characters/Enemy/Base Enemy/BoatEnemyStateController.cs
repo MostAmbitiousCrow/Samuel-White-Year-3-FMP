@@ -90,6 +90,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     /// <summary> Method to call upon this enemy appearing in the level. Additional data can be provided </summary>
     public virtual void InitialiseEnemy(BoatEnemy_Data data)
     {
+        ChangeState(IdleState);
         HealthComponent.RestoreHealth();
         boatEnterData = data;
 
@@ -100,6 +101,8 @@ public abstract class BoatEnemyStateController : BoatCharacter
     public virtual void ReturnToPool()
     {
         transform.parent = riverObject.transform;
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
         riverObject.ReturnToPool();
     }
 

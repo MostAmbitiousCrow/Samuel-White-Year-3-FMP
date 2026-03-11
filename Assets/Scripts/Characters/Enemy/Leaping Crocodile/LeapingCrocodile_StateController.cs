@@ -22,16 +22,6 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     public override EnemyAttackState AttackState { get; } = new LeapingCrocodile_AttackState();
     public override EnemyDefeatedState DefeatedState { get; } = new LeapingCrocodile_DefeatedState();
     #endregion
-    /// <summary>
-    /// Crocodile Data converted from the Enemy Data
-    /// </summary>
-    // public SO_EnemyData_LeapingCrocodile CrocData
-    // { get
-    //     {
-    //         var crocData = enemydata as SO_EnemyData_LeapingCrocodile;
-    //         return crocData;
-    //     }
-    // }
 
     #endregion
 
@@ -312,17 +302,5 @@ public class LeapingCrocodile_DefeatedState : EnemyDefeatedState
     {
         base.OnExit();
 
-    }
-
-    public override void OnHurt()
-    {
-        base.OnHurt();
-
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-        
     }
 }

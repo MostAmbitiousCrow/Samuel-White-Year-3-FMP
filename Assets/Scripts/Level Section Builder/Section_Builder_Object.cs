@@ -16,6 +16,8 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
 
     [Header("Debug")]
     [SerializeField] bool enableSnapping = true;
+    [SerializeField] protected Mesh debugMesh;
+    [SerializeField, Range(1f, 3f)] protected float meshScale = 1f;
 
     [Header("Data")]
     // [SerializeField] private GlobalRiverValues globalRiverValues;
@@ -36,7 +38,8 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
     protected void DrawItem(Color color, Vector3 scaleVector)
     {
         Gizmos.color = color;
-        Gizmos.DrawCube(transform.position, scaleVector);
+        if (debugMesh) Gizmos.DrawMesh(debugMesh, 0, transform.position, Quaternion.identity, scaleVector * meshScale);
+        else Gizmos.DrawCube(transform.position, scaleVector * meshScale);
     }
 
     private void SnapToLane()

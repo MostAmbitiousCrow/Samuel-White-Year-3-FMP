@@ -10194,12 +10194,17 @@ MonoBehaviour:
   startLane: 1
   height: 0
   distance: 0
+  startDistance: 0
   canMove: 0
   isMoving: 0
   explodesOnHit: 0
   artExploder: {fileID: 0}
+  riverManager: {fileID: 0}
   emergeTriggerDetectRadius: 3
   enemyController: {fileID: 0}
+  art: {fileID: 2692541710156837902}
+  emergingPs: {fileID: 7952210964842787617}
+  emergedPs: {fileID: 289545105970184909}
 --- !u!1 &7876201890639153814
 GameObject:
   m_ObjectHideFlags: 0

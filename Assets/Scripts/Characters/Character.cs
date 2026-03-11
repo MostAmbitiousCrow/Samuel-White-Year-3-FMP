@@ -188,7 +188,7 @@ namespace GameCharacters
             rb.isKinematic = true;
             animator.SetTrigger("Died");
             TriggerHitStop(.5f);
-            print($"{name} Died!");
+            print($"{name} Died!. Collider is {characterCollider.enabled}");
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace GameCharacters
         /// </summary>
         public virtual void OnHealthRestored()
         {
-            characterCollider.enabled = true;
+            
         }
         #endregion
 
