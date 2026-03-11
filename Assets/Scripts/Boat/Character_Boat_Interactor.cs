@@ -15,7 +15,7 @@ public class Character_Boat_Interactor : MonoBehaviour
     {
         if (boatController == null)
         {
-            boatController = FindObjectOfType<Boat_Controller>();
+            boatController = FindFirstObjectByType<Boat_Controller>();
             Debug.LogWarning($"{name} was missing {boatController}, located and injected");
         }
     }

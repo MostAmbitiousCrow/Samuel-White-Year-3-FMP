@@ -48,11 +48,11 @@ MonoBehaviour:
   distance: 0
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0
-    overridedData:
+    overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
       pipeConnection: 1
@@ -126,6 +126,8 @@ MonoBehaviour:
     - {fileID: 4317962581328293579}
     GemstoneGateDatas:
     - {fileID: 6661693478039078179}
+  pathName: Assets/Scriptable Objects/Level Data/
+  assetName: Level Section Data
   enableDebug: 1
 --- !u!1 &2888650534647860149
 GameObject:
@@ -175,11 +177,11 @@ MonoBehaviour:
   distance: 0
   height: 3
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 2
     overrideData: 0
-    overridedData:
+    overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
       pipeConnection: 3
@@ -233,7 +235,7 @@ MonoBehaviour:
   distance: 20
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     overrideData: 1
     overridedData:
@@ -286,7 +288,7 @@ MonoBehaviour:
   distance: 5
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     collectibleType: 0
     overrideData: 0
@@ -340,11 +342,11 @@ MonoBehaviour:
   distance: 25
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0
-    overridedData:
+    overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
       pipeConnection: 1
@@ -398,11 +400,11 @@ MonoBehaviour:
   distance: 0
   height: 5
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 2
     overrideData: 0
-    overridedData:
+    overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
       pipeConnection: 0
@@ -456,7 +458,7 @@ MonoBehaviour:
   distance: 10
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     enemyType: 0
     silhouetteAlwaysVisible: 1
@@ -518,11 +520,11 @@ MonoBehaviour:
   distance: 10
   height: 0
   enableSnapping: 1
-  _globalRiverValues: {fileID: 0}
+  riverManager: {fileID: 0}
   sectionData:
     obstacleType: 0
     overrideData: 0
-    overridedData:
+    overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
       pipeConnection: 1

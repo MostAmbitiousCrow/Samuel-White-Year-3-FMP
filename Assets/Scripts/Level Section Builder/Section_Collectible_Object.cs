@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Section Object derived class that shares overrided stats based on Obstacle objects
 /// </summary>
-public class Section_Collectible_Object : Section_Builder_Object
+public class Section_Collectible_Object : SectionBuilderObject
 {
     
     [System.Serializable]
@@ -26,7 +26,7 @@ public class Section_Collectible_Object : Section_Builder_Object
         Gemstone, GemstoneFragment
     }
 
-    public override void Register(Section_Content section)
+    public override void Register(SectionContentBuilder section)
     {
         section.sectionData.CollectibleDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);

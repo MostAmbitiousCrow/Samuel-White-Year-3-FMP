@@ -1,6 +1,5 @@
 using EditorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Base class of all Objects that will interact with the Sewer River
@@ -45,6 +44,12 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     [SerializeField, ShowField(nameof(explodesOnHit))] protected ArtExplode artExploder;
     [Space]
     [SerializeField] protected River_Manager riverManager;
+
+    #region Injection
+
+    public void InjectRiverManager(River_Manager rm) => riverManager = rm;
+
+    #endregion
 
     #region Space Movement Logic
 
@@ -140,10 +145,9 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         ObjectPoolManager.Instance.ReturnToPool(PoolObjectID, gameObject);
     }
 
-    public virtual void OnSpawn()
+    public virtual void OnSpawned()
     {
         isMoving = true;
-        return;
     }
 
     #endregion

@@ -35,7 +35,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     private int _direction = 0;
 
     [Header("Roll Settings")] 
-    [SerializeField] private float rollAmount = 7.5f;
+    [SerializeField] private float rollAmount = 15f;
     [SerializeField] private AnimationCurve rollCurve;
     
     [Header("Spline Movement")]
@@ -67,19 +67,12 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
 
         _direction = Mathf.RoundToInt(Mathf.Sign(localPos.x));
 
-        if (_direction != 0)
-        {
-            MoveToLane(_direction);
-        }
+        if (_direction == 0) return;
         
-        // float steerDirection = Mathf.Sign(localPos.x);
-        //
-        // if (Mathf.Abs(steerDirection) > 0.01f)
-        // {
-        //     MoveToLane((int)steerDirection);
-        // }
-
-        Debug.Log("Boat was steered!");
+        MoveToLane(_direction);
+        // Trigger OnBoatMoved listeners
+        OnBoatMoved?.Invoke();
+        // Debug.Log("Boat was steered!");
     }
 
     public void MoveToLane(int direction)
@@ -98,9 +91,6 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
 
         _moveElapsed = 0f;
         isMoving = true;
-        
-        // Trigger OnBoatMoved listeners
-        OnBoatMoved?.Invoke();
     }
     
     public void GoToLane(int lane)
@@ -137,9 +127,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         float rollT = rollCurve.Evaluate(_moveElapsed);
         // Roll the boat!
         float roll = _direction > 0? 
-            Mathf.Lerp(-15f, 0f, rollT) // Roll Left
+            Mathf.Lerp(-rollAmount, 0f, rollT) // Roll Left
             : 
-            Mathf.Lerp(15f, 0f, rollT); // Roll Right
+            Mathf.Lerp(rollAmount, 0f, rollT); // Roll Right
         transform.localRotation = Quaternion.Euler(0f, 0f, roll);
 
         // Set the boat to its move target once travel time has ended

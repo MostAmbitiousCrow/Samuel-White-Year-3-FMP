@@ -50,7 +50,7 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
     private void Awake()
     {
         if (!_audio) _audio = GetComponent<AudioSource>();
-        if (!_riverManager) _riverManager = FindObjectOfType<River_Manager>();
+        if (!_riverManager) _riverManager = FindFirstObjectByType<River_Manager>();
         //GameManager.GameLogic.onGameStarted += StartProgressing;
         //_riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
     }

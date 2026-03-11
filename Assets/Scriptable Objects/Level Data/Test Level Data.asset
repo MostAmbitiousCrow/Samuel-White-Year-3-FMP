@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c5eceaf2b4044e7bc5cee01dfefa3e, type: 3}
+  m_Name: Test Level Data
+  m_EditorClassIdentifier: 
+  levelName: A Level
+  levelColours: {fileID: 0}
+  levelSpline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  sectionData:
+  - {fileID: 11400000, guid: 3bc6c16bb1c504237aeb1d619b46caa2, type: 2}
+  - {fileID: 11400000, guid: f953933a1485e4448b5ae95972eeabf1, type: 2}

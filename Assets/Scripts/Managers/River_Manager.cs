@@ -48,8 +48,6 @@ public class River_Manager : MonoBehaviour
     [Header("River Lanes Info")]
     [SerializeField]
     private Transform lanesParent;
-    [SerializeField] private GlobalRiverValues globalRiverValues;
-    public GlobalRiverValues  GlobalRiverValues => globalRiverValues;
 
     [Serializable]
     public class RiverLane
@@ -265,9 +263,9 @@ public class River_Manager : MonoBehaviour
 
     private void OnValidate()
     {
-        if (RiverLanes == null || globalRiverValues == null || worldSplineContainer == null)
+        if (RiverLanes == null  || worldSplineContainer == null)
         {
-            Debug.LogWarning("Missing Global River Values, River Lanes or Spline Container");
+            Debug.LogWarning($"Missing River Lanes {RiverLanes} or Spline Container {worldSplineContainer}");
             return;
         }
 
@@ -285,7 +283,7 @@ public class River_Manager : MonoBehaviour
 
             var rot = Quaternion.LookRotation(splineTangent, splineUp);
 
-            var pos = (item.transform.right * i) * globalRiverValues.riverLaneDistance + new Vector3(splinePos.x, splinePos.y, splinePos.z);
+            var pos = (item.transform.right * i) * GlobalRiverValues.RiverLaneDistance + new Vector3(splinePos.x, splinePos.y, splinePos.z);
 
             item.transform.SetPositionAndRotation(pos, rot);
             i++;
@@ -392,7 +390,7 @@ public class River_Manager : MonoBehaviour
 
             wrappedDistance -= _splineLengths[i];
         }
-
+        
         // Convert distance to normalized t
         float t = SplineUtility.GetNormalizedInterpolation(
             worldSplineContainer.Splines[splineIndex],
@@ -409,12 +407,15 @@ public class River_Manager : MonoBehaviour
 
         // lane offset
         Vector3 right = Vector3.Cross(up, tangent).normalized;
-        Vector3 laneOffset = right * ((lane - 1) * globalRiverValues.riverLaneDistance);
-
+        Vector3 laneOffset = right * ((lane - 1) * GlobalRiverValues.RiverLaneDistance);
+        
+        // Prevent Look Rotation being zero (causing debug logs...)
+        Vector3 forward = tangent;
+        if (forward.sqrMagnitude < 0.1f)
+            forward = Vector3.forward;
+        
         newPosition = (Vector3)pos + laneOffset;
-        newRotation = Quaternion.LookRotation(tangent, up);
+        newRotation = Quaternion.LookRotation(forward, up);
     }
-
-
     #endregion
 }

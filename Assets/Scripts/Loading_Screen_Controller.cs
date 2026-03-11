@@ -49,6 +49,7 @@ public class Loading_Screen_Controller : MonoBehaviour
     #region Loading
     public void StartLoadingScreen()
     {
+        if (IsTransitioning) return;
         IsTransitioning = true;
         _transitionScreen.SetActive(true);
         UpdateLoadingMeter(0f);
@@ -88,9 +89,8 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         UpdateLoadingMeter(0f);
         _loadingMeterGroup.alpha = 1f;
-
+        
         IsTransitioning = false;
-        yield break;
     }
 
     IEnumerator CloseLoadingScreenProcess()

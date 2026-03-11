@@ -13,7 +13,7 @@ public class Gemstone_Gate : River_Object
 
     [Header("Stats")]
     [Tooltip("The distance of the gate to the players boat until the gate begins consuming the players gemstones")]
-    [SerializeField] float _distanceUntilConsumption = 10f;
+    [SerializeField] private float _distanceUntilConsumption = 10f;
     [Space(10)]
     [SerializeField] float _explodeDelay = .45f;
     [SerializeField] float _explodeForce = 1f;
@@ -63,15 +63,16 @@ public class Gemstone_Gate : River_Object
     {
         base.FixedTimeUpdate();
         if (_isConsuming || !canMove) return; // || SpaceManager == null
-        if (Boat_Space_Manager.Instance.GetDistanceToBoat(distance) < _distanceUntilConsumption)
+        // if (Boat_Space_Manager.Instance.GetDistanceToBoat(distance) < _distanceUntilConsumption)
+        if (Vector3.Distance(transform.position, Boat_Space_Manager.Instance.transform.position) < _distanceUntilConsumption) // TODO: Cleanup
         {
             StartCoroutine(ConsumeGemstones());
         }
     }
 
-    public override void OnSpawn()
+    public override void OnSpawned()
     {
-        base.OnSpawn();
+        base.OnSpawned();
         isMoving = true;
         _isConsuming = false;
 
@@ -241,6 +242,12 @@ public class Gemstone_Gate : River_Object
         GameManager.GameLogic.EndGame();
     }
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, _distanceUntilConsumption);
+    }
 }
 
 [Serializable]

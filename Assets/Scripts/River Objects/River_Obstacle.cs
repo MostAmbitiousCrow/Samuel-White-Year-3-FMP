@@ -43,9 +43,9 @@ public class River_Obstacle : River_Object
 
     #region Pooling Methods
 
-    public override void OnSpawn()
+    public override void OnSpawned()
     {
-        base.OnSpawn();
+        base.OnSpawned();
         IsHit = false;
     }
 

@@ -4,7 +4,7 @@ using EditorAttributes;
 /// <summary>
 /// Section Object derived class that shares overrided stats based on Enemy objects
 /// </summary>
-public class Section_Enemy_Object : Section_Builder_Object
+public class Section_Enemy_Object : SectionBuilderObject
 {
     [System.Serializable]
     public class SectionEnemyData
@@ -28,7 +28,7 @@ public class Section_Enemy_Object : Section_Builder_Object
         Crocodile, Frog, Bat, Tentacle
     }
 
-    public override void Register(Section_Content section)
+    public override void Register(SectionContentBuilder section)
     {
         section.sectionData.EnemyDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);

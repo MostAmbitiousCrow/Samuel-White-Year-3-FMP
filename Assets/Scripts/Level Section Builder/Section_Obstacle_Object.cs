@@ -1,10 +1,11 @@
 using UnityEngine;
 using EditorAttributes;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Section Object derived class that shares overrided stats based on Obstacle objects
 /// </summary>
-public class Section_Obstacle_Object : Section_Builder_Object
+public class Section_Obstacle_Object : SectionBuilderObject
 {
     [System.Serializable]
     public class SectionObstacleData
@@ -14,16 +15,15 @@ public class Section_Obstacle_Object : Section_Builder_Object
         // Override Stats?
         public bool overrideData;
 
-        [ShowField(nameof(overrideData))] public ObstacleData overridedData = new();
+        [FormerlySerializedAs("overridedData")] 
+        [ShowField(nameof(overrideData))] public ObstacleData overriddenData = new();
 
         // Pipe Data
         [ShowField(nameof(obstacleType), ObstacleType.SewerPipe)] public Pipe_Obstacle_Data pipeObstacleData = new();
     }
 
+    /// <summary> The data of the obstacle shared with the Game_Section_Manager and Section_Builder </summary>
     [Line(GUIColor.Cyan)]
-    /// <summary>
-    /// The data of the obstacle shared with the Game_Section_Manager and Section_Builder
-    /// </summary>
     public SectionObstacleData sectionData;
 
     public enum ObstacleType
@@ -31,7 +31,7 @@ public class Section_Obstacle_Object : Section_Builder_Object
         TrashPile, WideTrashPile, SewerPipe
     }
 
-    public override void Register(Section_Content section)
+    public override void Register(SectionContentBuilder section)
     {
         section.sectionData.ObstacleDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);

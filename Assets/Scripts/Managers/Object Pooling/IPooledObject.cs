@@ -9,5 +9,5 @@ public interface IPooledObject
     public void ReturnToPool();
 
     /// <summary> Method called whenever this object is spawned </summary>
-    public void OnSpawn();
+    public void OnSpawned();
 }

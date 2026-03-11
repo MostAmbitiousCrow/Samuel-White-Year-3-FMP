@@ -88,7 +88,7 @@ public class TutorialSectionReader : MonoBehaviour
         if (prevCondition || id == 0)
         {
             if (tutorialContents[id].UpdateContentCheckState()) _conditions[id] = true;
-            print ($"Action {id}: {_conditions[id]}");
+            // print ($"Action {id}: {_conditions[id]}");
         }
     }
     #endregion
@@ -133,15 +133,14 @@ public class TutorialSectionReader : MonoBehaviour
         
         // Destroy the tutorial section
         Destroy(gameObject);
-        yield break;
-
-        void OnTutorialCompleted()
-        {
-            TutorialComplete = true;
+    }
+    
+    private void OnTutorialCompleted()
+    {
+        TutorialComplete = true;
+        Debug.Log("Tutorial Completed");
         
-            // Start the game once the tutorial has been completed
-            GameManager.GameLogic.StartGame();
-            Debug.Log("Tutorial Completed");
-        }
+        // Start the game once the tutorial has been completed
+        GameManager.GameLogic.StartGame();
     }
 }

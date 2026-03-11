@@ -55,7 +55,7 @@ public class Menu_Manager_Main : Menu_Manager
         ToggleInput(false);
 
         // Load the main game scene or trigger your scene load transition here
-        EventSystem.current.enabled = false;
+        GameManager.Instance.CurrentEventSystem.enabled = false;
         GameManager.SceneManager.LoadScene(MainSceneManager.GameScenes.MainGame);
     }
     #endregion

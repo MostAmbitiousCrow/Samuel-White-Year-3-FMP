@@ -8,15 +8,16 @@ using UnityEngine;
  */
 public class GameLevelManager : MonoBehaviour
 {
-    private Game_Section_Manager _sectionManager;
+    // Previously the GameSectionManager
+    private LevelSectionManager _sectionManager;
     
     #region Initialisation
     private void Awake()
     {
-        _sectionManager = FindFirstObjectByType<Game_Section_Manager>();
+        _sectionManager = FindFirstObjectByType<LevelSectionManager>();
         if (!_sectionManager) Debug.LogError("No Game Section Manager was found!");
         
-        GameManager.GameLogic.OnGameStarted += InitialiseFirstLevel;
+        // GameManager.GameLogic.OnGameStarted += InitialiseFirstLevel;
         LevelCount = levels.Length;
     }
 
@@ -37,20 +38,23 @@ public class GameLevelManager : MonoBehaviour
     /// <summary> The current active level </summary>
     public int CurrentLevel { get; private set; }
 
-    [SerializeField] private LevelData currentLevelInstance;
     /// <summary> The count of the amount of levels that exist </summary>
     public int LevelCount { get; private set; }
     
     [SerializeField] private SO_LevelData[] levels;
-    public  SO_LevelData[] Levels => levels;
+    public SO_LevelData[] Levels => levels;
 
     // Events
     public delegate void LevelLoaded();
     public static LevelLoaded OnLevelLoaded;
 
+    // TODO: Temporary until I find out what's triggering the InitialiseFirstLevel method on Game Started
+    private bool _levelInitialised;
     private void InitialiseFirstLevel()
     {
+        if (_levelInitialised) return;
         LoadLevel(0);
+        _levelInitialised = true;
         Debug.Log("First Level Loaded");
     }
 
@@ -64,28 +68,11 @@ public class GameLevelManager : MonoBehaviour
 
         // Assign the new current level ID
         CurrentLevel = level;
-        
-        // Assign the Section Manager it's new level data
-        InstantiateLevel(levels[CurrentLevel], out var levelData);
-        currentLevelInstance =  levelData;
-        _sectionManager.AssignNewLevelData(currentLevelInstance);
+
+        _sectionManager.AssignNewLevelData(levels[level]);
         OnLevelLoaded?.Invoke();
         
-        Debug.Log($"Loaded Level {currentLevelInstance.name}");
-    }
-
-    private void InstantiateLevel(SO_LevelData soLevelData,out LevelData levelData)
-    {
-        if (currentLevelInstance != null) UnloadCurrentLevel();
-
-        var instance = Instantiate(soLevelData.sectionDataObject);
-        levelData = instance.GetComponent<LevelData>();
-    }
-
-    public void UnloadCurrentLevel()
-    {
-        Debug.Log($"Unloading current level: {currentLevelInstance.name}");
-       Destroy(currentLevelInstance.gameObject);
+        Debug.Log($"Loaded Level '{levels[level].levelName}'");
     }
     
     /// <summary> Loads the previous level based on the current level </summary>

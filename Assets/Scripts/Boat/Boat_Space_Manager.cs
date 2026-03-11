@@ -32,9 +32,6 @@ public class Boat_Space_Manager : MonoBehaviour
     }
     public List<BoatSide> boatSides = new();
     public int SpaceCount { get; private set; }
-    
-    [Header("Data")]
-    [SerializeField] private GlobalRiverValues globalRiverValues;
 
     [Button]
     public void UpdateSpaceDatas()
@@ -73,31 +70,19 @@ public class Boat_Space_Manager : MonoBehaviour
             boatSides.Add(bs);
         }
     }
-
-    #region Injection
-    //[Button]
-    //public void GetAndInjectBoatAffectedObjects()
-    //{
-    //    boatSpaceObjects = new List<IBoatSpaceMovement>(FindObjectsOfType<MonoBehaviour>().OfType<IBoatSpaceMovement>());
-    //    foreach (var item in boatSpaceObjects)
-    //    {
-    //        item.InjectBoatSpaceManager(this);
-    //    }
-    //    print($"Injected {this} into {boatSpaceObjects.Count} objects");
-    //}
-    #endregion
-
+    
     private void Awake()
     {
-        //GetAndInjectBoatAffectedObjects();
         Instance = this;
         SpaceCount = boatSides[0].spaceDatas.Count;
+        UpdateSpaceDatas();
     }
 
     private void OnValidate()
     {
         Instance = this;
         SpaceCount = boatSides[0].spaceDatas.Count;
+        UpdateSpaceDatas();
     }
 
     #region Lane and Space Checks
@@ -155,8 +140,7 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public BoatSide.SpaceData GetSideSpace(int side, bool getLeftSide)
     {
-        if (getLeftSide) return boatSides[side].spaceDatas.First();
-        else return boatSides[side].spaceDatas.Last();
+        return getLeftSide ? boatSides[side].spaceDatas.First() : boatSides[side].spaceDatas.Last();
     }
 
     /// <summary>
@@ -224,9 +208,9 @@ public class Boat_Space_Manager : MonoBehaviour
     // Adjust the side spaces of the boat to match the global River Boat Side Space Distance
     private void OnDrawGizmos()
     {
-        if (boatSides == null || globalRiverValues == null)
+        if (boatSides == null)
         {
-            Debug.LogWarning("Missing Global River Values or Boat Sides");
+            Debug.LogWarning("Missing Boat Sides");
             return;
         }
         if (Application.isPlaying) return;
@@ -239,7 +223,7 @@ public class Boat_Space_Manager : MonoBehaviour
             
             // Boat Spaces (not including first and last)
             int boatSpaceCount = bs.spaceDatas.Count - 2;
-            float spacing = globalRiverValues.boatSpaceDistance;
+            float spacing = GlobalRiverValues.BoatSpaceDistance;
 
             // float distance = i * 2f;
 
@@ -261,7 +245,7 @@ public class Boat_Space_Manager : MonoBehaviour
             }
 
             // Side Spaces
-            float sideOffset = globalRiverValues.boatSideSpaceDistance;
+            float sideOffset = GlobalRiverValues.BoatSideSpaceDistance;
 
             Transform first = bs.spaceDatas.First().t;
             first.localPosition = new Vector3(sideOffset, 0, bs.spaceDatas[^1].t.localPosition.z);

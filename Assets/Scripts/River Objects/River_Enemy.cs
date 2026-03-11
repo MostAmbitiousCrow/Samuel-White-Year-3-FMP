@@ -10,11 +10,11 @@ public class River_Enemy : River_Object
     
     [SerializeField] BoatEnemyStateController enemyController;
 
-    public void OverrideStats(BoatEnemy_Data overrideStats)
+    public void OverrideData(BoatEnemy_Data data)
     {
-        EnemyData = overrideStats;
+        EnemyData = data;
 
-        enemyController.InitialiseEnemy(overrideStats);
+        enemyController.InitialiseEnemy(data);
 
         // TODO Override Health!
         print($"{name} stats were overrided");
@@ -49,10 +49,9 @@ public class River_Enemy : River_Object
 
     #region Pooling Methods
 
-    public override void OnSpawn()
+    public override void OnSpawned()
     {
-        base.OnSpawn();
-        return;
+        base.OnSpawned();
     }
 
     #endregion

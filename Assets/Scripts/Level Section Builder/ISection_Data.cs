@@ -1,4 +1,4 @@
-public interface ISection_Data
+public interface ISectionData
 {
     public int Lane { get; set; }
     public int Distance { get; set; }

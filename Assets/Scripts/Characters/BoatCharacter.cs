@@ -23,10 +23,10 @@ namespace GameCharacters
         [ReadOnly, ShowField(nameof(canVault))] public bool isVaultingHeavily;
 
         [Header("Coyote Inputs")]
-        [SerializeField] protected bool WillMove = false;
-        [SerializeField] protected int MoveDirection;
-        [SerializeField] protected bool WillVault = false;
-        [SerializeField] protected bool WillJump = false;
+        protected bool WillMove = false;
+        protected new int MoveDirection;
+        protected bool WillVault = false;
+        protected bool WillJump = false;
 
         protected float VaultTimeElapsed = 0f;
 
@@ -341,7 +341,7 @@ namespace GameCharacters
 
             // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
             var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true, true);
+                (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true);
             if (bc)
             {
                 VaultToSide(newSpace, isHeavy, bc); // TODO: Modify to scan for damageable characters with the Character component
@@ -517,7 +517,7 @@ protected virtual void VaultMovement()
             {
                 isVaultingHeavily = false;
                 boatInteractor.ImpactBoat(TargetedSpace);
-                print("Grounded, Impacted Boat");
+                // print("Grounded, Impacted Boat");
             }
             
             OnLanded();

@@ -133,8 +133,8 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
         // Select the opening screen
         currentScreen = openingScreen;
 
-        if (ClosingScreen.UseExitButton) EventSystem.current.SetSelectedGameObject(ClosingScreen.ExitButton.gameObject);
-        else EventSystem.current.SetSelectedGameObject(OpeningScreen.EnterButton.gameObject);
+        if (ClosingScreen.UseExitButton) GameManager.Instance.CurrentEventSystem.SetSelectedGameObject(ClosingScreen.ExitButton.gameObject);
+        else GameManager.Instance.CurrentEventSystem.SetSelectedGameObject(OpeningScreen.EnterButton.gameObject);
     }
 
     protected void ScreenOpened(int screen)
@@ -158,13 +158,9 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
     {
         //if(GameManager.Instance.CurrentEventSystem)
         //    GameManager.Instance.CurrentEventSystem.enabled = state;
-        return; // TODO: Find another way to disable button input without disabling the component.
-        if (EventSystem.current)
-            EventSystem.current.enabled = state;
-        else
-        {
-            Debug.LogWarning($"Event System is missing");
-        }
+        // return; // TODO: Find another way to disable button input without disabling the component.
+        if (GameManager.Instance.CurrentEventSystem) GameManager.Instance.CurrentEventSystem.enabled = state;
+        else Debug.LogWarning($"Event System is missing");
     }
     #endregion
 

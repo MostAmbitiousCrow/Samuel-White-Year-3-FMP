@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using EditorAttributes;
@@ -106,6 +107,7 @@ namespace GameCharacters
                 {
                     MoveDirection.Left => 180f,
                     MoveDirection.Right => 0f,
+                    _ => throw new ArgumentOutOfRangeException()
                 };
             
                 currentDirection = direction;
@@ -115,6 +117,7 @@ namespace GameCharacters
                 {
                     MoveDirection.Left => 180f,
                     MoveDirection.Right => 0f,
+                    _ => throw new ArgumentOutOfRangeException()
                 };
                 
                 transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);

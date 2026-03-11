@@ -1,9 +1,7 @@
-using System;
 using EditorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
+public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
 {
     [Title("River Object for Building Objects for Level Sections", 11)]
     [Line(GUIColor.White, alpha: 1, lineThickness: 10)]
@@ -11,7 +9,7 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
     [Range(0, 100), SerializeField] int distance;
     [Range(0, 5), SerializeField] int height;
 
-    // ISection_Object Variables
+    // ISectionData Variables
     public int Lane { get => lane; set => lane = value; }
     public int Distance { get => distance; set => distance = value; }
     public int Height { get => height; set => height = value; }
@@ -20,7 +18,7 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
     [SerializeField] bool enableSnapping = true;
 
     [Header("Data")]
-    [SerializeField] private GlobalRiverValues globalRiverValues;
+    // [SerializeField] private GlobalRiverValues globalRiverValues;
 
     [SerializeField] private River_Manager riverManager;
 
@@ -30,10 +28,9 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
         AdditionalDebug();
     }
 
-    public void InjectRiverManager(GlobalRiverValues globalRiverValues, River_Manager riverManager)
+    public void InjectRiverManager(River_Manager rm)
     {
-        this.globalRiverValues = globalRiverValues;
-        this.riverManager = riverManager;
+        riverManager = rm;
     }
 
     protected void DrawItem(Color color, Vector3 scaleVector)
@@ -44,14 +41,16 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
 
     private void SnapToLane()
     {
-        if (!enableSnapping || globalRiverValues == null || riverManager == null) return;
-        // transform.position = new((Lane - 1) * globalRiverValues.riverLaneDistance, Height, Distance);
+        if (!enableSnapping)
+        {
+            return;
+        }
 
         riverManager.AssignToCurveSection(Distance, lane, out Vector3 pos, out Quaternion rot);
 
-        pos += (transform.right * (lane - 1)) * globalRiverValues.riverLaneDistance; //TODO: Assign this to AssignToCurveSection
+        pos += (transform.right * (lane - 1)) * GlobalRiverValues.RiverLaneDistance; //TODO: Assign this to AssignToCurveSection
         pos += Vector3.up * height;
-        transform.SetPositionAndRotation(pos, rot);
+        transform.SetLocalPositionAndRotation(pos, rot);
     }
 
     private void CurveOffset()
@@ -63,9 +62,9 @@ public abstract class Section_Builder_Object : MonoBehaviour, ISection_Data
     /// Called to retrieve or assign object data from the provided Section_Content.
     /// Override this method in derived classes to implement custom data handling logic.
     /// </summary>
-    /// <param name = "sc" > The Section_Content containing relevant data for this object.</param>
+    /// <param name = "section" > The Section_Content containing relevant data for this object.</param>
 
-    public abstract void Register(Section_Content section);
+    public abstract void Register(SectionContentBuilder section);
 
     protected abstract void AdditionalDebug();
     protected abstract void AdditionalDebugSelected();

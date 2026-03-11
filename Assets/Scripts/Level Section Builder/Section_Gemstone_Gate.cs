@@ -4,7 +4,7 @@ using EditorAttributes;
 /// <summary>
 /// Section Object derived class that shares overrided stats based on the Gemstone Gates
 /// </summary>
-public class Section_Gemstone_Gate : Section_Builder_Object
+public class Section_Gemstone_Gate : SectionBuilderObject
 {
     [System.Serializable]
     public class SectionGemstoneGateData
@@ -20,7 +20,7 @@ public class Section_Gemstone_Gate : Section_Builder_Object
     public SectionGemstoneGateData sectionData;
 
 
-    public override void Register(Section_Content section)
+    public override void Register(SectionContentBuilder section)
     {
         section.sectionData.GemstoneGateDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);
