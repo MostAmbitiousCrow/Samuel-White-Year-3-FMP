@@ -45,6 +45,16 @@ public abstract class BoatEnemyStateController : BoatCharacter
 
     #region States
     
+    private void Awake()
+    {
+        IdleState.Sc = this;
+        EmergeState.Sc = this;
+        MovingState.Sc = this;
+        AttackState.Sc = this;
+        DefeatedState.Sc = this;
+        ChangeState(IdleState);
+    }
+    
     protected IState CurrentState { get; private set; }
     protected IState StoredState { get; private set; }
     
@@ -90,9 +100,9 @@ public abstract class BoatEnemyStateController : BoatCharacter
     /// <summary> Method to call upon this enemy appearing in the level. Additional data can be provided </summary>
     public virtual void InitialiseEnemy(BoatEnemy_Data data)
     {
-        ChangeState(IdleState);
-        HealthComponent.RestoreHealth();
         boatEnterData = data;
+        HealthComponent.RestoreHealth();
+        ChangeState(IdleState);
 
         // TODO: Add any additional initialisation processes here. Likely after enemy pooling
     }

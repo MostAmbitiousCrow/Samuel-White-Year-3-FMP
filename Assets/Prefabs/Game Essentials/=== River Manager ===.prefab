@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 679949625211596971}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.018959355, z: -0, w: 0.9998203}
-  m_LocalPosition: {x: 10.248094, y: 0, z: -1.0706336}
+  m_LocalPosition: {x: 9.948093, y: 0, z: -0.7706337}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -187,12 +187,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldSplineContainer: {fileID: 0}
   boatController: {fileID: 0}
-  minMaxSpeed: {x: 0, y: 50}
-  startingRiverSpeed: 50
+  riverFlowSpeed: 0
+  minMaxSpeed: {x: 10, y: 50}
+  startingRiverSpeed: 10
   currentRiverSpeed: 5
   riverObjectSpawnDistance: 100
   lanesParent: {fileID: 3663419595711803000}
-  globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   RiverLanes:
   - ID: 0
     transform: {fileID: 4854008090063710238}
@@ -308,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 5843774783822772629}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.018959355, z: -0, w: 0.9998203}
-  m_LocalPosition: {x: -6.739686, y: 0, z: -0.42613146}
+  m_LocalPosition: {x: -7.039686, y: 0, z: -0.12613145}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -556,7 +556,7 @@ Transform:
   m_GameObject: {fileID: 8516603998519940876}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.018959355, z: -0, w: 0.9998203}
-  m_LocalPosition: {x: 1.7542038, y: 0, z: -0.74838257}
+  m_LocalPosition: {x: 1.4542038, y: 0, z: -0.44838256}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

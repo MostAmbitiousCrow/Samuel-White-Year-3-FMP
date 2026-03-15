@@ -196,7 +196,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             };
             var enm = ObjectPoolManager.Instance.Spawn<River_Enemy>(id);
             // Override Data
-            if (item.data.overrideData) enm.OverrideData(item.data.overridedData);
+            enm.OverrideData(item.data.overridedData);
             PlaceSectionObject(enm, item.lane, item.distance, item.height);
         }
     }
@@ -233,7 +233,6 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         Debug.Log($"Placing Object: {ro.name}. Lane = {lane}, Distance = {distance}, Height = {height}");
         ro.InjectRiverManager(riverManager);
         ro.canMove = true;
-        ro.isMoving = true;
 
         float spawnDist = distance;
         

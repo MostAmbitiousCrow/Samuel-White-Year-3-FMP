@@ -29,7 +29,7 @@ public class Section_Collectible_Object : SectionBuilderObject
 
     public override void Register(SectionContentBuilder section)
     {
-        section.sectionData.CollectibleDatas.Add(this);
+        section.sectionData.collectibleDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);
     }
 

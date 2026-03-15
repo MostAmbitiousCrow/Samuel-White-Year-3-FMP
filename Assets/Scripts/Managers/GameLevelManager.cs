@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 /*
@@ -69,7 +67,13 @@ public class GameLevelManager : MonoBehaviour
         // Assign the new current level ID
         CurrentLevel = level;
 
+        // Assign the new level data to the section manager
         _sectionManager.AssignNewLevelData(levels[level]);
+        
+        // Update the world Spline 
+        var spline = levels[level].levelSpline;
+        if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
+        
         OnLevelLoaded?.Invoke();
         
         Debug.Log($"Loaded Level '{levels[level].levelName}'");

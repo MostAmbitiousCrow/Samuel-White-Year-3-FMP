@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using EditorAttributes;
 using UnityEditor;
+using UnityEngine.Serialization;
+using UnityEngine.Splines;
 
 /// <summary> Class used for the level builder tool to generate Sections stored in the Level Data Scriptable Objects </summary>
 public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
@@ -20,27 +22,28 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         public int ObjectCount => SectionBuilderDatas.Count;
         public List<ISectionData> SectionBuilderDatas = new();
 
-        [Line(GUIColor.Cyan)]
-        public List<Section_Obstacle_Object> ObstacleDatas = new();
-        [Line(GUIColor.Red)]
-        public List<Section_Enemy_Object> EnemyDatas = new();
-        [Line(GUIColor.Yellow)]
-        public List<Section_Collectible_Object> CollectibleDatas = new();
+        [FormerlySerializedAs("ObstacleDatas")] [Line(GUIColor.Cyan)]
+        public List<Section_Obstacle_Object> obstacleDatas = new();
+        [FormerlySerializedAs("EnemyDatas")] [Line(GUIColor.Red)]
+        public List<Section_Enemy_Object> enemyDatas = new();
+        [FormerlySerializedAs("CollectibleDatas")] [Line(GUIColor.Yellow)]
+        public List<Section_Collectible_Object> collectibleDatas = new();
 
-        [Line(GUIColor.White)]
-        public List<Section_Gemstone_Gate> GemstoneGateDatas = new();
+        [FormerlySerializedAs("GemstoneGateDatas")] [Line(GUIColor.White)]
+        public List<Section_Gemstone_Gate> gemstoneGateDatas = new();
     }
     public SectionData sectionData = new();
+    // public SplineContainer splineContainer;
 
     // [EditorAttributes.Button]
     public void GetSectionObjects()
     {
         sectionData.SectionBuilderDatas.Clear();
 
-        sectionData.ObstacleDatas.Clear();
-        sectionData.EnemyDatas.Clear();
-        sectionData.CollectibleDatas.Clear();
-        sectionData.GemstoneGateDatas.Clear();
+        sectionData.obstacleDatas.Clear();
+        sectionData.enemyDatas.Clear();
+        sectionData.collectibleDatas.Clear();
+        sectionData.gemstoneGateDatas.Clear();
 
         foreach (var sbo in GetComponentsInChildren<SectionBuilderObject>())
         {
@@ -58,6 +61,9 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
             }
             sbo.InjectRiverManager(riverManager);
         }
+
+        // var spline = GetComponentInChildren<SplineContainer>();
+        // splineContainer = spline;
     }
 
     public void InjectRiverManager(River_Manager manager)
@@ -72,13 +78,18 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
     [Button]
     public void CreateSectionDataAsset()
     {
+        CreateSectionDataAsset(pathName, assetName);
+    }
+
+    public SO_SectionData CreateSectionDataAsset(string paraPathName, string paraAssetName)
+    {
         SO_SectionData scriptableObject = ScriptableObject.CreateInstance<SO_SectionData>();
 
         // Assign default / preconfigured values
         var content = scriptableObject.sectionContent;
         
         // Assign Enemy Data to content
-        var enemyData = sectionData.EnemyDatas.Select
+        var enemyData = sectionData.enemyDatas.Select
             (enemy => new SO_SectionData.SectionContent.SectionEnemyData
             {
                 data = enemy.sectionData, 
@@ -87,7 +98,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         content.enemies = enemyData;
         
         // Assign Obstacle Data to content
-        var obstacleData = sectionData.ObstacleDatas.Select(
+        var obstacleData = sectionData.obstacleDatas.Select(
             obstacle => new SO_SectionData.SectionContent.SectionObstacleData
             {
                 data = obstacle.sectionData, 
@@ -96,7 +107,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         content.obstacles = obstacleData;
         
         // Assign Collectible Data to content
-        var collectibleData = sectionData.CollectibleDatas.Select
+        var collectibleData = sectionData.collectibleDatas.Select
             (collectible => new SO_SectionData.SectionContent.SectionCollectibleData
             {
                 data = collectible.sectionData, 
@@ -105,7 +116,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         content.collectibles = collectibleData;
         
         // Assign Gemstone Gate Data to content
-        var gemstoneGateData = sectionData.GemstoneGateDatas.Select
+        var gemstoneGateData = sectionData.gemstoneGateDatas.Select
             (gate => new SO_SectionData.SectionContent.SectionGemstoneGateData
             {
                 data = gate.sectionData, 
@@ -116,13 +127,14 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         // Assign the section content to the Level Data Scriptable Object
         scriptableObject.sectionContent = content;
 
-        var path = $"{pathName}{assetName}.asset";
+        var path = $"{paraPathName}{paraAssetName}.asset";
 
         AssetDatabase.CreateAsset(scriptableObject, path);
         EditorUtility.SetDirty(scriptableObject);
         AssetDatabase.SaveAssets();
 
-        Debug.Log($"Saved {scriptableObject} to {pathName}");
+        Debug.Log($"Saved {scriptableObject} to {paraAssetName}");
+        return scriptableObject;
     }
 
     [Header("Debug")]
@@ -135,10 +147,10 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
 
         if (!enableDebug) return;
 
-        foreach (var item in sectionData.ObstacleDatas) item.DrawGizmos();
-        foreach (var item in sectionData.EnemyDatas) item.DrawGizmos();
-        foreach (var item in sectionData.CollectibleDatas) item.DrawGizmos();
-        foreach (var item in sectionData.GemstoneGateDatas) item.DrawGizmos();
+        foreach (var item in sectionData.obstacleDatas) item.DrawGizmos();
+        foreach (var item in sectionData.enemyDatas) item.DrawGizmos();
+        foreach (var item in sectionData.collectibleDatas) item.DrawGizmos();
+        foreach (var item in sectionData.gemstoneGateDatas) item.DrawGizmos();
     }
 #endif
 }

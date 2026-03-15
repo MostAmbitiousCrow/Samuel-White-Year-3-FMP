@@ -2,7 +2,7 @@ public class EnemyIdleState : EnemyState
 {
     public override void OnEnter()
     {
-        Sc.Animator.SetTrigger("Idle");
+        // Sc.Animator.SetTrigger("Idle"); //TODO: The reference to the State Controller stops existing for some reason...
 
     }
 

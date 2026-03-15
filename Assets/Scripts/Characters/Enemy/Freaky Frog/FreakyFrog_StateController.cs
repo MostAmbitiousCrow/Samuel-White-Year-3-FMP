@@ -55,7 +55,8 @@ public class FreakyFrog_StateController : BoatEnemyStateController
     
     public override void EmergeFromRiver()
     {
-        throw new System.NotImplementedException();
+        base.EmergeFromRiver();
+        ChangeState(EmergeState);
     }
     
     public class FreakyFrog_IdleState : EnemyIdleState

@@ -30,7 +30,7 @@ public class Section_Enemy_Object : SectionBuilderObject
 
     public override void Register(SectionContentBuilder section)
     {
-        section.sectionData.EnemyDatas.Add(this);
+        section.sectionData.enemyDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);
     }
 

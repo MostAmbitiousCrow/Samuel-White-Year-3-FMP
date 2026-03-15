@@ -55,6 +55,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     public void StartOnLane(int lane, float startDistance, float startHeight)
     {
+        isMoving = true;
         startLane = lane;
         GoToLane(startLane);
         SetDistanceAndHeight(startDistance, startHeight);
@@ -147,7 +148,6 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     public virtual void OnSpawned()
     {
-        isMoving = true;
     }
 
     #endregion

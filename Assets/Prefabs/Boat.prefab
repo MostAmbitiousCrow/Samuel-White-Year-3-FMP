@@ -262,7 +262,7 @@ Transform:
   m_GameObject: {fileID: 1006920051619328155}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: -1.05}
+  m_LocalPosition: {x: -5, y: 0, z: -1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -905,9 +905,100 @@ MonoBehaviour:
       sideID: 1
       insideBoat: 0
       isOccupied: 0
-  globalRiverValues: {fileID: 11400000, guid: 30e7d6ef228c63e409c6bd93f25f2268, type: 2}
   boatPassengers: []
   passengerFolder: {fileID: 3054449868538051621}
+--- !u!1 &2752544347299037563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6070488163412757387}
+  - component: {fileID: 7802922858927831866}
+  m_Layer: 15
+  m_Name: Steer SFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6070488163412757387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2752544347299037563}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1431318060842518721}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7802922858927831866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2752544347299037563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7444b0a6e88911f44961f06ff94992ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playInstantly: 0
+  isGroup: 1
+  request: 
+  groupRequest: e2b35c30-4f91-4f42-8625-2a31a0f5730a
+  editModuleSettings:
+    list:
+    - key: CarterGames.Assets.AudioManager.PitchEdit, CarterGames.AudioManager.Runtime,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      value:
+        list:
+        - key: showModule
+          value: True
+        - key: enabled
+          value: True
+        - key: moduleMode
+          value: 2
+        - key: normalEditValue
+          value: 1
+        - key: rangeEditValue
+          value: '[0.0, 1.0]'
+        - key: varianceEditValue
+          value: '[1.0, 0.1, 0.0, 1.0]'
+    - key: CarterGames.Assets.AudioManager.VolumeEdit, CarterGames.AudioManager.Runtime,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      value:
+        list:
+        - key: showModule
+          value: True
+        - key: enabled
+          value: True
+        - key: moduleMode
+          value: 1
+        - key: normalEditValue
+          value: 1
+        - key: rangeEditValue
+          value: '[0.5,0.6]'
+        - key: varianceEditValue
+          value: '[1.0, 0.1, 0.0, 1.0]'
+  showEvents: 0
+  onStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onLooped:
+    m_PersistentCalls:
+      m_Calls: []
+  onCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2945900145775360666
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,6 +1120,7 @@ Transform:
   - {fileID: 2516370226083617624}
   - {fileID: 8887302499045695125}
   - {fileID: 3054449868538051621}
+  - {fileID: 1431318060842518721}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6398182107363113773
@@ -1109,6 +1201,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   riverSplineObject: {fileID: 0}
+  boatSteerSfx: {fileID: 7802922858927831866}
 --- !u!54 &4584125785529316221
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1936,7 +2029,7 @@ Transform:
   m_GameObject: {fileID: 5760204652372532377}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: -1.05}
+  m_LocalPosition: {x: 5, y: 0, z: -1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2517,7 +2610,7 @@ Transform:
   m_GameObject: {fileID: 8016345505169853618}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 1.05}
+  m_LocalPosition: {x: 5, y: 0, z: 1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2549,7 +2642,7 @@ Transform:
   m_GameObject: {fileID: 8696520986469063879}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 1.05}
+  m_LocalPosition: {x: -5, y: 0, z: 1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2760,4 +2853,36 @@ Transform:
   - {fileID: 7043679085347449306}
   - {fileID: 205396749417515897}
   m_Father: {fileID: 8893361172216347625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8840368464157996847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431318060842518721}
+  m_Layer: 15
+  m_Name: --- Audio ---
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1431318060842518721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840368464157996847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6070488163412757387}
+  m_Father: {fileID: 7697235221224964546}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

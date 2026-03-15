@@ -418,4 +418,13 @@ public class River_Manager : MonoBehaviour
         newRotation = Quaternion.LookRotation(forward, up);
     }
     #endregion
+
+    #region World Spline Methods
+
+    public void UpdateWorldSpline(Spline newSpline)
+    {
+        worldSplineContainer.Spline = newSpline;
+    }
+
+    #endregion
 }

@@ -1,4 +1,5 @@
 using System;
+using CarterGames.Assets.AudioManager;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -42,6 +43,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     [SerializeField] private RiverSplineObject riverSplineObject;
     public RiverSplineObject RiverSplineObject => riverSplineObject;
 
+    [Header("Sound")] 
+    [SerializeField] private InspectorAudioClipPlayer boatSteerSfx;
+
     #region Event Listeners
     public static event Action OnBoatMoved;
     #endregion
@@ -70,6 +74,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         if (_direction == 0) return;
         
         MoveToLane(_direction);
+        
+        // Play Steer SFX
+        boatSteerSfx.Stop();
+        boatSteerSfx.Play();
+        
         // Trigger OnBoatMoved listeners
         OnBoatMoved?.Invoke();
         // Debug.Log("Boat was steered!");

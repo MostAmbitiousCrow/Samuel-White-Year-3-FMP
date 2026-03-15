@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c4d2cdcf57d4622862ed546a12aae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 0}
+  currentLevelData: {fileID: 0}
   currentSectionIndex: 0
   trashObjectID: 4
   wideTrashObjectID: 5
@@ -54,7 +54,7 @@ MonoBehaviour:
   batObjectID: 2
   tentacleObjectID: 3
   gemStoneObjectID: 7
-  gemFragmentObjectID: 0
+  gemFragmentObjectID: 10
   gemStoneGateObjectID: 8
   lastSpawnedObject: {fileID: 0}
   furthestDistance: 0

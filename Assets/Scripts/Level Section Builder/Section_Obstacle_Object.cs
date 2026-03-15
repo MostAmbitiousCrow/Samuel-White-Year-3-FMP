@@ -33,7 +33,7 @@ public class Section_Obstacle_Object : SectionBuilderObject
 
     public override void Register(SectionContentBuilder section)
     {
-        section.sectionData.ObstacleDatas.Add(this);
+        section.sectionData.obstacleDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);
     }
 

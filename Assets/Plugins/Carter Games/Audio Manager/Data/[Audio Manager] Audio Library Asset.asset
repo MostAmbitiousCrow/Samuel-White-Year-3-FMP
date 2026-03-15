@@ -2475,7 +2475,7 @@ MonoBehaviour:
         value: {fileID: 8300000, guid: 8dc016bcb29c2463db0c6a1a870ae218, type: 3}
         path: Assets/Sounds/Boat_Steer0.wav
         dynamicStartTime:
-          time: 0
+          time: 0.6
           threshold: 0
           option: 1
           tabPos: 1
@@ -2495,7 +2495,7 @@ MonoBehaviour:
         value: {fileID: 8300000, guid: 62dc6cda7de834413b324d3ea7bd8653, type: 3}
         path: Assets/Sounds/Boat_Steer1.wav
         dynamicStartTime:
-          time: 0
+          time: 0.375
           threshold: 0
           option: 1
           tabPos: 1
@@ -3222,6 +3222,120 @@ MonoBehaviour:
           category: 
           tags:
           - UI
+    - key: 8BitCave-8e2d3459-5e45-42f0-8bca-6e9ac22c8132
+      value:
+        key: 8BitCave
+        id: 8BitCave-8e2d3459-5e45-42f0-8bca-6e9ac22c8132
+        defaultKey: 8BitCave-8e2d3459-5e45-42f0-8bca-6e9ac22c8132
+        value: {fileID: 8300000, guid: ecc6d9c04faa48c4188d7f4159ece16e, type: 3}
+        path: Assets/Sounds/New/Music/8BitCave.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
+    - key: desertbounce-trimmed-ef0114db-4eab-4f53-904b-e75846617519
+      value:
+        key: desertbounce-trimmed
+        id: desertbounce-trimmed-ef0114db-4eab-4f53-904b-e75846617519
+        defaultKey: desertbounce-trimmed-ef0114db-4eab-4f53-904b-e75846617519
+        value: {fileID: 8300000, guid: 2c0b759e75f8c8840b38d621e542fe58, type: 3}
+        path: Assets/Sounds/New/Music/desertbounce-trimmed.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
+    - key: Epic1x_Intro-bba25a4a-8e38-4ea6-8274-24bd3f2bf90d
+      value:
+        key: Epic1x_Intro
+        id: Epic1x_Intro-bba25a4a-8e38-4ea6-8274-24bd3f2bf90d
+        defaultKey: Epic1x_Intro-bba25a4a-8e38-4ea6-8274-24bd3f2bf90d
+        value: {fileID: 8300000, guid: cff8dfce6b4dcc246858a33e7b4408f9, type: 3}
+        path: Assets/Sounds/New/Music/Let's Go - Edited/Epic1x_Intro.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
+    - key: Epic1x_Loop-c5d7b427-52ac-4509-9956-c4fb6f8a80f0
+      value:
+        key: Epic1x_Loop
+        id: Epic1x_Loop-c5d7b427-52ac-4509-9956-c4fb6f8a80f0
+        defaultKey: Epic1x_Loop-c5d7b427-52ac-4509-9956-c4fb6f8a80f0
+        value: {fileID: 8300000, guid: 0c559c2ae0b92934c9eddd8edd7d53f7, type: 3}
+        path: Assets/Sounds/New/Music/Let's Go - Edited/Epic1x_Loop.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
+    - key: bgm_action_3-7fbc5833-8b5e-4aff-ab8d-d18af8c1f1e6
+      value:
+        key: bgm_action_3
+        id: bgm_action_3-7fbc5833-8b5e-4aff-ab8d-d18af8c1f1e6
+        defaultKey: bgm_action_3-7fbc5833-8b5e-4aff-ab8d-d18af8c1f1e6
+        value: {fileID: 8300000, guid: 74819dd34a8f4694099f56a3608115ae, type: 3}
+        path: Assets/Sounds/New/Music/bgm_action_3.ogg
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
+    - key: whatliesbeneath-c4515ee8-0545-4cd5-91b4-0286041bac38
+      value:
+        key: whatliesbeneath
+        id: whatliesbeneath-c4515ee8-0545-4cd5-91b4-0286041bac38
+        defaultKey: whatliesbeneath-c4515ee8-0545-4cd5-91b4-0286041bac38
+        value: {fileID: 8300000, guid: 8a474612af1c3b54abef6dfc5c1cdfd2, type: 3}
+        path: Assets/Sounds/New/Music/whatliesbeneath.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
   groups:
     list:
     - key: 06b86d15-6c2b-4f89-9e54-1caf4f4856e9
@@ -3364,6 +3478,13 @@ MonoBehaviour:
         clipNames:
         - Explode-696a004c-e8d3-4a7a-880b-07a1df0f9e97
         - Crash-1ae278e1-3f0a-4b63-866e-46b6003b6ca5
+    - key: e2b35c30-4f91-4f42-8625-2a31a0f5730a
+      value:
+        groupName: Boat_Steered
+        groupPlayMode: 0
+        clipNames:
+        - Boat_Steer0-53ae6eec-1083-432c-9532-6b9a5a4b1b8f
+        - Boat_Steer1-81bbc79b-58d8-4ec9-884c-56bc6847dadb
   mixers:
     list:
     - key: 8a58fc35-dd70-4491-8d33-204a2fddb8b1

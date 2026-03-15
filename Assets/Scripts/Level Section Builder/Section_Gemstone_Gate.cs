@@ -22,7 +22,7 @@ public class Section_Gemstone_Gate : SectionBuilderObject
 
     public override void Register(SectionContentBuilder section)
     {
-        section.sectionData.GemstoneGateDatas.Add(this);
+        section.sectionData.gemstoneGateDatas.Add(this);
         section.sectionData.SectionBuilderDatas.Add(this);
     }
 
