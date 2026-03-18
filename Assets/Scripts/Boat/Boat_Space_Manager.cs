@@ -107,7 +107,7 @@ public class Boat_Space_Manager : MonoBehaviour
         // If target is within bounds of the space, return the targeted boat space
         if (targetSpace < spaces && targetSpace > -1) return boatSides[currentSide].spaceDatas[targetSpace];
         // Otherwise, just return the current space
-        else return boatSides[currentSide].spaceDatas[currentSpace];
+        return boatSides[currentSide].spaceDatas[currentSpace];
     }
 
     /// <summary>
@@ -247,13 +247,13 @@ public class Boat_Space_Manager : MonoBehaviour
             // Side Spaces
             float sideOffset = GlobalRiverValues.BoatSideSpaceDistance;
 
-            Transform first = bs.spaceDatas.First().t;
-            first.localPosition = new Vector3(sideOffset, 0, bs.spaceDatas[^1].t.localPosition.z);
+            Transform last = bs.spaceDatas.Last().t;
+            last.localPosition = new Vector3(sideOffset, 0, bs.spaceDatas[^1].t.localPosition.z);
             bs.spaceDatas.Last().insideBoat = false;
 
-            Transform last = bs.spaceDatas.Last().t;
-            last.localPosition = new Vector3(-sideOffset, 0, last.localPosition.z);
-            bs.spaceDatas.Last().insideBoat = false;
+            Transform first = bs.spaceDatas.First().t;
+            first.localPosition = new Vector3(-sideOffset, 0, first.localPosition.z);
+            bs.spaceDatas.First().insideBoat = false;
         }
 
     }

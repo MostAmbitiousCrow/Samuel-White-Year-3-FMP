@@ -62,7 +62,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     {
         CurrentState?.OnExit();
         CurrentState = newState;
-        // print($"New State: {CurrentState}");
+        // Debug.Log($"{name}: New State = {CurrentState}");
         CurrentState.OnEnter();
     }
     
@@ -94,7 +94,6 @@ public abstract class BoatEnemyStateController : BoatCharacter
     /// <summary> Emerges the enemy from the River </summary>
     public virtual void EmergeFromRiver()
     {
-        ResetCharacter();
     }
 
     /// <summary> Method to call upon this enemy appearing in the level. Additional data can be provided </summary>

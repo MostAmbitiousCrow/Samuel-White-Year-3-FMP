@@ -46,7 +46,7 @@ public class River_Enemy : River_Object
         base.TimeUpdate();
 
         if (!isMoving) return;
-        Debug.Log($"Enemy is Moving");
+        // Debug.Log($"Enemy is Moving");
         
         if (!(GetDistanceToBoat() < emergeTriggerDetectRadius)) return;
         Debug.Log($"Enemy has detected boat");

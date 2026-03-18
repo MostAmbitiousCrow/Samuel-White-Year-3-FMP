@@ -46,6 +46,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     [Header("Sound")] 
     [SerializeField] private InspectorAudioClipPlayer boatSteerSfx;
 
+    [Header("Components")]
+    [SerializeField] private Transform propellerArt;
+
     #region Event Listeners
     public static event Action OnBoatMoved;
     #endregion
@@ -120,6 +123,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     protected override void TimeUpdate()
     {
         if (isMoving) SteerMovement();
+        AnimatePropeller();
     }
     
     private void SteerMovement()
@@ -147,6 +151,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         transform.localRotation = Quaternion.identity;
 
         isMoving = false;
+    }
+
+    private void AnimatePropeller()
+    {
+        propellerArt.Rotate(Vector3.up, River_Manager.Instance.currentRiverSpeed * 1000f * Time.deltaTime);
     }
     #endregion
 

@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using EditorAttributes;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 
 namespace GameCharacters
@@ -69,6 +72,7 @@ namespace GameCharacters
         public CharacterHealth HealthComponent => healthComponent;
         [SerializeField] private Transform stompPosition;
         public Transform StompPosition => stompPosition;
+        [SerializeField] protected Vector3 stompSize = Vector3.one;
         [SerializeField] protected Collider characterCollider;
         public Collider CharacterCollider => characterCollider;
 
@@ -105,8 +109,8 @@ namespace GameCharacters
                 // Previous Rotation
                 var currentRotation = currentDirection switch
                 {
-                    MoveDirection.Left => 180f,
-                    MoveDirection.Right => 0f,
+                    MoveDirection.Left => 0f,
+                    MoveDirection.Right => 180f,
                     _ => throw new ArgumentOutOfRangeException()
                 };
             
@@ -116,8 +120,7 @@ namespace GameCharacters
                 var targetRotation = currentDirection switch
                 {
                     MoveDirection.Left => 180f,
-                    MoveDirection.Right => 0f,
-                    _ => throw new ArgumentOutOfRangeException()
+                    MoveDirection.Right => 0f
                 };
                 
                 transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
@@ -188,7 +191,7 @@ namespace GameCharacters
             rb.isKinematic = true;
             animator.SetTrigger("Died");
             TriggerHitStop(.5f);
-            print($"{name} Died!. Collider is {characterCollider.enabled}");
+            Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
         }
 
         /// <summary>

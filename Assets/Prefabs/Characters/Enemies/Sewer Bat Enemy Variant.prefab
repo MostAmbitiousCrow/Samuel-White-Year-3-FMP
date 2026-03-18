@@ -217,6 +217,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.19999999
       objectReference: {fileID: 0}
+    - target: {fileID: 5366757226011911095, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Bat : Enemy Character'
+      objectReference: {fileID: 0}
     - target: {fileID: 5417869051682545288, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -383,6 +388,7 @@ MonoBehaviour:
   animator: {fileID: 8620681408576664016}
   healthComponent: {fileID: 4474887987069178}
   stompPosition: {fileID: 7100771862509231846}
+  stompSize: {x: 1, y: 1, z: 1}
   characterCollider: {fileID: 9187696660757960072}
   isDirecting: 0
   rotationCurve:
@@ -422,6 +428,7 @@ MonoBehaviour:
   canJump: 0
   jumpPower: 10
   isJumping: 0
+  gravity: -25
   isBouncing: 0
   bouncePower: 5
   currentSpace:

@@ -5136,6 +5136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3952070885681981904}
   - component: {fileID: 6799795242921549534}
+  - component: {fileID: 3953813597650840144}
   - component: {fileID: 5584600842973260837}
   - component: {fileID: 2437323928954112940}
   m_Layer: 7
@@ -5228,6 +5229,29 @@ MonoBehaviour:
         m_CallState: 2
   doInvincibilityAnimation: 0
   renderers: []
+--- !u!114 &3953813597650840144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5366757226011911095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dee96011a33474dcab3c64cbe349c864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  art:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  artPositions: []
+  force: 10
+  minMaxAngularVelocity: {x: -5, y: 5}
+  animator: {fileID: 3022069612496646132}
 --- !u!54 &5584600842973260837
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -24,6 +24,34 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
     #endregion
 
     #endregion
+    
+    private void Awake()
+    {
+        IdleState.Sc = this;
+        EmergeState.Sc = this;
+        MovingState.Sc = this;
+        AttackState.Sc = this;
+        DefeatedState.Sc = this;
+
+        ChangeState(IdleState);
+        
+        AttackDelay = new WaitForSeconds(CrocData.attackAtTime);
+        AttackAtTime = new WaitForSeconds(CrocData.attackCooldown);
+        AttackDelay =  new WaitForSeconds(CrocData.attackDelay);
+        StepCooldown = new WaitForSeconds(CrocData.coolDownPerStep);
+        DelayBeforeStep = new WaitForSeconds(CrocData.delayBeforeStep);
+
+        GroundDelay = new WaitUntil(() => isGrounded);
+    }
+    
+    // Time:
+    protected WaitForSeconds AttackDelay;
+    protected WaitForSeconds AttackAtTime;
+    protected WaitForSeconds AttackCooldown;
+    protected WaitForSeconds StepCooldown;
+    protected WaitForSeconds DelayBeforeStep;
+    
+    protected WaitUntil GroundDelay;
 
     /// <summary> Emerges the enemy from the River </summary>
     public override void EmergeFromRiver()
@@ -87,30 +115,48 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              CrocSc.EnterBoat(false);
              
              CrocSc.Animator.SetTrigger("Emerge");
+
+             // Start the Emerge Routine
+             CrocSc.StartCoroutine(EmergeRoutine());
+         }
+
+         private IEnumerator EmergeRoutine()
+         {
+             yield return new WaitForSeconds(CrocSc.crocData.timeToEmerge);
+
+             // Trigger leap and move towards 
+             CrocSc.MoveToSpace(CrocSc.boatEnterData.targetBoatSide, CrocSc.boatEnterData.targetSpace);
+             CrocSc.TriggerJump();
+             CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, true);
+
+             yield return CrocSc.GroundDelay;
+             
+             CrocSc.ChangeState(CrocSc.MovingState);
          }
      
-         public override void UpdateState()
-         {
-             if (_currentEmergeTime > CrocSc.EmergeDelay)
-             {
-                 if (!CrocSc.isJumping && CrocSc.IsGrounded)
-                 {
-                     // Trigger leap and move towards 
-                     CrocSc.TriggerJump();
-                     CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, true);
-                     CrocSc.MoveToSpace(CrocSc.boatEnterData.targetBoatSide, CrocSc.boatEnterData.targetSpace);
-                 }
-                 // When the Crocodile has landed on the boat, patrol
-                 else
-                 {
-                     CrocSc.ChangeState(CrocSc.MovingState);
-                 }
-             }
-             else
-             {
-                 _currentEmergeTime += Time.deltaTime;
-             }
-         }
+         // Scrapping in favour of a coroutine since the movement logic is inconsistent
+         // public override void UpdateState()
+         // {
+         //     if (_currentEmergeTime > CrocSc.EmergeDelay)
+         //     {
+         //         if (!CrocSc.IsGrounded && !CrocSc.isJumping)
+         //         {
+         //             // Trigger leap and move towards 
+         //             CrocSc.MoveToSpace(CrocSc.boatEnterData.targetBoatSide, CrocSc.boatEnterData.targetSpace);
+         //             CrocSc.TriggerJump();
+         //             CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, false);
+         //         }
+         //         // When the Crocodile has landed on the boat, patrol
+         //         else if (CrocSc.isGrounded)
+         //         {
+         //             CrocSc.ChangeState(CrocSc.MovingState);
+         //         }
+         //     }
+         //     else
+         //     {
+         //         _currentEmergeTime += Time.deltaTime;
+         //     }
+         // }
      
          public override void OnExit()
          {
@@ -262,7 +308,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              var player = CharacterSpaceChecks.ScanAreaForDamageableCharacter
              (space.t.position, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
      
-             if (player != null)
+             if (player)
              {
                  player.GetComponent<IDamageable>().TakeDamage();
                  Debug.Log("Damaged Player");

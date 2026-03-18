@@ -113,30 +113,22 @@ public class FreakyFrog_StateController : BoatEnemyStateController
              FrogSc.EnterBoat(false);
              
              FrogSc.Animator.SetTrigger("Emerge");
+
+             FrogSc.StartCoroutine(EmergeRoutine());
          }
-     
-         public override void UpdateState()
+         
+         private IEnumerator EmergeRoutine()
          {
-             if (_currentEmergeTime > FrogSc.EmergeDelay)
-             {
-                 if (!FrogSc.isJumping && FrogSc.IsGrounded)
-                 {
-                     // Trigger jump and move towards the space ahead of it
-                     FrogSc.TriggerJump();
-                     FrogSc.SetDirection(FrogSc.boatEnterData.boardingFacingDirection, true);
-                     FrogSc.MoveToSpaceFromDirection((int)FrogSc.boatEnterData.startFacingDirection);
-                         // (FrogSc.boatEnterData.targetSideSpace, FrogSc.boatEnterData.targetSpace);
-                 }
-                 // When the Frog has landed on the boat, patrol
-                 else
-                 {
-                     FrogSc.ChangeState(FrogSc.MovingState);
-                 }
-             }
-             else
-             {
-                 _currentEmergeTime += Time.deltaTime;
-             }
+             yield return new WaitForSeconds(FrogSc.frogData.timeToEmerge);
+
+             // Trigger jump and move towards the space ahead of it
+             // FrogSc.SetDirection(FrogSc.boatEnterData.boardingFacingDirection, false);
+             FrogSc.MoveToSpaceFromDirection((int)FrogSc.boatEnterData.boardingFacingDirection);
+             FrogSc.TriggerJump();
+
+             yield return FrogSc.GroundDelay;
+             
+             FrogSc.ChangeState(FrogSc.MovingState);
          }
      
          public override void OnExit()
@@ -193,7 +185,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
                  _currentTimeUntilMove = 0f;
                  return;
              }
-             if (_stepped) // Do Cooldown if they've already moved
+             if (_stepped) // Do Cool down if they've already moved
              {
                  if (_currentCooldownTime < FrogSc.frogData.coolDownPerStep)
                  {
@@ -223,6 +215,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
                  else
                  {
                      FrogSc.Animator.SetTrigger("Move");
+                     FrogSc.TriggerJump();
                      FrogSc.MoveToSpaceFromDirection((int)FrogSc.CurrentDirection);
                       //TODO: Trigger Animation in method
                  }
@@ -269,7 +262,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
          public override void OnEnter()
          {
              base.OnEnter();
-             FrogSc.canMove = false;
+             // FrogSc.canMove = false;
              FrogSc.StartCoroutine(AttackRoutine());
          }
 
@@ -287,7 +280,11 @@ public class FreakyFrog_StateController : BoatEnemyStateController
              
              // If the frog should attack the opposite lane, vault. Else, just move forward normally
              if (FrogSc.AttackLane) FrogSc.PerformVault(true); // Heavy impact for the sake of juice
-             else FrogSc.MoveToSpaceFromDirection((int)FrogSc.CurrentDirection);
+             else
+             {
+                 FrogSc.TriggerJump();
+                 FrogSc.MoveToSpaceFromDirection((int)FrogSc.CurrentDirection);
+             }
              
              // Note: The frog has its bounce value set to zero, so it will just damage the player if it lands on them.
 

@@ -80,7 +80,7 @@ public class ObjectPoolManager : MonoBehaviour
             ( // Thanks Rider for simplifying this lol
                 createFunc: () => CreateFunction(item.prefab),
                 actionOnGet: (obj) => obj.SetActive(true),
-                actionOnRelease: (obj) => obj.SetActive(false),
+                actionOnRelease: (obj) =>  obj.SetActive(false),
                 actionOnDestroy: (obj) => Destroy(obj), 
                 defaultCapacity: item.amount,
                 maxSize: item.amount
