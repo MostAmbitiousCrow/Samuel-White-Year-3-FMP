@@ -8,19 +8,19 @@ public class EnemyDefeatedState : EnemyState
     public override void OnEnter()
     {
         _time = 0f;
-        Sc.Animator.SetTrigger("Defeated");
-        Sc.CharacterCollider.enabled = false;
+        // Sc.Animator.SetTrigger("Defeated"); // Done in the base Character script
+        // Sc.CharacterCollider.enabled = false;
     }
 
     public override void OnExit()
     {
-        _time = 0f;
-        Sc.CharacterCollider.enabled = true;
+        // _time = 0f;
+        // Sc.CharacterCollider.enabled = true;
     }
 
     public override void OnHurt()
     {
-
+        
     }
 
     public override void UpdateState()

@@ -83,13 +83,13 @@ public class Gemstone_Gate : River_Object
     #endregion
 
     #region Consume Gemstones Process
-    private ParticleSystem.Particle[] particles;
+    private ParticleSystem.Particle[] _particles;
 
     private IEnumerator ConsumeGemstones() //TODO: WIP
     {
         var logicPlayerData = GameManager.GameLogic.playerData;
 
-        if (logicPlayerData.PlayerTransform == null)
+        if (!logicPlayerData.PlayerTransform)
         {
             Debug.LogWarning("Missing Player Transform component, Cancelled Gemstone Gate Consumption Event");
             AbsorptionSucceeded(); // Callback
@@ -112,46 +112,43 @@ public class Gemstone_Gate : River_Object
 
         ParticleSystem.LimitVelocityOverLifetimeModule limitVelocity = _gemstoneParticles.limitVelocityOverLifetime;
 
-        if (savedGemstones > data.GemRequirement)
-            main.maxParticles = Mathf.RoundToInt(data.GemRequirement);
-        else
-            main.maxParticles = Mathf.RoundToInt(savedGemstones);
+        main.maxParticles = Mathf.RoundToInt
+            (savedGemstones > data.GemRequirement ? data.GemRequirement : savedGemstones);
 
         StartCoroutine(EmitParticlesOverTime(main.maxParticles, _emmisionRate, _emmisionMultiplier));
 
         yield return new WaitUntil(() => _gemstoneParticles.particleCount > 1);
 
         // Initialize particles array if null or too small
-        if (particles == null || particles.Length < main.maxParticles)
-            particles = new ParticleSystem.Particle[main.maxParticles];
+        if (_particles == null || _particles.Length < main.maxParticles)
+            _particles = new ParticleSystem.Particle[main.maxParticles];
 
-        int aliveCount = _gemstoneParticles.GetParticles(particles);
         int particlesRemaining = main.maxParticles;
         int amountRemaining = data.GemRequirement;
 
         while (particlesRemaining > 0)
         {
-            aliveCount = _gemstoneParticles.GetParticles(particles); ;
+            var aliveCount = _gemstoneParticles.GetParticles(_particles); ;
 
             // Make sure buffer is large enough (If using Emission)
-            if (particles == null || particles.Length < _gemstoneParticles.main.maxParticles)
-                particles = new ParticleSystem.Particle[_gemstoneParticles.main.maxParticles];
+            if (_particles == null || _particles.Length < _gemstoneParticles.main.maxParticles)
+                _particles = new ParticleSystem.Particle[_gemstoneParticles.main.maxParticles];
 
             for (int i = 0; i < aliveCount; i++)
             {
-                float age = particles[i].startLifetime - particles[i].remainingLifetime;
+                float age = _particles[i].startLifetime - _particles[i].remainingLifetime;
 
                 if (age >= _homingDelay)
                 {
                     limitVelocity.drag = 0f;
 
-                    Vector3 dir = (transform.position - particles[i].position).normalized;
-                    particles[i].velocity = Vector3.Lerp(particles[i].velocity, dir * _homingStrength, Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); //Time.deltaTime * 5f); // smoothing
+                    Vector3 dir = (transform.position - _particles[i].position).normalized;
+                    _particles[i].velocity = Vector3.Lerp(_particles[i].velocity, dir * _homingStrength, Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); //Time.deltaTime * 5f); // smoothing
 
-                    float distance = Vector3.Distance(particles[i].position, transform.position);
+                    float distance = Vector3.Distance(_particles[i].position, transform.position);
                     if (distance < _particleDespawnDistance)
                     {
-                        particles[i].remainingLifetime = 0f;
+                        _particles[i].remainingLifetime = 0f;
                         particlesRemaining--;
                         amountRemaining--;
                         _gemRequirementText.SetText(amountRemaining.ToString());
@@ -161,7 +158,7 @@ public class Gemstone_Gate : River_Object
                 }
             }
             _gemstoneParticles.transform.position = logicPlayerData.PlayerTransform.position;
-            _gemstoneParticles.SetParticles(particles, aliveCount);
+            _gemstoneParticles.SetParticles(_particles, aliveCount);
             _gemstoneParticles.Simulate(Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate(), withChildren: true, restart: false, fixedTimeStep: false);
             yield return new Animation_Frame_Rate_Manager.WaitForTick();
         }
@@ -190,12 +187,10 @@ public class Gemstone_Gate : River_Object
                 GameManager.GameLogic.AddGemstones(-g);
                 yield break;
             }
-            else
-            {
-                _gemstoneParticles.Emit(1);
-                GameManager.GameLogic.AddGemstones(-1);
-                count++;
-            }
+
+            _gemstoneParticles.Emit(1);
+            GameManager.GameLogic.AddGemstones(-1);
+            count++;
             if (count >= amount) yield break;
 
             yield return new WaitForSeconds(t);
@@ -215,7 +210,6 @@ public class Gemstone_Gate : River_Object
             // TODO: Animate gate explosion here
             yield return null;
         }
-        yield break;
     }
 
     #region Absorption Events

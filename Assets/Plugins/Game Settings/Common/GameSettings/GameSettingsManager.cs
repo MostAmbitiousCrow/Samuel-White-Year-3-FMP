@@ -337,6 +337,18 @@ namespace Game
 			}
 		}
 		
+		/// <summary> Determines whether to allow screen shake </summary>
+		public static bool DoHitFreeze
+		{
+			get => PlayerPrefs.GetInt("Gameplay.HitFreeze", 1) == 1;
+			set
+			{ 
+				PlayerPrefs.SetInt("Gameplay.HitFreeze", value ? 1 : 0);
+				PlayerPrefs.Save();
+				GameplayChanged?.Invoke();
+			}
+		}
+		
 		/// <summary> Determines whether to allow the FOV to slide </summary>
 		public static bool DoFovSliding
 		{
@@ -388,7 +400,7 @@ namespace Game
 		// ------------------------------------------------------------------------------------------------------------
 		#region Dev
 
-		public static bool AllowExternalLinks = true;
+		public static bool AllowExternalLinks = false; //NOTE: Keep false only for exhibition build!
 
 		#endregion
 	}

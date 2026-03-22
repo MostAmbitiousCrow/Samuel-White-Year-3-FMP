@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14c5eceaf2b4044e7bc5cee01dfefa3e, type: 3}
-  m_Name: Test Level Data
+  m_Name: Test Level Data Dungeon
   m_EditorClassIdentifier: 
   levelName: A Level
   levelColours: {fileID: 0}
@@ -227,5 +227,7 @@ MonoBehaviour:
       m_Data: []
     m_ObjectData:
       m_Data: []
+  levelType: 3
   sectionData:
-  - {fileID: 11400000, guid: 78a775273699e644aabdfca9271b8d87, type: 2}
+  - {fileID: 11400000, guid: 3bc6c16bb1c504237aeb1d619b46caa2, type: 2}
+  - {fileID: 11400000, guid: f953933a1485e4448b5ae95972eeabf1, type: 2}

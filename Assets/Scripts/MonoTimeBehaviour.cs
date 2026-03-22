@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Game;
 using UnityEngine;
 
 public abstract class MonoTimeBehaviour : MonoBehaviour
@@ -29,6 +30,7 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     #region HitStop
     public void TriggerHitStop(float stopDuration = .2f)
     {
+        if (!GameSettingsManager.DoHitFreeze) return;
         // Debug.Log("HitStop Routine Started");
         if (_hitStopRoutine != null) StopCoroutine(_hitStopRoutine);
         _hitStopRoutine = StartCoroutine(HitStopRoutine(stopDuration));

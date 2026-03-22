@@ -1416,6 +1416,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9064195890147475059, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1602,6 +1607,7 @@ MonoBehaviour:
   animator: {fileID: 5579330003625564286}
   healthComponent: {fileID: 6504590823400211186}
   stompPosition: {fileID: 6327174648849072603}
+  stompSize: {x: 1, y: 1, z: 1}
   characterCollider: {fileID: 5838702685281970269}
   isDirecting: 0
   rotationCurve:
@@ -1656,10 +1662,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   isVaulting: 0
   isVaultingHeavily: 0
-  WillMove: 0
-  MoveDirection: 0
-  WillVault: 0
-  WillJump: 0
   canJump: 1
   jumpPower: 15
   isJumping: 0

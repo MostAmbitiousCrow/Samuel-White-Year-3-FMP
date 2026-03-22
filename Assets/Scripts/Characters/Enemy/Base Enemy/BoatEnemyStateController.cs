@@ -99,9 +99,13 @@ public abstract class BoatEnemyStateController : BoatCharacter
     /// <summary> Method to call upon this enemy appearing in the level. Additional data can be provided </summary>
     public virtual void InitialiseEnemy(BoatEnemy_Data data)
     {
+        // Assign data, restore health and change to idle state
         boatEnterData = data;
         HealthComponent.RestoreHealth();
         ChangeState(IdleState);
+        
+        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        characterCollider.enabled = true;
 
         // TODO: Add any additional initialisation processes here. Likely after enemy pooling
     }
@@ -112,6 +116,18 @@ public abstract class BoatEnemyStateController : BoatCharacter
         transform.parent = riverObject.transform;
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+
+        isMoving = false;
+        isJumping = false;
+        isVaulting = false;
+        isGrounded = true;
+
+        canAccessBoatSpaces = true;
+        canAccessOuterBoatSides = true;
+        
+        ChangeState(IdleState);
+        
+        gameObject.SetActive(false);
         riverObject.ReturnToPool();
     }
 
@@ -120,8 +136,6 @@ public abstract class BoatEnemyStateController : BoatCharacter
         base.OnTookDamage();
         CurrentState.OnHurt();
         StoreState(CurrentState);
-
-        ChangeState(DefeatedState);
     }
 
     public override void OnDied()

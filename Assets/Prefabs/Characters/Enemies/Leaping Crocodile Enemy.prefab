@@ -841,6 +841,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Leaping Crocodile Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8245006621412079573, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245006621412079573, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245006621412079573, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245006621412079573, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1059,6 +1079,7 @@ MonoBehaviour:
   gravity: -25
   isBouncing: 0
   bouncePower: 5
+  canBounce: 1
   currentSpace:
     t: {fileID: 0}
     spaceID: 0

@@ -61,5 +61,13 @@ MonoBehaviour:
       lane: 2
       distance: 10
       height: 0
-    collectibles: []
+    collectibles:
+    - data:
+        collectibleType: 0
+        overrideData: 0
+        overridedData:
+          BankValue: 0
+      lane: 0
+      distance: 10
+      height: 0
     gemstoneGates: []

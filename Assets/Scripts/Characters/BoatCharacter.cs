@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using CameraShake;
 using EditorAttributes;
@@ -54,7 +53,7 @@ namespace GameCharacters
         [Header("Head Bounce")] [ReadOnly] public bool isBouncing = false;
         [SerializeField] protected float bouncePower = 5f;
         private float _timeSinceLastBounce;
-        private bool _canBounce;
+        [SerializeField] private bool canBounce = true;
 
         [Header("Space Information")]
         [Tooltip("The current space on the boat this character is on")]
@@ -94,7 +93,8 @@ namespace GameCharacters
         /// <summary> Set the character to target a given space </summary>
         protected void TargetSpace(SpaceData targetSpace)
         {
-            if (currentSpace != null) currentSpace.isOccupied = false;
+            // Exit previous space
+            currentSpace?.ExitSpace();
 
             // First Time Targeting space null prevention
             currentSpace ??= targetSpace;
@@ -102,7 +102,7 @@ namespace GameCharacters
             PreviousSpace = currentSpace;
 
             currentSpace = targetSpace;
-            currentSpace.isOccupied = true;
+            currentSpace.EnterSpace();
 
             // Assign previous and new target space for movement updates
             TargetedSpace = targetSpace;
@@ -113,7 +113,8 @@ namespace GameCharacters
         {
             var sd = Boat_Space_Manager.Instance.GetSpace(side, space);
 
-            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessOuterBoatSides, sd))
+            // Check space access, bypass if not grounded
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessOuterBoatSides, sd, !isGrounded))
             {
                 return;
             }
@@ -131,7 +132,8 @@ namespace GameCharacters
                 direction);
             SetDirection((MoveDirection)direction, false);
 
-            if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd) &&
+            // Check space access, ignore bypass if grounded
+            if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd, !isGrounded) &&
                 !isVaulting && canMove)
             {
                 TargetSpace(sd);
@@ -140,7 +142,7 @@ namespace GameCharacters
                 OnMove();
             }
             // print($"Moving to Space: {sd.spaceID}");
-            else Debug.Log($"{name} Couldn't access space: {sd.spaceID}");
+            // else Debug.Log($"{name} Couldn't access space: {sd.spaceID}");
 
         }
 
@@ -281,7 +283,7 @@ namespace GameCharacters
             }
 
             // Reset Bounce Cooldown
-            if (_timeSinceLastBounce - Time.time < .5f) _canBounce = true;
+            // if (_timeSinceLastBounce - Time.time < .5f) canBounce = true;
         }
 
         protected override void FixedTimeUpdate()
@@ -522,11 +524,12 @@ namespace GameCharacters
 
         public void TriggerBounce()
         {
+            if (!canBounce) return;
+            
             isGrounded = false;
             animator.SetBool("Grounded", isGrounded);
             _verticalVelocity = bouncePower;
             isBouncing = true;
-            _canBounce = false;
 
             _timeSinceLastBounce = Time.time;
         }
@@ -559,6 +562,7 @@ namespace GameCharacters
         {
             Boat_Space_Manager.Instance.AddPassenger(this);
             isOnBoat = true;
+            SetDirection(currentDirection, false);
             if (goToCurrentSpace) GoToSpace(currentSpace.sideID, currentSpace.spaceID);
         }
 
@@ -569,7 +573,18 @@ namespace GameCharacters
         {
             Boat_Space_Manager.Instance.RemovePassenger(this);
             isOnBoat = false;
+            SetDirection(currentDirection, false);
             if (goToCurrentSpace) MoveToSpace(currentSpace.sideID, currentSpace.spaceID);
+        }
+
+        #endregion
+
+        #region Damage Events
+
+        public override void OnDied()
+        {
+            base.OnDied();
+            currentSpace?.ExitSpace();
         }
 
         #endregion

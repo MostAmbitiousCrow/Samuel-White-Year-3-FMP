@@ -32,20 +32,6 @@ public class Loading_Screen_Controller : MonoBehaviour
         _transitionScreen.SetActive(false);
     }
 
-    //private void OnEnable() //TODO Triggers before the Gamemanager instance exists, try and fix this
-    //{
-    //    GameManager.Instance.UserSettings.onSettingsUpdated += OnSettingsUpdated;
-    //}
-    //private void OnDisable()
-    //{
-    //    GameManager.Instance.UserSettings.onSettingsUpdated -= OnSettingsUpdated;
-    //}
-
-    //private void OnSettingsUpdated(GameManager.GameUserSettings.GameSettings gameSettings)
-    //{
-    //    //_canvasScaler.referenceResolution = gameSettings.TargetAspectResolution.resolution; // Not necessary
-    //}
-
     #region Loading
     public void StartLoadingScreen()
     {
@@ -63,7 +49,8 @@ public class Loading_Screen_Controller : MonoBehaviour
     #endregion
 
     #region Loading Routine
-    IEnumerator EnterLoadingScreenProcess()
+
+    private IEnumerator EnterLoadingScreenProcess()
     {
         float t = startTransitionTime;
 
@@ -93,7 +80,7 @@ public class Loading_Screen_Controller : MonoBehaviour
         IsTransitioning = false;
     }
 
-    IEnumerator CloseLoadingScreenProcess()
+    private IEnumerator CloseLoadingScreenProcess()
     {
         yield return new WaitUntil(() => _canvas.worldCamera = Camera.main);
         // Debug.Log($"Render Camera was set to: {_canvas.worldCamera}");

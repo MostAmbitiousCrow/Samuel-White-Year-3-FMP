@@ -127,7 +127,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         // Assign the section content to the Level Data Scriptable Object
         scriptableObject.sectionContent = content;
 
-        var path = $"{paraPathName}{paraAssetName}.asset";
+        var path = $"{paraPathName}/{paraAssetName}.asset";
 
         AssetDatabase.CreateAsset(scriptableObject, path);
         EditorUtility.SetDirty(scriptableObject);

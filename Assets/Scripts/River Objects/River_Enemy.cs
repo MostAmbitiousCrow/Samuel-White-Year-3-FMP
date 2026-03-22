@@ -23,7 +23,7 @@ public class River_Enemy : River_Object
         enemyController.InitialiseEnemy(data);
 
         // TODO Override Health!
-        print($"{name} stats were overrided");
+        // print($"{name} stats were overrided");
     }
 
     private void OnEnable()
@@ -49,7 +49,7 @@ public class River_Enemy : River_Object
         // Debug.Log($"Enemy is Moving");
         
         if (!(GetDistanceToBoat() < emergeTriggerDetectRadius)) return;
-        Debug.Log($"Enemy has detected boat");
+        // Debug.Log($"Enemy has detected boat");
         
         // if (_targetSide) transform.position = _targetSide.position;
         isMoving = false;

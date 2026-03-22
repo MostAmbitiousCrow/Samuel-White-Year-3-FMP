@@ -29,7 +29,7 @@ public class TextUpdater : MonoBehaviour
         if (textMesh == null) textMesh = GetComponent<TextMeshProUGUI>();
         if (GameSettingsManager.Instance == null)
         {
-            Debug.Log("Game Settings Instance is Missing");
+            // Debug.Log("Game Settings Instance is Missing"); //TODO
             return;
         }
         

@@ -20,13 +20,28 @@ public class Boat_Space_Manager : MonoBehaviour
         [Serializable]
         public class SpaceData
         {
+            /// <summary> The Transform component of the space </summary>
             public Transform t;
             public int spaceID;
             public int sideID;
             /// <summary> Is this space inside the boat? </summary>
             public bool insideBoat = true;
 
-            [ReadOnly] public bool isOccupied = false;
+            // Occupant Detection
+            /// <summary> Call whenever a character is entering this space. </summary>
+            public void EnterSpace()
+            {
+                Occupants++;
+            }
+            /// <summary> Call whenever a character is leaving this space. </summary>
+            public void ExitSpace()
+            {
+                Occupants--;
+                if (Occupants <= 0) Occupants = 0;
+            }
+
+            [ReadOnly, ShowInInspector] public int Occupants {get; private set;}
+            [ReadOnly] public bool IsOccupied => Occupants > 0;
         }
         public List<SpaceData> spaceDatas = new();
     }
@@ -167,11 +182,18 @@ public class Boat_Space_Manager : MonoBehaviour
 
     /// <summary>
     /// Returns true or false based on if the boat space is inside, or outside, the boat and whether
-    /// the character can access it with given outer and inner side access checks
+    /// the character can access it with given outer and inner side access checks, or if the space is occupied
     /// </summary>
-    public bool CheckSpaceAccess(bool outerSideAccess, bool innerSideAccess, BoatSide.SpaceData spaceData)
+    public bool CheckSpaceAccess(bool outerSideAccess, bool innerSideAccess, BoatSide.SpaceData spaceData, bool bypassOccupancy = true)
     {
+        // Check access type if the space is within the boat
         bool result = spaceData.insideBoat ? innerSideAccess : outerSideAccess;
+        
+        // Check if the check should consider if the space is occupied by another character
+        if (!bypassOccupancy)
+        {
+            return result && !spaceData.IsOccupied;
+        }
 
         //print($"Result: {result} | Can Access Inner = {innerSideAccess} | Can Acess Outer = {outerSideAccess}");
         return result;

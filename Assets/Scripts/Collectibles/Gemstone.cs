@@ -1,12 +1,14 @@
+using System;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(BoxCollider))]
 public class Gemstone : River_Collectible
 {
-    [Header("Art Animation Control")]
     /// <summary>
     /// This object's art object that will be animated
     /// </summary>
+    [Header("Art Animation Control")]
     [Tooltip("This object's art object that will be animated")]
     [SerializeField] protected Transform _artObject;
     /// <summary>
@@ -27,10 +29,10 @@ public class Gemstone : River_Collectible
     [Tooltip("The animation curve for the art object's hover effect")]
     [SerializeField] protected AnimationCurve _hoverCurve;
 
-    [Header("Effects")]
     /// <summary>
     /// Particles that will play upon being collected
     /// </summary>
+    [Header("Effects")]
     [Tooltip("Particles that will play upon being collected")]
     [SerializeField] ParticleSystem _collectParticles;
     /// <summary>
@@ -59,6 +61,7 @@ public class Gemstone : River_Collectible
         _collectParticles.Emit(_collectParticlesAmount);
         _artObject.gameObject.SetActive(false);
         GameManager.GameLogic.AddGemstones(_collectParticlesAmount * Data.BankValue);
+        AudioManager.Play(Clip.Gem_Smash);
 
         _idleParticles.Stop();
         isMoving = false; //TODO: Temp
@@ -72,33 +75,45 @@ public class Gemstone : River_Collectible
         // TODO
     }
 
-    #region FrameRateManager Subscription
-    void OnEnable()
-    {
-        Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
+    // #region FrameRateManager Subscription
+    //
+    // private void OnEnable()
+    // {
+    //     Animation_Frame_Rate_Manager.OnTick += HandleOnTick;
+    //
+    //     if(GameManager.Instance) _particleHomeTarget = GameManager.GameLogic.playerData.PlayerTransform;
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     Animation_Frame_Rate_Manager.OnTick -= HandleOnTick;
+    // }
+    //
+    // private void HandleOnTick(object sender, Animation_Frame_Rate_Manager.OnTickEvent tickEvent)
+    // {
+    //     AnimateArtObject();
+    //     TickParticles();
+    //     ParticleAnimation();
+    // }
+    // #endregion
 
-        if(GameManager.Instance != null)
-            _particleHomeTarget = GameManager.GameLogic.playerData.PlayerTransform;
+    private void Start()
+    {
+        if(GameManager.Instance) _particleHomeTarget = GameManager.GameLogic.playerData.PlayerTransform;
     }
 
-    void OnDisable()
-    {
-        Animation_Frame_Rate_Manager.OnTick -= HandleOnTick;
-    }
-
-    private void HandleOnTick(object sender, Animation_Frame_Rate_Manager.OnTickEvent tickEvent)
+    protected override void TimeUpdate() //TODO: Make gemstone stop upon being smashed
     {
         AnimateArtObject();
         TickParticles();
         ParticleAnimation();
     }
-    #endregion
 
     #region Animation
     private void AnimateArtObject()
     {
         // Rotate the art object
-        _artObject.Rotate(Vector3.up, _rotateSpeed * Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate());
+        _artObject.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime); // Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate());
 
         // Animate the hover effect
         float hoverY = _hoverCurve.Evaluate(Mathf.PingPong(Time.time * _hoverSpeed, 1));
@@ -107,47 +122,50 @@ public class Gemstone : River_Collectible
 
     private void TickParticles()
     {
-        float step = Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate();
+        float step = Time.deltaTime;
         _collectParticles.Simulate(step, withChildren: true, restart: false, fixedTimeStep: false);
         _idleParticles.Simulate(step, withChildren: true, restart: false, fixedTimeStep: false);
     }
 
-    private ParticleSystem.Particle[] particles;
+    private ParticleSystem.Particle[] _particles;
 
     private void ParticleAnimation() // TODO: Turn into a coroutine
     {
-        if (_particleHomeTarget == null || !IsCollected) return;
+        // Debug.Log($"Target = {_particleHomeTarget}. Is Collected = {IsCollected}");
+        if (!_particleHomeTarget || !IsCollected) return;
+        // Debug.Log("Doing The Particle Animation");
 
         // Make sure buffer is large enough
-        if (particles == null || particles.Length < _collectParticles.main.maxParticles)
-            particles = new ParticleSystem.Particle[_collectParticles.main.maxParticles];
+        if (_particles == null || _particles.Length < _collectParticles.main.maxParticles)
+            _particles = new ParticleSystem.Particle[_collectParticles.main.maxParticles];
 
-        int aliveCount = _collectParticles.GetParticles(particles);
+        int aliveCount = _collectParticles.GetParticles(_particles);
 
         for (int i = 0; i < aliveCount; i++)
         {
-            if (particles[i].totalVelocity == Vector3.zero)
+            if (_particles[i].totalVelocity == Vector3.zero)
             {
                 print("Stopped");
                 return;
             }
 
-            float age = particles[i].startLifetime - particles[i].remainingLifetime;
+            float age = _particles[i].startLifetime - _particles[i].remainingLifetime;
 
             if (age >= homingDelay)
             {
-                Vector3 dir = (_particleHomeTarget.position - particles[i].position).normalized;
-                particles[i].velocity = Vector3.Lerp(particles[i].velocity, dir * homingStrength, Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); //Time.deltaTime * 5f); // smoothing
+                Vector3 dir = (_particleHomeTarget.position - _particles[i].position).normalized;
+                _particles[i].velocity = Vector3.Lerp(_particles[i].velocity, dir * homingStrength, Time.deltaTime * 5f); //Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); // smoothing
 
-                float distance = Vector3.Distance(particles[i].position, _particleHomeTarget.position);
+                float distance = Vector3.Distance(_particles[i].position, _particleHomeTarget.position);
                 if (distance < particleDespawnDistance)
                 {
                      GameManager.GameLogic.AddGemstones(Data.BankValue); // Replace to update the Players visual Gemstone Count
-                    particles[i].remainingLifetime = 0f;
+                    _particles[i].remainingLifetime = 0f;
+                    AudioManager.Play(Clip.Gem_Collect);
                 }
             }
         }
-        if (aliveCount > 0) _collectParticles.SetParticles(particles, aliveCount);
+        if (aliveCount > 0) _collectParticles.SetParticles(_particles, aliveCount);
         else
         {
             IsCollected = false;

@@ -16,9 +16,209 @@ MonoBehaviour:
   levelColours: {fileID: 0}
   levelSpline:
     m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 500
+      TangentIn:
+        x: -0
+        y: -0
+        z: -39.62737
+      TangentOut:
+        x: 0
+        y: 0
+        z: 39.62737
+      Rotation:
+        value:
+          x: 0
+          y: 0.70710677
+          z: 0
+          w: 0.70710677
+    - Position:
+        x: 118.8821
+        y: 0
+        z: 163.6271
+      TangentIn:
+        x: -0
+        y: -0
+        z: -97.9642
+      TangentOut:
+        x: 0
+        y: 0
+        z: 97.9642
+      Rotation:
+        value:
+          x: 0
+          y: 0.8910065
+          z: 0
+          w: 0.45399058
+    - Position:
+        x: 475.5283
+        y: 0
+        z: 154.5085
+      TangentIn:
+        x: -0
+        y: -0
+        z: -39.627346
+      TangentOut:
+        x: 0
+        y: 0
+        z: 39.627346
+      Rotation:
+        value:
+          x: 0
+          y: 0.9876883
+          z: 0
+          w: 0.15643445
+    - Position:
+        x: 192.3552
+        y: 0
+        z: -62.50001
+      TangentIn:
+        x: -0
+        y: -0
+        z: -97.96421
+      TangentOut:
+        x: 0
+        y: 0
+        z: 97.96421
+      Rotation:
+        value:
+          x: 0
+          y: 0.9876883
+          z: 0
+          w: -0.15643443
+    - Position:
+        x: 293.8927
+        y: 0
+        z: -404.5085
+      TangentIn:
+        x: -0
+        y: -0
+        z: -39.627357
+      TangentOut:
+        x: 0
+        y: 0
+        z: 39.627357
+      Rotation:
+        value:
+          x: 0
+          y: 0.8910066
+          z: 0
+          w: -0.4539904
+    - Position:
+        x: 0.000000014901161
+        y: 0
+        z: -202.2543
+      TangentIn:
+        x: -0
+        y: -0
+        z: -97.96422
+      TangentOut:
+        x: 0
+        y: 0
+        z: 97.964226
+      Rotation:
+        value:
+          x: 0
+          y: 0.7071069
+          z: 0
+          w: -0.70710665
+    - Position:
+        x: -293.8926
+        y: 0
+        z: -404.5087
+      TangentIn:
+        x: -0
+        y: -0
+        z: -39.627346
+      TangentOut:
+        x: 0
+        y: 0
+        z: 39.627346
+      Rotation:
+        value:
+          x: 0
+          y: -0.45399058
+          z: -0
+          w: 0.89100647
+    - Position:
+        x: -192.3552
+        y: 0
+        z: -62.50007
+      TangentIn:
+        x: -0
+        y: -0
+        z: -97.964226
+      TangentOut:
+        x: 0
+        y: 0
+        z: 97.964226
+      Rotation:
+        value:
+          x: 0
+          y: -0.1564346
+          z: -0
+          w: 0.9876883
+    - Position:
+        x: -475.5284
+        y: 0
+        z: 154.5084
+      TangentIn:
+        x: -0
+        y: -0
+        z: -39.62736
+      TangentOut:
+        x: 0
+        y: 0
+        z: 39.627354
+      Rotation:
+        value:
+          x: 0
+          y: 0.15643436
+          z: 0
+          w: 0.9876883
+    - Position:
+        x: -118.8821
+        y: 0
+        z: 163.6271
+      TangentIn:
+        x: -0
+        y: -0
+        z: -97.96425
+      TangentOut:
+        x: 0
+        y: 0
+        z: 97.96423
+      Rotation:
+        value:
+          x: 0
+          y: 0.4539905
+          z: 0
+          w: 0.8910065
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 1
     m_IntData:
       m_Data: []
     m_FloatData:
@@ -27,6 +227,7 @@ MonoBehaviour:
       m_Data: []
     m_ObjectData:
       m_Data: []
+  levelType: 1
   sectionData:
   - {fileID: 11400000, guid: 3bc6c16bb1c504237aeb1d619b46caa2, type: 2}
   - {fileID: 11400000, guid: f953933a1485e4448b5ae95972eeabf1, type: 2}

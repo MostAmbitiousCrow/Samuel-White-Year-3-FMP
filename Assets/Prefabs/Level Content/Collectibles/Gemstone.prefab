@@ -9841,11 +9841,12 @@ MonoBehaviour:
   startLane: 1
   height: 0
   distance: 0
+  startDistance: 0
   canMove: 0
   isMoving: 0
-  isAnimated: 0
-  riverObjectAnimator: {fileID: 0}
-  objectPrefab: {fileID: 5979095628691551611}
+  explodesOnHit: 0
+  artExploder: {fileID: 0}
+  riverManager: {fileID: 0}
   _defautlBankValue: 0
   _isCollected: 0
   Data:

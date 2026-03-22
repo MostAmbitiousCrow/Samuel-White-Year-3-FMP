@@ -2,12 +2,12 @@ using UnityEngine;
 using EditorAttributes;
 using System;
 
-[RequireComponent(typeof(Rigidbody))]
-// Collider will only register enemies, the player and their boat
-[RequireComponent(typeof(BoxCollider))]
 /// <summary>
 /// Base class for collectibles. Derives from the River_Object class.
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
+// Collider will only register enemies, the player and their boat
+[RequireComponent(typeof(BoxCollider))]
 public abstract class River_Collectible : River_Object
 {
     [Line(GUIColor.Yellow, 1, 3)]

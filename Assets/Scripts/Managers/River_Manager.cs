@@ -97,6 +97,16 @@ public class River_Manager : MonoBehaviour
         OnRiverSpeedUpdate?.Invoke();
     }
 
+    private void OnEnable()
+    {
+        SewerEnvironmentArtManager.OnEnvironmentUpdated += UpdateSplineLengths;
+    }
+
+    private void OnDisable()
+    {
+        SewerEnvironmentArtManager.OnEnvironmentUpdated -= UpdateSplineLengths;
+    }
+
     #region Lane and Space Checks
 
     /// <summary>

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using EditorAttributes;
 using UnityEditor;
@@ -11,9 +10,10 @@ public class LevelContentBuilder : MonoBehaviour
     [SerializeField] private SectionContentBuilder[] sections;
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private SO_GameColours levelColours;
+    [SerializeField] private Environments environmentType;
     
     [Header("Data Asset Creation")]
-    [SerializeField] private string pathName = "Assets/Scriptable Objects/Level Data/";
+    [SerializeField, TextArea] private string pathName = "Assets/Scriptable Objects/Level Data/";
     [SerializeField] private string assetName = "Level Data";
 
     private void OnValidate()
@@ -24,6 +24,10 @@ public class LevelContentBuilder : MonoBehaviour
         
         var sc = GetComponentInChildren<SplineContainer>();
         if (sc) splineContainer = sc;
+        
+        // Naming:
+        string splined = sc ? "Splined" : "";
+        name = new string($"{environmentType} Level Content Builder ({sections.Length}) {splined}");
     }
 
     [Button]
@@ -35,14 +39,19 @@ public class LevelContentBuilder : MonoBehaviour
 
         scriptableObject.levelColours = levelColours;
         scriptableObject.levelSpline = splineContainer.Spline;
+        scriptableObject.environmentType = environmentType;
 
         // LINQ to sort all section data into an array
-        scriptableObject.sectionData = sections.Select(section => 
-            section.CreateSectionDataAsset(pathName, assetName + " Section")).ToArray();
+        var id = 0;
+        scriptableObject.sectionData = sections.Select(section =>
+        {
+            id++;
+            return section.CreateSectionDataAsset(pathName, $"Level_{environmentType}_Section_{assetName}({id})");
+        }).ToArray();
 
         // Create the asset
         scriptableObject.name = assetName;
-        var path = $"{pathName}{assetName}.asset";
+        var path = $"{pathName}/Level_{environmentType}_{assetName}.asset";
 
         AssetDatabase.CreateAsset(scriptableObject, path);
         EditorUtility.SetDirty(scriptableObject);

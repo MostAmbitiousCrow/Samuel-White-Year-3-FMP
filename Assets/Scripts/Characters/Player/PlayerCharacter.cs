@@ -108,6 +108,8 @@ namespace GameCharacters
                 Time.timeScale = 2f;
             if (Input.GetKeyDown(KeyCode.Alpha6))
                 Time.timeScale = 4f;
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+                Time.timeScale = 8f;
         }
 
         private void MoveInput()
@@ -275,7 +277,7 @@ namespace GameCharacters
             base.OnTookDamage();
 
             AudioManager.Play(Clip.Plyr_Hurt);
-            Debug.Log("Player Took Damage");
+            // Debug.Log("Player Took Damage");
         }
 
         private void AssignInvincibility()

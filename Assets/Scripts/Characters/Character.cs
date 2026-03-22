@@ -120,7 +120,8 @@ namespace GameCharacters
                 var targetRotation = currentDirection switch
                 {
                     MoveDirection.Left => 180f,
-                    MoveDirection.Right => 0f
+                    MoveDirection.Right => 0f,
+                    _ => throw new ArgumentOutOfRangeException()
                 };
                 
                 transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
@@ -138,7 +139,8 @@ namespace GameCharacters
             var currentRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
-                MoveDirection.Right => 0f
+                MoveDirection.Right => 0f,
+                _ => throw new ArgumentOutOfRangeException()
             };
             
             currentDirection = direction;
@@ -147,7 +149,8 @@ namespace GameCharacters
             var targetRotation = currentDirection switch
             {
                 MoveDirection.Left => 180f,
-                MoveDirection.Right => 0f
+                MoveDirection.Right => 0f,
+                _ => throw new ArgumentOutOfRangeException()
             };
             
             rb.freezeRotation = false;
@@ -191,7 +194,7 @@ namespace GameCharacters
             rb.isKinematic = true;
             animator.SetTrigger("Died");
             TriggerHitStop(.5f);
-            Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
+            // Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
         }
 
         /// <summary>

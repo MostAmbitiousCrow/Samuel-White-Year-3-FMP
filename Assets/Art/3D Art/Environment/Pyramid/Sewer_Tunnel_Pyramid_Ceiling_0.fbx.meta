@@ -3,7 +3,12 @@ guid: 135d0f26476f38342a4c545b9aa35e64
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sewer_Tunnel_Pyramid_Ceiling_0_Backup_Material
+    second: {fileID: 2100000, guid: 3b0edcfbe5d3b5a479cf95a4e804c340, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -30,7 +35,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1

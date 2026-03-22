@@ -1,4 +1,5 @@
 using System.Collections;
+using Autodesk.Fbx;
 using UnityEngine;
 
 public class FreakyFrog_StateController : BoatEnemyStateController
@@ -171,7 +172,6 @@ public class FreakyFrog_StateController : BoatEnemyStateController
          public override void OnHurt()
          {
              base.OnHurt();
-             FrogSc.ChangeState(FrogSc.DefeatedState);
          }
      
          public override void UpdateState()
@@ -258,12 +258,19 @@ public class FreakyFrog_StateController : BoatEnemyStateController
      {
          public FreakyFrog_StateController FrogSc => Sc as FreakyFrog_StateController;
          private Boat_Space_Manager.BoatSide.SpaceData _targetSpace;
+         private Coroutine _attackRoutine;
          
          public override void OnEnter()
          {
              base.OnEnter();
              // FrogSc.canMove = false;
-             FrogSc.StartCoroutine(AttackRoutine());
+             _attackRoutine = FrogSc.StartCoroutine(AttackRoutine());
+         }
+
+         public override void OnExit()
+         {
+             base.OnExit();
+             FrogSc.StopCoroutine(_attackRoutine);
          }
 
          // The Frog will first wait to attack, then jump either opposite its side, or forwards depending on where its

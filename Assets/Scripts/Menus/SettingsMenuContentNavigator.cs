@@ -18,10 +18,11 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     // [SerializeField, HideProperty] private Slider sfxVolumeSlider;
     
     [FoldoutGroup("Gameplay", nameof(invincibilityToggle), 
-        nameof(dyslexicToggle), nameof(fovToggle), nameof(screenShakeToggle), nameof(rainbowModeToggle))]
+        nameof(dyslexicToggle), nameof(fovToggle), nameof(screenShakeToggle), nameof(hitFreezeToggle),
+        nameof(rainbowModeToggle))]
     [SerializeField] private Void gameplayFolder;
-    [SerializeField, HideProperty] private Toggle invincibilityToggle, dyslexicToggle, fovToggle, screenShakeToggle, 
-        rainbowModeToggle;
+    [SerializeField, HideProperty] private Toggle invincibilityToggle, dyslexicToggle, fovToggle, screenShakeToggle,
+        hitFreezeToggle, rainbowModeToggle;
     
     #endregion
     #region Settings
@@ -39,22 +40,32 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
 
     private void UpdateToggles()
     {
+        // Invincibility
         invincibilityToggle.isOn = GameSettingsManager.DoPlayerInvincibility;
         invincibilityToggle.onValueChanged.RemoveAllListeners();
         invincibilityToggle.onValueChanged.AddListener(OnPlayerInvincibilityValueChange);
         
+        // Dyslexic Font
         dyslexicToggle.isOn = GameSettingsManager.DoDyslexiaFont;
         dyslexicToggle.onValueChanged.RemoveAllListeners();
         dyslexicToggle.onValueChanged.AddListener(OnDyslexicFontValueChange);
         
+        // FOV
         fovToggle.isOn = GameSettingsManager.DoFovSliding;
         fovToggle.onValueChanged.RemoveAllListeners();
         fovToggle.onValueChanged.AddListener(OnFovSlideValueChange);
         
+        // Screen Shake
         screenShakeToggle.isOn = GameSettingsManager.DoScreenShake;
         screenShakeToggle.onValueChanged.RemoveAllListeners();
         screenShakeToggle.onValueChanged.AddListener(OnScreenShakeValueChange);
         
+        // Hit Freeze
+        hitFreezeToggle.isOn = GameSettingsManager.DoHitFreeze;
+        hitFreezeToggle.onValueChanged.RemoveAllListeners();
+        hitFreezeToggle.onValueChanged.AddListener(OnHitFreezeValueChange);
+        
+        // Rainbow Mode
         rainbowModeToggle.isOn = GameSettingsManager.DoRainbowMode;
         rainbowModeToggle.onValueChanged.RemoveAllListeners();
         rainbowModeToggle.onValueChanged.AddListener(OnRainbowModeValueChange);
@@ -79,6 +90,11 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     public void OnScreenShakeValueChange(bool value)
     {
         GameSettingsManager.DoScreenShake = value;
+    }
+
+    public void OnHitFreezeValueChange(bool value)
+    {
+        GameSettingsManager.DoHitFreeze = value;
     }
     
     public void OnRainbowModeValueChange(bool value)

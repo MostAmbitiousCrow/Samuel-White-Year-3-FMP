@@ -96,7 +96,8 @@ public class GameManager : MonoBehaviour
         public void TogglePauseState()
         {
             // Pause game logic here
-            print($"Game Pause State = {_gamePaused = !_gamePaused}");
+            _gamePaused = !_gamePaused;
+            print($"Game Pause State = {_gamePaused}");
 
             if (_gamePaused)
             {

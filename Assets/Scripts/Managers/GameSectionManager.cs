@@ -145,9 +145,9 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             yield return currentSectionIndex++;
         }
-        
+        Debug.Log("All Sections Spawned and Completed. Triggering Next Level Load");
+        currentSectionIndex = 0;
         gameLevelManager.LoadNextLevel();
-        Debug.Log("All Sections Spawned and Completed.");
     }
 
     #region Spawning Logic
@@ -230,7 +230,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 
     private void PlaceSectionObject(River_Object ro, int lane, int distance, int height)
     {
-        Debug.Log($"Placing Object: {ro.name}. Lane = {lane}, Distance = {distance}, Height = {height}");
+        // Debug.Log($"Placing Object: {ro.name}. Lane = {lane}, Distance = {distance}, Height = {height}");
         ro.InjectRiverManager(riverManager);
         ro.canMove = true;
 

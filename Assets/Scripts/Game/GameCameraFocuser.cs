@@ -80,7 +80,7 @@ public class GameCameraFocuser : MonoBehaviour
                 smoothTime
             );
     
-            transform.localPosition = originPosition + new Vector3(_currentXOffset, 0f, 0f);
+            transform.localPosition = originPosition + new Vector3(_currentXOffset, 0f, 0f); //TODO: Fix NaN error
     
             if (lookAtTarget)
                 transform.LookAt(lookAtTarget, transform.up);

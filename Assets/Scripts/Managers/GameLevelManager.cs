@@ -34,7 +34,8 @@ public class GameLevelManager : MonoBehaviour
     #region Level Loading
     // Level Information
     /// <summary> The current active level </summary>
-    public int CurrentLevel { get; private set; }
+    public int CurrentLevel => currentLevel;
+    [SerializeField] private int currentLevel;
 
     /// <summary> The count of the amount of levels that exist </summary>
     public int LevelCount { get; private set; }
@@ -45,6 +46,8 @@ public class GameLevelManager : MonoBehaviour
     // Events
     public delegate void LevelLoaded();
     public static LevelLoaded OnLevelLoaded;
+
+    public bool GameCompleted { get; private set; }
 
     // TODO: Temporary until I find out what's triggering the InitialiseFirstLevel method on Game Started
     private bool _levelInitialised;
@@ -59,39 +62,60 @@ public class GameLevelManager : MonoBehaviour
     /// <summary> Loads a specified level </summary>
     public void LoadLevel(int level)
     {
+        Debug.Log("Attempting to Load Level: " + level);
+        if (GameCompleted)
+        {
+            Debug.Log("Game Already Completed. Rejected Level Load"); //TODO: Temp
+            return;
+        }
         if (level < 0) { Debug.LogWarning("Unable to load level less than 0."); return; }
 
         // Complete the game once all levels have been completed
-        if (level > LevelCount-1) { GameManager.GameLogic.CompleteGame(); return; }
-
-        // Assign the new current level ID
-        CurrentLevel = level;
-
-        // Assign the new level data to the section manager
-        _sectionManager.AssignNewLevelData(levels[level]);
-        
-        // Update the world Spline 
-        var spline = levels[level].levelSpline;
-        if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
-        
-        OnLevelLoaded?.Invoke();
-        
-        Debug.Log($"Loaded Level '{levels[level].levelName}'");
+        Debug.Log($"Current Level Condition: {currentLevel} ({level}) => {LevelCount}");
+        if (level >= LevelCount)
+        {
+            GameManager.GameLogic.CompleteGame();
+            GameCompleted = true;
+            Debug.Log("All Levels Completed. Triggered Game Completion");
+        }
+        else if (!GameCompleted)
+        {
+            // Assign the new current level ID
+            currentLevel = level;
+            
+            // Assign the new level data to the section manager
+            _sectionManager.AssignNewLevelData(levels[currentLevel]);
+            
+            // Update the world Spline 
+            var spline = levels[currentLevel].levelSpline;
+            if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
+            
+            OnLevelLoaded?.Invoke();
+            
+            Debug.Log($"Loaded Level '{levels[currentLevel].levelName}'");
+        }
     }
     
     /// <summary> Loads the previous level based on the current level </summary>
     public void LoadPreviousLevel()
     {
-        CurrentLevel--;
-        if (CurrentLevel < 1) {CurrentLevel = 0; return;}
-        LoadLevel(CurrentLevel);
+        if (GameCompleted) return;
+        var cl = currentLevel - 1;
+        if (cl < 0) {currentLevel = 0; return;}
+        LoadLevel(cl);
     }
 
     /// <summary> Loads the next level based on the current level </summary>
     public void LoadNextLevel()
     {
-        CurrentLevel++;
-        LoadLevel(CurrentLevel);
+        if (GameCompleted) return;
+        var cl = currentLevel + 1;
+        LoadLevel(cl);
     }
     #endregion
+}
+
+public enum Environments
+{
+    Sewer, Pyramid, Cave, Dungeon
 }
