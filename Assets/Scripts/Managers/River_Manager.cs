@@ -2,6 +2,7 @@ using EditorAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameCharacters;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -100,11 +101,13 @@ public class River_Manager : MonoBehaviour
     private void OnEnable()
     {
         SewerEnvironmentArtManager.OnEnvironmentUpdated += UpdateSplineLengths;
+        PlayerCharacter.OnPlayerDied += () => PauseRiver();
     }
 
     private void OnDisable()
     {
         SewerEnvironmentArtManager.OnEnvironmentUpdated -= UpdateSplineLengths;
+        PlayerCharacter.OnPlayerDied -= () => PauseRiver();
     }
 
     #region Lane and Space Checks

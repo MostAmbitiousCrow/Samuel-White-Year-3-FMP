@@ -277,6 +277,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
          // target was provided 
          private IEnumerator AttackRoutine()
          {
+             Sc.Animator.SetTrigger("Prepare Attack");
              yield return FrogSc.AttackDelay;
 
              // Attack animation will be the 'prepare' animation

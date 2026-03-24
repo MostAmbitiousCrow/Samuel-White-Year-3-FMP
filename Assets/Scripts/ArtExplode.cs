@@ -11,6 +11,7 @@ public class ArtExplode : MonoBehaviour
     [SerializeField] private Rigidbody[] art;
 
     [SerializeField] private List<Vector3> artPositions = new List<Vector3>();
+    [SerializeField] private List<Quaternion> artRotations = new List<Quaternion>();
     [SerializeField] private float force = 10f;
     [SerializeField, MinMaxSlider(-5f, 5f, true)] private Vector2 minMaxAngularVelocity = new Vector2(-5f, 5f);
     [Space]
@@ -19,7 +20,11 @@ public class ArtExplode : MonoBehaviour
     private void Awake()
     {
         if (art.Length <= 0) return;
-        foreach (var r in art) artPositions.Add(r.transform.localPosition);
+        foreach (var r in art) 
+        {
+            artPositions.Add(r.transform.localPosition);
+            artRotations.Add(r.transform.localRotation);
+        }
     }
 
     private void OnEnable()
@@ -30,7 +35,7 @@ public class ArtExplode : MonoBehaviour
         {
             art[i].isKinematic = true;
             art[i].transform.localPosition = artPositions[i];
-            art[i].transform.localRotation = Quaternion.identity;
+            art[i].transform.localRotation = artRotations[i];
         }
 
         Debug.Log($"{gameObject} Art Reset");

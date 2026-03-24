@@ -557,9 +557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c2fa7f9223149a69db9a69986f156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clientId: 0
-  loginButton: {fileID: 0}
-  statusText: {fileID: 0}
 --- !u!1 &504730041
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,6 +2424,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 913539737500246373, guid: 26e9bd77e3009a94bb650ba693bd4c56,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100.00012
       objectReference: {fileID: 0}
     - target: {fileID: 1178115943656058809, guid: 26e9bd77e3009a94bb650ba693bd4c56,
         type: 3}

@@ -1,4 +1,5 @@
 using System.Collections;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 
 public class LeapingCrocodile_StateController : BoatEnemyStateController
@@ -60,7 +61,25 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
         
         ChangeState(EmergeState);
     }
-    
+
+    protected override void OnMove()
+    {
+        base.OnMove();
+        AudioManager.Play(Clip.Croc_Step_0); //TODO: Add some randomisation
+    }
+
+    protected override void OnMoved()
+    {
+        base.OnMoved();
+        AudioManager.Play(Clip.Croc_Step_1); //TODO: Add some randomisation
+    }
+
+    protected override void OnLanded()
+    {
+        base.OnLanded();
+        AudioManager.Play(Clip.Croc_Land); //TODO: Add some randomisation
+    }
+
     public class LeapingCrocodile_IdleState : EnemyIdleState
      {
          public LeapingCrocodile_StateController CrocSc => Sc as LeapingCrocodile_StateController;
@@ -128,6 +147,8 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              CrocSc.MoveToSpace(CrocSc.boatEnterData.targetBoatSide, CrocSc.boatEnterData.targetSpace);
              CrocSc.TriggerJump();
              CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, true);
+             
+             AudioManager.Play(Clip.Croc_Leap);
 
              yield return CrocSc.GroundDelay;
              
@@ -303,6 +324,8 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
 
          private IEnumerator AttackRoutine()
          {
+             Sc.Animator.SetTrigger("Prepare Attack");
+             AudioManager.Play(Clip.Croc_Attack);
              yield return new WaitForSeconds(CrocSc.CrocData.attackDelay);
              
              Sc.Animator.SetTrigger("Attack");

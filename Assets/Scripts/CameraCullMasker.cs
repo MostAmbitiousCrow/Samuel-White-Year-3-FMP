@@ -17,7 +17,7 @@ public class CameraCullMasker : MonoBehaviour
         _showLayersEvent = () => ShowOnlyLayer("Player");
     }
 
-    private Action _showLayersEvent;
+    private PlayerCharacter.PlayerDied _showLayersEvent;
 
     private void OnEnable() => PlayerCharacter.OnPlayerDied += _showLayersEvent;
     private void OnDisable() => PlayerCharacter.OnPlayerDied -= _showLayersEvent;

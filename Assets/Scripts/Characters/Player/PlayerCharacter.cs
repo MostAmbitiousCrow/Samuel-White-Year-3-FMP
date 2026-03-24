@@ -37,8 +37,9 @@ namespace GameCharacters
         public static event Action OnPlayerVaulted;
         // public delegate void PlayerJumped();
         public static event Action OnPlayerJumped;
-        
-        public static event Action OnPlayerDied;
+
+        public delegate void PlayerDied();
+        public static PlayerDied OnPlayerDied;
 
         #endregion
 
@@ -244,7 +245,7 @@ namespace GameCharacters
             if (GameSettingsManager.DoPlayerInvincibility) return;
             base.OnDied();
             
-            TriggerHitStop(2); // TODO: Get a timed reference or something to delay the End Game Logic and the Death SFX
+            TriggerHitStop(1); // TODO: Get a timed reference or something to delay the End Game Logic and the Death SFX
             MusicManager.Instance.PauseMusic();
             OnPlayerDied?.Invoke();
             Debug.Log("PLAYER DIED");
