@@ -38,8 +38,8 @@ public class Art_UV_Scroll : MonoBehaviour
     {
         if (_paused || !River_Manager.Instance) return;
 
-        X = Mathf.Repeat(_scrollDirection.x * River_Manager.Instance.RiverFlowSpeed * Time.time, 1f);
-        Y = Mathf.Repeat(_scrollDirection.y * River_Manager.Instance.RiverFlowSpeed * Time.time, 1f);
+        X = Mathf.Repeat(_scrollDirection.x * River_Manager.Instance.riverFlowSpeed * Time.time, 1f);
+        Y = Mathf.Repeat(_scrollDirection.y * River_Manager.Instance.riverFlowSpeed * Time.time, 1f);
 
         _scrollingMaterial.mainTextureOffset = new(X, Y); // Note: if the UV is moving too quickly, it's because the art has been scaled
     }

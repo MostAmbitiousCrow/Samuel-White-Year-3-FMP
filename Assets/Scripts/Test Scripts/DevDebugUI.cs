@@ -59,7 +59,7 @@ public class DevDebugUI : MonoBehaviour
     {
         if (riverManager != null)
         {
-            riverText.SetText($"River Speed: {riverManager.RiverFlowSpeed}");
+            riverText.SetText($"River Speed: {riverManager.riverFlowSpeed}");
         }
     }
 }

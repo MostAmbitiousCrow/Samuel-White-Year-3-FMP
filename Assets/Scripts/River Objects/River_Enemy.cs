@@ -26,10 +26,21 @@ public class River_Enemy : River_Object
         // print($"{name} stats were overrided");
     }
 
+    public void ReturnEnemy()
+    {
+        enemyController.ExitBoat();
+        gameObject.SetActive(true);
+        enemyController.transform.SetParent(transform.parent, true);
+        enemyController.gameObject.SetActive(false);
+        gameObject.SetActive(true);
+        Debug.Log($"Returned {enemyController.name} to {name}");
+    }
+
     private void OnEnable()
     {
         if (!enemyController) return;
         enemyController.SetDirection(enemyController.boatEnterData.startFacingDirection, false);
+        enemyController.transform.SetParent(transform.parent, true);
         enemyController.gameObject.SetActive(false); //TODO: Adjust this for bat enemies who will spawn with their enemy active
         
         // Set the target side for the Enemy Silhouette to follow

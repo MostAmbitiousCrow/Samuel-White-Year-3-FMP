@@ -34,11 +34,12 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     [Line(GUIColor.Yellow)]
     [FoldoutGroup("Collectible Objects", nameof(gemStoneObjectID), nameof(gemFragmentObjectID))]
     [SerializeField] private Void collectibleGroup;
-    [SerializeField, HideProperty] private int gemStoneObjectID;
+    [SerializeField, HideProperty] private int gemStoneObjectID = 7;
     [SerializeField, HideProperty] private int gemFragmentObjectID;
-    
+     
     [Line(GUIColor.White)]
-    [SerializeField] private int gemStoneGateObjectID;
+    [SerializeField] private int gemStoneGateObjectID= 8;
+    [SerializeField] private int slipStreamObjectID = 9;
 
     // Tracked last object in segment
     [SerializeField, ReadOnly] private River_Object lastSpawnedObject;
@@ -67,9 +68,18 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             InitializePrefabLookup();
         }
-    
-        private void OnEnable() => GameLevelManager.OnLevelLoaded += StartSpawning;
-        private void OnDisable() => GameLevelManager.OnLevelLoaded -= StartSpawning;
+
+        private void OnEnable()
+        {
+            GameLevelManager.OnLevelLoaded += StartSpawning;
+            GameManager.GameLogic.OnGameEnded += StopSpawning;
+        }
+
+        private void OnDisable()
+        {
+            GameLevelManager.OnLevelLoaded -= StartSpawning;
+            GameManager.GameLogic.OnGameEnded -= StopSpawning;
+        }
     
         private void InitializePrefabLookup()
         {
@@ -99,11 +109,24 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         Debug.Log($"Assigned new Level Data to Section Manager");
     }
 
+    private Coroutine _spawnRoutine;
     public void StartSpawning()
     {
         Debug.Log("Starting Spawning Objects");
-        StopAllCoroutines();
-        StartCoroutine(SpawnSectionRoutine());
+        if (_spawnRoutine != null) StopCoroutine(_spawnRoutine);
+        _spawnRoutine = StartCoroutine(SpawnSectionRoutine());
+    }
+
+    public void StopSpawning()
+    {
+        if (_spawnRoutine != null)
+        {
+            StopCoroutine(_spawnRoutine);
+            Debug.Log("Stopping Spawning Objects");
+            return;
+        }
+        
+        Debug.Log("No Routine to Stop");
     }
 
     private IEnumerator SpawnSectionRoutine()
@@ -125,26 +148,32 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             furthestDistance = 0;
             
             // Initial delay
-            if (data.sectionContent.initialDelay > 0) yield return new WaitForSeconds(data.sectionContent.initialDelay);
+            // if (data.sectionContent.initialDelay > 0) yield return new WaitForSeconds(data.sectionContent.initialDelay);
             
             // Spawn objects
             SpawnObstacles(data.sectionContent.obstacles);
             SpawnEnemies(data.sectionContent.enemies);
             SpawnCollectibles(data.sectionContent.collectibles);
             SpawnGemstoneGates(data.sectionContent.gemstoneGates);
+            SpawnSlipStreams(data.sectionContent.slipStreams);
             
             Debug.Log($"Last Spawned Object is: {lastSpawnedObject}");
             
-            if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
-            else Debug.Log($"Section {currentSectionIndex} had no objects.");
+            // if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
+            // else Debug.Log($"Section {currentSectionIndex} had no objects.");
 
             // Delay
-            if (data.sectionContent.postDelay > 0) yield return new WaitForSeconds(data.sectionContent.postDelay);
+            // if (data.sectionContent.postDelay > 0) yield return new WaitForSeconds(data.sectionContent.postDelay);
             
             Debug.Log($"Completed Section {currentSectionIndex}.");
             
             yield return currentSectionIndex++;
         }
+        
+        // TODO: Maybe use for the thing...
+        if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
+        else Debug.Log($"Section {currentSectionIndex} had no objects.");
+        
         Debug.Log("All Sections Spawned and Completed. Triggering Next Level Load");
         currentSectionIndex = 0;
         gameLevelManager.LoadNextLevel();
@@ -166,16 +195,13 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
                 Section_Obstacle_Object.ObstacleType.SewerPipe => pipeObjectID,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            var enm = ObjectPoolManager.Instance.Spawn<River_Obstacle>(id);
+            var obs = ObjectPoolManager.Instance.Spawn<River_Obstacle>(id);
 
-            if (item.data.overrideData)
-            {
-                // Check if the obstacle is a pipe
-                if (enm is Pipe_Obstacle pipe) pipe.OverridePipeData(item.data.pipeObstacleData);
-                else enm.OverrideData(item.data.overriddenData);
-            }
+            // Check if the obstacle is a pipe
+            if (obs is Pipe_Obstacle pipe) pipe.OverridePipeData(item.data.pipeObstacleData);
+            else obs.OverrideData(item.data.overriddenData);
             
-            PlaceSectionObject(enm, item.lane, item.distance, item.height);
+            PlaceSectionObject(obs, item.lane, item.distance, item.height);
         }
     }
 
@@ -227,6 +253,19 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             PlaceSectionObject(gsg, item.lane, item.distance, item.height);
         }
     }
+    
+    /// <summary> Method for spawning River Slipstreams </summary>
+    private void SpawnSlipStreams(List<SO_SectionData.SectionContent.SectionSlipStreamData> data)
+    {
+        if (data == null) return;
+        foreach (var item in data)
+        {
+            var gsg = ObjectPoolManager.Instance.Spawn<River_SlipStream>(slipStreamObjectID);
+            // Override Data
+            if (item.data.overrideData) gsg.OverrideData(item.data.overridedData);
+            PlaceSectionObject(gsg, item.lane, item.distance, item.height);
+        }
+    }
 
     private void PlaceSectionObject(River_Object ro, int lane, int distance, int height)
     {
@@ -242,8 +281,13 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             lastSpawnedObject = ro;
             furthestDistance = spawnDist;
         }
+
+        // TODO: Add a set distance between each section
         
-        ro.StartOnLane(lane, distance + riverManager.riverObjectSpawnDistance, height);
+        // Initial Spawn Distance from Boat * the current section displacement + Space Between Each Section
+        distance = (distance + riverManager.riverObjectSpawnDistance) * (currentSectionIndex + 1) + 10; //* currentSectionIndex + 1;
+        
+        ro.StartOnLane(lane, distance, height);
     }
     #endregion
 }

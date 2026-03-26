@@ -22,15 +22,18 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         public int ObjectCount => SectionBuilderDatas.Count;
         public List<ISectionData> SectionBuilderDatas = new();
 
-        [FormerlySerializedAs("ObstacleDatas")] [Line(GUIColor.Cyan)]
+        [Line(GUIColor.Cyan)]
         public List<Section_Obstacle_Object> obstacleDatas = new();
-        [FormerlySerializedAs("EnemyDatas")] [Line(GUIColor.Red)]
+        [Line(GUIColor.Red)]
         public List<Section_Enemy_Object> enemyDatas = new();
-        [FormerlySerializedAs("CollectibleDatas")] [Line(GUIColor.Yellow)]
+        [Line(GUIColor.Yellow)]
         public List<Section_Collectible_Object> collectibleDatas = new();
 
-        [FormerlySerializedAs("GemstoneGateDatas")] [Line(GUIColor.White)]
+        [Line(GUIColor.Cyan)]
         public List<Section_Gemstone_Gate> gemstoneGateDatas = new();
+        
+        [Line(GUIColor.White)]
+        public List<Section_SlipStream_Object> slipStreamDatas = new();
     }
     public SectionData sectionData = new();
     // public SplineContainer splineContainer;
@@ -44,6 +47,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         sectionData.enemyDatas.Clear();
         sectionData.collectibleDatas.Clear();
         sectionData.gemstoneGateDatas.Clear();
+        sectionData.slipStreamDatas.Clear();
 
         foreach (var sbo in GetComponentsInChildren<SectionBuilderObject>())
         {
@@ -124,6 +128,15 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
             }).ToList();
         content.gemstoneGates = gemstoneGateData;
         
+        // Assign Slip Stream Data to content
+        var slipStreamData = sectionData.slipStreamDatas.Select
+        (stream => new SO_SectionData.SectionContent.SectionSlipStreamData()
+        {
+            data = stream.sectionData, 
+            distance = stream.Distance, height = stream.Height, lane = stream.Lane
+        }).ToList();
+        content.slipStreams = slipStreamData;
+        
         // Assign the section content to the Level Data Scriptable Object
         scriptableObject.sectionContent = content;
 
@@ -151,6 +164,10 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         foreach (var item in sectionData.enemyDatas) item.DrawGizmos();
         foreach (var item in sectionData.collectibleDatas) item.DrawGizmos();
         foreach (var item in sectionData.gemstoneGateDatas) item.DrawGizmos();
+        foreach (var item in sectionData.slipStreamDatas) item.DrawGizmos();
+        {
+            
+        }
     }
 #endif
 }

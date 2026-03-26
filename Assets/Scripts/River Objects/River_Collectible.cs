@@ -50,7 +50,7 @@ public abstract class River_Collectible : River_Object
     #endregion
 
     #region Trigger
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (!IsCollected) OnCollected();
     }

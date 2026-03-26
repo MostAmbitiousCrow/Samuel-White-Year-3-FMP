@@ -35,11 +35,11 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
         riverManager = rm;
     }
 
-    protected void DrawItem(Color color, Vector3 scaleVector)
+    protected void DrawItem(Color color, Vector3 scaleVector, Vector3 position)
     {
         Gizmos.color = color;
-        if (debugMesh) Gizmos.DrawMesh(debugMesh, 0, transform.position, Quaternion.identity, scaleVector * meshScale);
-        else Gizmos.DrawCube(transform.position, scaleVector * meshScale);
+        if (debugMesh) Gizmos.DrawMesh(debugMesh, 0, position, Quaternion.identity, scaleVector * meshScale);
+        else Gizmos.DrawCube(position, scaleVector * meshScale);
     }
 
     private void SnapToLane()
@@ -51,14 +51,9 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
 
         riverManager.AssignToCurveSection(Distance, lane, out Vector3 pos, out Quaternion rot);
 
-        pos += (transform.right * (lane - 1)) * GlobalRiverValues.RiverLaneDistance; //TODO: Assign this to AssignToCurveSection
+        pos += transform.right * (lane - 1) * GlobalRiverValues.RiverLaneDistance / 16f; //TODO?: Assign this to AssignToCurveSection
         pos += Vector3.up * height;
         transform.SetLocalPositionAndRotation(pos, rot);
-    }
-
-    private void CurveOffset()
-    {
-
     }
 
     /// <summary>

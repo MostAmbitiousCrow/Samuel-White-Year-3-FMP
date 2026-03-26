@@ -41,7 +41,7 @@ MonoBehaviour:
           targetBoatSpaces: 1
           targetSpace: 2
           targetBoatSide: 0
-          boardingFacingDirection: 1
+          boardingFacingDirection: -1
       lane: 1
       distance: 50
       height: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
           targetLeftSide: 1
           startFacingDirection: 1
           targetBoatSpaces: 1
-          targetSpace: 0
+          targetSpace: 1
           targetBoatSide: 0
           boardingFacingDirection: 1
       lane: 2
@@ -71,3 +71,4 @@ MonoBehaviour:
       distance: 10
       height: 0
     gemstoneGates: []
+    slipStreams: []

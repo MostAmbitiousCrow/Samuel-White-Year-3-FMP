@@ -18,10 +18,18 @@ public class TutorialSectionReader : MonoBehaviour
     /// <summary> GameObject reference to detect whether the tutorial object exists </summary>
     public static GameObject TutorialObject;
 
+    // Input Action Listeners
     private Action _movedAction;
     private Action _vaultedAction;
+    private Action _heavyVaultedAction;
     private Action _jumpedAction;
-    private Action _steeredAction;
+    private Action _jumpedHeavyAction;
+    private Action _steeredLeftAction;
+    private Action _steeredRightAction;
+    private Action _targetKilledAction;
+    
+    // Skip Tutorial Input
+    private Action _tutorialSkipAction;
 
     private void Awake()
     {
@@ -29,13 +37,26 @@ public class TutorialSectionReader : MonoBehaviour
         _conditions =  new bool[tutorialContents.Length];
         
         // Assign event checks from player and boat controllers
+        // Move Input Section
         _movedAction += () => OnAction(0);
+        
+        // Vault Input Section
         _vaultedAction += () => OnAction(1);
-        _jumpedAction += () => OnAction(2);
-        _steeredAction += () => OnAction(3);
+        _heavyVaultedAction +=  () => OnAction(2);
+        
+        // Jump Input Section
+        _jumpedAction += () => OnAction(3);
+        _jumpedHeavyAction += () => OnAction(4);
+        
+        // Boat Steering Section
+        _steeredLeftAction += () => OnAction(5);
+        _steeredRightAction += () => OnAction(6);
+        
+        // Enemy Killed Section
+        // _targetKilledAction += () => OnAction(7); // TODO
         
         // Obtain all the tutorial content classes
-        tutorialContents = GetComponentsInChildren<TutorialContent>();
+        tutorialContents = GetComponentsInChildren<TutorialContent>(false);
     }
 
     #region Enable/Disable
@@ -48,8 +69,12 @@ public class TutorialSectionReader : MonoBehaviour
         // Assign event checks from player and boat controllers
         PlayerCharacter.OnPlayerMoved += _movedAction;
         PlayerCharacter.OnPlayerVaulted += _vaultedAction;
+        PlayerCharacter.OnPlayerHeavyVaulted += _heavyVaultedAction;
         PlayerCharacter.OnPlayerJumped += _jumpedAction;
-        Boat_Controller.OnBoatMoved += _steeredAction;
+        PlayerCharacter.OnPlayerHeavyJumped += _jumpedHeavyAction;
+        Boat_Controller.OnSteeredLeftAction += _steeredLeftAction;
+        Boat_Controller.OnSteeredRightAction += _steeredRightAction;
+        PlayerCharacter.OnPlayerKilledEnemy += _targetKilledAction;
         
         TutorialComplete = false;
 
@@ -67,8 +92,12 @@ public class TutorialSectionReader : MonoBehaviour
         // Unassign  event checks from player and boat controllers
         PlayerCharacter.OnPlayerMoved -= _movedAction;
         PlayerCharacter.OnPlayerVaulted -= _vaultedAction;
+        PlayerCharacter.OnPlayerHeavyVaulted -= _heavyVaultedAction;
         PlayerCharacter.OnPlayerJumped -= _jumpedAction;
-        Boat_Controller.OnBoatMoved -= _steeredAction;
+        PlayerCharacter.OnPlayerHeavyJumped -= _jumpedHeavyAction;
+        Boat_Controller.OnSteeredLeftAction -= _steeredLeftAction;
+        Boat_Controller.OnSteeredRightAction -= _steeredRightAction;
+        PlayerCharacter.OnPlayerKilledEnemy -= _targetKilledAction;
         
         // Cancel input graphic repeating updates
         foreach (var content in tutorialContents) content.CancelInvoke(nameof(content.UpdateInputGraphics));
@@ -82,6 +111,8 @@ public class TutorialSectionReader : MonoBehaviour
     #region Action Event
     private void OnAction(int id)
     {
+        if (TutorialComplete) return;
+        
         // Check if the previous condition has been met. Skip if the first action is selected.
         var prevCondition = _conditions[Mathf.Clamp(id-1, 0, _conditions.Length-1)];
         // ReSharper disable once InvertIf
@@ -95,13 +126,41 @@ public class TutorialSectionReader : MonoBehaviour
 
     private void Start()
     {
+        StartTutorialSequence();
+    }
+
+    private void OnValidate()
+    {
+        tutorialContents = GetComponentsInChildren<TutorialContent>(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace)) StopTutorialSequence();
+    }
+
+    public void StartTutorialSequence()
+    {
+        if (_inputReaderRoutine != null) StopCoroutine(_inputReaderRoutine);
+        
         // Initially set all canvas groups to be invisible
         foreach (var content in tutorialContents) content.CanvasGroup.alpha = 0f;
 
-        // TODO: Match to the Game Manager to trigger on game start
-        StartCoroutine(InputReaderRoutine());
+        // TODO: Match to the Game Manager to trigger on game initialised
+        _inputReaderRoutine = StartCoroutine(InputReaderRoutine());
     }
 
+    public void StopTutorialSequence()
+    {
+        if (_inputReaderRoutine != null) StopCoroutine(_inputReaderRoutine);
+        
+        // Initially set all canvas groups to be invisible
+        foreach (var content in tutorialContents) content.CanvasGroup.alpha = 0f;
+        
+        OnTutorialCompleted();
+    }
+
+    private Coroutine _inputReaderRoutine;
     private IEnumerator InputReaderRoutine()
     {
         for (int i = 0; i < tutorialContents.Length; i++)

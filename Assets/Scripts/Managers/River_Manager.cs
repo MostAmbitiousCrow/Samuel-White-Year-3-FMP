@@ -2,6 +2,7 @@ using EditorAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CarterGames.Assets.AudioManager;
 using GameCharacters;
 using Unity.Mathematics;
 using UnityEngine;
@@ -17,27 +18,20 @@ public class River_Manager : MonoBehaviour
     [SerializeField] private Boat_Controller boatController;
     public Boat_Controller BoatController => boatController;
 
+    [Header("Audio")] [SerializeField] private InspectorAudioClipPlayer speedIncreaseSound;
+    [SerializeField] private InspectorAudioClipPlayer speedDecreaseSound;
+
     [Header("River Stats")]
 
     [Tooltip("The current speed of the rivers flow. Affects the rivers animation.")]
-    [SerializeField] private float riverFlowSpeed;
-
-    public float RiverFlowSpeed
-    {
-        get => riverFlowSpeed;
-        set
-        {
-            riverFlowSpeed = value;
-            OnRiverSpeedUpdate?.Invoke();
-        }
-    }
+    public float riverFlowSpeed;
     
     [Tooltip("The min/max values of the levels of speed the river can reach")]
-    [MinMaxSlider(0, 50)] public Vector2Int minMaxSpeed = new(0, 50);
+    [MinMaxSlider(0f, 50f)] public Vector2 minMaxSpeed = new(0f, 50f);
     /// <summary> The default speed of the river. Default value is: 1 </summary>
     public int startingRiverSpeed = 50;
     /// <summary> The speed of the river shared across river objects </summary>
-    public int currentRiverSpeed = 5;
+    public float currentRiverSpeed = 5f;
     /// <summary> The minimum amount of distance river objects can spawn in the z axis </summary>
     public int riverObjectSpawnDistance = 45;
     /// <summary> Is the river currently paused? </summary>
@@ -117,8 +111,7 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public bool CheckAvailableLane(int lane)
     {
-        if (lane > RiverLanes.Count || lane < 0) return false;
-        else return true;
+        return lane <= RiverLanes.Count && lane >= 0;
     }
 
     /// <summary>
@@ -169,40 +162,68 @@ public class River_Manager : MonoBehaviour
     [Tooltip("The curve representing the speed up transition")] // Don't know any other way to describe it :sob
     [SerializeField] private AnimationCurve speedCurve;
 
-    [Button]
-    public void DevSlowDownRiver()
+    private int _previousSpeed;
+    public void SetRiverSpeed(int amount = 10, bool bypassCheck = true, bool playSound = true)
     {
-        currentRiverSpeed -= 10;
-        RiverFlowSpeed = currentRiverSpeed * 10f;
+        
+        if (!bypassCheck)
+        {
+           if (amount > minMaxSpeed.y)
+           {
+               print("River speed has reached maximum speed!");
+               return;
+           }
+   
+           if (amount < minMaxSpeed.x)
+           {
+               print("River speed has reached minimum speed!");
+               return;
+           }
+        }
+
+        targetRiverSpeed = amount;
+        if (playSound)
+        {
+            if (amount > _previousSpeed) speedIncreaseSound.Play();
+            else speedDecreaseSound.Play();
+        }
+        _previousSpeed = amount;
     }
-    
+
+    private int storedRiverSpeed;
+    [Button]
+    public void HaltRiver(int amount = 10)
+    {
+        _capturedTime = Time.time;
+        // Skip storing value if halting whilst slowed
+        if (!isHalted) storedRiverSpeed = targetRiverSpeed;
+        isHalted = true;
+        SetRiverSpeed(targetRiverSpeed / 2, true, false);
+    }
+
     /// <summary> The method to slow down the global river speed </summary>
     /// <param name="amount"></param>
-    /// <param name="multiplier"></param>
-    public void SlowDownRiver(int amount = 1, float multiplier = 10f)
+    [Button]
+    public void SlowDownRiver(int amount = 10, bool bypassRange = false)
     {
-        int targetSpeed = currentRiverSpeed - amount;
-        currentRiverSpeed = targetSpeed;
+        var targetSpeed = targetRiverSpeed - amount;
 
-        if (targetSpeed < minMaxSpeed.x) // If target speed is less than the min speed value
+        if (targetSpeed < minMaxSpeed.x && !bypassRange) // If target speed is less than the min speed value
         {
             print("River speed has reached minimum speed");
             return;
         }
+        targetRiverSpeed = targetSpeed;
+        
         OnRiverSpeedUpdate?.Invoke();
-        _speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, true, multiplier));
+        speedDecreaseSound.Play();
     }
 
-    [Button]
-    public void DevSpeedUpRiver()
-    {
-        currentRiverSpeed += 10;
-        RiverFlowSpeed = currentRiverSpeed * 10f;
-    }
     /// <summary> The method to speed up the global river speed </summary>
-    public void SpeedUpRiver(int amount = 1, float multiplier = 5f)
+    [Button]
+    public void SpeedUpRiver(int amount = 10)
     {
-        int targetSpeed = currentRiverSpeed + amount;
+        var targetSpeed = targetRiverSpeed + amount;
 
         if (targetSpeed > minMaxSpeed.y)
         {
@@ -210,44 +231,12 @@ public class River_Manager : MonoBehaviour
             return;
         }
 
-        if (_speedRoutine != null)
-        {
-            StopCoroutine(_speedRoutine);
-        }
-
-        currentRiverSpeed = targetSpeed;
-
+        targetRiverSpeed = targetSpeed;
         IsTransitioning = true;
 
         OnRiverSpeedUpdate?.Invoke();
-        _speedRoutine = StartCoroutine(RiverSpeedIncreaseRoutine(targetSpeed, false, multiplier));
+        speedIncreaseSound.Play();
     }
-
-
-    private Coroutine _speedRoutine;
-    private IEnumerator RiverSpeedIncreaseRoutine(int targetSpeed, bool decrease, float multiplier)
-    {
-        float startSpeed = RiverFlowSpeed;
-        float t = 0f;
-
-        while (t < 1f)
-        {
-            if (!IsPaused)
-            {
-                t += Time.deltaTime * multiplier * GameManager.GameLogic.GamePauseInt;
-                t = Mathf.Clamp01(t);
-
-                float curveValue = slowCurve?.Evaluate(t) ?? t;
-                RiverFlowSpeed = Mathf.Lerp(startSpeed, targetSpeed, curveValue);
-            }
-
-            yield return null;
-        }
-
-        RiverFlowSpeed = targetSpeed;
-        IsTransitioning = false;
-    }
-
 
     /// <summary> Completely stops the speed of the river with optional smoothing </summary>
     public void PauseRiver(bool smoothing = false, float smoothAmount = 1f) //TODO
@@ -266,8 +255,45 @@ public class River_Manager : MonoBehaviour
     /// <summary> Completely resets all changes made to the river to their default value and stops any speed transitions </summary>
     public void ResetRiver()
     {
-        if (_speedRoutine != null) StopCoroutine(_speedRoutine);
         currentRiverSpeed = startingRiverSpeed;
+        targetRiverSpeed = startingRiverSpeed;
+    }
+
+    // ==============================================================
+    // New River Speed Controls
+    // ==============================================================
+    
+    [SerializeField] private float slowTime = .5f;
+    [SerializeField] private float speedRecoveryTime = 2.4f;
+    [SerializeField, ReadOnly] private bool isHalted;
+    private float _referenceVelocity;
+    private float _capturedTime;
+    [SerializeField] private int targetRiverSpeed;
+    public int TargetRiverSpeed => targetRiverSpeed;
+    [SerializeField] private int slowTargetRiverSpeed;
+    
+    private void Update()
+    {
+        if (IsPaused) return;
+        
+        // Slow down boat to target slow speed
+        if (isHalted)
+        {
+            riverFlowSpeed = currentRiverSpeed = Mathf.SmoothDamp
+                (currentRiverSpeed, targetRiverSpeed, ref _referenceVelocity, slowTime / 10f);
+            
+            if (Time.time > _capturedTime + speedRecoveryTime)
+            {
+                isHalted = false;
+                targetRiverSpeed = storedRiverSpeed;
+                OnRiverSpeedUpdate?.Invoke();
+            }
+        }
+        else
+        {
+            riverFlowSpeed = currentRiverSpeed = Mathf.SmoothDamp
+                (currentRiverSpeed, targetRiverSpeed, ref _referenceVelocity, speedRecoveryTime / 10f);
+        }
     }
     #endregion
 

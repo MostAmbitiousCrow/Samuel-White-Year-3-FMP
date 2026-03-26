@@ -57,11 +57,11 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      targetSideSpaces: 0
+      targetSideSpaces: 1
       targetSideSpace: 0
       targetLeftSide: 0
-      startFacingDirection: 1
-      targetBoatSpaces: 0
-      targetSpace: 0
+      startFacingDirection: -1
+      targetBoatSpaces: 1
+      targetSpace: 2
       targetBoatSide: 0
-      boardingFacingDirection: 1
+      boardingFacingDirection: -1

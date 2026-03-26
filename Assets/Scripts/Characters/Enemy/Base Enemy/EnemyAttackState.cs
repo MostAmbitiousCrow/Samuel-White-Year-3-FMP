@@ -9,6 +9,7 @@ public class EnemyAttackState : EnemyState
 
     public override void OnExit()
     {
+        Sc.isAttacking = false;
 
     }
 

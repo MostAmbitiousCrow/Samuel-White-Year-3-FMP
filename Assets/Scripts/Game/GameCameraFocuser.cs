@@ -29,23 +29,23 @@ public class GameCameraFocuser : MonoBehaviour
     
     private void Start()
     {
-        if (playerTransform == null)
+        if (!playerTransform)
         {
             var p = FindFirstObjectByType<PlayerCharacter>();
             if (p) playerTransform = p.transform;
         }
-        if (boatTransform == null)
+        if (!boatTransform)
         {
             var b = FindFirstObjectByType<Boat_Controller>();
             boatTransform = b.transform;
         }
-        if (camera == null) camera = Camera.main;
+        if (!camera) camera = Camera.main;
 
         _slideValue = fovSlideRange.x;
         UpdateFOV();
         // Store origin position
         originPosition = transform.localPosition;
-        if (camera != null) camera.fieldOfView = _targetFOV;
+        if (camera) camera.fieldOfView = _targetFOV;
     }
 
     private void OnEnable()
@@ -124,9 +124,9 @@ public class GameCameraFocuser : MonoBehaviour
 
     private void UpdateFOV()
     {
-        float speed = River_Manager.Instance.currentRiverSpeed;
-        Vector2Int minMax = River_Manager.Instance.minMaxSpeed;
-        float t = Mathf.InverseLerp(minMax.x, minMax.y, speed); //TODO: Obtain the minimum and maximum speed of the river!
+        float speed = River_Manager.Instance.TargetRiverSpeed;
+        Vector2 minMax = River_Manager.Instance.minMaxSpeed;
+        float t = Mathf.InverseLerp(minMax.x, minMax.y, speed);
         
         _targetFOV = Mathf.Lerp(fovSlideRange.x, fovSlideRange.y, t);
     }

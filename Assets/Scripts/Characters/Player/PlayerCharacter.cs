@@ -29,17 +29,19 @@ namespace GameCharacters
         private InputAction _vaultLightAction;
         private InputAction _vaultHeavyAction;
         
-        #region Input Listeners
+        #region Event Listeners
 
-        // public delegate void PlayerMoved();
+        // Action Listening
         public static event Action OnPlayerMoved;
-        // public delegate void PlayerVaulted();
         public static event Action OnPlayerVaulted;
-        // public delegate void PlayerJumped();
+        public static event Action OnPlayerHeavyVaulted;
         public static event Action OnPlayerJumped;
+        public static event Action OnPlayerHeavyJumped;
 
+        // Event Listening
         public delegate void PlayerDied();
         public static PlayerDied OnPlayerDied;
+        public static event Action OnPlayerKilledEnemy;
 
         #endregion
 
@@ -66,6 +68,9 @@ namespace GameCharacters
             _vaultLightAction?.Enable();
             _vaultHeavyAction?.Enable();
 
+            // TODO: TEMP. Reset health whenever a new level is loaded
+            GameLevelManager.OnLevelLoaded += HealthComponent.RestoreHealth;
+
             if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
             HealthComponent.IsInvincible = GameSettingsManager.DoPlayerInvincibility;
 
@@ -77,6 +82,9 @@ namespace GameCharacters
             _moveAction?.Disable();
             _vaultLightAction?.Disable();
             _vaultHeavyAction?.Disable();
+            
+            // TODO: TEMP. Reset health whenever a new level is loaded
+            GameLevelManager.OnLevelLoaded += HealthComponent.RestoreHealth;
 
             if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
             
@@ -127,7 +135,7 @@ namespace GameCharacters
             {
                 MoveToSpaceFromDirection(Mathf.RoundToInt(MoveDirection)); 
                 // Trigger OnPlayerMoved listeners. Used for the Tutorial Section.
-                OnPlayerMoved?.Invoke();
+                if (isMoving) OnPlayerMoved?.Invoke(); // If moving check is to confirm that the player is indeed moving
             }
             if (!isVaulting) return;
             WillMove = true;
@@ -182,7 +190,8 @@ namespace GameCharacters
             AudioManager.Play(Clip.Plyr_Vault);
             
             // Trigger OnPlayerVaulted listeners. Used for the Tutorial Section.
-            OnPlayerVaulted?.Invoke();
+            if (isVaultingHeavily) OnPlayerHeavyVaulted?.Invoke();
+            else OnPlayerVaulted?.Invoke();
         }
 
         protected override void OnVaulted()
@@ -190,7 +199,7 @@ namespace GameCharacters
             base.OnVaulted();
             if (isVaultingHeavily)
             {
-                TriggerHitStop(.1f);
+                TriggerHitStop(.05f);
                 AudioManager.Play(Clip.Plyr_Land_1); // TODO: needs a new sfx for heavy vaulting
             }
             else AudioManager.Play(Clip.Plyr_Land_0);
@@ -212,13 +221,16 @@ namespace GameCharacters
             base.OnJumped();
             if (isVaultingHeavily)
             {
-                TriggerHitStop(.1f);
+                TriggerHitStop(.05f);
                 AudioManager.Play(Clip.Plyr_Jump_1); // Heavy Jump
+                OnPlayerHeavyJumped?.Invoke();
             }
-            else AudioManager.Play(Clip.Plyr_Jump_0); // Light Jump
-            
-            // Trigger OnPlayerJumped listeners. Used for the Tutorial Section.
-            OnPlayerJumped?.Invoke();
+            else
+            {
+                // Trigger OnPlayerJumped listeners. Used for the Tutorial Section.
+                OnPlayerJumped?.Invoke();
+                AudioManager.Play(Clip.Plyr_Jump_0); // Light Jump
+            }
         }
 
         protected override void OnLanded()
@@ -226,10 +238,16 @@ namespace GameCharacters
             base.OnLanded();
             if (isVaultingHeavily)
             {
-                TriggerHitStop(.1f);
+                TriggerHitStop(.05f);
                 AudioManager.Play(Clip.Plyr_Land_1);
             }
             else AudioManager.Play(Clip.Plyr_Land_0);
+        }
+
+        protected override void OnTargetEliminated()
+        {
+            base.OnTargetEliminated();
+            OnPlayerKilledEnemy?.Invoke(); // Enemy Killed Check for the Tutorial
         }
 
         #region Gemstone Events

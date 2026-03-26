@@ -608,7 +608,7 @@ PrefabInstance:
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: showEvents
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
@@ -676,11 +676,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: c84f27b4e35a86d4f8deea27ed5ac28c,
         type: 2}
-    - target: {fileID: 7595503734188337867, guid: d441f6f7cd1d04bcca0eba886cf78253,
-        type: 3}
-      propertyPath: m_AnimatePhysics
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7654244735121194933, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: m_Name

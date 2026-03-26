@@ -105,14 +105,14 @@ namespace GameCharacters
             if (animate) StartCoroutine(DirectionRoutine(direction));
             else
             {
-                isDirecting = true;
-                // Previous Rotation
-                var currentRotation = currentDirection switch
-                {
-                    MoveDirection.Left => 0f,
-                    MoveDirection.Right => 180f,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
+                // isDirecting = true;
+                // // Previous Rotation
+                // var currentRotation = currentDirection switch
+                // {
+                //     MoveDirection.Left => 0f,
+                //     MoveDirection.Right => 180f,
+                //     _ => throw new ArgumentOutOfRangeException()
+                // };
             
                 currentDirection = direction;
 
@@ -124,8 +124,8 @@ namespace GameCharacters
                     _ => throw new ArgumentOutOfRangeException()
                 };
                 
-                transform.localRotation = Quaternion.Euler(0f, Mathf.Lerp(currentRotation, targetRotation, 1f), 0f);
-                // print("Direction: " + direction);
+                transform.localRotation = Quaternion.Euler(0f, targetRotation, 0f);
+                print($"Set {name} direction to: {direction}");
                 isDirecting = false;
             }
         }
@@ -182,7 +182,7 @@ namespace GameCharacters
         public virtual void OnTookDamage()
         {
             animator.SetTrigger("TookDamage");
-            TriggerHitStop(.1f);
+            TriggerHitStop();
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace GameCharacters
             characterCollider.enabled = false;
             rb.isKinematic = true;
             animator.SetTrigger("Died");
-            TriggerHitStop(.5f);
+            TriggerHitStop(.1f);
             // Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
         }
 

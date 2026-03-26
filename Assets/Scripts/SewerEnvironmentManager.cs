@@ -25,7 +25,7 @@ public class SewerEnvironmentManager : MonoBehaviour
     {
         foreach (var item in sewerObjects)
         {
-            item.MaxSpeed = River_Manager.Instance.RiverFlowSpeed;
+            item.MaxSpeed = River_Manager.Instance.riverFlowSpeed;
         }
     }
 

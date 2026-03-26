@@ -41,6 +41,11 @@ public class GameOverMenu : MonoBehaviour
         GameManager.SceneManager.LoadScene(MainSceneManager.GameScenes.MainMenu);
     }
 
+    public void RetryGame()
+    {
+        GameManager.SceneManager.LoadScene(MainSceneManager.GameScenes.MainGame);
+    }
+
     public void DoEffects()
     {
         CameraShaker.Presets.Explosion3D(); // TODO: Add a preset for art explosions

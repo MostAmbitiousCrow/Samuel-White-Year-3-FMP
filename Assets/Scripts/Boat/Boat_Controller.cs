@@ -23,7 +23,6 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     [SerializeField] private float stunDuration = 1.5f;
     [Tooltip("How much of the current boats speed is decreased when an obstacle is hit")]
     [SerializeField] private float stunSlowMultiplier = .5f;
-    [FormerlySerializedAs("_isMoving")]
     [Space(10)]
     [SerializeField, ReadOnly] private bool isMoving;
     public bool IsMoving => isMoving;
@@ -48,15 +47,20 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
 
     [Header("Components")]
     [SerializeField] private Transform propellerArt;
+    [SerializeField] private ArtExplode artExplode;
+    [SerializeField] private RiverSplineObject splineObject;
 
     #region Event Listeners
     public static event Action OnBoatMoved;
+    public static event Action OnSteeredLeftAction;
+    public static event Action OnSteeredRightAction;
     #endregion
     #endregion
 
     private void Awake()
     {
-        // TODO: Obtain River Spline Object Reference
+        splineObject = GetComponentInParent<RiverSplineObject>();
+        artExplode = GetComponent<ArtExplode>();
     }
 
     private void Start()
@@ -74,7 +78,12 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
 
         _direction = Mathf.RoundToInt(Mathf.Sign(localPos.x));
 
+        // Skip if the direction wasn't either left or right
         if (_direction == 0) return;
+
+        // Trigger Steered Action Direction (for the tutorial)
+        if (_direction > 0f) OnSteeredRightAction?.Invoke();
+        else OnSteeredLeftAction?.Invoke();
         
         MoveToLane(_direction);
         
@@ -156,6 +165,12 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     private void AnimatePropeller()
     {
         propellerArt.Rotate(Vector3.up, River_Manager.Instance.currentRiverSpeed * 1000f * Time.deltaTime);
+    }
+
+    public void DestroyBoat()
+    {
+        riverSplineObject.StopMoving();
+        artExplode.ExplodeArt();
     }
     #endregion
 

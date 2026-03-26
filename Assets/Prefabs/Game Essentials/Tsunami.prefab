@@ -59,6 +59,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4967,6 +4970,9 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5071,23 +5077,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065cb933c8a12c4c8bb04efe5a8b837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canProgress: 1
-  _progressSpeedMultiplier: 0.1
-  _progressSpeed: 1
-  _speedUntilProgress: 2
-  _dangerMark: 0.9
-  _dangerMarkSpeedDrop: 0.1
-  _hasReachedPlayer: 0
-  _hasReachedDangerMark: 0
-  _visualProgress: 0
-  _actualProgress: 0
-  _splashParticles: {fileID: 3161554651739976547}
-  _audio: {fileID: 2446643839255965415}
-  _tsunamiShadowController: {fileID: 0}
-  _riverManager: {fileID: 0}
-  _decalProjector: {fileID: 8314365785718215450}
-  _shadowMinMaxOffset: {x: -10, y: 0}
-  _tsunamiArt: {fileID: 560267643562022502}
+  canProgress: 1
+  progressSpeedMultiplier: 0.01
+  progressSpeed: 0
+  speedUntilProgress: 3
+  dangerMark: 1
+  dangerMarkSpeedDrop: 0.6
+  hasReachedPlayer: 0
+  hasReachedDangerMark: 0
+  visualProgress: 0
+  actualProgress: 0
+  splashParticles: {fileID: 0}
+  audio: {fileID: 0}
+  tsunamiShadowController: {fileID: 0}
+  riverManager: {fileID: 0}
+  decalProjector: {fileID: 0}
+  shadowMinMaxOffset: {x: 0, y: 0}
+  tsunamiArt: {fileID: 0}
 --- !u!82 &2446643839255965415
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5099,6 +5105,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

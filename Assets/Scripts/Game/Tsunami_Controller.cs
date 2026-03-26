@@ -3,142 +3,117 @@ using EditorAttributes;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(AudioSource))]
-public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
+public class TsunamiController : MonoBehaviour, IAffectedByRiver
 {
     [Header("Data")]
     [Tooltip("Can the Tsunami progress towards the player?")]
-    [SerializeField] bool _canProgress = true;
+    [SerializeField] bool canProgress = true;
     /// <summary> Indicates whether the Tsunami is currently losing progress </summary>
     public bool IsReversing { get; private set; }
     /// <summary> Indicates whether the Tsunami has made no progress </summary>
     public bool IsIdle { get; private set; }
     /// <summary> Check for if the Tsunami has passed the player and has essentially ended the game </summary>
-    public bool HasReachedPlayer { get { return _hasReachedPlayer; } }
-    public bool HasReachedDangerMark { get { return _hasReachedDangerMark; } }
+    public bool HasReachedPlayer => hasReachedPlayer;
+    public bool HasReachedDangerMark => hasReachedDangerMark;
 
     [Space]
     [Tooltip("Multiplier for the speed of the Tsunami")]
-    [SerializeField] float _progressSpeedMultiplier = .01f;
+    [SerializeField] float progressSpeedMultiplier = .01f;
     [Tooltip("The current speed of the Tsunami, based on the speed of the River")]
-    [SerializeField, ReadOnly] int _progressSpeed = 0;
+    [SerializeField, ReadOnly] float progressSpeed = 0;
     [Tooltip("The speed of the river until the Tsunami begins to catchup with the player")]
-    [SerializeField] int _speedUntilProgress = 3;
+    [SerializeField] int speedUntilProgress = 3;
 
     [Space]
 
     [Tooltip("The percentage quota of the tsunami meter until activating the danger mark")]
-    [SerializeField, Range(0f, 1f)] float _dangerMark = 95f;
+    [SerializeField, Range(0f, 1f)] float dangerMark = 95f;
     [Tooltip("The multiplier applied to the river progress upon reaching the danger mark")]
-    [SerializeField, Range(0f, 1f)] float _dangerMarkSpeedDrop = .6f;
+    [SerializeField, Range(0f, 1f)] float dangerMarkSpeedDrop = .6f;
 
     [Header("Status")]
-    [SerializeField, ReadOnly] bool _hasReachedPlayer;
-    [SerializeField, ReadOnly] bool _hasReachedDangerMark;
-    [SerializeField, ProgressBar(1f), Range(0f, 1f)] float _visualProgress = 0f;
-    [SerializeField, ProgressBar(1f), Range(0f, 1f)] float _actualProgress = 0f;
-    public float ActualProgress { get { return _actualProgress; } }
+    [SerializeField, ReadOnly] bool hasReachedPlayer;
+    [SerializeField, ReadOnly] bool hasReachedDangerMark;
+    [SerializeField, ProgressBar(1f), Range(0f, 1f)] float visualProgress = 0f;
+    [SerializeField, ProgressBar(1f), Range(0f, 1f)] float actualProgress = 0f;
+    public float ActualProgress => actualProgress;
 
     [Header("Components")]
     //[SerializeField] Transform _shadow; // TODO: The shadow that looms over the camera (since the game doesn't use any lighting)
-    [SerializeField] ParticleSystem _splashParticles;
-    [SerializeField] AudioSource _audio;
+    [SerializeField] ParticleSystem splashParticles;
+    [SerializeField] AudioSource audio;
     [Space]
-    [SerializeField] Tsunami_Shadow_Controller _tsunamiShadowController;
-    [SerializeField] River_Manager _riverManager;
+    [SerializeField] Tsunami_Shadow_Controller tsunamiShadowController;
+    [SerializeField] River_Manager riverManager;
 
     #region Initialisers
     private void Awake()
     {
-        if (!_audio) _audio = GetComponent<AudioSource>();
-        if (!_riverManager) _riverManager = FindFirstObjectByType<River_Manager>();
+        if (!audio) audio = GetComponent<AudioSource>();
+        if (!riverManager) riverManager = FindFirstObjectByType<River_Manager>();
         //GameManager.GameLogic.onGameStarted += StartProgressing;
         //_riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
     }
     private void OnEnable()
     {
         GameManager.GameLogic.OnGameStarted += StartProgressing;
-        _riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
+        riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
     }
     private void OnDisable()
     {
         GameManager.GameLogic.OnGameStarted -= StartProgressing;
-        _riverManager.OnRiverSpeedUpdate -= OnRiverUpdated;
+        riverManager.OnRiverSpeedUpdate -= OnRiverUpdated;
     }
     #endregion
     private void Update()
     {
-        if (!_canProgress) return;
+        if (!canProgress) return;
 
         UpdateProgress();
     }
 
     #region Injection
-    public void InjectRiverManager(River_Manager manager) => _riverManager = manager;
+    public void InjectRiverManager(River_Manager manager) => riverManager = manager;
     #endregion
 
     #region Controls
-    void StartProgressing()
+
+    private void StartProgressing()
     {
-        _canProgress = true;
+        canProgress = true;
         ResetProgress();
     }
 
     public void Pause()
     {
-        _canProgress = false;
+        canProgress = false;
         UpdateProgressElements();
     }
 
     public void Resume()
     {
-        _canProgress = true;
+        canProgress = true;
         UpdateProgressElements();
     }
     #endregion
 
     #region Progress Methods
-
-    /*
-    IEnumerator ReverseProgress(float time, bool bypassDangerMark)
-    {
-        float t = 0f;
-        IsReversing = true;
-
-
-        while (t < time)
-        {
-            if (bypassDangerMark)
-                _actualProgress -= Time.deltaTime * _progressSpeedMultiplier * GameManager.GameLogic.GamePauseInt;
-            else
-            {
-                if (CheckDangerMark()) _actualProgress -= Time.deltaTime * _progressSpeed * _dangerMarkSpeedDrop * GameManager.GameLogic.GamePauseInt;
-                else _actualProgress -= Time.deltaTime * _progressSpeed * GameManager.GameLogic.GamePauseInt;
-            }
-
-        }
-
-        IsReversing = false;
-
-        yield break;
-    }
-    */
-
     // Called whenever the River Managers speed value is updated
-    void OnRiverUpdated()
+    private void OnRiverUpdated()
     {
         RecalculateProgression();
     }
 
-    void RecalculateProgression() //TODO
+    private void RecalculateProgression() // TODO
     {
-        if (_riverManager.currentRiverSpeed <= _speedUntilProgress) IsReversing = false;
+        if (riverManager.currentRiverSpeed <= speedUntilProgress) IsReversing = false;
         else IsReversing = true;
 
-        _progressSpeed = (_riverManager.minMaxSpeed.y - _speedUntilProgress) - _riverManager.currentRiverSpeed;
+        progressSpeed = (riverManager.minMaxSpeed.y - speedUntilProgress) - riverManager.riverFlowSpeed;
 
     }
 
-    void UpdateProgress()
+    private void UpdateProgress()
     {
         if(HasReachedPlayer)
         {
@@ -146,45 +121,44 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
             return;
         }
 
-        (_actualProgress, _visualProgress) = CalculateProgress();
+        (actualProgress, visualProgress) = CalculateProgress();
         UpdateProgressElements();
-        if (_hasReachedDangerMark) UpdateShadow();
-        else _decalProjector.pivot = new(0f, 0f, _shadowMinMaxOffset.x);
+        if (hasReachedDangerMark) UpdateShadow();
+        else decalProjector.pivot = new Vector3(0f, 0f, shadowMinMaxOffset.x);
     }
 
-    void ResetProgress()
+    private void ResetProgress()
     {
-        _visualProgress = 0f;
-        _actualProgress = 0f;
+        visualProgress = 0f;
+        actualProgress = 0f;
         // TODO: Update bool checks
         UpdateProgressElements();
     }
 
-    void UpdateProgressElements() => Game_UI.Instance.UpdateTsunamiMeter(_visualProgress);
+    private void UpdateProgressElements() => Game_UI.Instance.UpdateTsunamiMeter(visualProgress);
 
-    (float, float) CalculateProgress() // TODO: polish calculation
+    private (float, float) CalculateProgress() // TODO: polish calculation
     {
         // Calculate actual progress
-        float a = _actualProgress + Time.deltaTime * _progressSpeed *
-            (CheckDangerMark()? _dangerMarkSpeedDrop : 1f) 
-            * GameManager.GameLogic.GamePauseInt * _progressSpeedMultiplier;
+        var a = actualProgress + Time.deltaTime * progressSpeed *
+            (CheckDangerMark()? dangerMarkSpeedDrop : 1f) 
+            * GameManager.GameLogic.GamePauseInt * progressSpeedMultiplier;
 
         // Limit progress to 1f
         a = Mathf.Clamp(a, 0f, 1f);
 
         // Actual Progress rounded for visual simplicity
-        float v = Mathf.Round(a * 1000f) / 1000f;
+        var v = Mathf.Round(a * 1000f) / 1000f;
 
-        if (a == 1f) _hasReachedPlayer = true;
-        else _hasReachedPlayer = false;
-        if (a == 0f) return (0f, 0f);
-        else return (a, v);
+        // Check if the player distance has been reached by the Tsunami
+        hasReachedPlayer = Mathf.Approximately(a, 1f);
+        return a == 0f ? (0f, 0f) : (a, v);
     }
 
-    bool CheckDangerMark()
+    private bool CheckDangerMark()
     {
-        bool b = _visualProgress > _dangerMark;
-        _hasReachedDangerMark = b;
+        bool b = visualProgress > dangerMark;
+        hasReachedDangerMark = b;
         return b;
     }
 
@@ -193,24 +167,25 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
     #region Visual Methods
 
     [Header("Shadow Controls")]
-    [SerializeField] DecalProjector _decalProjector;
-    [SerializeField, MinMaxSlider(-10f, 0f)] Vector2 _shadowMinMaxOffset;
+    [SerializeField] DecalProjector decalProjector;
+    [SerializeField, MinMaxSlider(-10f, 0f)] Vector2 shadowMinMaxOffset;
 
-    void UpdateShadow()
+    private void UpdateShadow()
     {
-        float l = Mathf.InverseLerp(_dangerMark, 1f, _visualProgress);
-        _decalProjector.pivot = new(0f, 0f, Mathf.Lerp(_shadowMinMaxOffset.x,
-            _shadowMinMaxOffset.y, l));
+        float l = Mathf.InverseLerp(dangerMark, 1f, visualProgress);
+        decalProjector.pivot = new(0f, 0f, Mathf.Lerp(shadowMinMaxOffset.x,
+            shadowMinMaxOffset.y, l));
 
         //TODO Apply screen shake
     }
 
     [Header("Tsunami Animation")]
-    [SerializeField] Transform _tsunamiArt;
+    [SerializeField] Transform tsunamiArt;
     //[ReadOnly, MinMaxSlider(0f, 60f)] 
     readonly Vector2 _tsunamiPath = new (0f, 60f);
     private float _tsunamiProgress = 0f;
-    void MoveTsunami()
+
+    private void MoveTsunami()
     {
         if (_tsunamiProgress > 1f)
         {
@@ -221,10 +196,7 @@ public class Tsunami_Controller : MonoBehaviour, IAffectedByRiver
 
         _tsunamiProgress += Time.deltaTime * .2f * GameManager.GameLogic.GamePauseInt;
 
-        _tsunamiArt.localPosition = new Vector3(0f, 0f, Mathf.Lerp(_tsunamiPath.x, 
-            _tsunamiPath.y, _tsunamiProgress));
-
+        tsunamiArt.localPosition = new Vector3(0f, 0f, Mathf.Lerp(_tsunamiPath.x, _tsunamiPath.y, _tsunamiProgress));
     }
-
     #endregion
 }

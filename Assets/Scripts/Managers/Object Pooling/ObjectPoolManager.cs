@@ -21,7 +21,9 @@ public class ObjectPoolManager : MonoBehaviour
         // Collectibles
         Gemstone, Fragment,
         // Gate
-        GemstoneGate
+        GemstoneGate,
+        // Slip Stream
+        SlipStream
     }
     
     // Poolable items
@@ -52,6 +54,16 @@ public class ObjectPoolManager : MonoBehaviour
         if (autoStart) InitializePools();
     }
 
+    private void OnEnable()
+    {
+        GameManager.GameLogic.OnGameEnded += DestroyPools;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.GameLogic.OnGameEnded -= DestroyPools;
+    }
+
     public void InitializePools()
     {
         if (IsPoolReady) return;
@@ -66,7 +78,7 @@ public class ObjectPoolManager : MonoBehaviour
         // List through each pool items
         foreach (var item in itemsToPool)
         {
-            if (item.prefab == null) continue; // Skip if the prefab isn't assigned
+            if (!item.prefab) continue; // Skip if the prefab isn't assigned
 
             // Create Object Pool // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Pool.ObjectPool_1.html
             
@@ -77,19 +89,19 @@ public class ObjectPoolManager : MonoBehaviour
             // If object can't access the pool, destroy
             // Set initial capacity and max capacity based on the object pool size
             var newPool = new ObjectPool<GameObject>
-            ( // Thanks Rider for simplifying this lol
+            (
                 createFunc: () => CreateFunction(item.prefab),
-                actionOnGet: (obj) => obj.SetActive(true),
-                actionOnRelease: (obj) =>  obj.SetActive(false),
-                actionOnDestroy: (obj) => Destroy(obj), 
-                defaultCapacity: item.amount,
-                maxSize: item.amount
+                actionOnGet: obj => obj.SetActive(true),
+                actionOnRelease: obj =>  obj.SetActive(false),
+                actionOnDestroy: Destroy, 
+                defaultCapacity: 100,//item.amount, //TODO: The object pool is broken... The temporary fix is to just create a bunch of objects...
+                maxSize: 100//item.amount
             );
             
             _poolDictionary.Add(id, newPool);
             id++;
             
-            Debug.Log($"{item.name} Pool Created. Count = {newPool.CountAll}");
+            // Debug.Log($"{item.name} Pool Created. Count = {newPool.CountAll}");
         }
 
         IsPoolReady = true;
@@ -127,6 +139,12 @@ public class ObjectPoolManager : MonoBehaviour
     /// <summary> Returns an object back to its specific pool. </summary>
     public void ReturnToPool(int id, GameObject instance)
     {
+        if (!instance.activeInHierarchy)
+        {
+            Debug.LogError($"DOUBLE RETURN DETECTED: {instance.name}");
+            return;
+        }
+
         if (_poolDictionary.TryGetValue(id, out var pool))
         {
             pool.Release(instance);
@@ -143,7 +161,7 @@ public class ObjectPoolManager : MonoBehaviour
     [ContextMenu("Clear Pools")]
     public void DestroyPools()
     {
-        if(_poolDictionary == null) return;
+        // if(_poolDictionary.Count < 1) return;
 
         foreach (var pool in _poolDictionary.Values)
         {
@@ -151,5 +169,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
         _poolDictionary.Clear();
         IsPoolReady = false;
+        
+        Debug.Log("Pools Cleared");
     }
 }

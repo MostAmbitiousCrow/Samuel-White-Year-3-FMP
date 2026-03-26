@@ -3,54 +3,58 @@ using UnityEngine;
 
 public class Pipe_Obstacle : River_Obstacle
 {
+    /// <summary> What direction does the pipe connect to on the sewer walls </summary>
     [Header("Pipe Content")]
-    /// <summary>
-    /// What direction does the pipe connect to on the sewer walls
-    /// </summary>
-    public Pipe_Obstacle_Data PipeData = new();
-    [SerializeField] BoxCollider _hitBox;
-    [SerializeField] Transform[] _pipes;
+    public Pipe_Obstacle_Data pipeData = new();
+    [SerializeField] private BoxCollider hitBox;
+    [SerializeField] private Transform[] pipes;
 
     private void OnEnable()
     {
-        foreach (var item in _pipes)
-        {
-            item.gameObject.SetActive(true);
-        }
-    }
-
-    private void OnDisable()
-    {
-        foreach (var item in _pipes)
+        foreach (var item in pipes)
         {
             item.gameObject.SetActive(false);
-        }  
+        }
+        ConnectPipeToSurface();
     }
+
+    // private void OnDisable()
+    // {
+    //     foreach (var item in pipes)
+    //     {
+    //         item.gameObject.SetActive(false);
+    //     }  
+    // }
 
     public void OverridePipeData(Pipe_Obstacle_Data overridedData)
     {
-        PipeData = overridedData;
+        pipeData = overridedData;
         ConnectPipeToSurface();
     }
     
     private void ConnectPipeToSurface()
     {
-        // Set rotation based on pipe connection direction
-        transform.localRotation = Quaternion.Euler(0, 0, (int)PipeData.pipeConnection * 90);
-
-        // Calculate hitbox center and size
-        float pipesLength = _pipes.Length;
-        float totalDistance = PipeData.distancePerPipe * pipesLength;
-        _hitBox.center = pipesLength * 0.5f * PipeData.distancePerPipe * Vector3.right;
-        _hitBox.size = new Vector3(totalDistance + 1, 1, 1);
+        // Calculate hitbox centre and size
+        float pipesLength = pipeData.amount;
+        float totalDistance = pipeData.distancePerPipe * pipesLength;
+        hitBox.center = pipesLength * 0.5f * pipeData.distancePerPipe * Vector3.right;
+        hitBox.size = new Vector3(totalDistance + 1, 1, 1);
 
         // Enable and set the position of additional art pipes
         for (int i = 0; i < pipesLength; i++)
         {
-            Transform pipe = _pipes[i];
+            Transform pipe = pipes[i];
             pipe.gameObject.SetActive(true);
-            pipe.localPosition = (i + 1) * PipeData.distancePerPipe * Vector3.right;
+            pipe.localPosition = (i + 1) * pipeData.distancePerPipe * Vector3.right;
         }
+        
+        Debug.Log($"Pipe Obstacle Constructed. Pipes = {pipesLength}. Direction = {pipeData.pipeConnection}");
+    }
+
+    protected override void OnObjectPlaced()
+    {
+        // Set rotation based on pipe connection direction (Doing this after the object has been set on the river)
+        transform.localRotation *= Quaternion.Euler(0, 0, (int)pipeData.pipeConnection * 90f);
     }
 }
 

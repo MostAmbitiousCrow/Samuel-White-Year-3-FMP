@@ -1,3 +1,4 @@
+using System;
 using EditorAttributes;
 using UnityEngine;
 
@@ -51,7 +52,22 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     #endregion
 
+    // private void OnEnable()
+    // {
+    //     SewerEnvironmentArtManager.OnEnvironmentUpdated += RecalculateRiverPosition;
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     SewerEnvironmentArtManager.OnEnvironmentUpdated -= RecalculateRiverPosition;
+    // }
+
     #region Space Movement Logic
+
+    public void RecalculateRiverPosition()
+    {
+        SetDistanceAndHeight(100f, height);
+    }
 
     public void StartOnLane(int lane, float startDistance, float startHeight)
     {
@@ -89,7 +105,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     public void SetDistanceAndHeight(float offsetFromBoat, float height)
     {
         float spawnDistance =
-            River_Manager.Instance.BoatController.RiverSplineObject.DistanceTravelled
+            River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled
             + offsetFromBoat;
 
         startDistance = spawnDistance;
@@ -102,7 +118,10 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
             out Quaternion rot);
 
         transform.SetPositionAndRotation(pos + Vector3.up * height, rot);
+        OnObjectPlaced();
     }
+
+    protected virtual void OnObjectPlaced() { }
 
     #endregion
 
@@ -132,7 +151,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     #region Math
     protected float GetDistanceToBoat()
     {
-        return startDistance - River_Manager.Instance.BoatController.RiverSplineObject.DistanceTravelled;
+        return startDistance - River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled;
     }
 
     #endregion
@@ -143,12 +162,22 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     public void ReturnToPool()
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.LogError($"{name} tried to return twice!");
+            return;
+        }
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         ObjectPoolManager.Instance.ReturnToPool(PoolObjectID, gameObject);
     }
 
     public virtual void OnSpawned()
     {
+    }
+    
+    private void OnDestroy()
+    {
+        PoolObjectID = -1;
     }
 
     #endregion

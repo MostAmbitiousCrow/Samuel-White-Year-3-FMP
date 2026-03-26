@@ -36,7 +36,7 @@ public class Section_Enemy_Object : SectionBuilderObject
 
     protected override void AdditionalDebug()
     {
-        DrawItem(Color.red, Vector3.one);
+        DrawItem(Color.red, Vector3.one, transform.position);
         name = new($"{ObjectType.Enemy} - {sectionData.enemyType}");
     }
 

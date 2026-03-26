@@ -109,17 +109,23 @@ namespace GameCharacters
         }
 
         /// <summary> Moves the character to a space on the boat via a given side and space </summary>
-        public void MoveToSpace(int side, int space)
+        public void MoveToSpace(int side, int space, bool ignoreChecks = false)
         {
             var sd = Boat_Space_Manager.Instance.GetSpace(side, space);
 
             // Check space access, bypass if not grounded
-            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessOuterBoatSides, sd, !isGrounded))
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess
+                    (canAccessOuterBoatSides, canAccessOuterBoatSides, sd, !isGrounded || ignoreChecks))
             {
+                Debug.Log($"Couldn't Move {name} to space: {sd.spaceID}, Side: {sd.sideID}");
                 return;
             }
 
-            if (isVaulting || !canMove) return;
+            if (isVaulting || !canMove)
+            {
+                Debug.Log($"Couldn't Move {name} to space. Vaulting = {isVaulting}. Can Move = {canMove}");
+                return;
+            }
             TargetSpace(sd);
             isMoving = true;
             OnMoved();
@@ -316,7 +322,10 @@ namespace GameCharacters
         {
             if (MovementTimeElapsed < 1f)
             {
-                float t = groundedMovementCurve.Evaluate(MovementTimeElapsed);
+                float t = isGrounded? 
+                    groundedMovementCurve.Evaluate(MovementTimeElapsed) 
+                    : 
+                    airMovementCurve.Evaluate(MovementTimeElapsed);
 
                 Vector3 basePos = Vector3.Lerp(
                     PreviousSpace.t.localPosition,
@@ -351,7 +360,7 @@ namespace GameCharacters
                 if (WillVault) PerformVault(isVaultingHeavily);
             }
 
-            MovementTimeElapsed += Time.deltaTime / groundedMovementTime;
+            MovementTimeElapsed += Time.deltaTime / (isGrounded? groundedMovementTime : airMovementTime);
         }
 
         protected void PerformVault(bool isHeavy)
@@ -402,6 +411,7 @@ namespace GameCharacters
                 if (TargetedCharacter != null)
                 {
                     TargetedCharacter.GetComponent<IDamageable>().TakeDamage();
+                    OnTargetEliminated();
                     TargetedCharacter = null;
                 }
 
@@ -467,6 +477,7 @@ namespace GameCharacters
                 {
                     if (character == this) return; // Prevent Self Damage
                     character.GetComponent<IDamageable>().TakeDamage();
+                    OnTargetEliminated();
                     TriggerBounce();
                 }
             }
@@ -522,6 +533,11 @@ namespace GameCharacters
             else CameraShaker.Presets.ShortShake3D();
         }
 
+        protected virtual void OnTargetEliminated()
+        {
+            
+        }
+
         public void TriggerBounce()
         {
             if (!canBounce) return;
@@ -562,6 +578,7 @@ namespace GameCharacters
         {
             Boat_Space_Manager.Instance.AddPassenger(this);
             isOnBoat = true;
+            transform.localScale = Vector3.one;
             SetDirection(currentDirection, false);
             if (goToCurrentSpace) GoToSpace(currentSpace.sideID, currentSpace.spaceID);
         }
@@ -569,12 +586,13 @@ namespace GameCharacters
         /// <summary>
         /// Method to make the character exit the boats parent
         /// </summary>
-        public void ExitBoat(bool goToCurrentSpace)
+        public void ExitBoat()
         {
             Boat_Space_Manager.Instance.RemovePassenger(this);
             isOnBoat = false;
+            transform.localScale = Vector3.one;
             SetDirection(currentDirection, false);
-            if (goToCurrentSpace) MoveToSpace(currentSpace.sideID, currentSpace.spaceID);
+            // if (goToCurrentSpace) MoveToSpace(currentSpace.sideID, currentSpace.spaceID);
         }
 
         #endregion

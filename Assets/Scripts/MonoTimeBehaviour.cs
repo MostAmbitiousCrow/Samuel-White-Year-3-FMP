@@ -28,7 +28,7 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
     protected virtual void FixedTimeUpdate() { }
 
     #region HitStop
-    public void TriggerHitStop(float stopDuration = .2f)
+    public void TriggerHitStop(float stopDuration = .05f)
     {
         if (!GameSettingsManager.DoHitFreeze) return;
         // Debug.Log("HitStop Routine Started");

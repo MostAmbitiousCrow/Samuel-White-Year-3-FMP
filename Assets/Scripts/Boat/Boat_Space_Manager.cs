@@ -163,11 +163,10 @@ public class Boat_Space_Manager : MonoBehaviour
     /// </summary>
     public BoatSide.SpaceData GetBoatSpace(int side, int space)
     {
-        print($"Getting Space: {side} and Space: {space}");
-        print($"Space Datas =  {boatSides[side].spaceDatas.Count}.");
+        // print($"Getting Space: {side} and Space: {space}");
+        // print($"Space Datas =  {boatSides[side].spaceDatas.Count}.");
         if (space < 1) return boatSides[side].spaceDatas[1];
-        if (space > SpaceCount - 2) return boatSides[side].spaceDatas[SpaceCount - 2];
-        return boatSides[side].spaceDatas[space];
+        return space > SpaceCount - 2 ? boatSides[side].spaceDatas[SpaceCount - 2] : boatSides[side].spaceDatas[space];
     }
     #endregion
 
@@ -217,13 +216,14 @@ public class Boat_Space_Manager : MonoBehaviour
     public void AddPassenger(BoatCharacter passenger)
     {
         boatPassengers.Add(passenger);
-        passenger.transform.SetParent(passengerFolder);
+        passenger.transform.SetParent(passengerFolder,true);
+        passenger.transform.localRotation = Quaternion.identity;
     }
 
     public void RemovePassenger(BoatCharacter passenger)
     {
         boatPassengers.Remove(passenger);
-        passenger.transform.SetParent(null);
+        passenger.transform.SetParent(null, false);
     }
     #endregion
 

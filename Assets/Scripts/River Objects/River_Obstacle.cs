@@ -31,11 +31,12 @@ public class River_Obstacle : River_Object
 
         if (other.TryGetComponent<IDamageable>(out var character))
             character.TakeDamage(amount: obstacleData.ImpactDamage);
+        if (other.CompareTag("Boat")) riverManager.HaltRiver(10); // Slow down the river when the boat is hit
         IsHit = true;
 
         if (explodesOnHit) artExploder.ExplodeArt();
 
-        Invoke(nameof(ReturnToPool), 3f);
+        // Invoke(nameof(ReturnToPool), 3f);
     }
 
     // TODO: Add animation / Sink or destroy obstacle after damaging something

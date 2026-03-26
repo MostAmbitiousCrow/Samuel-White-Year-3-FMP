@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         }
 
         #region Game Initialisation
-        public bool GameStarted { get { return _gameStarted; } }
+        public bool GameStarted => _gameStarted;
         bool _gameStarted;
         public delegate void OnGameInitialised();
         public OnGameInitialised onGameInitialised;

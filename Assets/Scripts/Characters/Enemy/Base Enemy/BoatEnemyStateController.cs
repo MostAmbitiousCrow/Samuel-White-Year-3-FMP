@@ -94,6 +94,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     /// <summary> Emerges the enemy from the River </summary>
     public virtual void EmergeFromRiver()
     {
+        SetDirection(currentDirection, false);
     }
 
     /// <summary> Method to call upon this enemy appearing in the level. Additional data can be provided </summary>
@@ -106,17 +107,10 @@ public abstract class BoatEnemyStateController : BoatCharacter
         
         transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         characterCollider.enabled = true;
+        
+        // Reset Position and Rotation
 
-        // TODO: Add any additional initialisation processes here. Likely after enemy pooling
-    }
-
-    /// <summary> Returns the enemy back to the pooling system </summary>
-    public virtual void ReturnToPool()
-    {
-        transform.parent = riverObject.transform;
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-
+        canMove = true;
         isMoving = false;
         isJumping = false;
         isVaulting = false;
@@ -124,10 +118,17 @@ public abstract class BoatEnemyStateController : BoatCharacter
 
         canAccessBoatSpaces = true;
         canAccessOuterBoatSides = true;
+
+        // TODO: Add any additional initialisation processes here. Likely after enemy pooling
+    }
+
+    /// <summary> Returns the enemy back to the pooling system </summary>
+    public virtual void ReturnToPool()
+    {
+        ExitBoat();
         
         ChangeState(IdleState);
-        
-        gameObject.SetActive(false);
+        riverObject.ReturnEnemy(); // Return this enemy to its River Object
         riverObject.ReturnToPool();
     }
 

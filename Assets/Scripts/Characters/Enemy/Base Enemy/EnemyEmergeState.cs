@@ -5,7 +5,7 @@ public class EnemyEmergeState : EnemyState
     {
         //Debug.Log($"{Sc.name} entered Emerge State");
         Sc.isErupting = true;
-        Sc.Animator.SetTrigger("Erupting");
+        // Sc.Animator.SetTrigger("Erupting");
 
     }
 

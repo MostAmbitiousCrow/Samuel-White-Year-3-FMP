@@ -31,16 +31,18 @@ public class SO_SectionData : ScriptableObject
 
         public int ObjectCount => obstacles.Count + enemies.Count + collectibles.Count + gemstoneGates.Count;
 
-        [FormerlySerializedAs("Obstacles")] [Line(GUIColor.Cyan)] public List<SectionObstacleData> obstacles;
-        [FormerlySerializedAs("Enemies")] [Line(GUIColor.Red)] public List<SectionEnemyData> enemies;
-        [FormerlySerializedAs("Collectibles")] [Line(GUIColor.Yellow)] public List<SectionCollectibleData> collectibles;
+        [Line(GUIColor.Orange)] public List<SectionObstacleData> obstacles;
+        [Line(GUIColor.Red)] public List<SectionEnemyData> enemies;
+        [Line(GUIColor.Cyan)] public List<SectionCollectibleData> collectibles;
 
-        [FormerlySerializedAs("GemstoneGates")] [Line(GUIColor.White)] public List<SectionGemstoneGateData> gemstoneGates;
+        [Line(GUIColor.White)] public List<SectionGemstoneGateData> gemstoneGates;
+
+        [Line(GUIColor.Gray)] public List<SectionSlipStreamData> slipStreams;
         
         [Serializable]
         public class SectionObstacleData
         {
-            [FormerlySerializedAs("Data")] public Section_Obstacle_Object.SectionObstacleData data;
+            public Section_Obstacle_Object.SectionObstacleData data;
 
             public int lane;
             public int distance;
@@ -50,7 +52,7 @@ public class SO_SectionData : ScriptableObject
         [Serializable]
         public class SectionEnemyData
         {
-            [FormerlySerializedAs("Data")] public Section_Enemy_Object.SectionEnemyData data;
+            public Section_Enemy_Object.SectionEnemyData data;
                 
             public int lane;
             public int distance;
@@ -60,7 +62,7 @@ public class SO_SectionData : ScriptableObject
         [Serializable]
         public class SectionCollectibleData
         {
-            [FormerlySerializedAs("Data")] public Section_Collectible_Object.SectionCollectibleData data;
+            public Section_Collectible_Object.SectionCollectibleData data;
                 
             public int lane;
             public int distance;
@@ -70,7 +72,17 @@ public class SO_SectionData : ScriptableObject
         [Serializable]
         public class SectionGemstoneGateData
         {
-            [FormerlySerializedAs("Data")] public Section_Gemstone_Gate.SectionGemstoneGateData data;
+            public Section_Gemstone_Gate.SectionGemstoneGateData data;
+                
+            public int lane;
+            public int distance;
+            public int height;
+        }
+        
+        [Serializable]
+        public class SectionSlipStreamData
+        {
+            public Section_SlipStream_Object.SectionSlipStreamData data;
                 
             public int lane;
             public int distance;
