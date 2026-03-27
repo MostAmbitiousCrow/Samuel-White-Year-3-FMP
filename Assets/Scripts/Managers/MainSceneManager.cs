@@ -5,10 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class MainSceneManager : MonoBehaviour
 {
+    #region Scene Loading
+
+    
+
     public bool IsLoadingScene { get; private set; }
 
     [Header("Loading Screen Components")]
     [SerializeField] private Loading_Screen_Controller loadingScreenController;
+    public Loading_Screen_Controller LoadingScreenController => loadingScreenController;
 
     /// <summary>
     /// Delegate event for whenever the Main Scene Manager has successfully loaded a scene
@@ -101,7 +106,6 @@ public class MainSceneManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(1f); // TODO: Polish to have the game properly initialised
             GameManager.GameLogic.InitialiseGame();
         }
-
-        yield break;
     }
+    #endregion
 }

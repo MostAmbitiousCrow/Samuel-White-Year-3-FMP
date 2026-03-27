@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /*
@@ -17,6 +18,8 @@ public class GameLevelManager : MonoBehaviour
         
         // GameManager.GameLogic.OnGameStarted += InitialiseFirstLevel;
         LevelCount = levels.Length;
+
+        _loadingScreenController = GameManager.SceneManager.LoadingScreenController;
     }
 
     private void OnEnable()
@@ -82,17 +85,7 @@ public class GameLevelManager : MonoBehaviour
         {
             // Assign the new current level ID
             currentLevel = level;
-            
-            // Assign the new level data to the section manager
-            _sectionManager.AssignNewLevelData(levels[currentLevel]);
-            
-            // Update the world Spline 
-            var spline = levels[currentLevel].levelSpline;
-            if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
-            
-            OnLevelLoaded?.Invoke();
-            
-            Debug.Log($"Loaded Level '{levels[currentLevel].levelName}'");
+            StartCoroutine(LevelTransitionRoutine());
         }
     }
     
@@ -112,6 +105,26 @@ public class GameLevelManager : MonoBehaviour
         var cl = currentLevel + 1;
         LoadLevel(cl);
     }
+    
+    private Loading_Screen_Controller _loadingScreenController;
+
+    private IEnumerator LevelTransitionRoutine()
+    {
+        _loadingScreenController.StartLoadingScreen();
+        yield return new WaitUntil(() => !_loadingScreenController.IsTransitioning);
+            
+        // Assign the new level data to the section manager
+        _sectionManager.AssignNewLevelData(levels[currentLevel]);
+            
+        // Update the world Spline 
+        var spline = levels[currentLevel].levelSpline;
+        if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
+        OnLevelLoaded?.Invoke();
+        Debug.Log($"Loaded Level '{levels[currentLevel].levelName}'");
+
+        _loadingScreenController.EndLoadingScreen();
+    }
+    
     #endregion
 }
 

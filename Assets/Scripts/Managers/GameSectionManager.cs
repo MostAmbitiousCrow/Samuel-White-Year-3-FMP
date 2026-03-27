@@ -17,6 +17,11 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     [Header("Section Info")]
     [Min(0)][SerializeField] private int currentSectionIndex = 0;
     
+    [Header("Spacing Settings")]
+    [Tooltip("The distance between the end of each section")]
+    [SerializeField] private float gapBetweenSections = 20f;
+    private float _currentSectionOffset;
+    
     [Header("Section Objects")]
     private readonly Dictionary<Enum, int> _prefabLookup = new Dictionary<System.Enum, int>();
 
@@ -132,6 +137,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     private IEnumerator SpawnSectionRoutine()
     {
         int sectionLength = currentLevelData.sectionData.Length;
+        _currentSectionOffset = 0f;
         // Spawn Sections
         while (currentSectionIndex < sectionLength)
         {
@@ -167,6 +173,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             Debug.Log($"Completed Section {currentSectionIndex}.");
             
+            _currentSectionOffset += (furthestDistance + gapBetweenSections);
             yield return currentSectionIndex++;
         }
         
@@ -284,8 +291,11 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 
         // TODO: Add a set distance between each section
         
+        float finalDistance = riverManager.riverObjectSpawnDistance + _currentSectionOffset + distance;
+        
         // Initial Spawn Distance from Boat * the current section displacement + Space Between Each Section
-        distance = (distance + riverManager.riverObjectSpawnDistance) * (currentSectionIndex + 1) + 10; //* currentSectionIndex + 1;
+        // distance = (distance + riverManager.riverObjectSpawnDistance) * (currentSectionIndex + 1) + 10; //* currentSectionIndex + 1;
+        distance = (int)finalDistance;
         
         ro.StartOnLane(lane, distance, height);
     }
