@@ -8043,6 +8043,16 @@ PrefabInstance:
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2198188082466574380}
+    - target: {fileID: 3715775623188105936, guid: 406def269600f804da9cf05e03aefd2d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5786825475446811682}
+    - target: {fileID: 3715775623188105936, guid: 406def269600f804da9cf05e03aefd2d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2198188082466574380}
     - target: {fileID: 4438792530519534112, guid: 406def269600f804da9cf05e03aefd2d,
         type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8143,6 +8153,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5764720019230895055, guid: 406def269600f804da9cf05e03aefd2d,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2198188082466574380}
     - target: {fileID: 5801260446843024866, guid: 406def269600f804da9cf05e03aefd2d,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target

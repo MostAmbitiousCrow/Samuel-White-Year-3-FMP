@@ -34,7 +34,7 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
+          pipeConnection: 3
           distancePerPipe: 1.6
           amount: 5
       lane: 2
@@ -58,7 +58,7 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
+          pipeConnection: 3
           distancePerPipe: 1.6
           amount: 5
       lane: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
           amount: 5
       lane: 0
       distance: 30
-      height: 1
+      height: 3
     - data:
         obstacleType: 2
         overrideData: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
           amount: 5
       lane: 2
       distance: 85
-      height: 1
+      height: 3
     - data:
         obstacleType: 2
         overrideData: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
         pipeObstacleData:
           pipeConnection: 3
           distancePerPipe: 1.6
-          amount: 5
+          amount: 8
       lane: 1
       distance: 45
       height: 5
@@ -106,12 +106,24 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 3
+          pipeConnection: 2
           distancePerPipe: 1.6
-          amount: 5
+          amount: 8
       lane: 1
       distance: 100
-      height: 0
+      height: 3
+    - data:
+        obstacleType: 2
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          pipeConnection: 2
+          distancePerPipe: 1.6
+          amount: 8
+      lane: 1
+      distance: 100
+      height: 5
     enemies: []
     collectibles: []
     gemstoneGates: []

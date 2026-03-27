@@ -46,10 +46,22 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
+          pipeConnection: 2
+          distancePerPipe: 1.6
+          amount: 9
+      lane: 1
+      distance: 30
+      height: 3
+    - data:
+        obstacleType: 2
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
           pipeConnection: 0
           distancePerPipe: 1.6
-          amount: 7
-      lane: 0
+          amount: 9
+      lane: 2
       distance: 30
       height: 3
     - data:
@@ -62,6 +74,18 @@ MonoBehaviour:
           distancePerPipe: 1.6
           amount: 5
       lane: 1
+      distance: 30
+      height: 0
+    - data:
+        obstacleType: 0
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          pipeConnection: 1
+          distancePerPipe: 1.6
+          amount: 5
+      lane: 0
       distance: 30
       height: 0
     - data:

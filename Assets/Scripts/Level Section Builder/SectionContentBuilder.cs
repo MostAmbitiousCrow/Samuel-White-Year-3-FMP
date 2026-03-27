@@ -142,9 +142,11 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
 
         var path = $"{paraPathName}/{paraAssetName}.asset";
 
+        #if UNITY_EDITOR
         AssetDatabase.CreateAsset(scriptableObject, path);
         EditorUtility.SetDirty(scriptableObject);
         AssetDatabase.SaveAssets();
+        #endif
 
         Debug.Log($"Saved {scriptableObject} to {paraAssetName}");
         return scriptableObject;

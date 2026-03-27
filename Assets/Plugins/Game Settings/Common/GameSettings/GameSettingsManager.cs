@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine.Audio;
 
@@ -22,10 +23,15 @@ namespace Game
 			{
 				Debug.Log("Game Settings Manager already exists, deleting new Game Settings Manager");
 				Destroy(gameObject);
-				return;
 			}
-			Instance = this;
-			DontDestroyOnLoad(this);
+			else
+			{
+				Instance = this;
+                DontDestroyOnLoad(this);
+			}
+			
+			// Set VSync and Framerate
+			SetVSync(PlayerPrefs.GetInt("Settings.VSync") == 1);
 		}
 
 		private static readonly Vector2 MinScreenSize = new Vector2(1024, 768);
@@ -74,7 +80,7 @@ namespace Game
 
 				if (Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen)
 				{
-					// list all resolutionswith refresh rates  when in exclusive fullscreen
+					// list all resolutions with refresh rates  when in exclusive fullscreen
 					for (int i = 0; i < Screen.resolutions.Length; i++)
 					{
 						if (Screen.resolutions[i].width >= MinScreenSize.x && Screen.resolutions[i].height >= MinScreenSize.y)
@@ -87,14 +93,14 @@ namespace Game
 				else
 				{
 					// dop not include refresh rate options when not exclusive
-					for (int i = 0; i < Screen.resolutions.Length; i++)
+					foreach (var t in Screen.resolutions)
 					{
-						if (Screen.resolutions[i].width >= MinScreenSize.x && Screen.resolutions[i].height >= MinScreenSize.y)
+						if (t.width >= MinScreenSize.x && t.height >= MinScreenSize.y)
 						{
-							var res = $"{Screen.resolutions[i].width} x {Screen.resolutions[i].height}";
+							var res = $"{t.width} x {t.height}";
 							if (!l.Contains(res))
 							{
-								Resolutions.Add(Screen.resolutions[i]);
+								Resolutions.Add(t);
 								l.Add(res);
 							}
 						}
@@ -187,6 +193,38 @@ namespace Game
 			PlayerPrefs.Save();
 
 			ResolutionChanged?.Invoke();
+		}
+
+		public static int FrameRate
+		{
+			get => Application.targetFrameRate;
+			set => SetFrameRate(value);
+		}
+
+		private static void SetFrameRate(int frameRate)
+		{
+			
+			Application.targetFrameRate =  frameRate;
+		}
+
+		public static bool VSyncActive => QualitySettings.vSyncCount == 1;
+
+		public static void SetVSync(bool state, int targetFPS = 60)
+		{
+			// VSync On
+			if (state)
+			{
+				QualitySettings.vSyncCount = 1;
+			}
+			// VSync Off
+			else
+			{
+				QualitySettings.vSyncCount = 0;
+				Application.targetFrameRate = targetFPS; 
+			}
+
+			PlayerPrefs.SetInt("Settings.VSync", state ? 1:0);
+			PlayerPrefs.Save();
 		}
 
 		#endregion

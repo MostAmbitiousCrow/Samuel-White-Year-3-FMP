@@ -53,9 +53,11 @@ public class LevelContentBuilder : MonoBehaviour
         scriptableObject.name = assetName;
         var path = $"{pathName}/Level_{environmentType}_{assetName}.asset";
 
+        # if UNITY_EDITOR
         AssetDatabase.CreateAsset(scriptableObject, path);
         EditorUtility.SetDirty(scriptableObject);
         AssetDatabase.SaveAssets();
+        #endif
 
         Debug.Log($"Saved {scriptableObject} to {pathName}");
     }

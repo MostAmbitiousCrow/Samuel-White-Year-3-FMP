@@ -60,7 +60,7 @@ MonoBehaviour:
         pipeObstacleData:
           pipeConnection: 2
           distancePerPipe: 1.6
-          amount: 6
+          amount: 5
       lane: 2
       distance: 0
       height: 5
@@ -115,7 +115,7 @@ MonoBehaviour:
           targetBoatSide: 0
           boardingFacingDirection: -1
       lane: 1
-      distance: 0
+      distance: 15
       height: 0
     collectibles: []
     gemstoneGates: []
