@@ -93,8 +93,8 @@ namespace GameCharacters
         /// <summary> Set the character to target a given space </summary>
         protected void TargetSpace(SpaceData targetSpace)
         {
-            // Exit previous space
-            currentSpace?.ExitSpace();
+            // Exit previous space, only when grounded
+            if (isGrounded) currentSpace?.ExitSpace();
 
             // First Time Targeting space null prevention
             currentSpace ??= targetSpace;
@@ -102,7 +102,8 @@ namespace GameCharacters
             PreviousSpace = currentSpace;
 
             currentSpace = targetSpace;
-            currentSpace.EnterSpace();
+            // Only occupy spaces when grounded
+            if (isGrounded) currentSpace.EnterSpace();
 
             // Assign previous and new target space for movement updates
             TargetedSpace = targetSpace;
@@ -201,13 +202,11 @@ namespace GameCharacters
         public void GoToSpace(int side, int space)
         {
             SpaceData sd = Boat_Space_Manager.Instance.GetSpace(side, space);
-            if (Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd))
-            {
-                TargetSpace(sd);
+            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd)) return;
+            TargetSpace(sd);
 
-                if (isOnBoat) transform.localPosition = sd.t.localPosition;
-                else transform.position = sd.t.position;
-            }
+            if (isOnBoat) transform.localPosition = sd.t.localPosition;
+            else transform.position = sd.t.position;
 
         }
 
@@ -495,15 +494,14 @@ namespace GameCharacters
         {
             WillJump = false;
             // Return if already in the air
-            if (isGrounded)
-            {
-                isJumping = true;
-                isGrounded = false;
-                _verticalVelocity = jumpPower;
-                _currentY = 0f;
+            if (!isGrounded) return;
+            
+            isJumping = true;
+            isGrounded = false;
+            _verticalVelocity = jumpPower;
+            _currentY = 0f;
 
-                OnJumped();
-            }
+            OnJumped();
         }
 
         /// <summary> Is called before the character jumps </summary>
@@ -511,6 +509,8 @@ namespace GameCharacters
         {
             animator.SetTrigger("Jump");
             animator.SetBool("Grounded", isGrounded);
+            
+            currentSpace.ExitSpace();
 
             if (isVaultingHeavily && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace);
             //TODO: Add Jump SFX and VFX
@@ -523,6 +523,9 @@ namespace GameCharacters
         {
             isJumping = false;
             isBouncing = false;
+            
+            currentSpace.EnterSpace();
+            
             // rb.isKinematic = true; // TODO: Consider
             animator.SetTrigger("Landed");
             animator.SetBool("Grounded", isGrounded);

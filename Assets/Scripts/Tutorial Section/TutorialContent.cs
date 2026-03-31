@@ -9,13 +9,13 @@ public class TutorialContent : MonoBehaviour
     public CanvasGroup CanvasGroup { get; private set; }
     private Animation _checkAnimation;
     [SerializeField] private TextMeshProUGUI checkCounterText;
-    public TutorialGraphicUpdater[] TutorialGraphicUpdaters { get; private set; }
+    public GraphicUpdater[] TutorialGraphicUpdaters { get; private set; }
 
     private void Awake()
     {
         CanvasGroup = GetComponent<CanvasGroup>();
         _checkAnimation = GetComponentInChildren<Animation>();
-        TutorialGraphicUpdaters = GetComponentsInChildren<TutorialGraphicUpdater>();
+        TutorialGraphicUpdaters = GetComponentsInChildren<GraphicUpdater>();
         
         _checkAnimation.gameObject.SetActive(false);
         

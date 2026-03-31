@@ -40,7 +40,7 @@ public class Boat_Space_Manager : MonoBehaviour
                 if (Occupants <= 0) Occupants = 0;
             }
 
-            [ReadOnly, ShowInInspector] public int Occupants {get; private set;}
+            [ReadOnly, ShowInInspector] public int Occupants;
             [ReadOnly] public bool IsOccupied => Occupants > 0;
         }
         public List<SpaceData> spaceDatas = new();

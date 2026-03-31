@@ -43,7 +43,7 @@ namespace GameColours
     
         public enum ObjectTypes
         {
-            Global, Player, Enemy, Obstacle, Collectible, Environment, UI
+            Global, Player, Enemy, Obstacle, Collectible, Environment, River, UI
         }
     
         private void Awake()

@@ -100,8 +100,10 @@ MonoBehaviour:
   - type: 5
     materials:
     - {fileID: 2100000, guid: 3f3e5b11cf1144770beda8a1fc85b50d, type: 2}
-    - {fileID: 2100000, guid: 485ea99145c364045b7586ea0a99ca01, type: 2}
   - type: 6
+    materials:
+    - {fileID: 2100000, guid: 485ea99145c364045b7586ea0a99ca01, type: 2}
+  - type: 7
     materials:
     - {fileID: 2100000, guid: e6b0c5ad71495431194920a2d9f6a99c, type: 2}
   defaultColours: {fileID: 11400000, guid: 1d001ab45a140c74096257270f495b07, type: 2}

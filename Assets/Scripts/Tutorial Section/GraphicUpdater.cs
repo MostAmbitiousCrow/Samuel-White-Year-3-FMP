@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
 using UnityEngine.UI;
 
-public class TutorialGraphicUpdater : MonoBehaviour
+public class GraphicUpdater : MonoBehaviour
 {
     [Header("Visuals")]
     [SerializeField] private Image graphicRenderer;
@@ -19,6 +19,8 @@ public class TutorialGraphicUpdater : MonoBehaviour
         public Sprite[] gamepadGraphics;
         public Sprite[] keyboardGraphics;
     }
+
+    private void Awake() => UpdateGraphic();
 
     private int _currentSpriteIndex = 0;
     public void UpdateGraphic()
