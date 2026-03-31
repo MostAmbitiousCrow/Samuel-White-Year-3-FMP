@@ -12,7 +12,8 @@ Material:
     type: 3}
   m_Parent: {fileID: 2100000, guid: 676f4887cedfd470299c2fd3f6da0ffc, type: 2}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _COLOURBLINDNESS_NONE
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -30,9 +31,9 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _NewHighlight: {r: 0, g: 1, b: 0.99624085, a: 1}
-    - _NewMidtone: {r: 0, g: 0.49481297, b: 1, a: 1}
-    - _NewShadow: {r: 0, g: 0.1709298, b: 0.5019608, a: 1}
+    - _NewHighlight: {r: 0.5, g: 0.6679106, b: 1, a: 1}
+    - _NewMidtone: {r: 0.19294116, g: 0.4501962, b: 0.9647059, a: 1}
+    - _NewShadow: {r: 0, g: 0.1607844, b: 0.48235294, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2954330697245943831

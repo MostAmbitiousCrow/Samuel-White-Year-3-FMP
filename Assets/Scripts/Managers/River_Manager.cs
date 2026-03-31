@@ -190,13 +190,13 @@ public class River_Manager : MonoBehaviour
         _previousSpeed = amount;
     }
 
-    private int storedRiverSpeed;
+    private int _storedRiverSpeed;
     [Button]
     public void HaltRiver(int amount = 10)
     {
         _capturedTime = Time.time;
         // Skip storing value if halting whilst slowed
-        if (!isHalted) storedRiverSpeed = targetRiverSpeed;
+        if (!isHalted) _storedRiverSpeed = targetRiverSpeed;
         isHalted = true;
         SetRiverSpeed(targetRiverSpeed / 2, true, false);
     }
@@ -285,7 +285,7 @@ public class River_Manager : MonoBehaviour
             if (Time.time > _capturedTime + speedRecoveryTime)
             {
                 isHalted = false;
-                targetRiverSpeed = storedRiverSpeed;
+                targetRiverSpeed = _storedRiverSpeed;
                 OnRiverSpeedUpdate?.Invoke();
             }
         }

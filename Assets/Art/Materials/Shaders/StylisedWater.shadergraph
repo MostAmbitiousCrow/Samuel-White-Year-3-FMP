@@ -3284,17 +3284,17 @@
 }
 
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "5bafd1841872898ab1faf23a8b803631",
     "m_Guid": {
         "m_GuidSerialized": "b1fd1c1a-042c-4bec-bffb-128799bef33b"
     },
-    "m_Name": "Dark Foam Color",
+    "m_Name": "DarkFoamColor",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_73B07A88",
-    "m_OverrideReferenceName": "_DarkFoamColor",
+    "m_OverrideReferenceName": "_NewHighlight",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -3431,7 +3431,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "5cb667d8d32f198e84c89da0c2c1dcf7",
     "m_Id": 0,
-    "m_DisplayName": "Water Color",
+    "m_DisplayName": "WaterColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -3458,22 +3458,22 @@
     "m_Title": "Distort UVs based on Flow Map",
     "m_Position": {
         "x": -2221.333251953125,
-        "y": 411.33319091796877
+        "y": 411.3333740234375
     }
 }
 
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "5e4193260e2d9d8388cd3937dfcd8cc9",
     "m_Guid": {
         "m_GuidSerialized": "79bbc09d-c424-4978-bd01-ac1eaaebcf68"
     },
-    "m_Name": "Water Color",
+    "m_Name": "WaterColor",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_98153E5A",
-    "m_OverrideReferenceName": "_WaterColor",
+    "m_OverrideReferenceName": "_NewShadow",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -4035,7 +4035,7 @@
     "m_ObjectId": "6e7bdcba5dbb46f7980f239c32f28019",
     "m_Title": "Dark Foam Voronoi Sample",
     "m_Position": {
-        "x": -219.99996948242188,
+        "x": -220.666748046875,
         "y": -907.333251953125
     }
 }
@@ -5055,7 +5055,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "98a3f69ace4d9f859d4b8c9c2d9f7112",
     "m_Id": 0,
-    "m_DisplayName": "Dark Foam Color",
+    "m_DisplayName": "DarkFoamColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -5254,8 +5254,8 @@
     "m_ObjectId": "a2be27683f8640e59800689e2784a638",
     "m_Title": "Water Depth Color",
     "m_Position": {
-        "x": -100.66665649414063,
-        "y": 364.66656494140627
+        "x": -100.666748046875,
+        "y": 364.66650390625
     }
 }
 
@@ -5855,8 +5855,8 @@
     "m_ObjectId": "bcf1b763f2dd4b4a8216ae1affb25e78",
     "m_Title": "Combining texture and intersection foam",
     "m_Position": {
-        "x": 924.0000610351563,
-        "y": -206.66665649414063
+        "x": 923.333251953125,
+        "y": -206.66668701171876
     }
 }
 
@@ -6946,7 +6946,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "e83bba08fa03b184b5cb41317e11af1f",
     "m_Id": 0,
-    "m_DisplayName": "Light Foam Color",
+    "m_DisplayName": "LightFoamColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -7154,7 +7154,7 @@
     "m_ObjectId": "f04f328ebfa446feb0ae8050235440c8",
     "m_Title": "Main Foam Voronoi Sample",
     "m_Position": {
-        "x": -944.0,
+        "x": -944.6666870117188,
         "y": -227.33331298828126
     }
 }
@@ -7198,7 +7198,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "f081f7c9d3730883b41c85544425a246",
     "m_Id": 0,
-    "m_DisplayName": "Light Foam Color",
+    "m_DisplayName": "LightFoamColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -7466,17 +7466,17 @@
 }
 
 {
-    "m_SGVersion": 2,
+    "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "fa169f9a45eb338dba62235ce7cc22c7",
     "m_Guid": {
         "m_GuidSerialized": "47c0806a-aab1-4626-a975-ab2fbde687a4"
     },
-    "m_Name": "Light Foam Color",
+    "m_Name": "LightFoamColor",
     "m_DefaultRefNameVersion": 0,
     "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_C1C10823",
-    "m_OverrideReferenceName": "_LightFoamColor",
+    "m_OverrideReferenceName": "_NewMidtone",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -7590,7 +7590,7 @@
     "m_ObjectId": "fefeb1017c534f1791c1b6c5a678fcc2",
     "m_Title": "Vertex Bobbing",
     "m_Position": {
-        "x": 785.3333129882813,
+        "x": 785.333251953125,
         "y": -702.0
     }
 }

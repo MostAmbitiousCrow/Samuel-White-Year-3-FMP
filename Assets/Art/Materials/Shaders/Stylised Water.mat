@@ -57,6 +57,9 @@ Material:
     m_Colors:
     - _DarkFoamColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
     - _LightFoamColor: {r: 0.6084906, g: 0.6084906, b: 0.6084906, a: 1}
+    - _NewHighlight: {r: 1, g: 1, b: 1, a: 1}
+    - _NewMidtone: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _NewShadow: {r: 0, g: 0, b: 0, a: 1}
     - _WaterColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -12,37 +12,57 @@ namespace GameColours
         private static readonly int NewHighlight = Shader.PropertyToID(HighlightString);
         private static readonly int NewMidtone = Shader.PropertyToID(MidtoneString);
         private static readonly int NewShadow = Shader.PropertyToID(ShadowString);
-    
-        [Header("Materials")]
-        [SerializeField] private List<Material> materials = new();
+
+        [Header("Colours")]
+        [SerializeField] private MaterialType[] materialTypes;
+        
+        [Serializable]
+        public class MaterialType
+        {
+            public ObjectTypes type;
+            public Material[] materials;
+        }
+        
+        private static Material[] _materials;
+        private static Dictionary<int, Material[]> _objectColours;
         [Space]
         public static SO_GameColours CurrentColours;
         [SerializeField] private SO_GameColours defaultColours;
+        private static SO_GameColours _defaultColours;
+        
+        [Header("Colour Blindness")]
+        [SerializeField] private SO_GameColours[] colourBlindColours = new  SO_GameColours[3];
+        private static SO_GameColours[] _colourBlindness;
     
         // Cached parameter names
         private const string HighlightString = "_NewHighlight";
         private const string MidtoneString = "_NewMidtone";
         private const string ShadowString = "_NewShadow";
-        
-        private bool _rainbowModeActive;
+
+        public static bool IsRainbowModeActive;
     
         public enum ObjectTypes
         {
-            Global, Player, Enemy, Obstacle, Collectible, Boat, Environment, UI, Transition
+            Global, Player, Enemy, Obstacle, Collectible, Environment, UI
         }
-        
-        public ObjectMaterialColours detectColours = new ObjectMaterialColours()
-        {
-            HighlightColour = Color.white,
-            MidtoneColour = Color.gray,
-            ShadowColour = Color.black
-        };
     
         private void Awake()
         {
+            _colourBlindness = colourBlindColours;
+            _defaultColours = defaultColours;
+
+            _objectColours = new Dictionary<int, Material[]>();
+            var count = Enum.GetNames(typeof(ObjectTypes)).Length;
+            for (int i = 0; i < count; i++)
+            {
+                var matType = materialTypes[i];
+                _objectColours.Add((int)matType.type, matType.materials);
+            }
+            print($"Counted Types = {count}. Actual Count = {_objectColours.Count}");
+            
             ResetColours();
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
-            
+
             // GameManager.SceneManager.onLevelLoaded += ResetColours;
         }
     
@@ -57,78 +77,62 @@ namespace GameColours
         }
     
         [Button]
-        public void ResetColours()
+        public static void ResetColours()
         {
-            UpdateMaterials(defaultColours);
+            if (GameSettingsManager.CurrentColourblindMode 
+                == 
+                GameSettingsManager.ColourblindType.None)
+                AssignColours(_defaultColours);
+            else
+            {
+                AssignColourBlindColours();
+            }
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
         }
+
+        private static void AssignColourBlindColours()
+        {
+            AssignColours(_colourBlindness[(int)GameSettingsManager.CurrentColourblindMode]);
+        }
     
-        public void UpdateMaterials(SO_GameColours colours)
+        private static void AssignColours(SO_GameColours colours)
         {
             CurrentColours = colours;
     
             for (var i = 0; i < colours.MaterialColours.Length; i++)
             {
-                UpdateMaterial(i, colours.MaterialColours[i]);
+                print($"Length = {colours.MaterialColours.Length}. ({i})");
+                UpdateMaterials(_objectColours[i], colours.MaterialColours[i]);
             }
     
-            UpdateSkybox(colours.MaterialColours[5].ShadowColour); // Environment Colours
+            // UpdateSkybox(colours.MaterialColours[5].ShadowColour); // Environment Colours
         }
     
-        public void UpdateMaterial(ObjectTypes objectType, ObjectMaterialColours colour)
+        private static void UpdateMaterials(Material[] mat, ObjectMaterialColours colour)
         {
-            var i = (int)objectType;
-            
-            materials[i].SetColor(NewHighlight, colour.HighlightColour);
-            materials[i].SetColor(NewMidtone, colour.MidtoneColour);
-            materials[i].SetColor(NewShadow, colour.ShadowColour);
-            
-            Debug.Log($"Updated Material {i}");
+            foreach (var item in mat)
+            {
+                item.SetColor(NewHighlight, colour.HighlightColour);
+                item.SetColor(NewMidtone, colour.MidtoneColour);
+                item.SetColor(NewShadow, colour.ShadowColour);
+            }
         }
     
-        public void UpdateMaterial(int id, ObjectMaterialColours colour)
+        private static void UpdateSkybox(Color colour)
         {
-            materials[id].SetColor(NewHighlight, colour.HighlightColour);
-            materials[id].SetColor(NewMidtone, colour.MidtoneColour);
-            materials[id].SetColor(NewShadow, colour.ShadowColour);
-            
-            // Debug.Log($"Updated Material {id}");
-        }
-    
-        public void UpdateMaterial(Material mat, ObjectMaterialColours colour)
-        {
-            mat.SetColor(NewHighlight, colour.HighlightColour);
-            mat.SetColor(NewMidtone, colour.MidtoneColour);
-            mat.SetColor(NewShadow, colour.ShadowColour);
-        }
-    
-        public void UpdateSkybox(Color colour)
-        {
-            if (Camera.main != null) Camera.main.backgroundColor = colour;
-        }
-
-        public void AddMaterial(Material mat)
-        {
-            materials.Add(mat);
-            // Debug.Log($"Added {mat.name}");
-        }
-
-        public void RemoveMaterial(Material mat)
-        {
-            materials.Remove(mat);
-            // Debug.Log($"Removed {mat.name}");
+            if (Camera.main) Camera.main.backgroundColor = colour;
         }
     
         #region Rainbow Mode
-        private void SetRainbowMode(bool state)
+        public static void SetRainbowMode(bool state)
         {
-            _rainbowModeActive = state;
+            IsRainbowModeActive = state;
         }
             
         private void Update()
         {
-            // Fix: Only run if the game is ACTIVE and Rainbow Mode is ON
-            if (!_rainbowModeActive) return;
+            // Fix: Only run if Rainbow Mode is ON
+            if (!IsRainbowModeActive) return;
         
             CycleRainbow();
         }
@@ -138,12 +142,12 @@ namespace GameColours
             // Use Time.time to get a continuously increasing value for the hue
             var hueOffset = (Time.realtimeSinceStartup * 0.25f) % 1f;
     
-            for (var i = 0; i < materials.Count; i++)
+            for (var i = 0; i < _objectColours.Count; i++)
             {
-                var mat = materials[i];
+                var mats = _objectColours[i];
             
                 // Reference colour from offset
-                var baseCol = defaultColours.MaterialColours[i];
+                var baseCol = _defaultColours.MaterialColours[i];
             
                 // Must change the colour values INSIDE the class. ffs.
                 var rainbowCol = new ObjectMaterialColours
@@ -153,10 +157,10 @@ namespace GameColours
                     ShadowColour = ShiftHue(baseCol.ShadowColour, hueOffset)
                 };
             
-                UpdateMaterial(mat, rainbowCol);
+                UpdateMaterials(mats, rainbowCol);
             }
     
-            if (Camera.main != null) UpdateSkybox(ShiftHue(Camera.main.backgroundColor, hueOffset));
+            if (Camera.main) UpdateSkybox(ShiftHue(Camera.main.backgroundColor, hueOffset));
         }
         
         private Color ShiftHue(Color original, float offset)
@@ -173,7 +177,7 @@ namespace GameColours
         // TODO: Implement a routine to transition one colour scheme to another!
     
         #endregion
-    
+        
     }
     
     [Serializable]

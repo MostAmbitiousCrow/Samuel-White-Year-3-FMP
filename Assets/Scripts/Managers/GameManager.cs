@@ -1,10 +1,8 @@
 using EditorAttributes;
 using System;
-using System.Collections;
 using GameCharacters;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 /// <summary> Main source of management for the game. Always exists. </summary>
 [RequireComponent(typeof(MainSceneManager))]

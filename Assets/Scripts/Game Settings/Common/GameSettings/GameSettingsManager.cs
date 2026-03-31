@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace Game
 {
@@ -135,8 +136,11 @@ namespace Game
 						_screenResolutionIdx = i;
 						if (Screen.fullScreenMode != FullScreenMode.ExclusiveFullScreen || 
 							(	// the refresh can be out with about 1 or 2 values so just get it close
-								Screen.currentResolution.refreshRate < Resolutions[i].refreshRate + 2 &&
-								Screen.currentResolution.refreshRate > Resolutions[i].refreshRate - 2
+								Screen.currentResolution.refreshRateRatio.value < 
+								Resolutions[i].refreshRateRatio.value + 2 
+								&&
+								Screen.currentResolution.refreshRateRatio.value > 
+								Resolutions[i].refreshRateRatio.value - 2
 							))
 						{
 							break; // break now if the exact resolution with refresh rate was found
@@ -158,6 +162,13 @@ namespace Game
 				}
 			}
 		}
+
+		public enum ColourblindType
+		{
+			Protanopia, Deuteranopia, Tritanopia, None
+		}
+
+		public static ColourblindType CurrentColourblindMode;
 
 		/// <summary> Get or Set whether the game is in fullscreen mode or not. 
 		/// This toggles between FullScreenWindow and Windowed. </summary>
