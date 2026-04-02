@@ -56,7 +56,7 @@ namespace Game
 		private void OnValueChange(int idx)
 		{
 			GameSettingsManager.CurrentColourblindMode = (GameSettingsManager.ColourblindType)idx;
-			GameColoursManager.ResetColours();
+			GameColoursManager.UpdateColours();
 			Debug.Log($"Set Colourblind mode to {GameSettingsManager.CurrentColourblindMode}");
 		}
 

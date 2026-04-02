@@ -14,7 +14,15 @@ public class ScreenContentNavigator : MonoBehaviour
         public GameObject page;
         public GameObject enterObject;
     }
-    [SerializeField] protected int currentPage = 0;
+
+    [SerializeField] protected int startingPage;
+    [SerializeField, ReadOnly] protected int currentPage;
+
+    private void Start()
+    {
+        foreach (PageContent page in pages) page.page.SetActive(false);
+        OpenPage(startingPage);
+    }
 
     public void OpenPage(int page)
     {

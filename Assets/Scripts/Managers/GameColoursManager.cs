@@ -60,7 +60,7 @@ namespace GameColours
             }
             print($"Counted Types = {count}. Actual Count = {_objectColours.Count}");
             
-            ResetColours();
+            UpdateColours();
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
 
             // GameManager.SceneManager.onLevelLoaded += ResetColours;
@@ -68,16 +68,15 @@ namespace GameColours
     
         private void OnEnable()
         {
-            GameSettingsManager.GameplayChanged += ResetColours;
+            GameSettingsManager.GameplayChanged += UpdateColours;
         }
     
         private void OnDestroy()
         {
-            GameSettingsManager.GameplayChanged -= ResetColours;
+            GameSettingsManager.GameplayChanged -= UpdateColours;
         }
     
-        [Button]
-        public static void ResetColours()
+        public static void UpdateColours()
         {
             if (GameSettingsManager.CurrentColourblindMode 
                 == 
@@ -85,12 +84,26 @@ namespace GameColours
                 AssignColours(_defaultColours);
             else
             {
-                AssignColourBlindColours();
+                UpdateColourBlindColours();
             }
             SetRainbowMode(GameSettingsManager.DoRainbowMode);
         }
 
-        private static void AssignColourBlindColours()
+        [Button]
+        public void ResetColours()
+        {
+            _defaultColours = defaultColours;
+            UpdateColours();
+        }
+
+        [Button]
+        public void ResetColourBlindness()
+        {
+            GameSettingsManager.CurrentColourblindMode = GameSettingsManager.ColourblindType.None;
+            UpdateColours();
+        }
+
+        private static void UpdateColourBlindColours()
         {
             AssignColours(_colourBlindness[(int)GameSettingsManager.CurrentColourblindMode]);
         }
