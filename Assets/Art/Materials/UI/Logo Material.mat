@@ -27,16 +27,17 @@ Material:
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ALPHATEST_ON
+  - _COLOURBLINDNESS_NONE
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
   - SHADOWCASTER
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -48,11 +49,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaToMask: 1
+    - _AlphaToMask: 0
     - _ColourFuzziness: 0.24
     - _ColourRange: 0.24
+    - _DstBlend: 10
     - _IgnoreNewColours: 0
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _UseRBG: 1
     - _UseRGB: 1
+    - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 0, g: 1, b: 0, a: 1}
     - _Color: {r: 0, g: 1, b: 0, a: 1}
