@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Gemstone Material
+  m_Name: Boat Wall Material
   m_Shader: {fileID: -6465566751694194690, guid: 9f3d9130e23c0bd42b8c7fb27f5ef4db,
     type: 3}
-  m_Parent: {fileID: 2100000, guid: eae4ad5d722da5c469f1fee10bfaee86, type: 2}
+  m_Parent: {fileID: 2100000, guid: 70963895b389b449da084c87b9097adb, type: 2}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _COLOURBLINDNESS_NONE
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -29,23 +29,22 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: 465a55514042e4723ad5d993d3707204, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_94f5fb558f5d4a6c9b2161ac9e564239_Out_0_Texture2D:
         m_Texture: {fileID: 2800000, guid: 919dedf8bf0644891baab1a4f201af45, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _IgnoreNewColours: 1
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.49411765, b: 1, a: 1}
-    - _Color: {r: 0, g: 0.49411762, b: 1, a: 1}
-    - _Highlight: {r: 1, g: 1, b: 1, a: 1}
-    - _Midtone: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-    - _NewHighlight: {r: 0.7137255, g: 0.101960786, b: 0.93333334, a: 1}
-    - _NewMidtone: {r: 0.561294, g: 0.08018487, b: 0.734, a: 1}
-    - _NewShadow: {r: 0.40376464, g: 0.05768067, b: 0.528, a: 1}
-    - _Shadow: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    - _Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &2954330697245943831
+--- !u!114 &3320255047965804439
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player Material
+  m_Name: Gemstone Gate Material
   m_Shader: {fileID: -6465566751694194690, guid: 9f3d9130e23c0bd42b8c7fb27f5ef4db,
     type: 3}
-  m_Parent: {fileID: 2100000, guid: eae4ad5d722da5c469f1fee10bfaee86, type: 2}
-  m_ModifiedSerializedProperties: 16
-  m_ValidKeywords:
+  m_Parent: {fileID: 2100000, guid: 676f4887cedfd470299c2fd3f6da0ffc, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _COLOURBLINDNESS_NONE
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -28,21 +28,19 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Texture2D:
+    - _Texture2DAsset_94f5fb558f5d4a6c9b2161ac9e564239_Out_0_Texture2D:
         m_Texture: {fileID: 2800000, guid: 919dedf8bf0644891baab1a4f201af45, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _BaseColor: {r: 0, g: 1, b: 0, a: 1}
-    - _Color: {r: 0, g: 1, b: 0, a: 1}
-    - _NewHighlight: {r: 0.34901962, g: 0.9882353, b: 0.14509805, a: 1}
-    - _NewMidtone: {r: 0.246869, g: 0.699, b: 0.102630936, a: 1}
-    - _NewShadow: {r: 0.17672725, g: 0.504, b: 0.075272724, a: 1}
+    - _NewHighlight: {r: 0.5, g: 0.6679106, b: 1, a: 1}
+    - _NewMidtone: {r: 0.19294116, g: 0.4501962, b: 0.9647059, a: 1}
+    - _NewShadow: {r: 0, g: 0.1607844, b: 0.48235294, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &3320255047965804439
+--- !u!114 &2954330697245943831
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
