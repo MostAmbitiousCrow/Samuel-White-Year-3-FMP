@@ -5159,7 +5159,6 @@ MonoBehaviour:
   maxHealth: 1
   isDead: 0
   invincibilityDuration: 0.25
-  showEvents: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls:
@@ -5207,6 +5206,7 @@ MonoBehaviour:
         m_CallState: 2
   doInvincibilityAnimation: 0
   renderers: []
+  animator: {fileID: 7595503734188337867}
 --- !u!114 &3953813597650840144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5221,6 +5221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   art: []
   artPositions: []
+  artRotations: []
   force: 10
   minMaxAngularVelocity: {x: -5, y: 5}
   animator: {fileID: 7595503734188337867}

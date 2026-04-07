@@ -34,28 +34,28 @@ public class Game_UI : MonoBehaviour
 
     [Header("Player UI")]
     #region Player Health UI
-    [SerializeField] Slider _playerHealthSlider;
-    [SerializeField] TextMeshProUGUI _debugHealthText;
+    [SerializeField] private Slider playerHealthSlider;
+    [SerializeField] private TextMeshProUGUI debugHealthText;
 
     /// <summary> Fuction to update the UI for the players health bar. Parameter must be the players current health. </summary>
-    void UpdatePlayerHealthMeter(int health)
+    private void UpdatePlayerHealthMeter(int health)
     {
-        if (health < (int)_playerHealthSlider.minValue || health > (int)_playerHealthSlider.maxValue) return;
+        if (health < (int)playerHealthSlider.minValue || health > (int)playerHealthSlider.maxValue) return;
         
-        _playerHealthSlider.value = health;
+        playerHealthSlider.value = health;
     }
 
     #endregion
 
     #region Gemstone Counter
-    [SerializeField] TextMeshProUGUI _gemstoneCounterText;
+    [SerializeField] private TextMeshProUGUI gemstoneCounterText;
 
     /// <summary> Fuction to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
-    void UpdateGemstoneCounter(int gemstones)
+    private void UpdateGemstoneCounter(int gemstones)
     {
-        if(gemstones <= 0) _gemstoneCounterText.SetText($"Gemstones: {0}");
+        if(gemstones <= 0) gemstoneCounterText.SetText($"Gemstones: {0}");
 
-        _gemstoneCounterText.SetText($"Gemstones: {gemstones}");
+        gemstoneCounterText.SetText($"Gemstones: {gemstones}");
         //print($"Updated Gemstone Text: {gemstones}");
     }
 

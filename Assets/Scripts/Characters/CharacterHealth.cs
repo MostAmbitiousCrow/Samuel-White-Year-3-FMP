@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Events;
+using Void = EditorAttributes.Void;
 
 public class CharacterHealth : MonoBehaviour, IDamageable
 {
@@ -18,15 +20,26 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     public bool IsInvincible { get; set; }
 
     [Space] 
-    [SerializeField] private bool showEvents;
-    [SerializeField, ShowField(nameof(showEvents))] private UnityEvent deathEvent;
-    [SerializeField, ShowField(nameof(showEvents))] private UnityEvent healthRestoredEvent;
-    [SerializeField, ShowField(nameof(showEvents))] private UnityEvent tookDamageEvent;
+    [FoldoutGroup("Damage Events", nameof(deathEvent), nameof(healthRestoredEvent), nameof(tookDamageEvent))]
+    [SerializeField] private Void showEvents;
+    [SerializeField, HideProperty] private UnityEvent deathEvent;
+    [SerializeField, HideProperty] private UnityEvent healthRestoredEvent;
+    [SerializeField, HideProperty] private UnityEvent tookDamageEvent;
     
     [Space]
     [SerializeField] private bool doInvincibilityAnimation;
-    [SerializeField, ShowField(nameof(doInvincibilityAnimation))] private MeshRenderer[]  renderers; 
+    [SerializeField, ShowField(nameof(doInvincibilityAnimation))] private MeshRenderer[]  renderers;
+
+    [Header("Components")] 
+    [SerializeField] private Animator animator;
     #endregion
+
+    private void Awake()
+    {
+        if (!animator) animator = GetComponentInChildren<Animator>(true);
+        
+        RestoreHealth();
+    }
 
     private void OnEnable()
     {
@@ -43,6 +56,10 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     {
         isDead = false;
         currentHealth = MaxHealth;
+        
+        var normalisedHealth = CurrentHealth / (float)MaxHealth;
+        animator.SetFloat("Health", normalisedHealth);
+        
         healthRestoredEvent?.Invoke();
     }
 
@@ -57,6 +74,11 @@ public class CharacterHealth : MonoBehaviour, IDamageable
             tookDamageEvent.Invoke();
             StartCoroutine(DamageInvincibilityRoutine());
         }
+        
+        // Note: Health is a normalised value in the Animator.
+        
+        var normalisedHealth = (CurrentHealth) / (float)MaxHealth;
+        animator.SetFloat("Health", normalisedHealth);
     }
 
     private IEnumerator DamageInvincibilityRoutine()

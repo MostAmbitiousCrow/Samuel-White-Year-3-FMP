@@ -406,7 +406,12 @@ namespace GameCharacters
                 transform.localPosition = TargetedSpace.t.localPosition + Vector3.up * _currentY;
 
                 if (!isJumping) OnVaulted();
-                else animator.SetBool("Vaulting", false);
+                else
+                {
+                    
+                    animator.ResetTrigger("Vaulted");
+                    animator.SetBool("Vaulting", false);
+                }
 
                 // Damage any targeted characters
                 if (TargetedCharacter)
@@ -424,17 +429,14 @@ namespace GameCharacters
                 }
 
                 // Heavy Vaulting
-                if (isVaultingHeavily && canInteractWithBoat)
+                if (isVaultingHeavily && canInteractWithBoat && isGrounded)
                 {
-                    if (isGrounded)
+                    if (!WillJump)
                     {
-                        if (!WillJump)
-                        {
-                            boatInteractor.ImpactBoat(TargetedSpace);
-                            isVaultingHeavily = false;
-                        }
-                        // animator.SetBool("Hard Action", true);
+                        boatInteractor.ImpactBoat(TargetedSpace);
+                        isVaultingHeavily = false;
                     }
+                    // animator.SetBool("Hard Action", true);
                 }
                 
                 // If coyote jump action true, jump
@@ -450,12 +452,14 @@ namespace GameCharacters
         {
             //TODO: Flip the direction of the character based on the side of the boat they're vaulting from
             animator.SetBool("Vaulting", true);
+            animator.SetTrigger("Vaulted");
             animator.SetBool("Hard Action", isVaultingHeavily);
         }
 
         protected virtual void OnVaulted()
         {
             animator.SetBool("Vaulting", false);
+            // animator.ResetTrigger("Vaulted");
             animator.SetTrigger("Landed"); //TODO: add "Vault Landed" animation!
         }
 
@@ -517,7 +521,6 @@ namespace GameCharacters
             currentSpace.ExitSpace();
 
             if (isVaultingHeavily && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace);
-            //TODO: Add Jump SFX and VFX
 
             Debug.Log($"PERFORMED Jump. Current height is: {_currentY}. Grounded = {IsGrounded}");
         }
@@ -532,7 +535,7 @@ namespace GameCharacters
             
             // rb.isKinematic = true; // TODO: Consider
             animator.SetTrigger("Landed");
-            animator.SetBool("Grounded", isGrounded);
+            animator.SetBool("Grounded", true);
 
             //TODO: Add landed SFX and VFX
 
@@ -541,7 +544,7 @@ namespace GameCharacters
                 CameraShaker.Presets.Explosion3D();
                 if (canInteractWithBoat)
                     boatInteractor.ImpactBoat(TargetedSpace);
-                isVaultingHeavily = false;
+                if (!isVaulting) isVaultingHeavily = false;
             }
             else CameraShaker.Presets.ShortShake3D();
             Debug.Log($"Landed. Grounded = {IsGrounded} Height = {_currentY}");
@@ -563,25 +566,6 @@ namespace GameCharacters
 
             _timeSinceLastBounce = Time.time;
         }
-
-
-        // private Coroutine _waitGroundedRoutine;
-        //
-        // private IEnumerator WaitUntilGroundedRoutine()
-        // {
-        //     yield return new WaitForSeconds(0.1f);
-        //     yield return new WaitUntil(() => isGrounded);
-        //
-        //     if (isVaultingHeavily && canInteractWithBoat)
-        //     {
-        //         isVaultingHeavily = false;
-        //         boatInteractor.ImpactBoat(TargetedSpace);
-        //         // print("Grounded, Impacted Boat");
-        //     }
-        //
-        //     OnLanded();
-        //     _waitGroundedRoutine = null;
-        // }
 
         #region Boat Entering Methods
 

@@ -84,7 +84,7 @@ namespace GameCharacters
             _vaultHeavyAction?.Disable();
             
             // TODO: TEMP. Reset health whenever a new level is loaded
-            GameLevelManager.OnLevelLoaded += HealthComponent.RestoreHealth;
+            GameLevelManager.OnLevelLoaded -= HealthComponent.RestoreHealth;
 
             if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
             
@@ -117,17 +117,17 @@ namespace GameCharacters
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 Time.timeScale = 0f;
             if (Input.GetKeyDown(KeyCode.Alpha2))
-                Time.timeScale = .25f;
+                Time.timeScale = .1f;
             if (Input.GetKeyDown(KeyCode.Alpha3))
-                Time.timeScale = .5f;
+                Time.timeScale = .2f;
             if (Input.GetKeyDown(KeyCode.Alpha4))
-                Time.timeScale = 1f;
+                Time.timeScale = .25f;
             if (Input.GetKeyDown(KeyCode.Alpha5))
-                Time.timeScale = 2f;
+                Time.timeScale = 1f;
             if (Input.GetKeyDown(KeyCode.Alpha6))
-                Time.timeScale = 4f;
+                Time.timeScale = 2f;
             if (Input.GetKeyDown(KeyCode.Alpha7))
-                Time.timeScale = 8f;
+                Time.timeScale = 10f;
         }
 
         private void MoveInput()
