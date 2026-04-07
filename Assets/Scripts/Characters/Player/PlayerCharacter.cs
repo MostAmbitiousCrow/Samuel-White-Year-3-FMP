@@ -95,8 +95,17 @@ namespace GameCharacters
         {
             // Insert player actions here
             MoveInput();
-            OnLightVault();
-            OnHeavyVault();
+
+            if (!WillVault)
+            {
+                OnLightVault();
+                OnHeavyVault();
+            }
+            else
+            {
+                VaultPostProcess();
+            }
+
             
             base.TimeUpdate();
             
@@ -152,7 +161,7 @@ namespace GameCharacters
                 isVaultingHeavily = false;
                 PerformVault(false);
             }
-            VaultPostProcess();
+            // VaultPostProcess();
         }
 
         private void OnHeavyVault()
@@ -163,7 +172,7 @@ namespace GameCharacters
                 isVaultingHeavily = true;
                 PerformVault(true);
             }
-            VaultPostProcess();
+            // VaultPostProcess();
         }
 
 
@@ -174,12 +183,14 @@ namespace GameCharacters
             //TODO: Trigger Jump Upon Landing Logic Here
             
             // Trigger Jump if Vault Button is held
-            if (_vaultHeavyAction.WasPerformedThisFrame() 
-                || 
-                _vaultLightAction.WasPerformedThisFrame()) WillJump = true;
+            if (_vaultHeavyAction.WasPerformedThisFrame() || _vaultLightAction.WasPerformedThisFrame())
+            {
+                Debug.Log("Jump Action Performed");
+                if (WillJump) return;
+                WillJump = true;
+            }
             
-            if (!WillJump) return;
-            TriggerJump(); //TODO: Jump is still broken and won't trigger upon vaulting
+            // TriggerJump(); //TODO: Jump is still broken and won't trigger upon vaulting
 
         }
         #endregion
