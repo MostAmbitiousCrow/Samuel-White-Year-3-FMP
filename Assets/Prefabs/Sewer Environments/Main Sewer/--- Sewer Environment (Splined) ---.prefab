@@ -376,6 +376,11 @@ PrefabInstance:
       propertyPath: settings.deforming.curveOffset.y
       value: 17.6
       objectReference: {fileID: 0}
+    - target: {fileID: 3568102973625256656, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3645944863870132276, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
       propertyPath: rebuildTriggers
@@ -431,6 +436,16 @@ PrefabInstance:
       propertyPath: scaleData.Array.data[0].m_IndexUnit
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8633808145058857635, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: rebuildTriggers
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8633808145058857635, guid: afb52b4e771c2554e918c953cfc7952a,
+        type: 3}
+      propertyPath: splineContainer
+      value: 
+      objectReference: {fileID: 8177326626346682789}
     - target: {fileID: 9205371419675397465, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
       propertyPath: m_LocalPosition.x

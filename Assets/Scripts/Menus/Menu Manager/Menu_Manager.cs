@@ -159,8 +159,8 @@ public abstract class Menu_Manager : MonoBehaviour // By Samuel White
         //if(GameManager.Instance.CurrentEventSystem)
         //    GameManager.Instance.CurrentEventSystem.enabled = state;
         // return; // TODO: Find another way to disable button input without disabling the component.
-        if (GameManager.Instance.CurrentEventSystem) GameManager.Instance.CurrentEventSystem.enabled = state;
-        else Debug.LogWarning($"Event System is missing");
+        // if (EventSystem.current) EventSystem.current.enabled = state;
+        // else Debug.LogWarning($"Event System is missing");
     }
     #endregion
 
