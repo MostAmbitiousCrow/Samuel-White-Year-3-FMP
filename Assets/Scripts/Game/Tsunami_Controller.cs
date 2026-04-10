@@ -1,202 +1,226 @@
+using System;
+using CameraShake;
 using UnityEngine;
 using EditorAttributes;
-using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(AudioSource))]
-public class TsunamiController : MonoBehaviour, IAffectedByRiver
+public class TsunamiController : MonoBehaviour
 {
+    #region Variables
+    
     [Header("Data")]
-    [Tooltip("Can the Tsunami progress towards the player?")]
-    [SerializeField] bool canProgress = true;
-    /// <summary> Indicates whether the Tsunami is currently losing progress </summary>
-    public bool IsReversing { get; private set; }
-    /// <summary> Indicates whether the Tsunami has made no progress </summary>
-    public bool IsIdle { get; private set; }
-    /// <summary> Check for if the Tsunami has passed the player and has essentially ended the game </summary>
-    public bool HasReachedPlayer => hasReachedPlayer;
-    public bool HasReachedDangerMark => hasReachedDangerMark;
-
     [Space]
     [Tooltip("Multiplier for the speed of the Tsunami")]
-    [SerializeField] float progressSpeedMultiplier = .01f;
+    [SerializeField] private float progressSpeedMultiplier = .01f;
     [Tooltip("The current speed of the Tsunami, based on the speed of the River")]
-    [SerializeField, ReadOnly] float progressSpeed = 0;
+    [SerializeField, ReadOnly] private float progressSpeed = 0;
     [Tooltip("The speed of the river until the Tsunami begins to catchup with the player")]
-    [SerializeField] int speedUntilProgress = 3;
-
+    [SerializeField] private int speedUntilProgress = 3;
+    [Tooltip("The speed of the smoothness for progression. Affects variables such as Audio.")]
+    [SerializeField] private float smoothSpeed = .1f;
+    
+    [Header("Tsunami Effects")]
+    [SerializeField] private PerlinShake.Params shakeParams;
+    private PerlinShake _shake;
     [Space]
-
-    [Tooltip("The percentage quota of the tsunami meter until activating the danger mark")]
-    [SerializeField, Range(0f, 1f)] float dangerMark = 95f;
-    [Tooltip("The multiplier applied to the river progress upon reaching the danger mark")]
-    [SerializeField, Range(0f, 1f)] float dangerMarkSpeedDrop = .6f;
+    [SerializeField] private Material waterMaterial;
+    [SerializeField] private TsunamiStepEffects[] stepEffects;
+    [Serializable]
+    public struct TsunamiStepEffects
+    {
+        [Tooltip("The value representing the step before the maximum steps of which this effect will be applied")]
+        public int stepBefore;
+        [Tooltip("How much amplitude with the camera shake be during this step")]
+        public float shakeAmplitude;
+        [Tooltip("How fast will the Sewer River move during this step")]
+        public float waveSpeed;
+    }
 
     [Header("Status")]
-    [SerializeField, ReadOnly] bool hasReachedPlayer;
-    [SerializeField, ReadOnly] bool hasReachedDangerMark;
-    [SerializeField, ProgressBar(1f), Range(0f, 1f)] float visualProgress = 0f;
-    [SerializeField, ProgressBar(1f), Range(0f, 1f)] float actualProgress = 0f;
-    public float ActualProgress => actualProgress;
+    [Tooltip("Can the Tsunami progress towards the boat?")]
+    [SerializeField] private bool canProgress = true;
+    [Tooltip("Check for if the Tsunami has reached the boat and washed over it")]
+    [SerializeField, ReadOnly] private bool hasReachedBoat;
+    [Tooltip("Check for whether the boat is one step from reaching the boat")]
+    [SerializeField, ReadOnly] private bool hasReachedDangerMark;
+    public bool HasReachedBoat => hasReachedBoat;
+    public bool HasReachedDangerMark => hasReachedDangerMark;
+    [Tooltip("A visual progress bar visualising the Tsunamis distance from the boat")]
+    [SerializeField, ProgressBar(1f), Range(0f, 1f)]
+    private float visualProgress;
+    [Tooltip("The current step from its distance to the boat")]
+    [SerializeField, ReadOnly] private int currentStep;
+    [Tooltip("The maximum amount of steps the Tsunami can take before reaching the boat")]
+    [SerializeField] private int maximumSteps = 4;
 
     [Header("Components")]
     //[SerializeField] Transform _shadow; // TODO: The shadow that looms over the camera (since the game doesn't use any lighting)
-    [SerializeField] ParticleSystem splashParticles;
-    [SerializeField] AudioSource audio;
+    [SerializeField] private GameObject artwork;
+    [SerializeField] private RiverSplineObject riverSplineObject;
+    [SerializeField] private ParticleSystem[] particles;
+    [SerializeField] private AudioSource ambienceAudio;
+    [SerializeField] private BoxCollider smashBox;
     [Space]
-    [SerializeField] Tsunami_Shadow_Controller tsunamiShadowController;
-    [SerializeField] River_Manager riverManager;
+    [SerializeField]
+    private Tsunami_Shadow_Controller tsunamiShadowController;
+    [SerializeField] private River_Manager riverManager;
+    [SerializeField] private Boat_Controller boatController;
+    #endregion
 
     #region Initialisers
     private void Awake()
     {
-        if (!audio) audio = GetComponent<AudioSource>();
+        if (!ambienceAudio) ambienceAudio = GetComponent<AudioSource>();
         if (!riverManager) riverManager = FindFirstObjectByType<River_Manager>();
-        //GameManager.GameLogic.onGameStarted += StartProgressing;
-        //_riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
+        if (!boatController) boatController = FindFirstObjectByType<Boat_Controller>();
+        if (!smashBox) smashBox = GetComponent<BoxCollider>();
     }
+
+    private void Start()
+    {
+        // Setup Tsunami Camera Shake Control
+        shakeParams.envelope.sustain = 999999f;
+        _shake = new PerlinShake(shakeParams);
+        CameraShaker.Shake(_shake);
+        shakeParams.noiseModes[0].amplitude = 0f;
+        
+        ResetProgress();
+    }
+
     private void OnEnable()
     {
-        GameManager.GameLogic.OnGameStarted += StartProgressing;
-        riverManager.OnRiverSpeedUpdate += OnRiverUpdated;
+        GameManager.GameLogic.OnGameStarted += EnableControl;
+        GameManager.GameLogic.OnGameEnded += DisableControl;
+        GameLevelManager.OnLevelLoaded += ResetProgress;
     }
     private void OnDisable()
     {
-        GameManager.GameLogic.OnGameStarted -= StartProgressing;
-        riverManager.OnRiverSpeedUpdate -= OnRiverUpdated;
+        GameManager.GameLogic.OnGameStarted -= EnableControl;
+        GameManager.GameLogic.OnGameEnded -= DisableControl;
+        GameLevelManager.OnLevelLoaded -= ResetProgress;
     }
     #endregion
     private void Update()
     {
         if (!canProgress) return;
 
-        UpdateProgress();
+        ProgressTsunami();
     }
-
-    #region Injection
-    public void InjectRiverManager(River_Manager manager) => riverManager = manager;
-    #endregion
 
     #region Controls
 
-    private void StartProgressing()
-    {
-        canProgress = true;
-        ResetProgress();
-    }
-
-    public void Pause()
+    public void DisableControl()
     {
         canProgress = false;
-        UpdateProgressElements();
     }
 
-    public void Resume()
+    public void EnableControl()
     {
         canProgress = true;
-        UpdateProgressElements();
     }
-    #endregion
-
-    #region Progress Methods
-    // Called whenever the River Managers speed value is updated
-    private void OnRiverUpdated()
+    
+    /// <summary> Resets the Tsunamis progress towards the boat </summary>
+    public void ResetProgress()
     {
-        RecalculateProgression();
-    }
-
-    private void RecalculateProgression() // TODO
-    {
-        if (riverManager.currentRiverSpeed <= speedUntilProgress) IsReversing = false;
-        else IsReversing = true;
-
-        progressSpeed = (riverManager.minMaxSpeed.y - speedUntilProgress) - riverManager.riverFlowSpeed;
-
+        currentStep = 0;
+        artwork.SetActive(false);
+        smashBox.enabled = false;
+        shakeParams.noiseModes[0].amplitude = 0f;
+        
+        UpdateTsunamiProgress();
+        // foreach (var particle in particles) particle.Stop();
     }
 
-    private void UpdateProgress()
+    /// <summary> Sends the Tsunami forward towards the boat under a given amount of steps </summary>
+    /// <param name="steps"> The amount of steps to progress the Tsunami</param>
+    public void Progress(int steps = 1)
     {
-        if(HasReachedPlayer)
+        currentStep += steps;
+        UpdateTsunamiProgress();
+    }
+    
+    /// <summary> Sends the Tsunami backwards from the boat under a given amount of steps </summary>
+    /// <param name="steps"> The amount of steps to regress the Tsunami </param>
+    public void Regress(int steps = 1)
+    {
+        // This is checking the Danger Mark step effects
+        if (currentStep >= maximumSteps + 1) currentStep = maximumSteps - steps;
+        else currentStep -= steps;
+        UpdateTsunamiProgress();
+    }
+
+    private void UpdateTsunamiProgress()
+    {
+        // Check if the current step has already reached the maximum steps requirement
+        if (currentStep >= maximumSteps)
         {
-            MoveTsunami();
+            // If so, set the current step as the maximum step.
+            // If the Danger Mark is true, trigger the wash. Otherwise, set the Danger Mark as true
+            // currentStep = maximumSteps;
+            if (hasReachedDangerMark) TriggerWash();
+            else hasReachedDangerMark = true;
+        }
+        // Otherwise, uncheck the Danger Mark
+        else
+        {
+            hasReachedDangerMark = false;
+            if (currentStep < 0) currentStep = 0;
+        }
+    }
+
+    private float _smooth;
+    private float _velocity;
+    private void ProgressTsunami()
+    {
+        var lerp = Mathf.InverseLerp(0, maximumSteps, currentStep);
+        _smooth = Mathf.SmoothDamp(_smooth, lerp, ref _velocity, Time.deltaTime * smoothSpeed);
+
+        visualProgress = _smooth;
+        ambienceAudio.volume = _smooth;
+
+        // Do Effects //TODO: In Progress of improving...
+        // var effects = stepEffects[0];
+        // Camera Shake:
+        // shakeParams.noiseModes[0].amplitude = effects.shakeAmplitude;
+        
+        // Water Wave Speed: TODO
+        // waterMaterial.SetFloat("_Progress", effects.waveSpeed);
+        
+        // TODO: Improve
+        if (hasReachedDangerMark)
+        {
+            if (hasReachedBoat) shakeParams.noiseModes[0].amplitude = .5f;
+            else shakeParams.noiseModes[0].amplitude = .03f;
             return;
         }
-
-        (actualProgress, visualProgress) = CalculateProgress();
-        UpdateProgressElements();
-        if (hasReachedDangerMark) UpdateShadow();
-        else decalProjector.pivot = new Vector3(0f, 0f, shadowMinMaxOffset.x);
-    }
-
-    private void ResetProgress()
-    {
-        visualProgress = 0f;
-        actualProgress = 0f;
-        // TODO: Update bool checks
-        UpdateProgressElements();
-    }
-
-    private void UpdateProgressElements() => Game_UI.Instance.UpdateTsunamiMeter(visualProgress);
-
-    private (float, float) CalculateProgress() // TODO: polish calculation
-    {
-        // Calculate actual progress
-        var a = actualProgress + Time.deltaTime * progressSpeed *
-            (CheckDangerMark()? dangerMarkSpeedDrop : 1f) 
-            * GameManager.GameLogic.GamePauseInt * progressSpeedMultiplier;
-
-        // Limit progress to 1f
-        a = Mathf.Clamp(a, 0f, 1f);
-
-        // Actual Progress rounded for visual simplicity
-        var v = Mathf.Round(a * 1000f) / 1000f;
-
-        // Check if the player distance has been reached by the Tsunami
-        hasReachedPlayer = Mathf.Approximately(a, 1f);
-        return a == 0f ? (0f, 0f) : (a, v);
-    }
-
-    private bool CheckDangerMark()
-    {
-        bool b = visualProgress > dangerMark;
-        hasReachedDangerMark = b;
-        return b;
+        if (currentStep >= maximumSteps) shakeParams.noiseModes[0].amplitude = .02f;
+        else if (currentStep == maximumSteps-1) shakeParams.noiseModes[0].amplitude = .01f;
     }
 
     #endregion
 
-    #region Visual Methods
-
-    [Header("Shadow Controls")]
-    [SerializeField] DecalProjector decalProjector;
-    [SerializeField, MinMaxSlider(-10f, 0f)] Vector2 shadowMinMaxOffset;
-
-    private void UpdateShadow()
+    #region Events
+    /// <summary>The event that causes the Tsunami to speed ahead of the boat and destroy everything in its way</summary>
+    private void TriggerWash()
     {
-        float l = Mathf.InverseLerp(dangerMark, 1f, visualProgress);
-        decalProjector.pivot = new(0f, 0f, Mathf.Lerp(shadowMinMaxOffset.x,
-            shadowMinMaxOffset.y, l));
+        ambienceAudio.volume = 1f;
+        ambienceAudio.Play();
+        
+        artwork.SetActive(true);
+        smashBox.enabled = true;
 
-        //TODO Apply screen shake
+        riverSplineObject.speedMultiplier = 3.5f;
+        hasReachedBoat = true;
     }
 
-    [Header("Tsunami Animation")]
-    [SerializeField] Transform tsunamiArt;
-    //[ReadOnly, MinMaxSlider(0f, 60f)] 
-    readonly Vector2 _tsunamiPath = new (0f, 60f);
-    private float _tsunamiProgress = 0f;
-
-    private void MoveTsunami()
+    private void OnTriggerEnter(Collider other)
     {
-        if (_tsunamiProgress > 1f)
-        {
-            //TODO: Make the Tsunami End the game upon hitting the player!
-
-            return;
-        }
-
-        _tsunamiProgress += Time.deltaTime * .2f * GameManager.GameLogic.GamePauseInt;
-
-        tsunamiArt.localPosition = new Vector3(0f, 0f, Mathf.Lerp(_tsunamiPath.x, _tsunamiPath.y, _tsunamiProgress));
+        // Destroy anything in the Tsunamis path!
+        if (!other.TryGetComponent(out IDamageable obj)) return;
+        
+        obj.TakeDamage(DamageType.Standard, 100);
+        Debug.Log($"Tsunami destroyed {other.name}");
     }
+
     #endregion
 }

@@ -101,7 +101,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         River_Manager.RiverLane rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
         if (rl == null) return;
 
-        currentLane = rl.ID;
+        currentLane = rl.id;
 
         Vector3 lanePos = rl.transform.localPosition;
 
@@ -119,7 +119,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         River_Manager.RiverLane rl = River_Manager.Instance.GetLane(lane);
 
         var pos = rl.transform.localPosition;
-        currentLane = rl.ID;
+        currentLane = rl.id;
         transform.localPosition = new(pos.x, pos.y, transform.localPosition.z);
     }
 
@@ -166,12 +166,6 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     {
         propellerArt.Rotate(Vector3.up, River_Manager.Instance.currentRiverSpeed * 1000f * Time.deltaTime);
     }
-
-    public void DestroyBoat()
-    {
-        riverSplineObject.StopMoving();
-        artExplode.ExplodeArt();
-    }
     #endregion
 
     #region Injection
@@ -190,16 +184,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         River_Manager.Instance.SlowDownRiver();
     }
 
-    public void Died()
+    public void DestroyBoat()
     {
-        return;
+        riverSplineObject.StopMoving();
+        artExplode.ExplodeArt();
     }
-
-    public void HealthRestored()
-    {
-        return;
-    }
-
 
     #endregion
 }

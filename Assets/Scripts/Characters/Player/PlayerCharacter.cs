@@ -219,7 +219,7 @@ namespace GameCharacters
         protected override void OnMove()
         {
             base.OnMove();
-            AudioManager.PlayGroup(Group.Plyr_Dash);
+            AudioManager.Play(isGrounded ? Clip.Plyr_Dash_0 : Clip.Plyr_Dash_1);
         }
 
         protected override void OnMoved()

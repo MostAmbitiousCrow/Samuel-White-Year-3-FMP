@@ -12,7 +12,7 @@ public class CameraCullMasker : MonoBehaviour
         if (!targetCamera)
             targetCamera = Camera.main;
 
-        if (targetCamera != null) _originalMask = targetCamera.cullingMask;
+        if (targetCamera) _originalMask = targetCamera.cullingMask;
 
         _showLayersEvent = () => ShowOnlyLayer("Player");
     }

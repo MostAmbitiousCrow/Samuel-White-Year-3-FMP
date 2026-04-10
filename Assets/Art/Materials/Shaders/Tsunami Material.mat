@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Transition Material
-  m_Shader: {fileID: -6465566751694194690, guid: 92eedf2a070a84860b54960d14d7a65c,
+  m_Name: Tsunami Material
+  m_Shader: {fileID: -6465566751694194690, guid: 420f931d5d5a2844c8d0f0febb2e4a0b,
     type: 3}
-  m_Parent: {fileID: -876546973899608171, guid: 92eedf2a070a84860b54960d14d7a65c,
+  m_Parent: {fileID: -876546973899608171, guid: 420f931d5d5a2844c8d0f0febb2e4a0b,
     type: 3}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -25,24 +25,21 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _Mask:
-        m_Texture: {fileID: 2800000, guid: cc7f13f3f5f474275a1ed22268a648f1, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Alpha: 1
-    - _MaskAlpha: 0
-    - _Rotation: 0
-    - _Scale: 0
+    - _QueueControl: 0
+    - _Radius: 1
+    - _ScaleFactorX: 0.1
+    - _ScaleFactorY: 0.1
+    - _Tiling: 1
     m_Colors:
-    - _NewHighlight: {r: 1, g: 1, b: 1, a: 1}
-    - _Offset: {r: -0.08, g: 0, b: 0, a: 0}
-    - _Scale: {r: 0.37, g: 1, b: 0, a: 0}
+    - _Highlight: {r: 0.9254902, g: 0.45882353, b: 0.45882353, a: 1}
+    - _Midtone: {r: 1, g: 0.09803922, b: 0.09803922, a: 1}
+    - _Shadow: {r: 0.45882353, g: 0.08235294, b: 0.08235294, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &4931178118422029627
+--- !u!114 &8081300037609533171
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

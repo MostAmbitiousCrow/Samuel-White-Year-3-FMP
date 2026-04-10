@@ -70,7 +70,11 @@ namespace CameraShake
 
         private void Update()
         {
-            if (cameraTransform == null) return;
+            if (!cameraTransform || !GameSettingsManager.DoScreenShake)
+            {
+                cameraTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                return;
+            }
 
             Displacement cameraDisplacement = Displacement.Zero;
             for (int i = activeShakes.Count - 1; i >= 0; i--)

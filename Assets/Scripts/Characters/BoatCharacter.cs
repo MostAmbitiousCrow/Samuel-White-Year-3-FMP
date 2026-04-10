@@ -442,7 +442,7 @@ namespace GameCharacters
                 // If coyote jump action true, jump
                 if (WillJump)
                 {
-                    Debug.Log($"Will Jump. Current height is: {_currentY}. Grounded = {IsGrounded}");
+                    // Debug.Log($"Will Jump. Current height is: {_currentY}. Grounded = {IsGrounded}");
                     TriggerJump();
                 }
             }
@@ -522,7 +522,7 @@ namespace GameCharacters
 
             if (isVaultingHeavily && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace);
 
-            Debug.Log($"PERFORMED Jump. Current height is: {_currentY}. Grounded = {IsGrounded}");
+            // Debug.Log($"PERFORMED Jump. Current height is: {_currentY}. Grounded = {IsGrounded}");
         }
 
         /// <summary> Called whenever this character lands </summary>
@@ -547,7 +547,7 @@ namespace GameCharacters
                 if (!isVaulting) isVaultingHeavily = false;
             }
             else CameraShaker.Presets.ShortShake3D();
-            Debug.Log($"Landed. Grounded = {IsGrounded} Height = {_currentY}");
+            // Debug.Log($"Landed. Grounded = {IsGrounded} Height = {_currentY}");
         }
 
         protected virtual void OnTargetEliminated()

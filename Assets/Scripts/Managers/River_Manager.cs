@@ -17,8 +17,10 @@ public class River_Manager : MonoBehaviour
     public SplineContainer WorldSplineContainer => worldSplineContainer;
     [SerializeField] private Boat_Controller boatController;
     public Boat_Controller BoatController => boatController;
+    [SerializeField] private TsunamiController tsunamiController;
 
-    [Header("Audio")] [SerializeField] private InspectorAudioClipPlayer speedIncreaseSound;
+    [Header("Audio")] 
+    [SerializeField] private InspectorAudioClipPlayer speedIncreaseSound;
     [SerializeField] private InspectorAudioClipPlayer speedDecreaseSound;
 
     [Header("River Stats")]
@@ -47,11 +49,11 @@ public class River_Manager : MonoBehaviour
     [Serializable]
     public class RiverLane
     {
-        public int ID;
+        public int id;
         public Transform transform;
     }
-    public List<RiverLane> RiverLanes;
-    public List<IAffectedByRiver> riverInfluencedObjects = new();
+    public List<RiverLane> riverLanes;
+    public List<IAffectedByRiver> RiverInfluencedObjects = new();
 
     /// <summary> Action that updates all subcribed events whenever the river speed is updated </summary>
     public event Action OnRiverSpeedUpdate;
@@ -66,7 +68,8 @@ public class River_Manager : MonoBehaviour
         Instance = this;
         
         UpdateSplineLengths();
-        if (boatController == null) boatController = FindFirstObjectByType<Boat_Controller>();
+        if (!boatController) boatController = FindFirstObjectByType<Boat_Controller>();
+        if (!tsunamiController) tsunamiController = FindFirstObjectByType<TsunamiController>();
         UpdateSpaceDatas();
         ResetRiver();
     }
@@ -75,14 +78,14 @@ public class River_Manager : MonoBehaviour
     [Button]
     public void UpdateSpaceDatas()
     {
-        RiverLanes.Clear();
+        riverLanes.Clear();
 
         for (int i = 0; i < lanesParent.childCount; i++)
         {
-            RiverLane rl = new() { transform = lanesParent.GetChild(i).transform, ID = i };
-            RiverLanes.Add(rl);
+            RiverLane rl = new() { transform = lanesParent.GetChild(i).transform, id = i };
+            riverLanes.Add(rl);
         }
-        print($"Updated River Lanes to {RiverLanes.Count} lanes");
+        print($"Updated River Lanes to {riverLanes.Count} lanes");
     }
     #endregion
     
@@ -111,7 +114,7 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public bool CheckAvailableLane(int lane)
     {
-        return lane <= RiverLanes.Count && lane >= 0;
+        return lane <= riverLanes.Count && lane >= 0;
     }
 
     /// <summary>
@@ -125,8 +128,8 @@ public class River_Manager : MonoBehaviour
         spaces = GetLanes().Count;
         targetLane = currentLane + direction;
 
-        if (targetLane < spaces && targetLane > -1) return RiverLanes[targetLane];
-        else return RiverLanes[currentLane];
+        if (targetLane < spaces && targetLane > -1) return riverLanes[targetLane];
+        else return riverLanes[currentLane];
     }
 
     /// <summary>
@@ -142,7 +145,7 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public RiverLane GetLane(int lane)
     {
-        return RiverLanes[lane];
+        return riverLanes[lane];
     }
 
     /// <summary>
@@ -150,7 +153,7 @@ public class River_Manager : MonoBehaviour
     /// </summary>
     public List<RiverLane> GetLanes()
     {
-        return RiverLanes;
+        return riverLanes;
     }
     #endregion
 
@@ -165,6 +168,8 @@ public class River_Manager : MonoBehaviour
     private int _previousSpeed;
     public void SetRiverSpeed(int amount = 10, bool bypassCheck = true, bool playSound = true)
     {
+        // Regress the Tsunami if the river has sped up
+        if (amount > _previousSpeed) tsunamiController.Regress();
         
         if (!bypassCheck)
         {
@@ -185,7 +190,7 @@ public class River_Manager : MonoBehaviour
         if (playSound)
         {
             if (amount > _previousSpeed) speedIncreaseSound.Play();
-            else speedDecreaseSound.Play();
+            else if (amount < _previousSpeed) speedDecreaseSound.Play();
         }
         _previousSpeed = amount;
     }
@@ -199,6 +204,9 @@ public class River_Manager : MonoBehaviour
         if (!isHalted) _storedRiverSpeed = targetRiverSpeed;
         isHalted = true;
         SetRiverSpeed(targetRiverSpeed / 2, true, false);
+
+        // Progress the Tsunami
+        tsunamiController.Progress();
     }
 
     /// <summary> The method to slow down the global river speed </summary>
@@ -207,7 +215,7 @@ public class River_Manager : MonoBehaviour
     public void SlowDownRiver(int amount = 10, bool bypassRange = false)
     {
         var targetSpeed = targetRiverSpeed - amount;
-
+        
         if (targetSpeed < minMaxSpeed.x && !bypassRange) // If target speed is less than the min speed value
         {
             print("River speed has reached minimum speed");
@@ -224,7 +232,7 @@ public class River_Manager : MonoBehaviour
     public void SpeedUpRiver(int amount = 10)
     {
         var targetSpeed = targetRiverSpeed + amount;
-
+        
         if (targetSpeed > minMaxSpeed.y)
         {
             print("River speed has reached maximum speed!");
@@ -236,6 +244,9 @@ public class River_Manager : MonoBehaviour
 
         OnRiverSpeedUpdate?.Invoke();
         speedIncreaseSound.Play();
+        
+        // Regress the Tsunami
+        tsunamiController.Regress();
     }
 
     /// <summary> Completely stops the speed of the river with optional smoothing </summary>
@@ -266,6 +277,7 @@ public class River_Manager : MonoBehaviour
     [SerializeField] private float slowTime = .5f;
     [SerializeField] private float speedRecoveryTime = 2.4f;
     [SerializeField, ReadOnly] private bool isHalted;
+    public bool IsHalted => isHalted;
     private float _referenceVelocity;
     private float _capturedTime;
     [SerializeField] private int targetRiverSpeed;
@@ -302,15 +314,15 @@ public class River_Manager : MonoBehaviour
 
     private void OnValidate()
     {
-        if (RiverLanes == null  || worldSplineContainer == null)
+        if (riverLanes == null  || worldSplineContainer == null)
         {
-            Debug.LogWarning($"Missing River Lanes {RiverLanes} or Spline Container {worldSplineContainer}");
+            Debug.LogWarning($"Missing River Lanes {riverLanes} or Spline Container {worldSplineContainer}");
             return;
         }
 
         // Assign the lane positions to the world spline container
         int i = -1;
-        foreach (var item in RiverLanes)
+        foreach (var item in riverLanes)
         {
             // Get the position of the spline
             var splinePos = 

@@ -82,7 +82,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         var rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
 
         var pos = rl.transform.position;
-        currentLane = rl.ID;
+        currentLane = rl.id;
         CurrentMoveTarget = new Vector3(pos.x, pos.y, transform.position.z); //TODO: Add optional movement interpolation
         isMoving = true;
         // print($"Moved {direction} to Space Position: {rl.axis}, ID {rl.ID}");
@@ -93,7 +93,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         var rl = River_Manager.Instance.GetLane(lane);
 
         var pos = rl.transform.position;
-        currentLane = rl.ID;
+        currentLane = rl.id;
         transform.position = new(pos.x, pos.y, transform.position.z);
     }
 

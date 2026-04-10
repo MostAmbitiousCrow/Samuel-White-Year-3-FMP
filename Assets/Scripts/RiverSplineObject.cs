@@ -3,7 +3,9 @@ using UnityEngine;
 public class RiverSplineObject : MonoBehaviour
 {
     [SerializeField, Range(0, 2)] private int lane = 1;
-    [SerializeField] private float speedMultiplier = 1f;
+    public float speedMultiplier = 1f;
+    [Tooltip("Optional offset of this object on the river spline")]
+    [SerializeField] private float offset;
 
     [SerializeField] private float distanceOnSpline = 0f;
     public float DistanceOnSpline => distanceOnSpline;
@@ -21,7 +23,8 @@ public class RiverSplineObject : MonoBehaviour
         distanceOnSpline +=  speed * Time.deltaTime;
         distanceOnSpline %= River_Manager.SplineTotalLength; // Modulo to loop forever!
 
-        River_Manager.Instance.AssignToCurveSection(totalDistanceTravelled, lane, out Vector3 pos, out Quaternion rot);
+        River_Manager.Instance.AssignToCurveSection(totalDistanceTravelled + offset, lane,
+            out Vector3 pos, out Quaternion rot);
         transform.SetPositionAndRotation(pos, rot);
     }
 

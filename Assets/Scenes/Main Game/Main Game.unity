@@ -1722,6 +1722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 1
   speedMultiplier: 1
+  offset: 0
   distanceOnSpline: 0
   totalDistanceTravelled: 0
 --- !u!1001 &376738829
@@ -3595,6 +3596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 1
   speedMultiplier: 1
+  offset: 0
   distanceOnSpline: 0
   totalDistanceTravelled: 0
 --- !u!1001 &1962718609
@@ -3978,21 +3980,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tsunami
-      objectReference: {fileID: 0}
-    - target: {fileID: 8555857859445590250, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8931706103474759340, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
-        type: 3}
-      propertyPath: dangerMark
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8931706103474759340, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
-        type: 3}
-      propertyPath: _speedUntilProgress
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
