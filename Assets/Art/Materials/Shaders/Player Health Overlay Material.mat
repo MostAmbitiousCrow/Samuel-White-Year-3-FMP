@@ -27,9 +27,13 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Alpha: 1
+    - _Alpha: 0
+    - _Desnsity: 10
     - _Multiplier: 1.35
+    - _Speed: 1
     m_Colors:
-    - _PixelCount: {r: 64, g: 64, b: 0, a: 0}
+    - _MinMaxBounce: {r: 0.95, g: 1, b: 0, a: 0}
+    - _PixelCount: {r: 32, g: 32, b: 0, a: 0}
+    - _Scale: {r: 0.9, g: 0.55, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

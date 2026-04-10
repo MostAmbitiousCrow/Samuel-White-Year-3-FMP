@@ -425,9 +425,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 613ad81bf6f42e34c972183bf9e30ceb, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -822,6 +822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7572041761152443244}
+  - component: {fileID: 2308568026133656326}
   - component: {fileID: 3747826343409973514}
   - component: {fileID: 1568813623598394170}
   m_Layer: 5
@@ -850,6 +851,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2308568026133656326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804899812490960415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c76718ef90cc4df6b242db6627b79e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMesh: {fileID: 1568813623598394170}
 --- !u!222 &3747826343409973514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1366,8 +1380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9212a0ad8a223684b9a8244282044d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthSlider: {fileID: 0}
-  debugHealthText: {fileID: 0}
+  visualHealthBorder: {fileID: 2100000, guid: 613ad81bf6f42e34c972183bf9e30ceb, type: 2}
+  fadeDuration: 3.25
   gemstoneCounterText: {fileID: 0}
-  _playerProgressSlider: {fileID: 6657583299749657681}
-  _tsunamiProgressSlider: {fileID: 2439090003624846007}

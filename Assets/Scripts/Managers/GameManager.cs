@@ -206,7 +206,6 @@ public class GameManager : MonoBehaviour
         }
 
         public event Action<int> OnGemstoneCollected;
-        public event Action<int> OnPlayerDamaged;
 
         public void AddGemstones(int amount = 1)
         {
@@ -215,13 +214,9 @@ public class GameManager : MonoBehaviour
             // print($"Player Collected a Gemstone. Current Gemstones: {playerData.CurrentGemstones}");
         }
 
-        public delegate void OnPlayerDeath();
-        public OnPlayerDeath onPlayerDeath;
-
         /// <summary> Method to trigger whenever the player dies during the game </summary>
         public void PlayerDied()
         {
-            onPlayerDeath?.Invoke();
 
             EndGame();
         }

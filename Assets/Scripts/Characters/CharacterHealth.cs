@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using EditorAttributes;
 using UnityEngine;
@@ -16,7 +15,6 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     public bool IsDead => isDead;
     [Space]
     [SerializeField] private float invincibilityDuration = .25f;
-
     public bool IsInvincible { get; set; }
 
     [Space] 

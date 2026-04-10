@@ -1,48 +1,93 @@
+using GameCharacters;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Game_UI : MonoBehaviour
 {
     public static Game_UI Instance;
+    private static readonly int Alpha = Shader.PropertyToID("_Alpha");
 
     #region Subscriptions
     private void Awake()
     {
         Instance = this;
+        _storedTime = Time.time;
     }
     private void Start()
     {
         GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
-        GameManager.GameLogic.OnPlayerDamaged += UpdatePlayerHealthMeter;
+        PlayerCharacter.OnPlayerDamaged += CheckPlayerHealth;
+        PlayerCharacter.OnPlayerDied += ResetHealthBorder;
+        GameLevelManager.OnLevelLoaded += ResetHealthBorder;
     }
     private void OnEnable()
     {
         GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
-        GameManager.GameLogic.OnPlayerDamaged += UpdatePlayerHealthMeter;
+        PlayerCharacter.OnPlayerDamaged += CheckPlayerHealth;
+        PlayerCharacter.OnPlayerDied += ResetHealthBorder;
+        GameLevelManager.OnLevelLoaded += ResetHealthBorder;
     }
 
     private void OnDisable()
     {
         GameManager.GameLogic.OnGemstoneCollected -= UpdateGemstoneCounter;
-        GameManager.GameLogic.OnPlayerDamaged -= UpdatePlayerHealthMeter;
+        PlayerCharacter.OnPlayerDamaged -= CheckPlayerHealth;
+        PlayerCharacter.OnPlayerDied -= ResetHealthBorder;
+        GameLevelManager.OnLevelLoaded -= ResetHealthBorder;
     }
 
     #endregion
 
-    //public static event Action<float, float> UpdateTsunamiUI; //TODO: event to update UI
-
     [Header("Player UI")]
     #region Player Health UI
-    [SerializeField] private Slider playerHealthSlider;
-    [SerializeField] private TextMeshProUGUI debugHealthText;
+    [SerializeField] private Material visualHealthBorder;
+    [SerializeField] private float fadeDuration = 3.25f;
+    private float _storedTime;
+    private bool _isHealthInDanger;
 
-    /// <summary> Fuction to update the UI for the players health bar. Parameter must be the players current health. </summary>
-    private void UpdatePlayerHealthMeter(int health)
+    /// <summary>  </summary>
+    private void CheckPlayerHealth(int health)
     {
-        if (health < (int)playerHealthSlider.minValue || health > (int)playerHealthSlider.maxValue) return;
+        // If on their last hit point, set health in danger true
+        _isHealthInDanger = health == 1;
+        _storedTime = Time.time + fadeDuration; // Duration of the fade based on player invincibility duration
+        // TODO: ^ Link this up to the player invincibility duration?
+    }
+
+    private void ResetHealthBorder()
+    {
+        visualHealthBorder.SetFloat(Alpha, 0f);
+        _isHealthInDanger = false;
+    }
+
+    private void Update()
+    {
+        var progress = _storedTime - Time.time;
+
+        if (progress < 0f) return;
         
-        playerHealthSlider.value = health;
+        var value = Mathf.InverseLerp(0f, fadeDuration, progress);
+
+        var target = _isHealthInDanger ? .15f : 0f;
+        var start = _isHealthInDanger ? 0f : .15f;
+        var lerp = Mathf.Lerp(target, start, value);
+        visualHealthBorder.SetFloat(Alpha, lerp);
+        
+        // if (_isHealthInDanger)
+        // {
+        //     // Slowly Reveal Health Border
+        //     var value = Mathf.InverseLerp(0f, fadeDuration, progress);
+        //     var lerp = Mathf.Lerp(target, start, value);
+        //     visualHealthBorder.SetFloat(Alpha, lerp);
+        // }
+        // else
+        // {
+        //     // Slowly Hide Health Border
+        //     var value = Mathf.InverseLerp(0f, fadeDuration, progress);
+        //     var lerp = Mathf.Lerp(0f, .15f, value);
+        //     visualHealthBorder.SetFloat(Alpha, lerp);
+        // }
+        Debug.Log($"Health in Danger = {_isHealthInDanger}. Updating Health Border: Progress = {progress} Lerp = {lerp}");
     }
 
     #endregion
@@ -61,37 +106,37 @@ public class Game_UI : MonoBehaviour
 
     #endregion
 
-    [Header("Game UI")]
-    #region Player Progress Meter
-    [SerializeField] Slider _playerProgressSlider;
+    // [Header("Game UI")]
+    // #region Player Progress Meter
+    // [SerializeField] Slider _playerProgressSlider;
+    //
+    // /// <summary> Fuction to update the UI for the Players progress meter. Parameter must be the Players current progress </summary>
+    // public void UpdatePlayerProgressMeter(float playerProgress)
+    // {
+    //     _playerProgressSlider.value = playerProgress;
+    // }
+    // #endregion
+    //
+    // #region Tsunami Meter
+    // [SerializeField] Slider _tsunamiProgressSlider;
+    //
+    // /// <summary> Fuction to update the UI for the Tsunamis progress meter. Parameter must be the Tsunamis current progress </summary>
+    // public void UpdateTsunamiMeter(float tsunamiProgress)
+    // {
+    //     _tsunamiProgressSlider.value = tsunamiProgress;
+    // }
+    // #endregion
 
-    /// <summary> Fuction to update the UI for the Players progress meter. Parameter must be the Players current progress </summary>
-    public void UpdatePlayerProgressMeter(float playerProgress)
-    {
-        _playerProgressSlider.value = playerProgress;
-    }
-    #endregion
-
-    #region Tsunami Meter
-    [SerializeField] Slider _tsunamiProgressSlider;
-
-    /// <summary> Fuction to update the UI for the Tsunamis progress meter. Parameter must be the Tsunamis current progress </summary>
-    public void UpdateTsunamiMeter(float tsunamiProgress)
-    {
-        _tsunamiProgressSlider.value = tsunamiProgress;
-    }
-    #endregion
-
-    #region UI
-    /// <summary> Fuction to completely reset the Game and Player UI to defaults. </summary>
-
-    public void ResetUI()
-    {
-        UpdateGemstoneCounter(0);
-        UpdatePlayerHealthMeter(3); // TODO: expose players max health so UI can be updated accordingly
-        UpdatePlayerProgressMeter(0);
-        UpdateTsunamiMeter(0);
-    }
-
-    #endregion
+    // #region UI
+    // /// <summary> Fuction to completely reset the Game and Player UI to defaults. </summary>
+    //
+    // public void ResetUI()
+    // {
+    //     UpdateGemstoneCounter(0);
+    //     UpdatePlayerHealthMeter(3); // TODO: expose players max health so UI can be updated accordingly
+    //     UpdatePlayerProgressMeter(0);
+    //     UpdateTsunamiMeter(0);
+    // }
+    //
+    // #endregion
 }

@@ -42,6 +42,10 @@ namespace GameCharacters
         public delegate void PlayerDied();
         public static PlayerDied OnPlayerDied;
         public static event Action OnPlayerKilledEnemy;
+        /// <summary>
+        /// Event to trigger when the player has taken damage. The parameter is the amount of health remaining.
+        /// </summary>
+        public static event Action<int> OnPlayerDamaged;
 
         #endregion
 
@@ -307,6 +311,7 @@ namespace GameCharacters
             base.OnTookDamage();
 
             AudioManager.Play(Clip.Plyr_Hurt);
+            OnPlayerDamaged?.Invoke(HealthComponent.CurrentHealth);
             // Debug.Log("Player Took Damage");
         }
 
