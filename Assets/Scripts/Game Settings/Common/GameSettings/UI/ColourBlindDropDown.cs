@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using EditorAttributes;
-using GameColours;
 
 namespace Game
 {
@@ -55,9 +54,9 @@ namespace Game
 
 		private void OnValueChange(int idx)
 		{
-			GameSettingsManager.CurrentColourblindMode = (GameSettingsManager.ColourblindType)idx;
-			GameColoursManager.UpdateColours();
-			Debug.Log($"Set Colourblind mode to {GameSettingsManager.CurrentColourblindMode}");
+			// GameSettingsManager.CurrentColourblindMode = (GameSettingsManager.ColourblindType)idx;
+			GameSettingsManager.SetColourBlindness((GameSettingsManager.ColourblindType)idx);
+			Debug.Log($"Set Colourblind mode to {GameSettingsManager.CurrentColourblindMode}. ID was: {idx}");
 		}
 
 		// ------------------------------------------------------------------------------------------------------------

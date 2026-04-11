@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using GameColours;
 using TMPro;
 using UnityEngine.Audio;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace Game
 {
@@ -168,7 +167,11 @@ namespace Game
 			Protanopia, Deuteranopia, Tritanopia, None
 		}
 
-		public static ColourblindType CurrentColourblindMode;
+		/// <summary>
+		/// Retrieve the colour blind type in an enum form based on the current saved PlayerPref colour blind mode
+		/// </summary>
+		public static ColourblindType CurrentColourblindMode 
+			=> (ColourblindType)PlayerPrefs.GetInt("Settings.ColourBlindness", (int)ColourblindType.None);
 
 		/// <summary> Get or Set whether the game is in fullscreen mode or not. 
 		/// This toggles between FullScreenWindow and Windowed. </summary>
@@ -236,6 +239,12 @@ namespace Game
 
 			PlayerPrefs.SetInt("Settings.VSync", state ? 1:0);
 			PlayerPrefs.Save();
+		}
+
+		public static void SetColourBlindness(ColourblindType type)
+		{
+			PlayerPrefs.SetInt("Settings.ColourBlindness", (int)type);
+			GameColoursManager.UpdateColours();
 		}
 
 		#endregion

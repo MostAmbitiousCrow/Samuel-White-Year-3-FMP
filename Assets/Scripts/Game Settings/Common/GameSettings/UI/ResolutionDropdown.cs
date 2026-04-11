@@ -64,7 +64,7 @@ namespace Game
 
 		private void RefreshControl()
 		{
-			if (targetElement != null)
+			if (targetElement)
 			{
 				targetElement.ClearOptions();
 				targetElement.onValueChanged.RemoveAllListeners();

@@ -96,10 +96,11 @@ namespace GameColours
             UpdateColours();
         }
 
+        /// <summary> Sets the colour blindness to 'none' and updates the game colours </summary>
         [Button]
         public void ResetColourBlindness()
         {
-            GameSettingsManager.CurrentColourblindMode = GameSettingsManager.ColourblindType.None;
+            GameSettingsManager.SetColourBlindness(0);
             UpdateColours();
         }
 
