@@ -1668,12 +1668,13 @@ MonoBehaviour:
   gravity: -25
   isBouncing: 0
   bouncePower: 7.5
+  canBounce: 1
   currentSpace:
     t: {fileID: 0}
     spaceID: 0
     sideID: 0
     insideBoat: 1
-    isOccupied: 0
+    Occupants: 0
   isOnBoat: 0
   canAccessOuterBoatSides: 0
   canAccessBoatSpaces: 1
@@ -1731,6 +1732,7 @@ MonoBehaviour:
   - {fileID: 7750919844484548745}
   - {fileID: 4013907147408159808}
   artPositions: []
+  artRotations: []
   force: 10
   minMaxAngularVelocity: {x: -5, y: 5}
   animator: {fileID: 5579330003625564286}

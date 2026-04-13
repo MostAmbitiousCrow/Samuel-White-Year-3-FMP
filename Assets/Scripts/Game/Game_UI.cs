@@ -73,21 +73,7 @@ public class Game_UI : MonoBehaviour
         var lerp = Mathf.Lerp(target, start, value);
         visualHealthBorder.SetFloat(Alpha, lerp);
         
-        // if (_isHealthInDanger)
-        // {
-        //     // Slowly Reveal Health Border
-        //     var value = Mathf.InverseLerp(0f, fadeDuration, progress);
-        //     var lerp = Mathf.Lerp(target, start, value);
-        //     visualHealthBorder.SetFloat(Alpha, lerp);
-        // }
-        // else
-        // {
-        //     // Slowly Hide Health Border
-        //     var value = Mathf.InverseLerp(0f, fadeDuration, progress);
-        //     var lerp = Mathf.Lerp(0f, .15f, value);
-        //     visualHealthBorder.SetFloat(Alpha, lerp);
-        // }
-        Debug.Log($"Health in Danger = {_isHealthInDanger}. Updating Health Border: Progress = {progress} Lerp = {lerp}");
+        // Debug.Log($"Health in Danger = {_isHealthInDanger}. Updating Health Border: Progress = {progress} Lerp = {lerp}");
     }
 
     #endregion

@@ -39,7 +39,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
 
     // TODO: Sounds
 
-
+    protected static readonly int PrepareAttackHash = Animator.StringToHash("Prepare Attack");
 
     #endregion
 
@@ -62,7 +62,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     {
         CurrentState?.OnExit();
         CurrentState = newState;
-        // Debug.Log($"{name}: New State = {CurrentState}");
+        Debug.Log($"{name}: New State = {CurrentState}");
         CurrentState.OnEnter();
     }
     
@@ -103,18 +103,16 @@ public abstract class BoatEnemyStateController : BoatCharacter
         // Assign data, restore health and change to idle state
         boatEnterData = data;
         HealthComponent.RestoreHealth();
-        ChangeState(IdleState);
-        
-        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        characterCollider.enabled = true;
         
         // Reset Position and Rotation
+        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        characterCollider.enabled = true;
 
         canMove = true;
         isMoving = false;
         isJumping = false;
         isVaulting = false;
-        isGrounded = true;
+        // isGrounded = true;
 
         canAccessBoatSpaces = true;
         canAccessOuterBoatSides = true;

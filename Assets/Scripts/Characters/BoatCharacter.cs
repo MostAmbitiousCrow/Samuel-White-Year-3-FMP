@@ -15,16 +15,12 @@ namespace GameCharacters
 
         [Title("Boat Character")] [Line(GUIColor.Gray)] [Header("Vault Movement")] [SerializeField]
         protected bool canVault = true;
-
         [SerializeField, ShowField(nameof(canVault))]
         protected float vaultTime = .5f;
-
         [SerializeField, ShowField(nameof(canVault))]
         protected AnimationCurve vaultCurve;
-
         [ReadOnly, ShowField(nameof(canVault))]
         public bool isVaulting;
-
         [ReadOnly, ShowField(nameof(canVault))]
         public bool isVaultingHeavily;
 
@@ -32,23 +28,19 @@ namespace GameCharacters
         protected new int MoveDirection;
         protected bool WillVault = false;
         protected bool WillJump = false;
-
         protected float VaultTimeElapsed = 0f;
 
         [Header("Jump Movement")] [SerializeField]
         protected bool canJump = true;
-
         [SerializeField, ShowField(nameof(canJump))]
         protected float jumpPower = 10f;
-
         [ShowField(nameof(canJump))] public bool isJumping;
-
         protected float JumpTimeElapsed = 0f;
-
+        public bool isAffectedByGravity = true;
         [SerializeField] protected float gravity = -25f;
 
         private float _verticalVelocity;
-        private float _currentY;
+        [SerializeField, ReadOnly] protected float currentY;
 
         [Header("Head Bounce")] [ReadOnly] public bool isBouncing = false;
         [SerializeField] protected float bouncePower = 5f;
@@ -57,11 +49,8 @@ namespace GameCharacters
 
         [Header("Space Information")]
         [Tooltip("The current space on the boat this character is on")]
-        [SerializeField, ReadOnly]
-        protected SpaceData currentSpace;
-
+        [SerializeField, ReadOnly] protected SpaceData currentSpace;
         public SpaceData CurrentSpace => currentSpace;
-
         [ReadOnly] public bool isOnBoat;
 
         /* Variables for lerping target space movement */
@@ -221,7 +210,6 @@ namespace GameCharacters
             else transform.position = sd.t.position;
 
             TargetSpace(sd);
-            rb.isKinematic = true;
         }
 
         /// <summary> Sends the character directly to the position of the specified space on the Boat </summary>
@@ -284,7 +272,7 @@ namespace GameCharacters
 
             if (isGrounded)
             {
-                _currentY = 0f;
+                currentY = 0f;
             }
             
             // Debug.Log($"");
@@ -311,7 +299,7 @@ namespace GameCharacters
 
             transform.localPosition = new Vector3(
                 basePos.x,
-                basePos.y + _currentY,
+                basePos.y + currentY,
                 basePos.z
             );
         }
@@ -336,7 +324,7 @@ namespace GameCharacters
 
                 transform.localPosition = new Vector3(
                     basePos.x,
-                    basePos.y + _currentY,
+                    basePos.y + currentY,
                     basePos.z
                 );
             }
@@ -350,7 +338,7 @@ namespace GameCharacters
 
                 transform.localPosition = new Vector3(
                     basePos.x,
-                    basePos.y + _currentY,
+                    basePos.y + currentY,
                     basePos.z
                 );
 
@@ -394,7 +382,7 @@ namespace GameCharacters
 
                 float t = vaultCurve.Evaluate(VaultTimeElapsed);
                 Vector3 pos = Vector3.Lerp(PreviousSpace.t.localPosition, TargetedSpace.t.localPosition, t);
-                transform.localPosition = new Vector3(pos.x, pos.y + _currentY, pos.z);
+                transform.localPosition = new Vector3(pos.x, pos.y + currentY, pos.z);
             }
             // Vaulted Ended
             else
@@ -403,7 +391,7 @@ namespace GameCharacters
                 WillVault = false;
 
                 VaultTimeElapsed = 0f;
-                transform.localPosition = TargetedSpace.t.localPosition + Vector3.up * _currentY;
+                transform.localPosition = TargetedSpace.t.localPosition + Vector3.up * currentY;
 
                 if (!isJumping) OnVaulted();
                 else
@@ -468,9 +456,14 @@ namespace GameCharacters
         private void VerticalMovement()
         {
             if (isGrounded) return;
-            // Do Gravity (fall)
-            _verticalVelocity += gravity * Time.deltaTime;
-            _currentY += _verticalVelocity * Time.deltaTime;
+
+            if (isAffectedByGravity)
+            {
+                // Do Gravity (fall)
+                _verticalVelocity += gravity * Time.deltaTime;
+                currentY += _verticalVelocity * Time.deltaTime;
+            }
+
 
             // Set Vertical Falling Animation Parameter
             animator.SetFloat("Vertical Velocity", _verticalVelocity);
@@ -490,8 +483,8 @@ namespace GameCharacters
             }
 
             // Detect Landing
-            if (!(_currentY <= 0f)) return;
-            _currentY = 0f;
+            if (!(currentY <= 0f)) return;
+            currentY = 0f;
             _verticalVelocity = 0f;
             isGrounded = true;
 
@@ -507,7 +500,7 @@ namespace GameCharacters
             isJumping = true;
             isGrounded = false;
             _verticalVelocity = jumpPower;
-            _currentY = 0.1f;
+            currentY = 0.1f;
 
             OnJumped();
         }
@@ -533,7 +526,6 @@ namespace GameCharacters
             
             currentSpace.EnterSpace();
             
-            // rb.isKinematic = true; // TODO: Consider
             animator.SetTrigger("Landed");
             animator.SetBool("Grounded", true);
 

@@ -189,7 +189,7 @@ namespace GameCharacters
             // Trigger Jump if Vault Button is held
             if (_vaultHeavyAction.WasPerformedThisFrame() || _vaultLightAction.WasPerformedThisFrame())
             {
-                Debug.Log("Jump Action Performed");
+                // Debug.Log("Jump Action Performed");
                 if (WillJump) return;
                 WillJump = true;
             }

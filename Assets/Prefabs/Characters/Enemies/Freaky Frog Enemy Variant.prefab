@@ -224,6 +224,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Freaky Frog Enemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8245006621412079573, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8245006621412079573, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -415,7 +425,9 @@ MonoBehaviour:
   canJump: 1
   jumpPower: 10
   isJumping: 0
+  isAffectedByGravity: 1
   gravity: -25
+  currentY: 0
   isBouncing: 0
   bouncePower: 0
   canBounce: 0
@@ -424,6 +436,7 @@ MonoBehaviour:
     spaceID: 0
     sideID: 0
     insideBoat: 1
+    Occupants: 0
   isOnBoat: 0
   canAccessOuterBoatSides: 1
   canAccessBoatSpaces: 1
@@ -432,9 +445,9 @@ MonoBehaviour:
   isErupting: 0
   isAttacking: 0
   boatEnterData:
-    targetSideSpaces: 0
+    doTargetSideSpaces: 0
     targetSideSpace: 0
-    targetLeftSide: 0
+    doTargetLeftSide: 0
     startFacingDirection: -1
     targetBoatSpaces: 0
     targetSpace: 0

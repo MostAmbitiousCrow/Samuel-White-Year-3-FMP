@@ -99,7 +99,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              
              // Go To Side Space on the Boat
              CrocSc.SetDirection(CrocSc.boatEnterData.startFacingDirection, false);
-             CrocSc.GoToSideSpace(CrocSc.boatEnterData.targetSideSpace, CrocSc.boatEnterData.targetLeftSide);
+             CrocSc.GoToSideSpace(CrocSc.boatEnterData.targetSideSpace, CrocSc.boatEnterData.doTargetLeftSide);
              
              // _currentEmergeTime = 0f;
              CrocSc.EnterBoat(false);
@@ -170,14 +170,6 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              CrocSc.canAccessBoatSpaces = true;
              
              CrocSc.Animator.SetTrigger("Idle");
-             
-
-             // Set the direction of the enemy upon landing on the boat
-             // TODO:
-             // This doesn't work with the way ground detection works... Exit is getting triggered before the croc
-             // Reaches the ground
-
-             // CrocSc.SetDirection(CrocSc.boatEnterData.boardingFacingDirection, false);
          }
      }
      
@@ -197,18 +189,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              _currentTimeUntilMove = _currentCooldownTime = _currentDelayTime = 0f;
              _stepped = false;
          }
-     
-         public override void OnExit()
-         {
-             base.OnExit();
-         }
-     
-         public override void OnHurt()
-         {
-             base.OnHurt();
-             // CrocSc.ChangeState(CrocSc.DefeatedState);
-         }
-     
+
          public override void UpdateState()
          {
              base.UpdateState();

@@ -107,7 +107,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
              
              // Go To Side Space on the Boat
              FrogSc.SetDirection(FrogSc.boatEnterData.startFacingDirection, false);
-             FrogSc.GoToSideSpace(FrogSc.boatEnterData.targetBoatSide, FrogSc.boatEnterData.targetLeftSide);
+             FrogSc.GoToSideSpace(FrogSc.boatEnterData.targetBoatSide, FrogSc.boatEnterData.doTargetLeftSide);
              
              _currentEmergeTime = 0f;
              FrogSc.EnterBoat(false);

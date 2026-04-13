@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d9e6e9060cfc34da5d009b2059e303, type: 3}
-  m_Name: Frog and Croc Test
+  m_Name: Bat Enemy Test
   m_EditorClassIdentifier: 
   sectionContent:
     initialDelay: 0
@@ -30,11 +30,11 @@ MonoBehaviour:
       height: 0
     enemies:
     - data:
-        enemyType: 0
+        enemyType: 2
         silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          doTargetSideSpaces: 0
+          doTargetSideSpaces: 1
           targetSideSpace: 0
           doTargetLeftSide: 0
           startFacingDirection: 1
@@ -45,30 +45,6 @@ MonoBehaviour:
       lane: 1
       distance: 50
       height: 0
-    - data:
-        enemyType: 1
-        silhouetteAlwaysVisible: 1
-        overrideData: 1
-        overridedData:
-          doTargetSideSpaces: 0
-          targetSideSpace: 0
-          doTargetLeftSide: 0
-          startFacingDirection: 1
-          targetBoatSpaces: 1
-          targetSpace: 1
-          targetBoatSide: 0
-          boardingFacingDirection: -1
-      lane: 2
-      distance: 10
-      height: 0
-    collectibles:
-    - data:
-        collectibleType: 0
-        overrideData: 0
-        overridedData:
-          BankValue: 0
-      lane: 0
-      distance: 10
-      height: 0
+    collectibles: []
     gemstoneGates: []
     slipStreams: []

@@ -45,11 +45,11 @@ public class Section_Enemy_Object : SectionBuilderObject
         var data = sectionData.overridedData;
         
         // Draw Targeted Side Space
-        if (data.targetSideSpaces)
+        if (data.doTargetSideSpaces)
         {
             Gizmos.color = Color.white;
             Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace
-                (data.targetSideSpace, data.targetLeftSide).t.position, .5f);
+                (data.targetSideSpace, data.doTargetLeftSide).t.position, .5f);
         }
         // Draw targeted boat space
         if (data.targetBoatSpaces)

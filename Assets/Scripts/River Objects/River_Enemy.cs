@@ -19,11 +19,7 @@ public class River_Enemy : River_Object
     public void OverrideData(BoatEnemy_Data data)
     {
         EnemyData = data;
-
         enemyController.InitialiseEnemy(data);
-
-        // TODO Override Health!
-        // print($"{name} stats were overrided");
     }
 
     public void ReturnEnemy()
@@ -45,7 +41,7 @@ public class River_Enemy : River_Object
         
         // Set the target side for the Enemy Silhouette to follow
         var space = Boat_Space_Manager.Instance.GetSideSpace
-            (enemyController.boatEnterData.targetSideSpace, enemyController.boatEnterData.targetLeftSide);
+            (enemyController.boatEnterData.targetSideSpace, enemyController.boatEnterData.doTargetLeftSide);
         _targetSide = space.t;
         
         art.SetActive(true);
@@ -60,9 +56,7 @@ public class River_Enemy : River_Object
         // Debug.Log($"Enemy is Moving");
         
         if (!(GetDistanceToBoat() < emergeTriggerDetectRadius)) return;
-        // Debug.Log($"Enemy has detected boat");
         
-        // if (_targetSide) transform.position = _targetSide.position;
         isMoving = false;
         enemyController.gameObject.SetActive(true);
         enemyController.EmergeFromRiver();

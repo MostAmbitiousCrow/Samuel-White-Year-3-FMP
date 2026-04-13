@@ -15,8 +15,6 @@ public class SewerBat_StateController : BoatEnemyStateController
         MovingState.Sc = this;
         AttackState.Sc = this;
         DefeatedState.Sc = this;
-
-        ChangeState(IdleState);
     }
 
     [Header("Sewer Bat Data")]
@@ -31,176 +29,106 @@ public class SewerBat_StateController : BoatEnemyStateController
     
     public override void EmergeFromRiver()
     {
-        
+        ChangeState(EmergeState);
     }
-}
 
-public class SewerBat_IdleState : EnemyIdleState
-{
-    public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
+    #region States
 
-    public override void OnEnter()
+    public class SewerBat_IdleState : EnemyIdleState
     {
-        base.OnEnter();
-        
+        public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            BatSc.gravity = 0f;
+            // BatSc.currentY = BatSc.jumpPower;
+            BatSc.isAffectedByGravity = false;
+        }
+
+        public override void FixedUpdateState()
+        {
+            base.FixedUpdateState();
+            var space = BatSc.currentSpace;
+            if (CharacterSpaceChecks.ScanAreaForDamageableCharacter
+                (space.t.position, Vector3.one, Quaternion.identity, BatSc.TargetableCharacterLayers))
+                BatSc.ChangeState(BatSc.AttackState);
+        }
     }
 
-    public override void OnExit()
+    public class SewerBat_EmergeState : EnemyEmergeState
     {
-        base.OnExit();
+        public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
+        private float _storedTime;
+        private bool _emerged;
 
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            BatSc.isAffectedByGravity = false;
+            var enterData = BatSc.boatEnterData;
+            BatSc.EnterBoat(false);
+            BatSc.GoToSideSpace(BatSc.boatEnterData.targetSideSpace, BatSc.boatEnterData.doTargetLeftSide);
+            _storedTime = Time.time;
+            _emerged = false;
+        }
+
+        public override void FixedUpdateState()
+        {
+            if (Time.time - _storedTime > BatSc.batData.timeToEmerge && !_emerged)
+            {
+                BatSc.isAffectedByGravity = true;
+                var enterData = BatSc.boatEnterData;
+                BatSc.TriggerJump();
+                BatSc.MoveToSpace(enterData.targetSideSpace, enterData.targetSpace);
+                _emerged = true;
+            }
+            
+            // This is the height the bat is expected to reach when it jumps
+            // TODO: Rework how flying enemies (the bat) should emerge. Or something like that...
+            if (BatSc.currentY > 7.5f)
+            {
+                BatSc.ChangeState(BatSc.IdleState);
+            }
+        }
     }
 
-    public override void OnHurt()
+    public class SewerBat_MovingState : EnemyMovingState
     {
-        base.OnHurt();
-
+        public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
     }
 
-    public override void UpdateState()
+    public class SewerBat_AttackState : EnemyAttackState
     {
-        base.UpdateState();
+        public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
+        private float _storedTime;
 
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            _storedTime = Time.time;
+            BatSc.Animator.SetTrigger(PrepareAttackHash);
+        }
+
+        public override void UpdateState()
+        {
+            base.UpdateState();
+
+            // Once the delay is finished, enable gravity as if the Bat is Diving!
+            if (Time.time - _storedTime > BatSc.BatData.attackDelay)
+            {
+                BatSc.gravity = BatSc.BatData.diveGravity;
+                BatSc.isAffectedByGravity = true;
+            }
+
+            // Once the Bat has slammed onto the ground, Die
+            if (BatSc.IsGrounded) BatSc.HealthComponent.Die();
+        }
     }
-    public override void FixedUpdateState()
+
+    public class SewerBat_DefeatedState : EnemyDefeatedState
     {
-        base.FixedUpdateState();
-
+        public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
     }
-}
-
-public class SewerBat_EmergeState : EnemyEmergeState
-{
-    public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-
-    }
-
-    public override void OnHurt()
-    {
-        base.OnHurt();
-
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-    }
-}
-
-public class SewerBat_MovingState : EnemyMovingState
-{
-    public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-
-    }
-
-    public override void OnHurt()
-    {
-        base.OnHurt();
-
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-    }
-}
-
-public class SewerBat_AttackState : EnemyAttackState
-{
-    public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-
-    }
-
-    public override void OnHurt()
-    {
-        base.OnHurt();
-
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-    }
-}
-
-public class SewerBat_DefeatedState : EnemyDefeatedState
-{
-    public SewerBat_StateController BatSc => Sc as SewerBat_StateController;
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-
-    }
-
-    public override void OnHurt()
-    {
-        base.OnHurt();
-
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-
-    }
-    public override void FixedUpdateState()
-    {
-        base.FixedUpdateState();
-
-    }
+    #endregion
 }

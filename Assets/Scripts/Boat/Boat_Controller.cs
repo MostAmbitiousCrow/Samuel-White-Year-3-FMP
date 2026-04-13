@@ -93,7 +93,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         
         // Trigger OnBoatMoved listeners
         OnBoatMoved?.Invoke();
-        Debug.Log("Boat was steered!");
+        // Debug.Log("Boat was steered!");
     }
 
     public void MoveToLane(int direction)

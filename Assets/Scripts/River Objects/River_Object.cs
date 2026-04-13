@@ -169,6 +169,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         }
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         ObjectPoolManager.Instance.ReturnToPool(PoolObjectID, gameObject);
+        isMoving = false; //TODO: Mental Note that I put this here
     }
 
     public virtual void OnSpawned()

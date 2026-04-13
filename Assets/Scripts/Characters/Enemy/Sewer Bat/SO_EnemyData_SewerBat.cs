@@ -4,6 +4,6 @@ using UnityEngine;
 public class SO_EnemyData_SewerBat : SO_EnemyData
 {
     [Header("Dive Data")]
-    public AnimationCurve DiveCurve;
-    public float DiveSpeedMultiplier = 1f;
+    // public AnimationCurve DiveCurve;
+    public float diveGravity = -25f;
 }

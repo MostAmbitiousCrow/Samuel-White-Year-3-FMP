@@ -16,15 +16,15 @@ using GameCharacters;
 public class BoatEnemy_Data
 {
     [Header("Boat Side Space Targeting")]
-    public bool targetSideSpaces;
+    public bool doTargetSideSpaces;
     
     [Tooltip("The Boats Side Space for the Enemy to target")]
-    [ShowField(nameof(targetSideSpaces)), Range(0, 1)] public int targetSideSpace;
+    [ShowField(nameof(doTargetSideSpaces)), Range(0, 1)] public int targetSideSpace;
 
     [Tooltip("Should the enemy target the left side space of the boat")]
-    [ShowField(nameof(targetSideSpaces))] public bool targetLeftSide;
+    [ShowField(nameof(doTargetSideSpaces))] public bool doTargetLeftSide;
     
-    [ShowField(nameof(targetSideSpaces))] 
+    [ShowField(nameof(doTargetSideSpaces))] 
     public Character.MoveDirection startFacingDirection = Character.MoveDirection.Right;
     
     [Line,Header("Boat Space Targeting")]
