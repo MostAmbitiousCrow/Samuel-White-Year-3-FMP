@@ -1,3 +1,4 @@
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 
 public class SewerBat_StateController : BoatEnemyStateController
@@ -32,6 +33,18 @@ public class SewerBat_StateController : BoatEnemyStateController
         ChangeState(EmergeState);
     }
 
+    public override void OnDied()
+    {
+        base.OnDied();
+        AudioManager.Play(Clip.Bat_Crash);
+    }
+
+    protected override void OnJumped()
+    {
+        base.OnJumped();
+        AudioManager.Play(Clip.Bat_Dive);
+    }
+
     #region States
 
     public class SewerBat_IdleState : EnemyIdleState
@@ -44,6 +57,8 @@ public class SewerBat_StateController : BoatEnemyStateController
             BatSc.gravity = 0f;
             // BatSc.currentY = BatSc.jumpPower;
             BatSc.isAffectedByGravity = false;
+            // Temp to prevent Fall/Rise Blend Animation from getting stuck...
+            BatSc.animator.SetBool("Grounded", true);
         }
 
         public override void FixedUpdateState()
@@ -65,8 +80,10 @@ public class SewerBat_StateController : BoatEnemyStateController
         public override void OnEnter()
         {
             base.OnEnter();
+            // Disable Artwork
+            BatSc.artRoot.gameObject.SetActive(false);
+            
             BatSc.isAffectedByGravity = false;
-            var enterData = BatSc.boatEnterData;
             BatSc.EnterBoat(false);
             BatSc.GoToSideSpace(BatSc.boatEnterData.targetSideSpace, BatSc.boatEnterData.doTargetLeftSide);
             _storedTime = Time.time;
@@ -77,16 +94,18 @@ public class SewerBat_StateController : BoatEnemyStateController
         {
             if (Time.time - _storedTime > BatSc.batData.timeToEmerge && !_emerged)
             {
+                // Enable Artwork
+                BatSc.artRoot.gameObject.SetActive(true);
                 BatSc.isAffectedByGravity = true;
                 var enterData = BatSc.boatEnterData;
                 BatSc.TriggerJump();
-                BatSc.MoveToSpace(enterData.targetSideSpace, enterData.targetSpace);
+                BatSc.MoveToSpace(enterData.targetSideSpace, enterData.targetSpace, true);
                 _emerged = true;
             }
             
             // This is the height the bat is expected to reach when it jumps
             // TODO: Rework how flying enemies (the bat) should emerge. Or something like that...
-            if (BatSc.currentY > 7.5f)
+            if (BatSc.currentY > 7f)
             {
                 BatSc.ChangeState(BatSc.IdleState);
             }
@@ -108,6 +127,9 @@ public class SewerBat_StateController : BoatEnemyStateController
             base.OnEnter();
             _storedTime = Time.time;
             BatSc.Animator.SetTrigger(PrepareAttackHash);
+            // Revert the ground parameter from the Idle State to fix falling animation
+            BatSc.animator.SetBool("Grounded", false);
+            AudioManager.Play(Clip.Bat_Alert);
         }
 
         public override void UpdateState()
