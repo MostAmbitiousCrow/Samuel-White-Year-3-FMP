@@ -5,10 +5,10 @@ public class River_Enemy : River_Object
 {
     [Line(GUIColor.Red, 1, 3)]
     [Header("Enemy Stats")]
-    [SerializeField] float emergeTriggerDetectRadius = 3f;
+    [SerializeField] private float emergeTriggerDetectRadius = 3f;
     public BoatEnemy_Data EnemyData { get; private set; }
     
-    [SerializeField] BoatEnemyStateController enemyController;
+    [SerializeField] private BoatEnemyStateController enemyController;
 
     private Transform _targetSide;
 

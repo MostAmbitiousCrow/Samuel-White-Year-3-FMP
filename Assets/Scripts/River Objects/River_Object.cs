@@ -77,6 +77,23 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         SetDistanceAndHeight(startDistance, startHeight);
     }
 
+    public River_Manager.RiverLane CurrentLane { get; set; }
+
+    // TODO:
+    // 'MoveToLane' currently does what MoveToLaneFromDirection does and
+    // needs to be renamed and established as MoveToLaneFromDirection.
+    // This applies to the boat controller script too.
+    public void MoveToLaneFromDirection(int direction)
+    {
+        // var rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
+        //
+        // var pos = rl.transform.position;
+        // currentLane = rl.id;
+        // CurrentMoveTarget = new Vector3(pos.x, pos.y, transform.position.z); //TODO: Add optional movement interpolation
+        // isMoving = true;
+        // print($"Moved {direction} to Space Position: {rl.axis}, ID {rl.ID}");
+    }
+
     public void MoveToLane(int direction)
     {
         var rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);

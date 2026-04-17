@@ -2,20 +2,17 @@ using System;
 using CarterGames.Assets.AudioManager;
 using EditorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 using static Boat_Space_Manager.BoatSide;
+using static River_Manager;
 
-public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamageable
+public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
 {
     #region Variables
     [Line(GUIColor.Green)]
     [Header("Boat Settings")]
+    public RiverLane CurrentLane { get; set; }
     public float steerSpeed = 1;
     public AnimationCurve steerInterpolationCurve;
-    [FormerlySerializedAs("_currentLane")]
-    [Space(10)]
-    [Tooltip("The current lane of the boat the character is standing on")]
-    [SerializeField, ReadOnly] private int currentLane;
     [Tooltip("What lane should this object start on? (if applicable)")]
     public int startLane = 1;
     [Space(10)]
@@ -96,12 +93,17 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         // Debug.Log("Boat was steered!");
     }
 
+    public void MoveToLaneFromDirection(int direction)
+    {
+        throw new NotImplementedException();
+    }
+
     public void MoveToLane(int direction)
     {
-        River_Manager.RiverLane rl = River_Manager.Instance.GetLaneFromDirection(currentLane, direction);
+        RiverLane rl = Instance.GetLaneFromDirection(CurrentLane.id, direction);
         if (rl == null) return;
 
-        currentLane = rl.id;
+        CurrentLane = rl;
 
         Vector3 lanePos = rl.transform.localPosition;
 
@@ -116,16 +118,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     
     public void GoToLane(int lane)
     {
-        River_Manager.RiverLane rl = River_Manager.Instance.GetLane(lane);
+        RiverLane rl = Instance.GetLane(lane);
 
         var pos = rl.transform.localPosition;
-        currentLane = rl.id;
+        CurrentLane = rl;
         transform.localPosition = new(pos.x, pos.y, transform.localPosition.z);
-    }
-
-    public int GetCurrentLane()
-    {
-        return currentLane;
     }
 
     #region Movement
@@ -147,6 +144,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
         transform.localPosition = newPosition;
         
         float rollT = rollCurve.Evaluate(_moveElapsed);
+        
         // Roll the boat!
         float roll = _direction > 0? 
             Mathf.Lerp(-rollAmount, 0f, rollT) // Roll Left
@@ -164,7 +162,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
 
     private void AnimatePropeller()
     {
-        propellerArt.Rotate(Vector3.up, River_Manager.Instance.currentRiverSpeed * 1000f * Time.deltaTime);
+        propellerArt.Rotate(Vector3.up, Instance.currentRiverSpeed * 1000f * Time.deltaTime);
     }
     #endregion
 
@@ -181,7 +179,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement //, IDamage
     public void TookDamage()
     {
         print("Boat hit, slowing river");
-        River_Manager.Instance.SlowDownRiver();
+        Instance.SlowDownRiver();
     }
 
     public void DestroyBoat()

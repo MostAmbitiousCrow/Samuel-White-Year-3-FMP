@@ -1,4 +1,3 @@
-using System.Collections;
 using CameraShake;
 using EditorAttributes;
 using UnityEngine;
