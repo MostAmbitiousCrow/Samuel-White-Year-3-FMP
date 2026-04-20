@@ -17,14 +17,14 @@ public class Game_UI : MonoBehaviour
     {
         GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
         PlayerCharacter.OnPlayerDamaged += CheckPlayerHealth;
-        PlayerCharacter.OnPlayerDied += ResetHealthBorder;
+        PlayerCharacter.OnPlayerDied += _ => ResetHealthBorder();
         GameLevelManager.OnLevelLoaded += ResetHealthBorder;
     }
     private void OnEnable()
     {
         GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
         PlayerCharacter.OnPlayerDamaged += CheckPlayerHealth;
-        PlayerCharacter.OnPlayerDied += ResetHealthBorder;
+        PlayerCharacter.OnPlayerDied += _ => ResetHealthBorder();
         GameLevelManager.OnLevelLoaded += ResetHealthBorder;
     }
 
@@ -32,7 +32,7 @@ public class Game_UI : MonoBehaviour
     {
         GameManager.GameLogic.OnGemstoneCollected -= UpdateGemstoneCounter;
         PlayerCharacter.OnPlayerDamaged -= CheckPlayerHealth;
-        PlayerCharacter.OnPlayerDied -= ResetHealthBorder;
+        PlayerCharacter.OnPlayerDied -= _ => ResetHealthBorder();
         GameLevelManager.OnLevelLoaded -= ResetHealthBorder;
     }
 

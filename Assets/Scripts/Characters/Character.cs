@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-using System.Numerics;
 using UnityEngine;
 using EditorAttributes;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
 
 
 namespace GameCharacters
@@ -15,6 +12,9 @@ namespace GameCharacters
     [RequireComponent(typeof(Rigidbody), typeof(CharacterHealth))]
     public abstract class Character : MonoTimeBehaviour
     {
+        private static readonly int Died = Animator.StringToHash("Died");
+        private static readonly int TookDamage = Animator.StringToHash("TookDamage");
+
         #region Variables
         //TODO: Convert majority movement variables to a scriptable object
         [Title("Character")]
@@ -175,25 +175,28 @@ namespace GameCharacters
         #endregion
 
         #region Damage Events
+
         /// <summary>
         /// Event Called by the CharacterHealth Script whenever this character takes damage
         /// </summary>
-        public virtual void OnTookDamage()
+        /// <param name="damageType"></param>
+        public virtual void OnTookDamage(DamageType damageType)
         {
-            animator.SetTrigger("TookDamage");
+            animator.SetTrigger(TookDamage);
             TriggerHitStop();
         }
 
         /// <summary>
         /// Event Called by the CharacterHealth Script when this character dies
         /// </summary>
-        public virtual void OnDied()
+        /// <param name="damageType"></param>
+        public virtual void OnDied(DamageType damageType)
         {
             characterCollider.enabled = false;
             rb.isKinematic = true;
-            animator.SetTrigger("Died");
+            animator.SetTrigger(Died);
             TriggerHitStop(.1f);
-            // Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
+            Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
         }
 
         /// <summary>

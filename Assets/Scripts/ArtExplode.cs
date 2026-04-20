@@ -38,7 +38,7 @@ public class ArtExplode : MonoBehaviour
             art[i].transform.localRotation = artRotations[i];
         }
 
-        Debug.Log($"{gameObject} Art Reset");
+        // Debug.Log($"{gameObject} Art Reset");
     }
 
     public void ExplodeArt()

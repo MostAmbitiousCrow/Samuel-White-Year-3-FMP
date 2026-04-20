@@ -6,6 +6,8 @@ using Void = EditorAttributes.Void;
 
 public class CharacterHealth : MonoBehaviour, IDamageable
 {
+    private static readonly int HealthParameter = Animator.StringToHash("Health");
+
     #region Variables
     [SerializeField] private int currentHealth;
     public int CurrentHealth => currentHealth;
@@ -47,6 +49,7 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     public void Die()
     {
         isDead = true;
+        // TODO: Temporary
         deathEvent?.Invoke();
     }
 
@@ -56,14 +59,15 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         currentHealth = MaxHealth;
         
         var normalisedHealth = CurrentHealth / (float)MaxHealth;
-        animator.SetFloat("Health", normalisedHealth);
+        animator.SetFloat(HealthParameter, normalisedHealth);
         
         healthRestoredEvent?.Invoke();
     }
 
     public void TakeDamage(DamageType type = DamageType.Standard, int amount = 1)
     {
-        if (IsInvincible || isDead) return;
+        // Skip damage if invincible or already dead. Pass if the damage was from the tsunami.
+        if ((IsInvincible || isDead) && (type != DamageType.Tsunami)) return;
         
         currentHealth -= amount;
         if (CurrentHealth <= 0) Die();
@@ -75,8 +79,9 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         
         // Note: Health is a normalised value in the Animator.
         
-        var normalisedHealth = (CurrentHealth) / (float)MaxHealth;
-        animator.SetFloat("Health", normalisedHealth);
+        var normalisedHealth = CurrentHealth / (float)MaxHealth;
+        animator.SetFloat(HealthParameter, normalisedHealth);
+        Debug.Log($"{name} damaged by type: {type}, for {amount} damage");
     }
 
     private IEnumerator DamageInvincibilityRoutine()

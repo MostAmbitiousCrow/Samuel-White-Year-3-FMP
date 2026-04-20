@@ -77,13 +77,13 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         private void OnEnable()
         {
             GameLevelManager.OnLevelLoaded += StartSpawning;
-            GameManager.GameLogic.OnGameEnded += StopSpawning;
+            GameManager.MainGameLogic.OnGameOver += StopSpawning;
         }
 
         private void OnDisable()
         {
             GameLevelManager.OnLevelLoaded -= StartSpawning;
-            GameManager.GameLogic.OnGameEnded -= StopSpawning;
+            GameManager.MainGameLogic.OnGameOver -= StopSpawning;
         }
     
         private void InitializePrefabLookup()
@@ -122,7 +122,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         _spawnRoutine = StartCoroutine(SpawnSectionRoutine());
     }
 
-    public void StopSpawning()
+    public void StopSpawning(GameManager.MainGameLogic.GameOverType gameOverType)
     {
         if (_spawnRoutine != null)
         {

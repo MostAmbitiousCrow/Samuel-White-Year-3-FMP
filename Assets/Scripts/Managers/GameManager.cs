@@ -158,15 +158,22 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Started");
         }
 
-        public delegate void GameEnded();
-        public GameEnded OnGameEnded;
+        public static event Action<GameOverType> OnGameOver;
+        
+        /// <summary>
+        /// An enum to help determine what type of game over was triggered
+        /// </summary>
+        public enum GameOverType
+        {
+            Default, Tsunami
+        }
         /// <summary> Method that ends the current game session. </summary>
-        public void EndGame()
+        public void EndGame(GameOverType gameOverType = GameOverType.Default)
         {
             // Logic to end the main game after it has started
             _gameStarted = false;
             // Invoke subscribed methods
-            OnGameEnded?.Invoke();
+            OnGameOver?.Invoke(gameOverType);
 
             Debug.Log("Game Ended");
         }

@@ -56,12 +56,12 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.GameLogic.OnGameEnded += DestroyPools;
+        GameManager.MainGameLogic.OnGameOver += DestroyPools;
     }
 
     private void OnDisable()
     {
-        GameManager.GameLogic.OnGameEnded -= DestroyPools;
+        GameManager.MainGameLogic.OnGameOver -= DestroyPools;
     }
 
     public void InitializePools()
@@ -159,7 +159,7 @@ public class ObjectPoolManager : MonoBehaviour
     #endregion
 
     [ContextMenu("Clear Pools")]
-    public void DestroyPools()
+    public void DestroyPools(GameManager.MainGameLogic.GameOverType gameOverType)
     {
         // if(_poolDictionary.Count < 1) return;
 

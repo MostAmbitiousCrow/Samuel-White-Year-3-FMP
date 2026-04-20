@@ -17,5 +17,5 @@ using System;public interface IDamageable
 
 public enum DamageType
 {
-    Stomp, Standard
+    Stomp, Standard, Tsunami
 }

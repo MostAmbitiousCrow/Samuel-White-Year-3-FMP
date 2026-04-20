@@ -48,7 +48,7 @@ public class Pipe_Obstacle : River_Obstacle
             pipe.localPosition = (i + 1) * pipeData.distancePerPipe * Vector3.right;
         }
         
-        Debug.Log($"Pipe Obstacle Constructed. Pipes = {pipesLength}. Direction = {pipeData.pipeConnection}");
+        // Debug.Log($"Pipe Obstacle Constructed. Pipes = {pipesLength}. Direction = {pipeData.pipeConnection}");
     }
 
     protected override void OnObjectPlaced()

@@ -98,13 +98,13 @@ public class River_Manager : MonoBehaviour
     private void OnEnable()
     {
         SewerEnvironmentArtManager.OnEnvironmentUpdated += UpdateSplineLengths;
-        PlayerCharacter.OnPlayerDied += () => PauseRiver();
+        PlayerCharacter.OnPlayerDied += _ => PauseRiver();
     }
 
     private void OnDisable()
     {
         SewerEnvironmentArtManager.OnEnvironmentUpdated -= UpdateSplineLengths;
-        PlayerCharacter.OnPlayerDied -= () => PauseRiver();
+        PlayerCharacter.OnPlayerDied -= _ => PauseRiver();
     }
 
     #region Lane and Space Checks

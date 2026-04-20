@@ -27,7 +27,7 @@ public class River_Obstacle : River_Object
     private void OnTriggerEnter(Collider other)
     {
         if (IsHit) return;
-        print($"{name} hit: {other.name}");
+        // print($"{name} hit: {other.name}");
 
         if (other.TryGetComponent<IDamageable>(out var character))
             character.TakeDamage(amount: obstacleData.ImpactDamage);

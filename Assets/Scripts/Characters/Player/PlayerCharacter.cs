@@ -39,7 +39,7 @@ namespace GameCharacters
         public static event Action OnPlayerHeavyJumped;
 
         // Event Listening
-        public delegate void PlayerDied();
+        public delegate void PlayerDied(DamageType damageType);
         public static PlayerDied OnPlayerDied;
         public static event Action OnPlayerKilledEnemy;
         /// <summary>
@@ -273,14 +273,14 @@ namespace GameCharacters
         }
 
         #endregion
-        public override void OnDied()
+        public override void OnDied(DamageType damageType)
         {
-            if (GameSettingsManager.DoPlayerInvincibility) return;
-            base.OnDied();
+            // if (GameSettingsManager.DoPlayerInvincibility) return;
+            base.OnDied(damageType);
             
             TriggerHitStop(1); // TODO: Get a timed reference or something to delay the End Game Logic and the Death SFX
             MusicManager.Instance.PauseMusic();
-            OnPlayerDied?.Invoke();
+            OnPlayerDied?.Invoke(damageType);
             Debug.Log("PLAYER DIED");
                 
             // Wait for the hitstop to end to trigger the death event
@@ -302,13 +302,13 @@ namespace GameCharacters
         public override void OnHealthRestored()
         {
             base.OnHealthRestored();
-            Debug.Log("Player Health Restored");
+            // Debug.Log("Player Health Restored");
         }
 
-        public override void OnTookDamage()
+        public override void OnTookDamage(DamageType damageType)
         {
-            if (GameSettingsManager.DoPlayerInvincibility) return;
-            base.OnTookDamage();
+            if (GameSettingsManager.DoPlayerInvincibility && damageType != DamageType.Tsunami) return;
+            base.OnTookDamage(damageType);
 
             AudioManager.Play(Clip.Plyr_Hurt);
             OnPlayerDamaged?.Invoke(HealthComponent.CurrentHealth);

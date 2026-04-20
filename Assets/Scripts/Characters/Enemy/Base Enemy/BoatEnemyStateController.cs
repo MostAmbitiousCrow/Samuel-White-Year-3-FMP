@@ -62,7 +62,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     {
         CurrentState?.OnExit();
         CurrentState = newState;
-        Debug.Log($"{name}: New State = {CurrentState}");
+        // Debug.Log($"{name}: New State = {CurrentState}");
         CurrentState.OnEnter();
     }
     
@@ -130,16 +130,16 @@ public abstract class BoatEnemyStateController : BoatCharacter
         riverObject.ReturnToPool();
     }
 
-    public override void OnTookDamage()
+    public override void OnTookDamage(DamageType damageType)
     {
-        base.OnTookDamage();
+        base.OnTookDamage(damageType);
         CurrentState.OnHurt();
         StoreState(CurrentState);
     }
 
-    public override void OnDied()
+    public override void OnDied(DamageType damageType)
     {
-        base.OnDied();
+        base.OnDied(damageType);
         ChangeState(DefeatedState);
     }
 

@@ -14,7 +14,7 @@ public class CameraCullMasker : MonoBehaviour
 
         if (targetCamera) _originalMask = targetCamera.cullingMask;
 
-        _showLayersEvent = () => ShowOnlyLayer("Player");
+        _showLayersEvent = damageType => ShowOnlyLayer("Player", damageType);
     }
 
     private PlayerCharacter.PlayerDied _showLayersEvent;
@@ -24,6 +24,16 @@ public class CameraCullMasker : MonoBehaviour
 
     public void ShowOnlyLayer(string layerName)
     {
+        int layer = LayerMask.NameToLayer(layerName);
+        targetCamera.cullingMask = 1 << layer;
+        Debug.Log("Camera Mask set to " + layerName);
+    }
+    
+    private void ShowOnlyLayer(string layerName, DamageType damageType)
+    {
+        // Skip Culling Mask if the player died to the tsunami
+        if (damageType == DamageType.Tsunami) return;
+        
         int layer = LayerMask.NameToLayer(layerName);
         targetCamera.cullingMask = 1 << layer;
         Debug.Log("Camera Mask set to " + layerName);

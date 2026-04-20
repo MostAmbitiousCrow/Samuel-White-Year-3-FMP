@@ -588,9 +588,9 @@ namespace GameCharacters
 
         #region Damage Events
 
-        public override void OnDied()
+        public override void OnDied(DamageType damageType)
         {
-            base.OnDied();
+            base.OnDied(damageType);
             currentSpace?.ExitSpace();
         }
 

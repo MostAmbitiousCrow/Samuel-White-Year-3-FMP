@@ -74,14 +74,14 @@ namespace GameCharacters
 
         #region Health Events
 
-        public override void OnTookDamage()
+        public override void OnTookDamage(DamageType damageType)
         {
-            base.OnTookDamage();
+            base.OnTookDamage(damageType);
         }
 
-        public override void OnDied()
+        public override void OnDied(DamageType damageType)
         {
-            base.OnDied();
+            base.OnDied(damageType);
         }
 
         #endregion

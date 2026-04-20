@@ -90,13 +90,13 @@ public class TsunamiController : MonoBehaviour
     private void OnEnable()
     {
         GameManager.GameLogic.OnGameStarted += EnableControl;
-        GameManager.GameLogic.OnGameEnded += DisableControl;
+        GameManager.MainGameLogic.OnGameOver += DisableControl;
         GameLevelManager.OnLevelLoaded += ResetProgress;
     }
     private void OnDisable()
     {
         GameManager.GameLogic.OnGameStarted -= EnableControl;
-        GameManager.GameLogic.OnGameEnded -= DisableControl;
+        GameManager.MainGameLogic.OnGameOver -= DisableControl;
         GameLevelManager.OnLevelLoaded -= ResetProgress;
     }
     #endregion
@@ -109,7 +109,7 @@ public class TsunamiController : MonoBehaviour
 
     #region Controls
 
-    public void DisableControl()
+    public void DisableControl(GameManager.MainGameLogic.GameOverType gameOverType)
     {
         canProgress = false;
     }
@@ -170,6 +170,7 @@ public class TsunamiController : MonoBehaviour
 
     private float _smooth;
     private float _velocity;
+    private bool _isDropping;
     private void ProgressTsunami()
     {
         var lerp = Mathf.InverseLerp(0, maximumSteps, currentStep);
@@ -186,14 +187,29 @@ public class TsunamiController : MonoBehaviour
         // Water Wave Speed: TODO
         // waterMaterial.SetFloat("_Progress", effects.waveSpeed);
         
+        
+        
         // TODO: Improve
         if (hasReachedDangerMark)
         {
-            if (hasReachedBoat) shakeParams.noiseModes[0].amplitude = .5f;
-            else shakeParams.noiseModes[0].amplitude = .03f;
-            return;
+            switch (hasReachedBoat)
+            {
+                case true when !_isDropping:
+                    _isDropping = true;
+                    shakeParams.noiseModes[0].amplitude = .5f;
+                    break;
+                case true:
+                    shakeParams.noiseModes[0].amplitude = .03f;
+                    break;
+            }
+
+            if (!_isDropping) return;
+            
+            // Slowly decrease the amplitude overtime
+            shakeParams.noiseModes[0].amplitude -= Time.deltaTime * .1f;
+            shakeParams.noiseModes[0].amplitude = Mathf.Clamp(shakeParams.noiseModes[0].amplitude, 0f, 10f);
         }
-        if (currentStep >= maximumSteps) shakeParams.noiseModes[0].amplitude = .02f;
+        else if (currentStep >= maximumSteps) shakeParams.noiseModes[0].amplitude = .02f;
         else if (currentStep == maximumSteps-1) shakeParams.noiseModes[0].amplitude = .01f;
     }
 
@@ -218,7 +234,7 @@ public class TsunamiController : MonoBehaviour
         // Destroy anything in the Tsunamis path!
         if (!other.TryGetComponent(out IDamageable obj)) return;
         
-        obj.TakeDamage(DamageType.Standard, 100);
+        obj.TakeDamage(DamageType.Tsunami, 100);
         Debug.Log($"Tsunami destroyed {other.name}");
     }
 

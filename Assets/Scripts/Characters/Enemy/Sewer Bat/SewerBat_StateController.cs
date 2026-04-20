@@ -33,9 +33,9 @@ public class SewerBat_StateController : BoatEnemyStateController
         ChangeState(EmergeState);
     }
 
-    public override void OnDied()
+    public override void OnDied(DamageType damageType)
     {
-        base.OnDied();
+        base.OnDied(damageType);
         AudioManager.Play(Clip.Bat_Crash);
     }
 

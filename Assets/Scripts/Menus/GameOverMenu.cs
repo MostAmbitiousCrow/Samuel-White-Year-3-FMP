@@ -11,8 +11,6 @@ public class GameOverMenu : MonoBehaviour
     private Canvas _canvas;
     private Button _button;
     
-    private GameManager.MainGameLogic.GameEnded _playAnimationEvent;
-    
     private void Start()
     {
         _canvas = GetComponent<Canvas>();
@@ -21,18 +19,12 @@ public class GameOverMenu : MonoBehaviour
         _canvasGroup = GetComponentInChildren(typeof(CanvasGroup), true) as CanvasGroup;
         _button = GetComponentInChildren(typeof(Button), true) as Button;
 
-        _playAnimationEvent += () => _animation.Play();
-        GameManager.GameLogic.OnGameEnded += _playAnimationEvent;
+        GameManager.MainGameLogic.OnGameOver -= OnGameOver;
     }
-
-    // private void OnEnable()
-    // {
-    //     GameManager.GameLogic.OnGameEnded += _playAnimationEvent;
-    // }
 
     private void OnDisable()
     {
-        GameManager.GameLogic.OnGameEnded -= _playAnimationEvent;
+        GameManager.MainGameLogic.OnGameOver -= OnGameOver;
     }
 
     public void ReturnToMenu()
@@ -53,5 +45,10 @@ public class GameOverMenu : MonoBehaviour
 
         GameManager.Instance.CurrentEventSystem.
             SetSelectedGameObject(_button.gameObject);
+    }
+
+    private void OnGameOver(GameManager.MainGameLogic.GameOverType gameOverType)
+    {
+        _animation.Play();
     }
 }
