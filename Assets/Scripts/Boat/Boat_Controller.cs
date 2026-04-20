@@ -1,6 +1,7 @@
 using System;
 using CarterGames.Assets.AudioManager;
 using EditorAttributes;
+using GameCharacters;
 using UnityEngine;
 using static Boat_Space_Manager.BoatSide;
 using static River_Manager;
@@ -63,6 +64,16 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     private void Start()
     {
         GoToLane(startLane);
+    }
+
+    private void OnEnable()
+    {
+        PlayerCharacter.OnPlayerDied += DestroyBoat;
+    }
+
+    private void OnDisable()
+    {
+        PlayerCharacter.OnPlayerDied -= DestroyBoat;
     }
 
     /// <summary>
@@ -182,8 +193,11 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
         Instance.SlowDownRiver();
     }
 
-    public void DestroyBoat()
+    public void DestroyBoat(DamageType damageType)
     {
+        // Only destroy the boat if it was the Tsunami that killed the player
+        if (damageType != DamageType.Tsunami) return;
+        
         riverSplineObject.StopMoving();
         artExplode.ExplodeArt();
     }

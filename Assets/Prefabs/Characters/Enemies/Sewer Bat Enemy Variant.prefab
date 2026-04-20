@@ -497,6 +497,11 @@ PrefabInstance:
       objectReference: {fileID: 975833707667684665}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 975833707667684665}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}

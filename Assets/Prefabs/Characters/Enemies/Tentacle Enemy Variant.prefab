@@ -9859,6 +9859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3953612895887577037}
+  - component: {fileID: 6611608914639873153}
   - component: {fileID: 4262633910615160371}
   - component: {fileID: 6320608725556910905}
   - component: {fileID: 6915825812450584205}
@@ -9889,6 +9890,57 @@ Transform:
   - {fileID: 5860333563798337683}
   m_Father: {fileID: 5095422147939710179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6611608914639873153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3848341649746601508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80d4d1b2c8f59047af20caab06b8e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMove: 0
+  groundedMovementTime: 0.2
+  groundedMovementCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  coyoteTime: 0.15
+  coyoteTriggered: 0
+  airMovementTime: 0.25
+  airMovementCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  verticalDistance: 0
+  movementVerticalOffset: 0
+  currentDirection: -1
+  isMoving: 0
+  isGrounded: 1
+  targetableCharacterLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  artRoot: {fileID: 0}
+  rb: {fileID: 0}
+  animator: {fileID: 0}
+  healthComponent: {fileID: 0}
+  stompPosition: {fileID: 0}
+  stompSize: {x: 1, y: 1, z: 1}
+  characterCollider: {fileID: 0}
+  isDirecting: 0
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &4262633910615160371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9952,6 +10004,7 @@ MonoBehaviour:
         m_CallState: 2
   doInvincibilityAnimation: 0
   renderers: []
+  character: {fileID: 6611608914639873153}
   animator: {fileID: 530392042040112872}
 --- !u!114 &6320608725556910905
 MonoBehaviour:

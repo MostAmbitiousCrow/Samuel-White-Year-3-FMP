@@ -904,22 +904,22 @@ PrefabInstance:
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9998203
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.018959355
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3997206771628698319, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
@@ -1198,6 +1198,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 5579330003625564286}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 696926595142143543}
+    - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
       propertyPath: maxHealth
       value: 3
       objectReference: {fileID: 0}
@@ -1269,17 +1279,17 @@ PrefabInstance:
     - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: tookDamageEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: healthRestoredEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8541553808367113436, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
@@ -1665,7 +1675,9 @@ MonoBehaviour:
   canJump: 1
   jumpPower: 15
   isJumping: 0
+  isAffectedByGravity: 1
   gravity: -25
+  currentY: 0
   isBouncing: 0
   bouncePower: 7.5
   canBounce: 1

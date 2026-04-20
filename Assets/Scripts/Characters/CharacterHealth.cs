@@ -1,5 +1,6 @@
 using System.Collections;
 using EditorAttributes;
+using GameCharacters;
 using UnityEngine;
 using UnityEngine.Events;
 using Void = EditorAttributes.Void;
@@ -30,7 +31,8 @@ public class CharacterHealth : MonoBehaviour, IDamageable
     [SerializeField] private bool doInvincibilityAnimation;
     [SerializeField, ShowField(nameof(doInvincibilityAnimation))] private MeshRenderer[]  renderers;
 
-    [Header("Components")] 
+    [Header("Components")]
+    [SerializeField] private Character character;
     [SerializeField] private Animator animator;
     #endregion
 
@@ -46,10 +48,11 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         RestoreHealth();
     }
 
-    public void Die()
+    public void Die(DamageType type = DamageType.Standard)
     {
         isDead = true;
-        // TODO: Temporary
+        
+        character.OnDied(type);
         deathEvent?.Invoke();
     }
 
@@ -61,6 +64,7 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         var normalisedHealth = CurrentHealth / (float)MaxHealth;
         animator.SetFloat(HealthParameter, normalisedHealth);
         
+        character.OnHealthRestored();
         healthRestoredEvent?.Invoke();
     }
 
@@ -70,10 +74,11 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         if ((IsInvincible || isDead) && (type != DamageType.Tsunami)) return;
         
         currentHealth -= amount;
-        if (CurrentHealth <= 0) Die();
+        if (CurrentHealth <= 0) Die(type);
         else
         {
-            tookDamageEvent.Invoke();
+            tookDamageEvent?.Invoke();
+            character.OnTookDamage(type);
             StartCoroutine(DamageInvincibilityRoutine());
         }
         

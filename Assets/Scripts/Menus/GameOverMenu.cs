@@ -19,7 +19,7 @@ public class GameOverMenu : MonoBehaviour
         _canvasGroup = GetComponentInChildren(typeof(CanvasGroup), true) as CanvasGroup;
         _button = GetComponentInChildren(typeof(Button), true) as Button;
 
-        GameManager.MainGameLogic.OnGameOver -= OnGameOver;
+        GameManager.MainGameLogic.OnGameOver += OnGameOver;
     }
 
     private void OnDisable()

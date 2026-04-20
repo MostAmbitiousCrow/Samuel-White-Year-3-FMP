@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -281,21 +282,30 @@ namespace GameCharacters
             TriggerHitStop(1); // TODO: Get a timed reference or something to delay the End Game Logic and the Death SFX
             MusicManager.Instance.PauseMusic();
             OnPlayerDied?.Invoke(damageType);
-            Debug.Log("PLAYER DIED");
-                
+            Debug.Log($"PLAYER DIED! Type = {damageType}");
+
+            var gameOverType = damageType switch
+            {
+                DamageType.Stomp or DamageType.Standard => GameManager.MainGameLogic.GameOverType.Default,
+                DamageType.Tsunami => GameManager.MainGameLogic.GameOverType.Tsunami,
+                _ => throw new ArgumentOutOfRangeException(nameof(damageType), damageType, null)
+            };
+
             // Wait for the hitstop to end to trigger the death event
-            Invoke(nameof(DeathEvent), 0.1f);
+            StartCoroutine(DeathEvent(gameOverType));
         } 
         
-        private void DeathEvent()
+        private IEnumerator DeathEvent(GameManager.MainGameLogic.GameOverType gameOverType)
         {
+            yield return new WaitForSeconds(.1f);
+            
             // Explode artwork and play death sound 
             if (TryGetComponent<ArtExplode>(out var explode)) explode.ExplodeArt();
             AudioManager.Play(Clip.Plyr_Died);
             
             // End the game after dying! Wait four seconds before doing so
             // GameManager.Instance.Invoke(nameof(GameManager.GameLogic.EndGame), 4f);
-            GameManager.GameLogic.EndGame();
+            GameManager.GameLogic.EndGame(gameOverType);
             Debug.Log("PLAYER DIED. ENDED GAME");
         }
 

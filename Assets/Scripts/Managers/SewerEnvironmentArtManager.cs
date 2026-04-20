@@ -9,6 +9,7 @@ public class SewerEnvironmentArtManager : MonoBehaviour
 {
     [Header("Spline Meshes")]
     [SerializeField] private SplineMesher sewerRiverSplineMesher;
+    [SerializeField] private SplineMesher sewerFloorSplineMesher;
     [SerializeField] private SplineMesher[] sewerWallSplineMeshers, sewerCeilingSplineMeshers;
 
     [Header("Sewer Art")]
@@ -74,8 +75,9 @@ public class SewerEnvironmentArtManager : MonoBehaviour
             splineMesher.Rebuild();
         }
         
-        // Rebuild Sewer River Artwork
+        // Rebuild Sewer River and floor Artwork
         sewerRiverSplineMesher.Rebuild();
+        sewerFloorSplineMesher.Rebuild();
         
         // Update subscribers (River Manager updates its spline length when the environment is updated)
         OnEnvironmentUpdated?.Invoke();

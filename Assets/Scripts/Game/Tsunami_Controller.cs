@@ -111,7 +111,7 @@ public class TsunamiController : MonoBehaviour
 
     public void DisableControl(GameManager.MainGameLogic.GameOverType gameOverType)
     {
-        canProgress = false;
+        if (gameOverType != GameManager.MainGameLogic.GameOverType.Tsunami) canProgress = false;
     }
 
     public void EnableControl()
@@ -171,48 +171,71 @@ public class TsunamiController : MonoBehaviour
     private float _smooth;
     private float _velocity;
     private bool _isDropping;
+
     private void ProgressTsunami()
     {
+        // Smooth progress update based on the current step compared to the maximum steps.
         var lerp = Mathf.InverseLerp(0, maximumSteps, currentStep);
         _smooth = Mathf.SmoothDamp(_smooth, lerp, ref _velocity, Time.deltaTime * smoothSpeed);
-
+        
         visualProgress = _smooth;
         ambienceAudio.volume = _smooth;
 
-        // Do Effects //TODO: In Progress of improving...
-        // var effects = stepEffects[0];
-        // Camera Shake:
-        // shakeParams.noiseModes[0].amplitude = effects.shakeAmplitude;
+        //TODO: Improve:
+        //Perhaps base the distance and amplitude distance when dropping based on the
+        //players boat distance the the tsunamis distance on the river
         
-        // Water Wave Speed: TODO
-        // waterMaterial.SetFloat("_Progress", effects.waveSpeed);
-        
-        
-        
-        // TODO: Improve
+        // Check if the danger mark has been reached.
         if (hasReachedDangerMark)
         {
-            switch (hasReachedBoat)
+            // Drop if the tsunami has already reached the boat
+            if (_isDropping)
             {
-                case true when !_isDropping:
-                    _isDropping = true;
-                    shakeParams.noiseModes[0].amplitude = .5f;
-                    break;
-                case true:
-                    shakeParams.noiseModes[0].amplitude = .03f;
-                    break;
+                // Reduce the amplitude of the tsunami overtime.
+                shakeParams.noiseModes[0].amplitude -= Time.deltaTime * 0.05f;
+                shakeParams.noiseModes[0].amplitude = Mathf.Clamp(shakeParams.noiseModes[0].amplitude, 0f, 10f);
+                Debug.Log("Tsunami is dropping!");
+
+                // If the amplitude has fully dropped, stop the tsunami.
+                if (shakeParams.noiseModes[0].amplitude <= 0f)
+                {
+                    riverSplineObject.ignorePause = false;
+                    canProgress = false;
+                    Debug.Log("Tsunami drop completed");
+                }
+
+                return;
             }
 
-            if (!_isDropping) return;
-            
-            // Slowly decrease the amplitude overtime
-            shakeParams.noiseModes[0].amplitude -= Time.deltaTime * .1f;
-            shakeParams.noiseModes[0].amplitude = Mathf.Clamp(shakeParams.noiseModes[0].amplitude, 0f, 10f);
+            // If the tsunami has reached the boat and is not dropping, start the drop.
+            if (hasReachedBoat)
+            {
+                if (!_isDropping)
+                {
+                    _isDropping = true;
+                    shakeParams.noiseModes[0].amplitude = 0.5f;  // Set a high amplitude when tsunami reaches the boat.
+                }
+                else
+                {
+                    shakeParams.noiseModes[0].amplitude = 0.03f;  // Lower amplitude once tsunami starts dropping.
+                }
+            }
         }
-        else if (currentStep >= maximumSteps) shakeParams.noiseModes[0].amplitude = .02f;
-        else if (currentStep == maximumSteps-1) shakeParams.noiseModes[0].amplitude = .01f;
+        // Handle cases where the danger mark has not been reached yet.
+        else
+        {
+            // Check if the current step has reached the maximum step requirement.
+            if (currentStep >= maximumSteps)
+            {
+                shakeParams.noiseModes[0].amplitude = 0.02f;  // Lower amplitude once maximum steps are reached.
+            }
+            // Otherwise, check if the current step is just before the maximum.
+            else if (currentStep == maximumSteps - 1)
+            {
+                shakeParams.noiseModes[0].amplitude = 0.01f;  // Minimal amplitude when almost at max steps.
+            }
+        }
     }
-
     #endregion
 
     #region Events
@@ -226,6 +249,7 @@ public class TsunamiController : MonoBehaviour
         smashBox.enabled = true;
 
         riverSplineObject.speedMultiplier = 3.5f;
+        riverSplineObject.ignorePause = true;
         hasReachedBoat = true;
     }
 

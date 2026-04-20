@@ -11,10 +11,11 @@ public class RiverSplineObject : MonoBehaviour
     public float DistanceOnSpline => distanceOnSpline;
     [SerializeField] private float totalDistanceTravelled = 0f;
     public float TotalDistanceTravelled => totalDistanceTravelled;
+    public bool ignorePause;
 
     private void Update()
     {
-        if (River_Manager.Instance.IsPaused) return;
+        if (River_Manager.Instance.IsPaused && !ignorePause) return;
 
         float speed = River_Manager.Instance.currentRiverSpeed * speedMultiplier;
 
