@@ -17,7 +17,7 @@ public class ObjectPoolManager : MonoBehaviour
         // Enemies
         Crocodile, Frog, Bat, Tentacle,
         // Obstacles
-        Trash, WideTrash, Pipe,
+        Trash, WideTrash, Pipe, Bridge,
         // Collectibles
         Gemstone, Fragment,
         // Gate

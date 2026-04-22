@@ -33,7 +33,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     /// </summary>
     [Tooltip("The distance of this object to the destination of its lane")]
     [SerializeField] protected float distance = 0f;
-    [SerializeField] private float startDistance;
+    [SerializeField] protected float startDistance;
     [Space]
     public bool canMove = false;
     public bool isMoving;

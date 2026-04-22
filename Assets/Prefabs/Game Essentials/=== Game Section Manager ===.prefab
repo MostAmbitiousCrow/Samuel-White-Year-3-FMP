@@ -46,16 +46,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevelData: {fileID: 0}
   currentSectionIndex: 0
+  gapBetweenSections: 20
   trashObjectID: 4
   wideTrashObjectID: 5
   pipeObjectID: 6
+  bridgeObjectID: 7
   crocodileObjectID: 0
   frogObjectID: 1
   batObjectID: 2
   tentacleObjectID: 3
-  gemStoneObjectID: 7
-  gemFragmentObjectID: 10
-  gemStoneGateObjectID: 8
+  gemStoneObjectID: 8
+  gemFragmentObjectID: 11
+  gemStoneGateObjectID: 9
+  slipStreamObjectID: 10
   lastSpawnedObject: {fileID: 0}
   furthestDistance: 0
   riverManager: {fileID: 0}

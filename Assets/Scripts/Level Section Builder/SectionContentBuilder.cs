@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using EditorAttributes;
 using UnityEditor;
-using UnityEngine.Serialization;
-using UnityEngine.Splines;
 
 /// <summary> Class used for the level builder tool to generate Sections stored in the Level Data Scriptable Objects </summary>
 public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
@@ -167,9 +165,6 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         foreach (var item in sectionData.collectibleDatas) item.DrawGizmos();
         foreach (var item in sectionData.gemstoneGateDatas) item.DrawGizmos();
         foreach (var item in sectionData.slipStreamDatas) item.DrawGizmos();
-        {
-            
-        }
     }
 #endif
 }

@@ -1,15 +1,18 @@
 ﻿using System;
+using sc.modeling.splines.runtime;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using UnityEngine;
 
 namespace sc.modeling.splines.editor
 {
-    public class UI
+    public static class UI
     {
         public static readonly Color RedColor = new Color(1f, 0.31f, 0.34f);
         public static readonly Color OrangeColor= new Color(1f, 0.68f, 0f);
         public static readonly Color GreenColor = new Color(0.33f, 1f, 0f);
+        public static readonly Color LightBlueColor = new Color(0.4f, 0.6f, 1f); 
+        public static readonly Color LighterBlueColor = new Color(0.6f, 0.8f, 1f); 
         
         public static Texture CreateIcon(string data)
         {
@@ -19,6 +22,55 @@ namespace sc.modeling.splines.editor
             icon.LoadImage(bytes, true);
             
             return icon;
+        }
+
+        public static void DrawHeader()
+        {
+            Rect rect = EditorGUILayout.GetControlRect();
+            rect.x -= 30f;
+
+            //Draw title
+            GUIContent textContent = new GUIContent($"{AssetInfo.ASSET_NAME}");
+            Vector2 titleSize = EditorStyles.boldLabel.CalcSize(textContent);
+            
+            Rect textRect = new Rect(rect.x + 10f, rect.y, titleSize.x, titleSize.y);
+            GUI.Label(textRect, textContent, EditorStyles.boldLabel);
+            float totalWidth = textRect.width + 13f;
+            
+            //Draw icon to the right
+            Rect iconRect = new Rect(rect.x + totalWidth, rect.y + 2f, Icons.Edition.width, Icons.Edition.height);
+            GUI.DrawTexture(iconRect, Icons.Edition, ScaleMode.ScaleToFit);
+            totalWidth += iconRect.width + 2f;
+            
+            //Version
+            GUIContent version = new GUIContent($"{AssetInfo.VERSION} " + (!AssetInfo.VersionChecking.UPDATE_AVAILABLE ? "(latest)" : string.Empty));
+            float versionWidth = EditorStyles.miniLabel.CalcSize(version).x;
+
+            Rect versionRect = new Rect(rect.x + totalWidth, rect.y, versionWidth, titleSize.y);
+            totalWidth += versionRect.width;
+            GUI.Label(versionRect, version, EditorStyles.miniLabel);
+
+            if (AssetInfo.VersionChecking.UPDATE_AVAILABLE)
+            {
+                GUIContent update = new GUIContent($" Update to {AssetInfo.VersionChecking.LATEST_AVAILABLE}", EditorGUIUtility.IconContent("d_Package Manager").image);
+
+                GUIStyle linkStyle = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
+                linkStyle.normal.textColor = Color.Lerp(LightBlueColor, LightBlueColor * 1.4f,
+                    Mathf.Sin((float)EditorApplication.timeSinceStartup * 5f) * 0.5f + 0.5f);
+                linkStyle.hover.textColor = LighterBlueColor;
+    
+                float updateWidth = linkStyle.CalcSize(update).x;
+    
+                Rect updateRect = new Rect(rect.x + (-updateWidth * 0.5f) + totalWidth * 0.5f, rect.y + titleSize.y + 1f, updateWidth, titleSize.y);
+    
+                //Make it clickable
+                EditorGUIUtility.AddCursorRect(updateRect, MouseCursor.Link);
+    
+                if (GUI.Button(updateRect, update, linkStyle))
+                {
+                    AssetInfo.OpenInPackageManager();
+                }
+            }
         }
         
         public class Section
@@ -46,7 +98,7 @@ namespace sc.modeling.splines.editor
                 
             public void DrawHeader(Action clickAction)
             {
-                UI.DrawHeader(title, Expanded, clickAction);
+                UI.DrawSectionHeader(title, Expanded, clickAction);
                 anim.target = Expanded;
             }
         }
@@ -95,7 +147,7 @@ namespace sc.modeling.splines.editor
         }
 
         private const float HeaderHeight = 22f;
-        public static bool DrawHeader(GUIContent content, bool isExpanded, Action clickAction)
+        public static bool DrawSectionHeader(GUIContent content, bool isExpanded, Action clickAction)
         {
             DrawSplitter();
 
@@ -147,6 +199,40 @@ namespace sc.modeling.splines.editor
             return isExpanded;
         }
 
+        public static class Icons
+        {
+            public static string prefix => EditorGUIUtility.isProSkin ? "d_" : string.Empty;
+
+            private static Texture2D LoadFromResources(string path)
+            {
+                string absolutePath = $"{SplineMesher.kPackageRoot}/Editor/Resources/{path}";
+                Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>(absolutePath);
+
+                if (!icon)
+                {
+                    Debug.LogError($"Failed to load icon {absolutePath}");
+                    return EditorGUIUtility.IconContent("_Help").image as Texture2D;
+                }
+
+                return icon;
+            }
+
+            private static Texture2D LoadNative(string path) => EditorGUIUtility.IconContent(path).image as Texture2D;
+
+            public static Texture2D LoadFromData(string data, int size = 32)
+            {
+                byte[] bytes = Convert.FromBase64String(data);
+
+                Texture2D icon = new Texture2D(size, size, TextureFormat.RGBA32, false, false);
+                icon.LoadImage(bytes, true);
+
+                return icon;
+            }
+
+            private static Texture2D _Edition;
+            public static Texture2D Edition => _Edition = LoadFromResources("spline-mesher-edition-icon.psd");
+        }
+
         public static class Styles
         {
             private static GUIStyle _Section;
@@ -161,6 +247,7 @@ namespace sc.modeling.splines.editor
                             margin = new RectOffset(0, 0, -5, 5),
                             padding = new RectOffset(10, 10, 5, 5),
                             clipping = TextClipping.Clip,
+                            wordWrap = true
                         };
                     }
 

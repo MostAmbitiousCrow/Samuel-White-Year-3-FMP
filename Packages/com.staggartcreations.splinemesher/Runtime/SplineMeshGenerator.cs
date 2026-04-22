@@ -650,12 +650,14 @@ namespace sc.modeling.splines.runtime
             {
                 validHit = true;
                 
+                #if TERRAIN_PHYSICS
                 if (settings.terrainOnly)
                 {
                     validHit = hit.collider.GetType() == typeof(TerrainCollider);;
 
                     if (validHit == false) return false;
                 }
+                #endif
 
                 hitPosition = hit.point; 
                 hitNormal = hit.normal;

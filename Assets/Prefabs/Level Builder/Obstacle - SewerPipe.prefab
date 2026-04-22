@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1313936508639737631}
-  - component: {fileID: 7040310904434626305}
+  - component: {fileID: 3936748635748320958}
   m_Layer: 0
   m_Name: Obstacle - SewerPipe
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7040310904434626305
+--- !u!114 &3936748635748320958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,23 +41,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 3344502653485941506}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Script: {fileID: 11500000, guid: 05cae1df49d314b4dba2c0ae95b6c576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 0
   distance: 0
-  height: 5
+  height: 0
   enableSnapping: 1
-  debugMesh: {fileID: -7052733683892202860, guid: af2b165c510fa409c96744cd2aa511e7,
+  debugMesh: {fileID: -7052733683892202860, guid: 9a2334b9448a540c69a070ab9ad6f1f8,
     type: 3}
   meshScale: 1
   riverManager: {fileID: 0}
   sectionData:
-    obstacleType: 2
+    obstacleType: 0
     overrideData: 0
     overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
-      pipeConnection: 0
+      pipeConnection: 1
       distancePerPipe: 1.6
       amount: 5
+  pipeData:
+    connectedPipes:
+    - lane: 0
+      height: 0
+      distance: 0
+      pipeConnection: 0
+    - lane: 0
+      height: 0
+      distance: 0
+      pipeConnection: 0
+    pipeJoints: []

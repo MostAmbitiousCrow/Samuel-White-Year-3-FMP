@@ -186,7 +186,7 @@ namespace sc.modeling.splines.editor
                 rollFrequency = settingsDeforming.FindPropertyRelative("rollFrequency");
                 rollAngle = settingsDeforming.FindPropertyRelative("rollAngle");
                 #if SPLINES
-                rollDataPathIndexUnit = settingsDeforming.FindPropertyRelative("rollPathIndexUnit");
+                rollDataPathIndexUnit = settingsDeforming.FindPropertyRelative("pathIndexUnit");
                 
                 SerializedProperty settingColor = settings.FindPropertyRelative("color");
                 colorPathIndexUnit = settingColor.FindPropertyRelative("pathIndexUnit");
@@ -365,7 +365,10 @@ namespace sc.modeling.splines.editor
         {
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.LabelField($"Version {SplineMesher.VERSION} " + (SplineMeshEditor.VersionChecking.UPDATE_AVAILABLE ? "(update available)" : "(latest)"), EditorStyles.centeredGreyMiniLabel);
+                GUILayout.FlexibleSpace();
+
+                UI.DrawHeader();
+                
                 if (GUILayout.Button(new GUIContent(EditorGUIUtility.IconContent(iconPrefix + "Help").image, "Help window"), EditorStyles.miniButtonMid, GUILayout.Width(30f)))
                 {
                     HelpWindow.ShowWindow();
@@ -427,6 +430,10 @@ namespace sc.modeling.splines.editor
                     #endif
                 }
             }
+            
+            #if SM2
+            EditorGUILayout.HelpBox("Spline Mesher Pro is installed, please use the migration tool to convert this instance", MessageType.Info);
+            #endif
         }
         
         private void DrawInputOutput()

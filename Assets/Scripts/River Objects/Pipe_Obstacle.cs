@@ -6,7 +6,6 @@ public class Pipe_Obstacle : River_Obstacle
     /// <summary> What direction does the pipe connect to on the sewer walls </summary>
     [Header("Pipe Content")]
     public Pipe_Obstacle_Data pipeData = new();
-    [SerializeField] private BoxCollider hitBox;
     [SerializeField] private Transform[] pipes;
 
     private void OnEnable()
@@ -37,8 +36,8 @@ public class Pipe_Obstacle : River_Obstacle
         // Calculate hitbox centre and size
         float pipesLength = pipeData.amount;
         float totalDistance = pipeData.distancePerPipe * pipesLength;
-        hitBox.center = pipesLength * 0.5f * pipeData.distancePerPipe * Vector3.right;
-        hitBox.size = new Vector3(totalDistance + 1, 1, 1);
+        boxCollider.center = pipesLength * 0.5f * pipeData.distancePerPipe * Vector3.right;
+        boxCollider.size = new Vector3(totalDistance + 1, 1, 1);
 
         // Enable and set the position of additional art pipes
         for (int i = 0; i < pipesLength; i++)

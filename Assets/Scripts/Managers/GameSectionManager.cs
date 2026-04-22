@@ -26,9 +26,9 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     private readonly Dictionary<Enum, int> _prefabLookup = new Dictionary<System.Enum, int>();
 
     [Line(GUIColor.Cyan)]
-    [FoldoutGroup("Obstacle Objects", nameof(trashObjectID), nameof(wideTrashObjectID),  nameof(pipeObjectID))]
+    [FoldoutGroup("Obstacle Objects", nameof(trashObjectID), nameof(wideTrashObjectID), nameof(pipeObjectID), nameof(bridgeObjectID))]
     [SerializeField] private Void obstacleGroup;
-    [SerializeField, HideProperty] private int trashObjectID, wideTrashObjectID,  pipeObjectID;
+    [SerializeField, HideProperty] private int trashObjectID, wideTrashObjectID, pipeObjectID, bridgeObjectID;
     
     [Line(GUIColor.Red)]
     [FoldoutGroup("Enemy Objects", nameof(crocodileObjectID), nameof(frogObjectID), nameof(batObjectID), nameof(tentacleObjectID))]
@@ -200,13 +200,24 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
                 Section_Obstacle_Object.ObstacleType.TrashPile => trashObjectID,
                 Section_Obstacle_Object.ObstacleType.WideTrashPile => wideTrashObjectID,
                 Section_Obstacle_Object.ObstacleType.SewerPipe => pipeObjectID,
+                Section_Obstacle_Object.ObstacleType.Bridge => bridgeObjectID,
                 _ => throw new ArgumentOutOfRangeException()
             };
             var obs = ObjectPoolManager.Instance.Spawn<River_Obstacle>(id);
 
-            // Check if the obstacle is a pipe
-            if (obs is Pipe_Obstacle pipe) pipe.OverridePipeData(item.data.pipeObstacleData);
-            else obs.OverrideData(item.data.overriddenData);
+            switch (obs)
+            {
+                // Check if the obstacle is a pipe
+                case River_PipeObstacle_New pipe:
+                    pipe.AssignPipeData(item.data.pipeObstacleData);
+                    break;
+                case RiverObstacleBridge bridge:
+                    bridge.AssignObstacleData(item.data.obstacleBridgeData);
+                    break;
+                default:
+                    obs.OverrideData(item.data.overriddenData);
+                    break;
+            }
             
             PlaceSectionObject(obs, item.lane, item.distance, item.height);
         }

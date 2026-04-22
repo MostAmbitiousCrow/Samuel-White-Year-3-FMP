@@ -129,7 +129,7 @@ public class River_Manager : MonoBehaviour
         targetLane = currentLane + direction;
 
         if (targetLane < spaces && targetLane > -1) return riverLanes[targetLane];
-        else return riverLanes[currentLane];
+        return riverLanes[currentLane];
     }
 
     /// <summary>

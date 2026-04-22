@@ -16,6 +16,8 @@ public class River_Obstacle : River_Object
     [Header("Obstacle Stats")]
     public ObstacleData obstacleData; //TODO can be private
     public bool IsHit { get; private set; }
+    
+    [SerializeField] protected BoxCollider boxCollider;
 
     public void OverrideData(ObstacleData overridedData)
     {
@@ -30,8 +32,9 @@ public class River_Obstacle : River_Object
         // print($"{name} hit: {other.name}");
 
         if (other.TryGetComponent<IDamageable>(out var character))
-            character.TakeDamage(amount: obstacleData.ImpactDamage);
-        if (other.CompareTag("Boat")) riverManager.HaltRiver(10); // Slow down the river when the boat is hit
+            character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
+        if (other.CompareTag("Boat"))
+            other.GetComponent<Boat_Controller>().TakeDamage();
         IsHit = true;
 
         if (explodesOnHit) artExploder.ExplodeArt();

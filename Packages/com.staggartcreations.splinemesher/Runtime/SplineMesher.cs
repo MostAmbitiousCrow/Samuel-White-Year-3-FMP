@@ -25,8 +25,7 @@ namespace sc.modeling.splines.runtime
     [SelectionBase] //Select this object when selecting caps (child objects)
     public partial class SplineMesher : MonoBehaviour
     {
-        public const string VERSION = "1.3.2";
-        public const string kPackageRoot = "Packages/com.staggartcreations.splinemesher";
+        public const string kPackageRoot = "Packages/xyz.staggart-creations.splinemesher-standard";
         
         public static readonly List<SplineMesher> Instances = new List<SplineMesher>();
         

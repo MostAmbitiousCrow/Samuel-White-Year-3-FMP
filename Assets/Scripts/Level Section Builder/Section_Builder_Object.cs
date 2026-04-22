@@ -22,7 +22,7 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
     [Header("Data")]
     // [SerializeField] private GlobalRiverValues globalRiverValues;
 
-    [SerializeField] private River_Manager riverManager;
+    [SerializeField] protected River_Manager riverManager;
 
     public void DrawGizmos()
     {

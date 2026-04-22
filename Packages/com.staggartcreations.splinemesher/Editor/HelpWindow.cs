@@ -8,14 +8,20 @@ namespace sc.modeling.splines.editor
     public class HelpWindow : EditorWindow
     {
         private static readonly int width = 530;
-        private static readonly int height = 440;
+        private static int height = 440;
         
-        //[MenuItem("Help/Spline Mesher", false, 0)]
+        #if !SM2
+        [MenuItem("Help/Spline Mesher", false, 0)]
+        #endif
         public static void ShowWindow()
         {
             HelpWindow editorWindow = EditorWindow.GetWindow<HelpWindow>(true, "Help", true);
             editorWindow.titleContent = new GUIContent("Help");
 
+            #if !SM2
+            height += 200;
+            #endif
+            
             //Open somewhat in the center of the screen
             editorWindow.position = new Rect((Screen.currentResolution.width / 2f) - (width * 0.5f), (Screen.currentResolution.height / 2f) - (height * 0.5f), (width * 2), height);
 
@@ -24,7 +30,7 @@ namespace sc.modeling.splines.editor
             editorWindow.minSize = new Vector2(width, 200);
 
             //Init
-            SplineMeshEditor.VersionChecking.CheckForUpdate();
+            AssetInfo.VersionChecking.CheckForUpdate();
 
             editorWindow.Show();
         }
@@ -32,21 +38,25 @@ namespace sc.modeling.splines.editor
         private void OnGUI()
         {
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("<size=24>Spline Mesher</size>", UI.Styles.Header);
+            EditorGUILayout.LabelField("<size=24>Spline Mesher - Standard</size>", UI.Styles.Header);
 
             GUILayout.Label("by Staggart Creations", UI.Styles.Footer);
 
-            //EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
             EditorGUILayout.Space();
-
+            
+            DrawProInfo();
+            
             Color defaultColor = GUI.contentColor;
 
             using (new EditorGUILayout.VerticalScope(UI.Styles.Section))
             {
+                #if !SM2
                 DrawReviewButton();
 
                 EditorGUILayout.Space();
 
+                #endif
                 //Version
                 using (new EditorGUILayout.HorizontalScope())
                 {
@@ -54,16 +64,16 @@ namespace sc.modeling.splines.editor
 
                     using (new EditorGUILayout.HorizontalScope(EditorStyles.textField))
                     {
-                        if (SplineMeshEditor.VersionChecking.UPDATE_AVAILABLE == false)
+                        if (AssetInfo.VersionChecking.UPDATE_AVAILABLE == false)
                         {
                             GUI.contentColor = UI.GreenColor;
-                            EditorGUILayout.LabelField(SplineMesher.VERSION + " (Latest)");
+                            EditorGUILayout.LabelField(AssetInfo.VERSION + " (Latest)");
                             GUI.contentColor = defaultColor;
                         }
                         else
                         {
                             GUI.contentColor = UI.OrangeColor;
-                            EditorGUILayout.LabelField(SplineMesher.VERSION + " (Update available)", EditorStyles.boldLabel);
+                            EditorGUILayout.LabelField(AssetInfo.VERSION + $" (Update available)", EditorStyles.boldLabel);
                             GUI.contentColor = defaultColor;
                         }
                     }
@@ -71,16 +81,16 @@ namespace sc.modeling.splines.editor
 
                 using (new EditorGUILayout.VerticalScope())
                 {
-                    if (SplineMeshEditor.VersionChecking.UPDATE_AVAILABLE)
+                    if (AssetInfo.VersionChecking.UPDATE_AVAILABLE)
                     {
                         using (new EditorGUILayout.HorizontalScope())
                         {
                             //GUILayout.Label("");
                             GUILayout.Space(EditorGUIUtility.labelWidth + 80f);
 
-                            if (GUILayout.Button(new GUIContent($"  Download v{SplineMeshEditor.VersionChecking.latestVersion}", EditorGUIUtility.IconContent("Asset Store").image)))
+                            if (GUILayout.Button(new GUIContent($"  Download v{AssetInfo.VersionChecking.LATEST_AVAILABLE}", EditorGUIUtility.IconContent("Asset Store").image)))
                             {
-                                SplineMeshEditor.OpenInPackageManager();
+                                AssetInfo.OpenInPackageManager();
                             }
                         }
                     }
@@ -96,11 +106,11 @@ namespace sc.modeling.splines.editor
 
                     if (GUILayout.Button(new GUIContent("<b><size=12>  Documentation</size></b>\n<i><size=11>  Usage instructions</size></i>", DocIcon), UI.Styles.Button))
                     {
-                        Application.OpenURL(SplineMeshEditor.DOC_URL);
+                        Application.OpenURL(AssetInfo.DOC_URL);
                     }
                     if (GUILayout.Button(new GUIContent("<b><size=12>  FAQ/Troubleshooting</size></b>\n<i><size=11>  Common issues and solutions</size></i>", FaqIcon), UI.Styles.Button))
                     {
-                        Application.OpenURL(SplineMeshEditor.DOC_URL + "?section=troubleshooting-faq-2");
+                        Application.OpenURL(AssetInfo.DOC_URL + "?section=troubleshooting-faq-2");
                     }
                     EditorGUILayout.EndHorizontal();
                 }
@@ -122,11 +132,11 @@ namespace sc.modeling.splines.editor
 
                     if (GUILayout.Button(new GUIContent("<b><size=12>  Discord</size></b>\n<i><size=11>  Access support</size></i>", DiscordIcon), UI.Styles.Button))
                     {
-                        Application.OpenURL(SplineMeshEditor.DISCORD_INVITE_URL);
+                        Application.OpenURL(AssetInfo.DISCORD_INVITE_URL);
                     }
                     if (GUILayout.Button(new GUIContent("<b><size=12>  Forum</size></b>\n<i><size=11>  Join the discussion</size></i>", ForumIcon), UI.Styles.Button))
                     {
-                        Application.OpenURL(SplineMeshEditor.FORUM_URL);
+                        Application.OpenURL(AssetInfo.FORUM_URL);
                     }
                     if (GUILayout.Button(new GUIContent("<b><size=12>  X</size></b>\n<i><size=11>  Follow developments</size></i>", TwitterIcon), UI.Styles.Button))
                     {
@@ -143,12 +153,46 @@ namespace sc.modeling.splines.editor
             using (new EditorGUILayout.HorizontalScope())
             {
                 GUILayout.FlexibleSpace();
-                if (GUILayout.Button(new GUIContent("<b><size=12>  Write a review</size></b>\n<i>  Support further development</i>", ReviewIcon), UI.Styles.Button, GUILayout.Height(45f), GUILayout.Width(240f)))
+                if (GUILayout.Button(new GUIContent("<b><size=12>  Leave a review</size></b>\n<i>  This goes a long way!</i>", ReviewIcon), UI.Styles.Button, GUILayout.Height(45f), GUILayout.Width(240f)))
                 {
-                    SplineMeshEditor.OpenReviewsPage();
+                    AssetInfo.OpenReviewsPage();
                 }
                 GUILayout.FlexibleSpace();
             }
+        }
+
+        public static void DrawProInfo()
+        {
+#if !SM2
+            using (new EditorGUILayout.VerticalScope(UI.Styles.Section))
+            {
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button(
+                            new GUIContent("<b><size=12>  Spline Mesher Pro</size></b>\n<i>  Open Asset Store</i>",
+                                EditorGUIUtility.IconContent("Asset Store").image), UI.Styles.Button,
+                            GUILayout.Height(45f), GUILayout.Width(240f)))
+                    {
+                        Application.OpenURL(
+                            $"https://assetstore.unity.com/packages/slug/338468?aid=1011l7Uk8&pubref=smeditor_upgrade");
+
+                    }
+
+                    GUILayout.FlexibleSpace();
+                }
+
+                EditorGUILayout.LabelField("Upgrade to the Pro version for advanced features, at a discount.", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("• Fast multithreaded mesh generation, x50 faster");
+                EditorGUILayout.LabelField("• Fill mesh generation.");
+                EditorGUILayout.LabelField("• Segmented output");
+                EditorGUILayout.LabelField("• Procedural input shapes");
+                EditorGUILayout.LabelField("• MeshLOD support");
+                EditorGUILayout.LabelField("• Many QoL improvements");
+                
+                EditorGUILayout.Space();
+            }
+#endif
         }
         
         private static Texture m_ReviewIcon;

@@ -1,4 +1,10 @@
-﻿1.3.2 (November 28th 2025)
+﻿1.4.0 (March 1st 2026)
+Package name was changed to "xyz.staggart-creations.splinemesher-standard". To adhere to new UPM standards and consistency with other packages.
+
+Fixed:
+- Script compile error if the Terrain Physics module was disabled.
+
+1.3.2 (November 28th 2025)
 
 Added:
 - Rebuild Trigger: On Mesh File Change. Rebuilds when the input mesh is altered.

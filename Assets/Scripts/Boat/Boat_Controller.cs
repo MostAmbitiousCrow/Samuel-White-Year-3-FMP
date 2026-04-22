@@ -187,10 +187,10 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
 
     #region Damage Events
 
-    public void TookDamage()
+    public void TakeDamage()
     {
-        print("Boat hit, slowing river");
-        Instance.SlowDownRiver();
+        Instance.HaltRiver(10);
+        print("Boat hit, halted river");
     }
 
     public void DestroyBoat(DamageType damageType)
