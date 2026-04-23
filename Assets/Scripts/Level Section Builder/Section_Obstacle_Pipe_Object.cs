@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Section_Obstacle_Pipe_Object : Section_Obstacle_Object
 {
-    [Header("Pipe Object")]
-    [SerializeField] private NewPipeObstacleData pipeData;
-    
     protected override void AdditionalDebug()
     {
         name = $"{ObjectType.Obstacle} - {sectionData.obstacleType}";
     
-        if (pipeData.connectedPipes.Length < 2) return;
+        if (sectionData.pipeObstacleData.connectedPipes.Length < 2) return;
 
         var points = new List<Vector3>();
 
         // Start pipe
-        var pipe = pipeData.connectedPipes[0];
+        var pipe = sectionData.pipeObstacleData.connectedPipes[0];
         
         AssignPosition(pipe, out var pos);
         points.Add(pos);
@@ -30,14 +27,14 @@ public class Section_Obstacle_Pipe_Object : Section_Obstacle_Object
         }
 
         // Pipe Joints
-        foreach (var joint in pipeData.pipeJoints)
+        foreach (var joint in sectionData.pipeObstacleData.pipeJoints)
         {
             AssignPosition(joint, out pos);
             points.Add(pos);
         }
 
         // End pipe
-        pipe = pipeData.connectedPipes[1];
+        pipe = sectionData.pipeObstacleData.connectedPipes[1];
         AssignPosition(pipe, out pos);
         points.Add(pos);
 

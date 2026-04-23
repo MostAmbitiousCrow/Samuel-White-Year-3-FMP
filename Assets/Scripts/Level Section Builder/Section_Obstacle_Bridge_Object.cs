@@ -6,8 +6,6 @@ public class Section_Obstacle_Bridge_Object : Section_Obstacle_Object
 {
     [Line]
     [Header("Bridge Data")]
-    [SerializeField] private ObstacleBridgeData bridgeData;
-
     [SerializeField, Range(0, 2)] private float bridgeWidth;
     [SerializeField, Range(0, 5)] private int bridgeHeight;
     [SerializeField, Range(0f, 100f)] private float bridgeLength;
@@ -15,6 +13,8 @@ public class Section_Obstacle_Bridge_Object : Section_Obstacle_Object
     protected override void AdditionalDebug()
     {
         base.AdditionalDebug();
+
+        var bridgeData = sectionData.obstacleBridgeData;
         
         bridgeData.Width = bridgeWidth;
         bridgeWidth = bridgeData.Width;

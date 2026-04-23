@@ -2406,8 +2406,8 @@ MonoBehaviour:
   splineContainer: {fileID: 307473355}
   levelColours: {fileID: 0}
   environmentType: 0
-  pathName: Assets/Scriptable Objects/Level Data/Levels/Level 1 - Sewer
-  assetName: Level 1
+  pathName: Assets/Scriptable Objects/Level Data/Testing Purposes/Obstacles
+  assetName: Test Obstacles
 --- !u!1001 &169194316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3604,6 +3604,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
         type: 3}
+      propertyPath: sectionData.pipeObstacleData.pipeJoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
       propertyPath: pipeData.connectedPipes.Array.data[0].pipeConnection
       value: 2
       objectReference: {fileID: 0}
@@ -3611,6 +3616,66 @@ PrefabInstance:
         type: 3}
       propertyPath: pipeData.connectedPipes.Array.data[1].pipeConnection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.pipeJoints.Array.data[0].lane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.pipeJoints.Array.data[0].height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.pipeJoints.Array.data[1].height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[0].lane
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[1].lane
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.pipeJoints.Array.data[0].distance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.pipeJoints.Array.data[1].distance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[0].height
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[1].height
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[0].distance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[1].distance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: sectionData.pipeObstacleData.connectedPipes.Array.data[0].pipeConnection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
