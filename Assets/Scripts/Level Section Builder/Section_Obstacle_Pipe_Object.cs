@@ -118,8 +118,7 @@ public class Section_Obstacle_Pipe_Object : Section_Obstacle_Object
                 throw new ArgumentOutOfRangeException();
         }
         
-        riverManager.AssignToCurveSection
-            (pipe.distance, pipe.lane, out Vector3 pos, out Quaternion rot);
+        riverManager.AssignToCurveSection(pipe.distance, pipe.lane, out Vector3 pos, out Quaternion rot);
 
         pos += transform.right * (pipe.lane - 1) * GlobalRiverValues.RiverLaneDistance / 16f;
         pos += ((direction * distance) + (Vector3.up * pipe.height)) + transform.position;

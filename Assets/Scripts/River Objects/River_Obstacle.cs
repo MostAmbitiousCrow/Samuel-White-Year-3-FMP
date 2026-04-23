@@ -15,7 +15,7 @@ public class River_Obstacle : River_Object
     [EditorAttributes.Line(EditorAttributes.GUIColor.Cyan, 1, 3)]
     [Header("Obstacle Stats")]
     public ObstacleData obstacleData; //TODO can be private
-    public bool IsHit { get; private set; }
+    public bool IsHit { get; protected set; }
     
     [SerializeField] protected BoxCollider boxCollider;
 

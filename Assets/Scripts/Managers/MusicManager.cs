@@ -35,7 +35,7 @@ public class MusicManager : MonoBehaviour
         var data = _gameLevelManager.Levels[_gameLevelManager.CurrentLevel].environmentType;
         var audioClip = sewerMusic[(int)data];
         MusicSource.clip = audioClip;
-        Debug.Log($"Playing Music: {audioClip} From the {data} Level");
+        // Debug.Log($"Playing Music: {audioClip} From the {data} Level");
         MusicSource.Play();
     }
 

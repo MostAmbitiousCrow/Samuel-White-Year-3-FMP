@@ -111,13 +111,13 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     public void AssignNewLevelData(SO_LevelData data)
     {
         currentLevelData = data;
-        Debug.Log($"Assigned new Level Data to Section Manager");
+        // Debug.Log($"Assigned new Level Data to Section Manager");
     }
 
     private Coroutine _spawnRoutine;
     public void StartSpawning()
     {
-        Debug.Log("Starting Spawning Objects");
+        // Debug.Log("Starting Spawning Objects");
         if (_spawnRoutine != null) StopCoroutine(_spawnRoutine);
         _spawnRoutine = StartCoroutine(SpawnSectionRoutine());
     }

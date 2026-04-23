@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d39be867011414f739f3363c5ce7db7d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d39be867011414f739f3363c5ce7db7d,
         type: 3}
@@ -96,7 +96,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d39be867011414f739f3363c5ce7db7d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d39be867011414f739f3363c5ce7db7d,
         type: 3}
@@ -333,7 +333,7 @@ MonoBehaviour:
       spacing: 0
     deforming:
       curveOffset: {x: 0, y: -0.8}
-      pivotOffset: {x: 0, y: 0}
+      pivotOffset: {x: 0, y: -0.8}
       scale: {x: 1, y: 1, z: 1}
       scalePathIndexUnit: 0
       scaleInterpolation: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
       align: 1
       blendNormal: 1
     mesh:
-      keepReadable: 0
+      keepReadable: 1
       storeGradientsInUV: 1
       lightmapUVMarginMultiplier: 1
       lightmapUVAngleThreshold: 88
@@ -372,9 +372,15 @@ MonoBehaviour:
       m_Calls: []
   m_meshFilter: {fileID: 2102566633348643403}
   splineContainer: {fileID: 240577198070032083}
-  splineCount: 2
+  splineCount: 3
   splineChangeMode: 0
   scaleData:
+  - m_IndexUnit: 0
+    m_DefaultValue:
+      x: 1
+      y: 1
+      z: 1
+    m_DataPoints: []
   - m_IndexUnit: 0
     m_DefaultValue:
       x: 1
@@ -394,6 +400,9 @@ MonoBehaviour:
   - m_IndexUnit: 0
     m_DefaultValue: 0
     m_DataPoints: []
+  - m_IndexUnit: 0
+    m_DefaultValue: 0
+    m_DataPoints: []
   conformingStrength:
   - m_IndexUnit: 0
     m_DefaultValue: 1
@@ -401,7 +410,15 @@ MonoBehaviour:
   - m_IndexUnit: 0
     m_DefaultValue: 1
     m_DataPoints: []
+  - m_IndexUnit: 0
+    m_DefaultValue: 1
+    m_DataPoints: []
   vertexColorRedData:
+  - m_IndexUnit: 0
+    m_DefaultValue:
+      value: 0
+      blend: 1
+    m_DataPoints: []
   - m_IndexUnit: 0
     m_DefaultValue:
       value: 0
@@ -423,6 +440,11 @@ MonoBehaviour:
       value: 0
       blend: 1
     m_DataPoints: []
+  - m_IndexUnit: 0
+    m_DefaultValue:
+      value: 0
+      blend: 1
+    m_DataPoints: []
   vertexColorBlueData:
   - m_IndexUnit: 0
     m_DefaultValue:
@@ -434,7 +456,17 @@ MonoBehaviour:
       value: 0
       blend: 1
     m_DataPoints: []
+  - m_IndexUnit: 0
+    m_DefaultValue:
+      value: 0
+      blend: 1
+    m_DataPoints: []
   vertexColorAlphaData:
+  - m_IndexUnit: 0
+    m_DefaultValue:
+      value: 0
+      blend: 1
+    m_DataPoints: []
   - m_IndexUnit: 0
     m_DefaultValue:
       value: 0
@@ -571,6 +603,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112428136379561885, guid: 0d63efc6084834593aaf1cc52b817b92,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6112428136379561885, guid: 0d63efc6084834593aaf1cc52b817b92,
         type: 3}
@@ -748,6 +785,58 @@ MonoBehaviour:
       m_Data: []
     m_ObjectData:
       m_Data: []
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 6.4
+        y: 0
+        z: 6.4
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.64000005
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.64000005
+      Rotation:
+        value:
+          x: 0
+          y: -0.70710677
+          z: -0
+          w: 0.70710677
+    - Position:
+        x: 0
+        y: 0
+        z: 6.4
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.64000005
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.64000005
+      Rotation:
+        value:
+          x: 0
+          y: -0.70710677
+          z: -0
+          w: 0.70710677
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   m_Knots:
     m_KnotsLink: []
 --- !u!65 &4264227048857599290 stripped
@@ -790,3 +879,14 @@ MonoBehaviour:
     ImpactDamage: 1
   boxCollider: {fileID: 4264227048857599290}
   splineMesher: {fileID: 3233951193934371210}
+  pipeData:
+    connectedPipes:
+    - lane: 0
+      height: 0
+      distance: 0
+      pipeConnection: 0
+    - lane: 0
+      height: 0
+      distance: 0
+      pipeConnection: 0
+    pipeJoints: []

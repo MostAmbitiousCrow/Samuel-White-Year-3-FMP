@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using sc.modeling.splines.runtime;
 using UnityEngine;
 using EditorAttributes;
@@ -11,6 +12,8 @@ public class River_PipeObstacle_New : River_Obstacle
     [Header("Pipe Data")]
     [SerializeField] private SplineMesher splineMesher;
     public NewPipeObstacleData pipeData;
+    [Space]
+    [SerializeField] private List<Vector3> points;
 
     /// <summary>
     /// The value used for distancing the spacing between each pipe.
@@ -23,48 +26,91 @@ public class River_PipeObstacle_New : River_Obstacle
         pipeData = data;
     }
 
+    // TODO: Currently doesn't work :(
+    private void OnCollisionEnter(Collision other)
+    {
+        if (IsHit) return;
+        // print($"{name} hit: {other.name}");
+
+        if (other.collider.TryGetComponent<IDamageable>(out var character))
+            character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
+        if (other.collider.CompareTag("Boat"))
+            other.collider.GetComponent<Boat_Controller>().TakeDamage();
+        IsHit = true;
+
+        if (explodesOnHit) artExploder.ExplodeArt();
+    }
+
     protected override void OnObjectPlaced()
     {
         base.OnObjectPlaced();
-        
-        var splineContainer = splineMesher.splineContainer;
-        
-        // === Set the starting connection ===
-        var connectedPipe = pipeData.connectedPipes[0];
-        Spline spline = new Spline();
-        
-        // Add starting Knot to spline
-        var knot = new BezierKnot
-        {
-            Position = new float3()
-        };
-        spline.Add(knot);
-        
-        splineContainer.AddSpline();
-        
-        // Add end knot to spline
-        River_Manager.Instance.AssignToCurveSection
-            (startDistance + connectedPipe.distance, connectedPipe.lane, out Vector3 pos, out Quaternion rot);
-        knot = new BezierKnot
-        {
-            Position = pos + Vector3.up * connectedPipe.height,
-            Rotation = rot
-        };
-        spline.Add(knot);
-        
-        // === Build the pipe joints (if available) ===
 
-        if (pipeData.pipeJoints.Length > 0)
+        var splineContainer = splineMesher.splineContainer;
+        splineContainer.Splines = new List<Spline>();
+
+        // Build the pipe path using shared logic
+        points = BuildPipePoints(pipeData, River_Manager.Instance, transform);
+
+        // Create splines
+        
+        var splines = new List<Spline>();
+        for (int i = 0; i < points.Count - 1; i++)
         {
-            
+            var spline = new Spline
+            {
+                new BezierKnot
+                {
+                    Position = points[i],
+                    Rotation = quaternion.identity
+                },
+                new BezierKnot
+                {
+                    Position = points[i + 1],
+                    Rotation = quaternion.identity
+                }
+            };
+            spline.SetTangentMode(TangentMode.AutoSmooth);
+            splines.Add(spline);
         }
-        
-        // === Set the end connection ===
-        
-        
-        // Rebuild the mesh
+
+        foreach (var spline in splines)
+        {
+            splineContainer.AddSpline(spline);
+        }
+
         splineMesher.Rebuild();
+        Debug.Log("Pipe Obstacle Built!");
     }
+    
+    private List<Vector3> BuildPipePoints(NewPipeObstacleData data, River_Manager rm, Transform t)
+    {
+        var points = new List<Vector3>();
+
+        // ==== Start pipe ====
+        var start = data.connectedPipes[0];
+        points.Add(GetPipePosition(start, rm, t));
+
+        // ==== Joints ====
+        foreach (var joint in data.pipeJoints) points.Add(GetPipePosition(joint, rm, t));
+
+        // ==== End pipe ====
+        var end = data.connectedPipes[1];
+        points.Add(GetPipePosition(end, rm, t));
+
+        return points;
+    }
+
+    private Vector3 GetPipePosition(NewPipeObstacleData.PipeData pipe, River_Manager rm, Transform t)
+    {
+        // rm.AssignToCurveSection(pipe.distance, pipe.lane, out var pos, out var rot);
+        var pos = new Vector3();
+        pos += t.right * (pipe.lane - 1) * GlobalRiverValues.RiverLaneDistance; //* 1.6f;
+        pos += Vector3.up * pipe.height;
+        pos += transform.forward * pipe.distance;
+        
+        return pos;
+    }
+
 }
 
 [Serializable]
