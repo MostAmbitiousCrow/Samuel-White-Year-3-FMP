@@ -130,7 +130,7 @@ public class ObjectPoolManager : MonoBehaviour
 
         if (!obj.TryGetComponent(out River_Object ro)) return obj.GetComponent<T>();
         ro.PoolObjectID = id;
-        ro.OnSpawned();
+        // ro.OnSpawned();
 
         return obj.GetComponent<T>();
     }

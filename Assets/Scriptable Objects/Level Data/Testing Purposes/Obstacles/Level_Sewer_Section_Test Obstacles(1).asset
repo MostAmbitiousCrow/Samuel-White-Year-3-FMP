@@ -32,7 +32,10 @@ MonoBehaviour:
             distance: 0
             pipeConnection: 0
           pipeJoints: []
-      lane: 1
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+      lane: 2
       distance: 0
       height: 0
     - data:
@@ -57,8 +60,39 @@ MonoBehaviour:
           - lane: 0
             height: 5
             distance: 10
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 1
       distance: 20
+      height: 0
+    - data:
+        obstacleType: 2
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 5
+            distance: 0
+            pipeConnection: 2
+          - lane: 2
+            height: 0
+            distance: 10
+            pipeConnection: 3
+          pipeJoints:
+          - lane: 0
+            height: 5
+            distance: 10
+          - lane: 0
+            height: 0
+            distance: 10
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+      lane: 1
+      distance: 65
       height: 0
     - data:
         obstacleType: 3
@@ -76,8 +110,121 @@ MonoBehaviour:
             distance: 0
             pipeConnection: 0
           pipeJoints: []
-      lane: 0
+        obstacleBridgeData:
+          leftJointLane: 1
+          rightJointLane: 2
+      lane: 1
       distance: 10
+      height: 2
+    - data:
+        obstacleType: 3
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 1
+      lane: 1
+      distance: 15
+      height: 2
+    - data:
+        obstacleType: 3
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 2
+      lane: 1
+      distance: 35
+      height: 2
+    - data:
+        obstacleType: 3
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 1
+          rightJointLane: 2
+      lane: 1
+      distance: 40
+      height: 2
+    - data:
+        obstacleType: 3
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 1
+      lane: 1
+      distance: 50
+      height: 2
+    - data:
+        obstacleType: 3
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 2
+          rightJointLane: 0
+      lane: 1
+      distance: 60
       height: 2
     enemies: []
     collectibles: []

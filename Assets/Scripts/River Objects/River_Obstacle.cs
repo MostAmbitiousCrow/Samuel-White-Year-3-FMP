@@ -15,7 +15,8 @@ public class River_Obstacle : River_Object
     [EditorAttributes.Line(EditorAttributes.GUIColor.Cyan, 1, 3)]
     [Header("Obstacle Stats")]
     public ObstacleData obstacleData; //TODO can be private
-    public bool IsHit { get; protected set; }
+
+    public bool IsHit; //{ get; protected set; }
     
     [SerializeField] protected BoxCollider boxCollider;
 
@@ -28,8 +29,17 @@ public class River_Obstacle : River_Object
     // When collided with an object (player or enemy), damage it and destroy this obstacle
     private void OnTriggerEnter(Collider other)
     {
-        if (IsHit) return;
-        // print($"{name} hit: {other.name}");
+        OnHit(other.gameObject);
+    }
+    
+    protected void OnHit(GameObject other)
+    {
+        if (IsHit)
+        {
+            print($"{name} Was already hit");
+            return;
+        }
+        print($"{name} hit: {other.gameObject.name}");
 
         if (other.TryGetComponent<IDamageable>(out var character))
             character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
@@ -38,8 +48,6 @@ public class River_Obstacle : River_Object
         IsHit = true;
 
         if (explodesOnHit) artExploder.ExplodeArt();
-
-        // Invoke(nameof(ReturnToPool), 3f);
     }
 
     // TODO: Add animation / Sink or destroy obstacle after damaging something

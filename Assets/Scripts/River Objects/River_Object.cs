@@ -75,6 +75,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         startLane = lane;
         GoToLane(startLane);
         SetDistanceAndHeight(startDistance, startHeight);
+        OnObjectPlaced();
     }
 
     public River_Manager.RiverLane CurrentLane { get; set; }
@@ -135,10 +136,13 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
             out Quaternion rot);
 
         transform.SetPositionAndRotation(pos + Vector3.up * height, rot);
-        OnObjectPlaced();
+        // OnObjectPlaced();
     }
 
-    protected virtual void OnObjectPlaced() { }
+    protected virtual void OnObjectPlaced()
+    {
+        Debug.Log($"{name} placed {currentLane} lane at {transform.position}");
+    }
 
     #endregion
 

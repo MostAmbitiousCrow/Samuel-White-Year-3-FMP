@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using sc.modeling.splines.runtime;
+using System.Linq;
 using UnityEngine;
 using EditorAttributes;
+using sc.modeling.splines.runtime;
 using Unity.Mathematics;
 using UnityEngine.Splines;
 
@@ -14,6 +15,10 @@ public class River_PipeObstacle_New : River_Obstacle
     public NewPipeObstacleData pipeData;
     [Space]
     [SerializeField] private List<Vector3> points;
+    
+    [Header("Pipe Detection")]
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private float pipeSize = 1f;
 
     /// <summary>
     /// The value used for distancing the spacing between each pipe.
@@ -21,24 +26,10 @@ public class River_PipeObstacle_New : River_Obstacle
     /// </summary>
     public static readonly float PipeLength = 1.6f;
 
+    #region Pipe Generation
     public void AssignPipeData(NewPipeObstacleData data)
     {
         pipeData = data;
-    }
-
-    // TODO: Currently doesn't work :(
-    private void OnCollisionEnter(Collision other)
-    {
-        if (IsHit) return;
-        // print($"{name} hit: {other.name}");
-
-        if (other.collider.TryGetComponent<IDamageable>(out var character))
-            character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
-        if (other.collider.CompareTag("Boat"))
-            other.collider.GetComponent<Boat_Controller>().TakeDamage();
-        IsHit = true;
-
-        if (explodesOnHit) artExploder.ExplodeArt();
     }
 
     protected override void OnObjectPlaced()
@@ -73,44 +64,121 @@ public class River_PipeObstacle_New : River_Obstacle
             splines.Add(spline);
         }
 
-        foreach (var spline in splines)
-        {
-            splineContainer.AddSpline(spline);
-        }
+        foreach (var spline in splines) splineContainer.AddSpline(spline);
 
         splineMesher.Rebuild();
-        Debug.Log("Pipe Obstacle Built!");
     }
     
     private List<Vector3> BuildPipePoints(NewPipeObstacleData data, River_Manager rm, Transform t)
     {
-        var points = new List<Vector3>();
+        points = new List<Vector3>();
 
         // ==== Start pipe ====
         var start = data.connectedPipes[0];
-        points.Add(GetPipePosition(start, rm, t));
+        points.Add(GetPipePosition(start));
 
         // ==== Joints ====
-        foreach (var joint in data.pipeJoints) points.Add(GetPipePosition(joint, rm, t));
-
+        foreach (var joint in data.pipeJoints) points.Add(GetPipePosition(joint));
+        
         // ==== End pipe ====
         var end = data.connectedPipes[1];
-        points.Add(GetPipePosition(end, rm, t));
-
+        points.Add(GetPipePosition(end));
+        
         return points;
     }
 
-    private Vector3 GetPipePosition(NewPipeObstacleData.PipeData pipe, River_Manager rm, Transform t)
+    private Vector3 GetPipePosition(NewPipeObstacleData.PipeData pipe)
     {
-        // rm.AssignToCurveSection(pipe.distance, pipe.lane, out var pos, out var rot);
-        var pos = new Vector3();
-        pos += t.right * (pipe.lane - 1) * GlobalRiverValues.RiverLaneDistance; //* 1.6f;
+        float baseDistance = startDistance;
+        riverManager.AssignToCurveSection(baseDistance + pipe.distance, pipe.lane, out var pos, out var rot);
         pos += Vector3.up * pipe.height;
-        pos += transform.forward * pipe.distance;
-        
+        pos = transform.InverseTransformPoint(pos);
+
         return pos;
     }
+    #endregion
 
+    #region Detection
+
+    private void FixedUpdate()
+    {
+        if (IsHit) return;
+
+        for (int i = 0; i < points.Count-1; i++)
+        {
+            var pointA = transform.TransformPoint(points[i]);
+            var pointB = transform.TransformPoint(points[i + 1]);
+
+            CastPipeDetection(pointA, pointB);
+        }
+    }
+
+    private void CastPipeDetection(Vector3 pointA, Vector3 pointB)
+    {
+        var segment = pointB - pointA;
+        var length = segment.magnitude;
+
+        // Prevent Mesh Infinity Error
+        if (length <= 0.001f) return;
+
+        var direction = segment.normalized;
+        var centre = pointA + segment * 0.5f;
+        var rotation = Quaternion.LookRotation(direction);
+        
+        const float padding = 0.1f;
+
+        var halfExtents = new Vector3(pipeSize + padding, pipeSize + padding, length * 0.5f);
+
+        var origin = centre - direction * 0.01f;
+        const float maxDistance = 0.02f;
+
+        // TODO: Overlap Boxes aren't at the correct position...
+        var results = Array.Empty<Collider>();
+        Physics.OverlapBoxNonAlloc(centre, halfExtents, results, rotation, layerMask);
+
+        if (results.Length > 0)
+        {
+            DebugDrawBox(centre, halfExtents, rotation, Color.green);
+            OnHit(results.First().gameObject);
+            Debug.Log($"Drawing Boxcast at centre: {centre}. Hit = {results.First().gameObject}");
+        }
+        else
+        {
+            DebugDrawBox(centre, halfExtents, rotation, Color.red);
+        }
+        Debug.Log($"Drawing Boxcast at centre: {centre}");
+    }
+
+    
+    private void DebugDrawBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color)
+    {
+        var right = rotation * Vector3.right * halfExtents.x;
+        var up = rotation * Vector3.up * halfExtents.y;
+        var forward = rotation * Vector3.forward * halfExtents.z;
+
+        Vector3[] corners =
+        {
+            center + right + up + forward,
+            center + right + up - forward,
+            center + right - up + forward,
+            center + right - up - forward,
+            center - right + up + forward,
+            center - right + up - forward,
+            center - right - up + forward,
+            center - right - up - forward
+        };
+
+        L(0,1); L(0,2); L(0,4);
+        L(7,5); L(7,6); L(7,3);
+        L(1,5); L(1,3);
+        L(2,3); L(2,6);
+        L(4,5); L(4,6);
+        return;
+
+        // Edges
+        void L(int a, int b) => Debug.DrawLine(corners[a], corners[b], color);
+    }
+    #endregion
 }
 
 [Serializable]

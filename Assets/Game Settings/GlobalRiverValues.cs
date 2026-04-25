@@ -18,7 +18,7 @@ public static class GlobalRiverValues
     /// <summary> The distance from any lane to the sewer river ceiling. Used for ceiling object placement. </summary>
     public static readonly float CeilingToLaneDistance = 18f;
     /// <summary> The distance from the outer lanes to the sewer river wall. Used for wall object placement. </summary>
-    public static readonly float WallToLaneDistance = 9.5f;
+    public static readonly float WallToLaneDistance = 7.5f;
     /// <summary> The distance from any lane to the sewer river floor. Used for floor object placement. </summary>
     public static readonly float FloorToLaneDistance = 0.5f;
     #endregion
