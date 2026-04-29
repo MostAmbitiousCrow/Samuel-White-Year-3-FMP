@@ -53,22 +53,21 @@ MonoBehaviour:
   meshScale: 1
   riverManager: {fileID: 0}
   sectionData:
-    obstacleType: 0
+    obstacleType: 2
     overrideData: 0
     overriddenData:
       ImpactDamage: 1
     pipeObstacleData:
-      pipeConnection: 1
-      distancePerPipe: 1.6
-      amount: 5
-  pipeData:
-    connectedPipes:
-    - lane: 0
-      height: 0
-      distance: 0
-      pipeConnection: 0
-    - lane: 0
-      height: 0
-      distance: 0
-      pipeConnection: 0
-    pipeJoints: []
+      connectedPipes:
+      - lane: 0
+        height: 0
+        distance: 0
+        pipeConnection: 0
+      - lane: 0
+        height: 0
+        distance: 0
+        pipeConnection: 0
+      pipeJoints: []
+    obstacleBridgeData:
+      leftJointLane: 0
+      rightJointLane: 0

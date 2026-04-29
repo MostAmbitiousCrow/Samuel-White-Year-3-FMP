@@ -43,7 +43,6 @@ public class River_PipeObstacle_New : River_Obstacle
         points = BuildPipePoints(pipeData, River_Manager.Instance, transform);
 
         // Create splines
-        
         var splines = new List<Spline>();
         for (int i = 0; i < points.Count - 1; i++)
         {

@@ -22,69 +22,110 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 0
-      distance: 5
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 2
-      distance: 5
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 3
-          distancePerPipe: 1.6
-          amount: 8
-      lane: 2
-      distance: 15
-      height: 5
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 8
+          connectedPipes:
+          - lane: 1
+            height: 0
+            distance: 0
+            pipeConnection: 1
+          - lane: 1
+            height: 5
+            distance: 0
+            pipeConnection: 4
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 1
-      distance: 55
-      height: 3
+      distance: 0
+      height: 0
     - data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 8
+          connectedPipes:
+          - lane: 2
+            height: 0
+            distance: 0
+            pipeConnection: 1
+          - lane: 2
+            height: 5
+            distance: 0
+            pipeConnection: 4
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 1
-      distance: 55
-      height: 3
+      distance: 80
+      height: 0
+    - data:
+        obstacleType: 2
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 2
+            height: 5
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints:
+          - lane: 0
+            height: 5
+            distance: 0
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+      lane: 1
+      distance: 40
+      height: 0
+    - data:
+        obstacleType: 2
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+      lane: 1
+      distance: 0
+      height: 0
     - data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 0
       distance: 25
       height: 0
@@ -94,9 +135,19 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 2
       distance: 40
       height: 0
@@ -106,9 +157,19 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 1
       distance: 55
       height: 0
@@ -118,9 +179,19 @@ MonoBehaviour:
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 0
       distance: 80
       height: 0
@@ -130,9 +201,9 @@ MonoBehaviour:
         silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          targetSideSpaces: 1
+          doTargetSideSpaces: 0
           targetSideSpace: 0
-          targetLeftSide: 0
+          doTargetLeftSide: 0
           startFacingDirection: -1
           targetBoatSpaces: 1
           targetSpace: 4
@@ -146,9 +217,9 @@ MonoBehaviour:
         silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          targetSideSpaces: 1
+          doTargetSideSpaces: 1
           targetSideSpace: 1
-          targetLeftSide: 0
+          doTargetLeftSide: 0
           startFacingDirection: -1
           targetBoatSpaces: 1
           targetSpace: 1
@@ -162,9 +233,9 @@ MonoBehaviour:
         silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          targetSideSpaces: 1
+          doTargetSideSpaces: 1
           targetSideSpace: 0
-          targetLeftSide: 0
+          doTargetLeftSide: 0
           startFacingDirection: -1
           targetBoatSpaces: 1
           targetSpace: 1

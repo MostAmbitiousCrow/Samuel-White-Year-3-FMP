@@ -7,6 +7,7 @@ public class Section_Obstacle_Pipe_Object : Section_Obstacle_Object
     protected override void AdditionalDebug()
     {
         name = $"{ObjectType.Obstacle} - {sectionData.obstacleType}";
+        Lane = 1;
     
         if (sectionData.pipeObstacleData.connectedPipes.Length < 2) return;
 

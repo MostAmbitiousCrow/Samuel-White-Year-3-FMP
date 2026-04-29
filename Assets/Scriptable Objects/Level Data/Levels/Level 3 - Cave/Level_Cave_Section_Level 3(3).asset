@@ -15,63 +15,152 @@ MonoBehaviour:
   sectionContent:
     initialDelay: 0
     postDelay: 0
-    obstacles:
+    obstacles: []
+    enemies:
     - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 0
-      distance: 20
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 0
-      distance: 90
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 2
-      distance: 20
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 2
-      distance: 90
-      height: 3
-    enemies: []
-    collectibles: []
-    gemstoneGates: []
-    slipStreams:
-    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          speedIncreaseAmount: 30
+          doTargetSideSpaces: 1
+          targetSideSpace: 0
+          doTargetLeftSide: 0
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 3
+          targetBoatSide: 0
+          boardingFacingDirection: 1
       lane: 1
-      distance: 0
+      distance: 10
       height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 0
+          doTargetLeftSide: 1
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 1
+          targetBoatSide: 0
+          boardingFacingDirection: 1
+      lane: 2
+      distance: 50
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 0
+          doTargetLeftSide: 0
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 4
+          targetBoatSide: 0
+          boardingFacingDirection: 1
+      lane: 0
+      distance: 50
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 1
+          doTargetLeftSide: 0
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 3
+          targetBoatSide: 1
+          boardingFacingDirection: 1
+      lane: 0
+      distance: 75
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 1
+          doTargetLeftSide: 1
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 2
+          targetBoatSide: 1
+          boardingFacingDirection: 1
+      lane: 2
+      distance: 75
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 0
+          doTargetLeftSide: 1
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 2
+          targetBoatSide: 0
+          boardingFacingDirection: 1
+      lane: 2
+      distance: 95
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 0
+          doTargetLeftSide: 0
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 3
+          targetBoatSide: 0
+          boardingFacingDirection: 1
+      lane: 0
+      distance: 95
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 1
+          doTargetLeftSide: 0
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 4
+          targetBoatSide: 1
+          boardingFacingDirection: 1
+      lane: 0
+      distance: 100
+      height: 0
+    - data:
+        enemyType: 2
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 1
+          targetSideSpace: 1
+          doTargetLeftSide: 1
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 1
+          targetBoatSide: 1
+          boardingFacingDirection: 1
+      lane: 2
+      distance: 100
+      height: 0
+    collectibles: []
+    gemstoneGates: []
+    slipStreams: []

@@ -15,80 +15,24 @@ MonoBehaviour:
   sectionContent:
     initialDelay: 0
     postDelay: 0
-    obstacles:
+    obstacles: []
+    enemies:
     - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 9
-      lane: 0
-      distance: 0
-      height: 5
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 0
-      distance: 15
-      height: 5
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 3
-      lane: 0
-      distance: 30
-      height: 5
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 9
+        enemyType: 1
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 0
+          targetSideSpace: 0
+          doTargetLeftSide: 0
+          startFacingDirection: -1
+          targetBoatSpaces: 1
+          targetSpace: 2
+          targetBoatSide: 0
+          boardingFacingDirection: -1
       lane: 2
-      distance: 45
-      height: 5
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 6
-      lane: 2
-      distance: 60
-      height: 5
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 3
-      lane: 2
-      distance: 75
-      height: 5
-    enemies: []
+      distance: 10
+      height: 0
     collectibles: []
     gemstoneGates: []
     slipStreams:

@@ -17,192 +17,95 @@ MonoBehaviour:
     postDelay: 0
     obstacles:
     - data:
-        obstacleType: 0
+        obstacleType: 2
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 2
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 2
+          - lane: 2
+            height: 0
+            distance: 0
+            pipeConnection: 3
+          pipeJoints:
+          - lane: 0
+            height: 0
+            distance: 20
+          - lane: 0
+            height: 0
+            distance: 40
+          - lane: 0
+            height: 0
+            distance: 50
+          - lane: 0
+            height: 5
+            distance: 50
+          - lane: 2
+            height: 5
+            distance: 50
+          - lane: 2
+            height: 0
+            distance: 50
+          - lane: 2
+            height: 0
+            distance: 40
+          - lane: 2
+            height: 0
+            distance: 20
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+      lane: 1
       distance: 0
       height: 0
     - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 1
-      distance: 0
-      height: 0
-    - data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 9
+          connectedPipes:
+          - lane: 1
+            height: 0
+            distance: 20
+            pipeConnection: 1
+          - lane: 2
+            height: 0
+            distance: 0
+            pipeConnection: 3
+          pipeJoints:
+          - lane: 1
+            height: 5
+            distance: 20
+          - lane: 0
+            height: 5
+            distance: 20
+          - lane: 0
+            height: 5
+            distance: 50
+          - lane: 1
+            height: 5
+            distance: 50
+          - lane: 1
+            height: 0
+            distance: 50
+          - lane: 1
+            height: 0
+            distance: 25
+          - lane: 2
+            height: 0
+            distance: 25
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
       lane: 1
-      distance: 20
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 9
-      lane: 1
-      distance: 20
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 9
-      lane: 1
-      distance: 22
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 9
-      lane: 1
-      distance: 22
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 2
-          distancePerPipe: 1.6
-          amount: 9
-      lane: 1
-      distance: 24
-      height: 3
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 0
-          distancePerPipe: 1.6
-          amount: 9
-      lane: 1
-      distance: 24
-      height: 3
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 1
-      distance: 30
+      distance: 55
       height: 0
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 1
-      distance: 60
-      height: 0
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 2
-      distance: 70
-      height: 0
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 0
-      distance: 85
-      height: 0
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          pipeConnection: 1
-          distancePerPipe: 1.6
-          amount: 5
-      lane: 1
-      distance: 100
-      height: 0
-    enemies:
-    - data:
-        enemyType: 1
-        silhouetteAlwaysVisible: 1
-        overrideData: 1
-        overridedData:
-          targetSideSpaces: 1
-          targetSideSpace: 0
-          targetLeftSide: 1
-          startFacingDirection: 1
-          targetBoatSpaces: 1
-          targetSpace: 1
-          targetBoatSide: 0
-          boardingFacingDirection: 1
-      lane: 0
-      distance: 50
-      height: 0
+    enemies: []
     collectibles: []
     gemstoneGates: []
-    slipStreams:
-    - data:
-        overrideData: 1
-        overridedData:
-          speedIncreaseAmount: 30
-      lane: 1
-      distance: 0
-      height: 0
-    - data:
-        overrideData: 1
-        overridedData:
-          speedIncreaseAmount: 10
-      lane: 1
-      distance: 40
-      height: 0
+    slipStreams: []

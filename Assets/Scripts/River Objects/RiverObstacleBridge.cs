@@ -22,9 +22,10 @@ public class RiverObstacleBridge : River_Obstacle
     {
         obstacleBridgeData = data;
     }
-    
-    private void FixedUpdate()
+
+    protected override void FixedTimeUpdate()
     {
+        base.FixedTimeUpdate();
         if (IsHit) return;
         
         // Do Detection

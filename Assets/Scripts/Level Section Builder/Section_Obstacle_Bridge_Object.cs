@@ -20,6 +20,7 @@ public class Section_Obstacle_Bridge_Object : Section_Obstacle_Object
 
         // Always Centre the Bridge to the Centre of the River Lanes
         Lane = 1;
+        Height = 2;
         
         var joints = new List<Vector3>();
         

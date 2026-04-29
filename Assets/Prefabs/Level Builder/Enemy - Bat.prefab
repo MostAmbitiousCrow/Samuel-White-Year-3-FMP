@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lane: 0
   distance: 10
-  height: 5
+  height: 0
   enableSnapping: 1
-  debugMesh: {fileID: -2432090755550338912, guid: d491d9b97cba30d4392f1f373d4f204b,
+  debugMesh: {fileID: 3247238316739864911, guid: 36167d53e1861a94183ff69137c440ef,
     type: 3}
   meshScale: 1
   riverManager: {fileID: 0}
@@ -57,11 +57,11 @@ MonoBehaviour:
     silhouetteAlwaysVisible: 1
     overrideData: 1
     overridedData:
-      targetSideSpaces: 0
+      doTargetSideSpaces: 1
       targetSideSpace: 0
-      targetLeftSide: 0
+      doTargetLeftSide: 0
       startFacingDirection: 1
-      targetBoatSpaces: 0
+      targetBoatSpaces: 1
       targetSpace: 0
       targetBoatSide: 0
       boardingFacingDirection: 1
