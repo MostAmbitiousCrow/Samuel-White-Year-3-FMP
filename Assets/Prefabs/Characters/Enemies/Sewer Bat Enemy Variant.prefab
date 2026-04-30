@@ -88,6 +88,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 356650705271931197, guid: 36167d53e1861a94183ff69137c440ef,
+        type: 3}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 36167d53e1861a94183ff69137c440ef,
         type: 3}
       propertyPath: m_Name

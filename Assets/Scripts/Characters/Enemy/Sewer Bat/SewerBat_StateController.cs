@@ -1,4 +1,5 @@
 using CarterGames.Assets.AudioManager;
+using GameCharacters;
 using UnityEngine;
 
 public class SewerBat_StateController : BoatEnemyStateController
@@ -30,7 +31,9 @@ public class SewerBat_StateController : BoatEnemyStateController
     
     public override void EmergeFromRiver()
     {
-        base.EmergeFromRiver();
+        artExplode.ResetArtPositions();
+        // For some reason the bat always respawns facing right, which flips it. This forces it to always face the front.
+        SetDirection(Character.MoveDirection.Left, false);
         ChangeState(EmergeState);
     }
 
@@ -60,6 +63,7 @@ public class SewerBat_StateController : BoatEnemyStateController
             BatSc.isAffectedByGravity = false;
             // Temp to prevent Fall/Rise Blend Animation from getting stuck...
             BatSc.animator.SetBool("Grounded", true);
+            BatSc.animator.SetTrigger("Landed");
         }
 
         public override void FixedUpdateState()
@@ -145,7 +149,8 @@ public class SewerBat_StateController : BoatEnemyStateController
             }
 
             // Once the Bat has slammed onto the ground, Die
-            if (BatSc.IsGrounded) BatSc.HealthComponent.Die();
+            if (!BatSc.IsGrounded) return;
+            BatSc.HealthComponent.Die();
         }
     }
 

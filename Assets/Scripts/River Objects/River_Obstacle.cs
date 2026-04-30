@@ -42,12 +42,18 @@ public class River_Obstacle : River_Object
         print($"{name} hit: {other.gameObject.name}");
 
         if (other.TryGetComponent<IDamageable>(out var character))
+        {
             character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
-        if (other.CompareTag("Boat"))
+            IsHit = true;
+            if (explodesOnHit) artExploder.ExplodeArt();
+            
+        }
+        else if (other.CompareTag("Boat"))
+        {
             other.GetComponent<Boat_Controller>().TakeDamage();
-        IsHit = true;
-
-        if (explodesOnHit) artExploder.ExplodeArt();
+            IsHit = true;
+            if (explodesOnHit) artExploder.ExplodeArt();
+        }
     }
 
     // TODO: Add animation / Sink or destroy obstacle after damaging something
@@ -55,9 +61,9 @@ public class River_Obstacle : River_Object
 
     #region Pooling Methods
 
-    public override void OnSpawned()
+    protected override void OnObjectPlaced()
     {
-        base.OnSpawned();
+        base.OnObjectPlaced();
         IsHit = false;
     }
 
