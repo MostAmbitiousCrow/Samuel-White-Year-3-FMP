@@ -1004,6 +1004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6112428136379561885, guid: 0d63efc6084834593aaf1cc52b817b92,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112428136379561885, guid: 0d63efc6084834593aaf1cc52b817b92,
+        type: 3}
       propertyPath: m_Center.x
       value: 5
       objectReference: {fileID: 0}
@@ -1193,7 +1198,6 @@ MonoBehaviour:
   boxCollider: {fileID: 771585089249952896}
   splineMesher: {fileID: 2789556175491864994}
   obstacleBridgeData:
-    startRightSide: 0
     leftJointLane: 0
     rightJointLane: 0
   leftArtwork:
@@ -1204,5 +1208,5 @@ MonoBehaviour:
   - {fileID: 6135056311096731903}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   detectionSize: 1

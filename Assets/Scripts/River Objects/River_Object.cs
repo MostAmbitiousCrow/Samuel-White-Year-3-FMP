@@ -141,7 +141,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     protected virtual void OnObjectPlaced()
     {
-        Debug.Log($"{name} placed {currentLane} lane at {transform.position}");
+        // Debug.Log($"{name} placed {currentLane} lane at {transform.position}");
     }
 
     #endregion

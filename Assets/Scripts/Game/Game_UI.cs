@@ -84,11 +84,11 @@ public class Game_UI : MonoBehaviour
     /// <summary> Fuction to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
     private void UpdateGemstoneCounter(int gemstones)
     {
-        if (!gemstoneCounterText)
-        {
-            Debug.LogError("Gemstone Counter Text is Missing!");
-            return;
-        }
+        // if (!gemstoneCounterText.gameObject)
+        // {
+        //     Debug.LogError("Gemstone Counter Text is Missing!");
+        //     return;
+        // }
         if(gemstones <= 0) gemstoneCounterText.SetText("Gemstones: 0");
 
         gemstoneCounterText.SetText($"Gemstones: {gemstones}");

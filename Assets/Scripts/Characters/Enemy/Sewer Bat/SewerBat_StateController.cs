@@ -30,6 +30,7 @@ public class SewerBat_StateController : BoatEnemyStateController
     
     public override void EmergeFromRiver()
     {
+        base.EmergeFromRiver();
         ChangeState(EmergeState);
     }
 

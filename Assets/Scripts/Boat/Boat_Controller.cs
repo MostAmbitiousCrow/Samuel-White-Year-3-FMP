@@ -1,4 +1,5 @@
 using System;
+using CameraShake;
 using CarterGames.Assets.AudioManager;
 using EditorAttributes;
 using GameCharacters;
@@ -190,6 +191,8 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     public void TakeDamage()
     {
         Instance.HaltRiver(10);
+        AudioManager.Play(Clip.Crash);
+        CameraShaker.Presets.Explosion3D();
         print("Boat hit, halted river");
     }
 

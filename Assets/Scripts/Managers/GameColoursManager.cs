@@ -115,7 +115,7 @@ namespace GameColours
     
             for (var i = 0; i < colours.MaterialColours.Length; i++)
             {
-                print($"Length = {colours.MaterialColours.Length}. ({i})");
+                // print($"Length = {colours.MaterialColours.Length}. ({i})");
                 UpdateMaterials(_objectColours[i], colours.MaterialColours[i]);
             }
     

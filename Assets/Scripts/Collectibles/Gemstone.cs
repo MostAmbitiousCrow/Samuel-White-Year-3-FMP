@@ -68,9 +68,9 @@ public class Gemstone : River_Collectible
     }
     #endregion
 
-    protected override void Reset()
+    protected override void OnObjectPlaced()
     {
-        base.Reset();
+        base.OnObjectPlaced();
         _artObject.gameObject.SetActive(true);
         // TODO
     }

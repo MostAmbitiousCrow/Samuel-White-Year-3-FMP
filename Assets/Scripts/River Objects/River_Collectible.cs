@@ -41,7 +41,7 @@ public abstract class River_Collectible : River_Object
     /// <summary>
     /// Resets the collectible
     /// </summary>
-    protected virtual void Reset()
+    protected override void OnObjectPlaced()
     {
         IsCollected = false;
         canMove = true;

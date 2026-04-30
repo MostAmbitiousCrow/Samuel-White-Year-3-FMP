@@ -136,68 +136,37 @@ public class RiverObstacleBridge : River_Obstacle
         rota = rot;
     }
     
+    private readonly Collider[] _results = new Collider[4];
     private void CastPipeDetection(Vector3 pointA, Vector3 pointB)
     {
         var segment = pointB - pointA;
         var length = segment.magnitude;
 
-        if (length <= 0.001f)
-            return;
+        if (length <= 0.001f) return;
 
         var direction = segment.normalized;
         var centre = pointA + segment * 0.5f;
-        var rotation = Quaternion.LookRotation(direction);
-        
+        var rotation = Quaternion.LookRotation(direction, Vector3.up);
+
         const float padding = 0.1f;
+        var halfExtents = new Vector3(detectionSize + padding, detectionSize + padding, length * 0.5f);
 
-        var halfExtents = new Vector3(
-            detectionSize + padding,
-            detectionSize + padding,
-            length * 0.5f
-        );
+        int hitCount = Physics.OverlapBoxNonAlloc(centre, halfExtents, _results, rotation, layerMask);
 
-        var origin = centre - direction * 0.01f;
-        const float maxDistance = 0.02f;
-
-        if (Physics.BoxCast(origin, halfExtents, direction, out var hit, rotation, Mathf.Infinity, layerMask))
+        if (hitCount > 0)
         {
-            DebugDrawBox(centre, halfExtents, rotation, Color.green);
-            OnHit(hit.collider.gameObject);
+            DebugHelpers.DebugDrawBox(centre, halfExtents, rotation, Color.green);
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                OnHit(_results[i].gameObject);
+                Debug.Log($"Hit: {_results[i].gameObject}");
+            }
         }
-        else
-        {
-            DebugDrawBox(centre, halfExtents, rotation, Color.red);
-        }
-        Debug.Log($"Drawing Boxcast at centre: {centre}. Hit = {hit.collider}");
-    }
-    
-    private void DebugDrawBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color)
-    {
-        var right = rotation * Vector3.right * halfExtents.x;
-        var up = rotation * Vector3.up * halfExtents.y;
-        var forward = rotation * Vector3.forward * halfExtents.z;
-
-        Vector3[] corners =
-        {
-            center + right + up + forward,
-            center + right + up - forward,
-            center + right - up + forward,
-            center + right - up - forward,
-            center - right + up + forward,
-            center - right + up - forward,
-            center - right - up + forward,
-            center - right - up - forward
-        };
-
-        L(0,1); L(0,2); L(0,4);
-        L(7,5); L(7,6); L(7,3);
-        L(1,5); L(1,3);
-        L(2,3); L(2,6);
-        L(4,5); L(4,6);
-        return;
-
-        // Edges
-        void L(int a, int b) => Debug.DrawLine(corners[a], corners[b], color);
+#if Unity
+        
+#endif
+        else DebugHelpers.DebugDrawBox(centre, halfExtents, rotation, Color.red);
     }
 }
 

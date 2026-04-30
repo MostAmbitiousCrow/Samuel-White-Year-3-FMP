@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CameraShake;
 using CarterGames.Assets.AudioManager;
@@ -20,6 +21,7 @@ public class ArtExplode : MonoBehaviour
     private void Awake()
     {
         if (art.Length <= 0) return;
+        
         foreach (var r in art) 
         {
             artPositions.Add(r.transform.localPosition);
@@ -29,16 +31,24 @@ public class ArtExplode : MonoBehaviour
 
     private void OnEnable()
     {
+        ResetArtPositions();
         if(animator) animator.enabled = true;
+    }
 
+    public void ResetArtPositions()
+    {
         for (int i = 0; i < art.Length; i++)
         {
-            art[i].isKinematic = true;
-            art[i].transform.localPosition = artPositions[i];
-            art[i].transform.localRotation = artRotations[i];
+            var artObj = art[i]; 
+            artObj.isKinematic = true;
+            artObj.transform.localPosition = artPositions[i];
+            artObj.transform.localRotation = artRotations[i];
+            
+            // Debug.Log($"{artObj.name} local pos = {artObj.transform.localPosition}. Original = {artPositions[i]}");
         }
 
-        // Debug.Log($"{gameObject} Art Reset");
+
+        Debug.Log($"{gameObject} Art Reset");
     }
 
     public void ExplodeArt()
@@ -65,28 +75,6 @@ public class ArtExplode : MonoBehaviour
     {
         foreach (var r in art) r.isKinematic = true;
     }
-
-    // private Vector3 CalculateCenter()
-    // {
-    //     var totalX = 0f;
-    //     var totalY = 0f;
-    //     var totalZ = 0f;
-    //     
-    //     foreach (var item in art)
-    //     {
-    //         totalX += item.position.x;
-    //         totalY += item.position.y;
-    //         totalZ += item.position.z;
-    //     }
-    //     
-    //     var centerX = totalX / art.Length;
-    //     var centerY = totalY / art.Length;
-    //     var centerZ = totalZ / art.Length;
-    //     
-    //     var center = new Vector3(centerX, centerY, centerZ);
-    //     
-    //     return  center;
-    // }
 
     private Vector3 GetRandomRotation()
     {

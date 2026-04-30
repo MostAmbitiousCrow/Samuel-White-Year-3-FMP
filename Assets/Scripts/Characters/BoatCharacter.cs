@@ -617,5 +617,4 @@ namespace GameCharacters
             Gizmos.DrawWireCube(StompPosition.position, stompSize);
         }
     }
-}
-
+} 

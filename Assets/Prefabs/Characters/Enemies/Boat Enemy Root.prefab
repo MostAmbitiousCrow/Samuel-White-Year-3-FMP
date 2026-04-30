@@ -5120,6 +5120,7 @@ MonoBehaviour:
         m_CallState: 2
   doInvincibilityAnimation: 0
   renderers: []
+  character: {fileID: 0}
   animator: {fileID: 7595503734188337867}
 --- !u!114 &3953813597650840144
 MonoBehaviour:
@@ -5199,11 +5200,11 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 0}
   m_CullingMode: 2
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

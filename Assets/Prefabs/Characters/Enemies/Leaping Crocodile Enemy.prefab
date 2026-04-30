@@ -618,7 +618,12 @@ PrefabInstance:
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: tookDamageEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
@@ -986,6 +991,7 @@ MonoBehaviour:
   riverObject: {fileID: 8407155269637631034}
   eruptParticles: {fileID: 4891603864006376065}
   splashParticles: {fileID: 3007614878960765805}
+  artExplode: {fileID: 1974651370509886448}
   crocData: {fileID: 11400000, guid: ed0181f5182d2254fa37bbaed97faa32, type: 2}
 --- !u!114 &8350838978296305534 stripped
 MonoBehaviour:

@@ -31,11 +31,11 @@ public abstract class BoatEnemyStateController : BoatCharacter
 
     [Header("Components")] 
     [SerializeField] protected River_Enemy riverObject;
-
     [Space]
-
     [SerializeField] protected ParticleSystem eruptParticles;
     [SerializeField] protected ParticleSystem splashParticles;
+    [Space]
+    [SerializeField] protected ArtExplode artExplode;
 
     // TODO: Sounds
 
@@ -94,6 +94,7 @@ public abstract class BoatEnemyStateController : BoatCharacter
     /// <summary> Emerges the enemy from the River </summary>
     public virtual void EmergeFromRiver()
     {
+        artExplode.ResetArtPositions();
         SetDirection(currentDirection, false);
     }
 

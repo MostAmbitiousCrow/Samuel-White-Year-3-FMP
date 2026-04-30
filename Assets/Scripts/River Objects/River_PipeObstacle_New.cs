@@ -40,7 +40,7 @@ public class River_PipeObstacle_New : River_Obstacle
         splineContainer.Splines = new List<Spline>();
 
         // Build the pipe path using shared logic
-        points = BuildPipePoints(pipeData, River_Manager.Instance, transform);
+        points = BuildPipePoints();
 
         // Create splines
         var splines = new List<Spline>();
@@ -68,22 +68,45 @@ public class River_PipeObstacle_New : River_Obstacle
         splineMesher.Rebuild();
     }
     
-    private List<Vector3> BuildPipePoints(NewPipeObstacleData data, River_Manager rm, Transform t)
+    private List<Vector3> BuildPipePoints()
     {
         points = new List<Vector3>();
+        
+        // === Start Surface Connection Pipe ===
+        var startPipe = pipeData.connectedPipes[0];
+        if (startPipe.pipeConnection != NewPipeObstacleData.PipeConnection.None)
+            points.Add(GetPointConnection(startPipe));
 
         // ==== Start pipe ====
-        var start = data.connectedPipes[0];
-        points.Add(GetPipePosition(start));
+        points.Add(GetPipePosition(startPipe));
 
         // ==== Joints ====
-        foreach (var joint in data.pipeJoints) points.Add(GetPipePosition(joint));
+        foreach (var joint in pipeData.pipeJoints) points.Add(GetPipePosition(joint));
         
         // ==== End pipe ====
-        var end = data.connectedPipes[1];
-        points.Add(GetPipePosition(end));
+        var endPipe = pipeData.connectedPipes[1];
+        points.Add(GetPipePosition(endPipe));
         
+        // === Start Surface Connection Pipe ===
+        if (endPipe.pipeConnection != NewPipeObstacleData.PipeConnection.None)
+            points.Add(GetPointConnection(endPipe));
+
         return points;
+    }
+
+    private Vector3 GetPointConnection(NewPipeObstacleData.ConnectedPipeData data)
+    {
+        var point = GetPipePosition(data);
+        point += data.pipeConnection switch
+        {
+            NewPipeObstacleData.PipeConnection.None => throw new ArgumentOutOfRangeException(),
+            NewPipeObstacleData.PipeConnection.Floor => Vector3.down * (GlobalRiverValues.FloorToLaneDistance + point.y),
+            NewPipeObstacleData.PipeConnection.LeftWall => Vector3.left * GlobalRiverValues.WallToLaneDistance,
+            NewPipeObstacleData.PipeConnection.RightWall => Vector3.right * GlobalRiverValues.WallToLaneDistance,
+            NewPipeObstacleData.PipeConnection.Ceiling => Vector3.up * (GlobalRiverValues.CeilingToLaneDistance + point.y),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        return point;
     }
 
     private Vector3 GetPipePosition(NewPipeObstacleData.PipeData pipe)
@@ -99,8 +122,9 @@ public class River_PipeObstacle_New : River_Obstacle
 
     #region Detection
 
-    private void FixedUpdate()
+    protected override void FixedTimeUpdate()
     {
+        base.FixedTimeUpdate();
         if (IsHit) return;
 
         for (int i = 0; i < points.Count-1; i++)
@@ -112,70 +136,39 @@ public class River_PipeObstacle_New : River_Obstacle
         }
     }
 
+    private readonly Collider[] _results = new Collider[4];
+
     private void CastPipeDetection(Vector3 pointA, Vector3 pointB)
     {
         var segment = pointB - pointA;
         var length = segment.magnitude;
 
-        // Prevent Mesh Infinity Error
         if (length <= 0.001f) return;
 
         var direction = segment.normalized;
         var centre = pointA + segment * 0.5f;
-        var rotation = Quaternion.LookRotation(direction);
-        
-        const float padding = 0.1f;
+        var rotation = Quaternion.LookRotation(direction, Vector3.up);
 
+        const float padding = 0.1f;
         var halfExtents = new Vector3(pipeSize + padding, pipeSize + padding, length * 0.5f);
 
-        var origin = centre - direction * 0.01f;
-        const float maxDistance = 0.02f;
+        int hitCount = Physics.OverlapBoxNonAlloc(centre, halfExtents, _results, rotation, layerMask);
 
-        // TODO: Overlap Boxes aren't at the correct position...
-        var results = Array.Empty<Collider>();
-        Physics.OverlapBoxNonAlloc(centre, halfExtents, results, rotation, layerMask);
-
-        if (results.Length > 0)
+        if (hitCount > 0)
         {
-            DebugDrawBox(centre, halfExtents, rotation, Color.green);
-            OnHit(results.First().gameObject);
-            Debug.Log($"Drawing Boxcast at centre: {centre}. Hit = {results.First().gameObject}");
+            #if UNITY_EDITOR
+            DebugHelpers.DebugDrawBox(centre, halfExtents, rotation, Color.green);
+            #endif
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                OnHit(_results[i].gameObject);
+                Debug.Log($"Hit: {_results[i].gameObject}");
+            }
         }
-        else
-        {
-            DebugDrawBox(centre, halfExtents, rotation, Color.red);
-        }
-        Debug.Log($"Drawing Boxcast at centre: {centre}");
-    }
-
-    
-    private void DebugDrawBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, Color color)
-    {
-        var right = rotation * Vector3.right * halfExtents.x;
-        var up = rotation * Vector3.up * halfExtents.y;
-        var forward = rotation * Vector3.forward * halfExtents.z;
-
-        Vector3[] corners =
-        {
-            center + right + up + forward,
-            center + right + up - forward,
-            center + right - up + forward,
-            center + right - up - forward,
-            center - right + up + forward,
-            center - right + up - forward,
-            center - right - up + forward,
-            center - right - up - forward
-        };
-
-        L(0,1); L(0,2); L(0,4);
-        L(7,5); L(7,6); L(7,3);
-        L(1,5); L(1,3);
-        L(2,3); L(2,6);
-        L(4,5); L(4,6);
-        return;
-
-        // Edges
-        void L(int a, int b) => Debug.DrawLine(corners[a], corners[b], color);
+        #if UNITY_EDITOR
+        else DebugHelpers.DebugDrawBox(centre, halfExtents, rotation, Color.red);
+        #endif
     }
     #endregion
 }

@@ -503,7 +503,12 @@ PrefabInstance:
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
+        type: 3}
+      propertyPath: tookDamageEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
@@ -514,7 +519,7 @@ PrefabInstance:
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 975833707667684665}
+      objectReference: {fileID: 7533564333508113524}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -528,7 +533,7 @@ PrefabInstance:
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnDied
+      value: ExplodeArt
       objectReference: {fileID: 0}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
@@ -558,7 +563,7 @@ PrefabInstance:
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
       propertyPath: deathEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SewerBat_StateController, Assembly-CSharp
+      value: ArtExplode, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6799795242921549534, guid: d441f6f7cd1d04bcca0eba886cf78253,
         type: 3}
@@ -835,6 +840,7 @@ MonoBehaviour:
   riverObject: {fileID: 524652872159902654}
   eruptParticles: {fileID: 3461493370569911557}
   splashParticles: {fileID: 6509662859039186153}
+  artExplode: {fileID: 7533564333508113524}
   batData: {fileID: 11400000, guid: 1dc9008e98c534c21bc44dd36d737be2, type: 2}
 --- !u!4 &1540934135525474476 stripped
 Transform:
