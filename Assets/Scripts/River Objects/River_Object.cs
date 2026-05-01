@@ -151,7 +151,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         distance = GetDistanceToBoat();
             
         // Once out of sight, return to pool
-        if (distance < -50f) ReturnToPool();
+        if (distance < -100f) ReturnToPool();
     }
 
     private void RiverFlowMovement() // TODO: Probably remove if objects will be stationary
