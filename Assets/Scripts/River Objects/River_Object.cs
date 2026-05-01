@@ -66,7 +66,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     public void RecalculateRiverPosition()
     {
-        SetDistanceAndHeight(100f, height);
+        SetDistanceAndHeight(startDistance, height);
     }
 
     public void StartOnLane(int lane, float startDistance, float startHeight)
@@ -120,20 +120,16 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         return currentLane;
     }
 
-    public void SetDistanceAndHeight(float offsetFromBoat, float height)
+    public void SetDistanceAndHeight(float offsetFromBoat, float heightToAssign)
     {
-        float spawnDistance =
-            River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled
-            + offsetFromBoat;
+        var spawnDistance = offsetFromBoat;
+            // River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled
+            // + offsetFromBoat;
 
         startDistance = spawnDistance;
-        this.height = height;
+        height = heightToAssign;
 
-        River_Manager.Instance.AssignToCurveSection(
-            spawnDistance,
-            currentLane,
-            out Vector3 pos,
-            out Quaternion rot);
+        River_Manager.Instance.AssignToCurveSection(spawnDistance, currentLane, out Vector3 pos, out Quaternion rot);
 
         transform.SetPositionAndRotation(pos + Vector3.up * height, rot);
         // OnObjectPlaced();

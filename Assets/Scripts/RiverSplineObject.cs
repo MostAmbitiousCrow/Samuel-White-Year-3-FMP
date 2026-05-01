@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class RiverSplineObject : MonoBehaviour
@@ -12,6 +13,16 @@ public class RiverSplineObject : MonoBehaviour
     [SerializeField] private float totalDistanceTravelled = 0f;
     public float TotalDistanceTravelled => totalDistanceTravelled;
     public bool ignorePause;
+
+    private void OnEnable()
+    {
+        GameLevelManager.OnLevelLoaded += Reset;
+    }
+
+    private void OnDisable()
+    {
+        GameLevelManager.OnLevelLoaded -= Reset;
+    }
 
     private void Update()
     {

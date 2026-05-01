@@ -138,6 +138,10 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     {
         int sectionLength = currentLevelData.sectionData.Length;
         _currentSectionOffset = 0f;
+
+        // Wait a frame to allow the boat to reset first
+        yield return null;
+        
         // Spawn Sections
         while (currentSectionIndex < sectionLength)
         {

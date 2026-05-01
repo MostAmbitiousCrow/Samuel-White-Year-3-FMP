@@ -69,41 +69,63 @@ MonoBehaviour:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
-          - lane: 1
-            height: 0
-            distance: 20
-            pipeConnection: 1
           - lane: 2
             height: 0
             distance: 0
             pipeConnection: 3
+          - lane: 1
+            height: 0
+            distance: 20
+            pipeConnection: 1
           pipeJoints:
-          - lane: 1
-            height: 5
-            distance: 20
-          - lane: 0
-            height: 5
-            distance: 20
-          - lane: 0
-            height: 5
-            distance: 50
-          - lane: 1
-            height: 5
-            distance: 50
-          - lane: 1
-            height: 0
-            distance: 50
-          - lane: 1
-            height: 0
-            distance: 25
           - lane: 2
             height: 0
             distance: 25
+          - lane: 1
+            height: 0
+            distance: 25
+          - lane: 1
+            height: 0
+            distance: 40
+          - lane: 1
+            height: 5
+            distance: 40
+          - lane: 0
+            height: 5
+            distance: 40
+          - lane: 0
+            height: 5
+            distance: 20
+          - lane: 1
+            height: 5
+            distance: 20
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
       lane: 1
-      distance: 55
+      distance: 60
+      height: 0
+    - data:
+        obstacleType: 0
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+      lane: 2
+      distance: 100
       height: 0
     enemies: []
     collectibles: []
