@@ -70,11 +70,11 @@ MonoBehaviour:
           - lane: 2
             height: 5
             distance: 0
-            pipeConnection: 0
+            pipeConnection: 3
           - lane: 0
             height: 0
             distance: 0
-            pipeConnection: 0
+            pipeConnection: 1
           pipeJoints:
           - lane: 0
             height: 5
@@ -84,28 +84,6 @@ MonoBehaviour:
           rightJointLane: 0
       lane: 1
       distance: 40
-      height: 0
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          connectedPipes:
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          pipeJoints: []
-        obstacleBridgeData:
-          leftJointLane: 0
-          rightJointLane: 0
-      lane: 1
-      distance: 0
       height: 0
     - data:
         obstacleType: 0

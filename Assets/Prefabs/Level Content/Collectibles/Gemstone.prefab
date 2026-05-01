@@ -9765,37 +9765,46 @@ MonoBehaviour:
   _isCollected: 0
   Data:
     BankValue: 1
-  _artObject: {fileID: 8470983020858837656}
-  _rotateSpeed: 60
-  _hoverSpeed: 0.5
-  _hoverCurve:
+  artObject: {fileID: 8470983020858837656}
+  rotateSpeed: 60
+  hoverSpeed: 0.5
+  hoverCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.5
       value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2
+      outSlope: -2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _collectParticles: {fileID: 1570232790181881637}
-  _idleParticles: {fileID: 7776811727822959558}
-  _collectParticlesAmount: 30
-  _particleHomeTarget: {fileID: 0}
+  collectParticles: {fileID: 1570232790181881637}
+  idleParticles: {fileID: 7776811727822959558}
+  collectParticlesAmount: 30
+  particleHomeTarget: {fileID: 0}
   homingDelay: 2
   homingStrength: 5
   particleDespawnDistance: 0.5

@@ -50,7 +50,7 @@ public class Gemstone : River_Collectible
     [SerializeField] private float homingDelay = 2f;
     [Tooltip("The strength of the homing collect particles")]
     [SerializeField] private float homingStrength = 1f;
-    [SerializeField] private float particleDespawnDistance = .5f;
+    [SerializeField] private float particleDespawnDistance = .2f;
 
     #region Collection Event
     protected override void OnCollected()
@@ -150,10 +150,11 @@ public class Gemstone : River_Collectible
 
             float age = _particles[i].startLifetime - _particles[i].remainingLifetime;
 
-            if (age >= homingDelay)
+            if (age >= homingDelay / (River_Manager.Instance.currentRiverSpeed / 10f))
             {
                 Vector3 dir = (particleHomeTarget.position - _particles[i].position).normalized;
-                _particles[i].velocity = Vector3.Lerp(_particles[i].velocity, dir * homingStrength, Time.deltaTime * 5f); //Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); // smoothing
+                _particles[i].velocity = Vector3.Lerp(_particles[i].velocity, dir * homingStrength,
+                    Time.deltaTime * (River_Manager.Instance.currentRiverSpeed * 2f)); //Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); // smoothing
 
                 float distance = Vector3.Distance(_particles[i].position, particleHomeTarget.position);
                 if (distance < particleDespawnDistance)

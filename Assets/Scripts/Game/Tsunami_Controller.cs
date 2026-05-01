@@ -194,14 +194,14 @@ public class TsunamiController : MonoBehaviour
                 // Reduce the amplitude of the tsunami overtime.
                 shakeParams.noiseModes[0].amplitude -= Time.deltaTime * 0.05f;
                 shakeParams.noiseModes[0].amplitude = Mathf.Clamp(shakeParams.noiseModes[0].amplitude, 0f, 10f);
-                Debug.Log("Tsunami is dropping!");
+                // Debug.Log("Tsunami is dropping!");
 
                 // If the amplitude has fully dropped, stop the tsunami.
                 if (shakeParams.noiseModes[0].amplitude <= 0f)
                 {
                     riverSplineObject.ignorePause = false;
                     canProgress = false;
-                    Debug.Log("Tsunami drop completed");
+                    // Debug.Log("Tsunami drop completed");
                 }
 
                 return;
