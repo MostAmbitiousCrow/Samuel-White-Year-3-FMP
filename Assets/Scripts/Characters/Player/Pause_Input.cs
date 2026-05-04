@@ -1,34 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 public class Pause_Input : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private InputAction pauseAction;
+    private InputAction _pauseAction;
 
     private void Awake()
     {
-        if (!playerInput) playerInput = GetComponent<PlayerInput>();
-
-        var actionMap = playerInput.currentActionMap;
+        var actionMap = InputSystem.actions.actionMaps[0];
 
         // The name of the pause input action
-        pauseAction = actionMap.FindAction("Pause");
-        pauseAction.performed += OnPause;
+        _pauseAction = actionMap.FindAction("Pause");
+        _pauseAction.performed += OnPause;
     }
 
     private void OnEnable()
     {
-        pauseAction.performed += OnPause;
+        _pauseAction.performed += OnPause;
     }
 
     private void OnDisable()
     {
-        pauseAction.performed -= OnPause;
+        _pauseAction.performed -= OnPause;
     }
 
-    void OnPause(InputAction.CallbackContext context)
+    private void OnPause(InputAction.CallbackContext context)
     {
         GameManager.GameLogic.TogglePauseState();
     }

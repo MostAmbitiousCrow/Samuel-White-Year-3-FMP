@@ -1,6 +1,7 @@
 using CameraShake;
 using EditorAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static Boat_Space_Manager.BoatSide;
 
 namespace GameCharacters
@@ -10,9 +11,22 @@ namespace GameCharacters
     /// </summary>
     public class BoatCharacter : Character
     {
+        // Animator Cached Properties
+        private static readonly int AnimatorGrounded = Animator.StringToHash("Grounded");
+        private static readonly int AnimatorMoving = Animator.StringToHash("Moving");
+        private static readonly int AnimatorMoved = Animator.StringToHash("Moved");
+        private static readonly int AnimatorVaulting = Animator.StringToHash("Vaulting");
+        private static readonly int AnimatorVaulted = Animator.StringToHash("Vaulted");
+        private static readonly int AnimatorGroundPound = Animator.StringToHash("Hard Action");
+        private static readonly int AnimatorGroundPounded = Animator.StringToHash("Ground Pound");
+        private static readonly int AnimatorLanded = Animator.StringToHash("Landed");
+        private static readonly int AnimatorVelocity = Animator.StringToHash("Vertical Velocity");
+        private static readonly int AnimatorJump = Animator.StringToHash("Jump");
+
         #region Variables
 
-        [Title("Boat Character")] [Line(GUIColor.Gray)] [Header("Vault Movement")] [SerializeField]
+        [Title("Boat Character")] [Line(GUIColor.Gray)] [Header("Vault Movement")] 
+        [SerializeField]
         protected bool canVault = true;
         [SerializeField, ShowField(nameof(canVault))]
         protected float vaultTime = .5f;
@@ -20,19 +34,21 @@ namespace GameCharacters
         protected AnimationCurve vaultCurve;
         [ReadOnly, ShowField(nameof(canVault))]
         public bool isVaulting;
-        [ReadOnly, ShowField(nameof(canVault))]
-        public bool isVaultingHeavily;
+        [FormerlySerializedAs("isVaultingHeavily")] [ReadOnly, ShowField(nameof(canVault))]
+        public bool isGroundPounding;
+        [SerializeField] protected float groundPoundTime = .25f;
+        protected float GroundPoundElapsed;
 
-        [Header("Coyote Inputs")] protected bool WillMove = false;
+        [Header("Coyote Inputs")] 
+        protected bool WillMove = false;
         protected new int MoveDirection;
         protected bool WillVault = false;
         protected bool WillJump = false;
         protected float VaultTimeElapsed = 0f;
 
-        [Header("Jump Movement")] [SerializeField]
-        protected bool canJump = true;
-        [SerializeField, ShowField(nameof(canJump))]
-        protected float jumpPower = 10f;
+        [Header("Jump Movement")] 
+        [SerializeField] protected bool canJump = true;
+        [SerializeField, ShowField(nameof(canJump))] protected float jumpPower = 10f;
         [ShowField(nameof(canJump))] public bool isJumping;
         protected float JumpTimeElapsed = 0f;
         public bool isAffectedByGravity = true;
@@ -41,7 +57,8 @@ namespace GameCharacters
         private float _verticalVelocity;
         [SerializeField, ReadOnly] protected float currentY;
 
-        [Header("Head Bounce")] [ReadOnly] public bool isBouncing = false;
+        [Header("Head Bounce")] [ReadOnly]
+        public bool isBouncing = false;
         [SerializeField] protected float bouncePower = 5f;
         private float _timeSinceLastBounce;
         [SerializeField] private bool canBounce = true;
@@ -144,46 +161,37 @@ namespace GameCharacters
         /// <summary> Called whenever the character has started a move </summary>
         protected virtual void OnMove()
         {
-            animator.SetBool("Moving", true);
-            animator.SetTrigger("Moved");
+            animator.SetBool(AnimatorMoving, true);
+            animator.SetTrigger(AnimatorMoved);
         }
 
         /// <summary> Called whenever the character has finished a move </summary>
         protected virtual void OnMoved()
         {
             // Move Completed, stop moving parameter
-            animator.SetBool("Moving", false);
+            animator.SetBool(AnimatorMoving, false);
         }
 
         /// <summary> Vaults the character to a given side and space </summary>
-        public void VaultToSide(SpaceData spaceData, bool isHeavy)
+        public void VaultToSide(SpaceData spaceData)
         {
             // Check if the character can access that space
             if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
                 return;
+            // Skip if already vaulting or moving
             if (isVaulting || isMoving || !canVault) return;
             TargetSpace(spaceData);
             isVaulting = true;
-            isVaultingHeavily = isHeavy;
 
             // Trigger the OnVault Method for Animations + Sounds
             OnVault();
         }
 
         /// <summary> Vault to the side with a provided space data with an additional character to attack upon landing </summary>
-        public void VaultToSide(SpaceData spaceData, bool isHeavy, Character victim)
+        public void VaultToSide(SpaceData spaceData, Character victim)
         {
-            // Check if the character can access that space
-            if (!Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, spaceData))
-                return;
-            if (isVaulting || isMoving || !canVault) return;
-            TargetSpace(spaceData);
-            isVaulting = true;
-            isVaultingHeavily = isHeavy;
+            VaultToSide(spaceData);
             TargetedCharacter = victim;
-
-            // Trigger the OnVault Method for Animations + Sounds
-            OnVault();
         }
 
         /// <summary> Sends the character directly to the position of the specified space on a given side </summary>
@@ -259,6 +267,10 @@ namespace GameCharacters
             if (canMove && isMoving && !isVaulting)
             {
                 SpaceMovement();
+                if (isGroundPounding && isGrounded)
+                {
+                    GroundPoundSequence();
+                }
             }
             else if (canVault && isVaulting)
             {
@@ -267,23 +279,16 @@ namespace GameCharacters
             else
             {
                 StayOnCurrentSpace();
+                if (isGroundPounding && isGrounded)
+                {
+                    GroundPoundSequence();
+                }
             }
 
             if (isGrounded)
             {
                 currentY = 0f;
             }
-            
-            // Debug.Log($"");
-
-            // Reset Bounce Cooldown
-            // if (_timeSinceLastBounce - Time.time < .5f) canBounce = true;
-        }
-
-        protected override void FixedTimeUpdate()
-        {
-            base.FixedTimeUpdate();
-            if (!currentSpace?.t || HealthComponent.IsDead) return;
         }
 
         #endregion
@@ -345,13 +350,13 @@ namespace GameCharacters
                 OnMoved();
 
                 // Coyote input for vaulting after moving
-                if (WillVault) PerformVault(isVaultingHeavily);
+                if (WillVault) PerformVault();
             }
 
             MovementTimeElapsed += Time.deltaTime / (isGrounded? groundedMovementTime : airMovementTime);
         }
 
-        protected void PerformVault(bool isHeavy)
+        protected void PerformVault()
         {
             if (GameManager.GameLogic.GamePaused) return;
 
@@ -361,15 +366,9 @@ namespace GameCharacters
             // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
             var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
                 (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true);
-            if (bc)
-            {
-                VaultToSide(newSpace, isHeavy,
-                    bc); // TODO: Modify to scan for damageable characters with the Character component
-            }
-            else
-            {
-                VaultToSide(newSpace, isHeavy);
-            }
+            
+            if (bc) VaultToSide(newSpace, bc); // TODO: Modify to scan for damageable characters with the Character component
+            else VaultToSide(newSpace);
         }
 
         protected virtual void VaultMovement()
@@ -395,9 +394,8 @@ namespace GameCharacters
                 if (!isJumping) OnVaulted();
                 else
                 {
-                    
                     animator.ResetTrigger("Vaulted");
-                    animator.SetBool("Vaulting", false);
+                    animator.SetBool(AnimatorVaulting, false);
                 }
 
                 // Damage any targeted characters
@@ -415,14 +413,10 @@ namespace GameCharacters
                     WillMove = false;
                 }
 
-                // Heavy Vaulting
-                if (isVaultingHeavily && canInteractWithBoat && isGrounded)
+                // Trigger Vaulting Ground Pound
+                if (isGroundPounding && canInteractWithBoat && isGrounded && !WillJump)
                 {
-                    if (!WillJump)
-                    {
-                        boatInteractor.ImpactBoat(TargetedSpace);
-                        isVaultingHeavily = false;
-                    }
+                    OnGroundPound();
                     // animator.SetBool("Hard Action", true);
                 }
                 
@@ -438,16 +432,45 @@ namespace GameCharacters
         protected virtual void OnVault()
         {
             //TODO: Flip the direction of the character based on the side of the boat they're vaulting from
-            animator.SetBool("Vaulting", true);
-            animator.SetTrigger("Vaulted");
-            animator.SetBool("Hard Action", isVaultingHeavily);
+            animator.SetBool(AnimatorVaulting, true);
+            animator.SetTrigger(AnimatorVaulted);
+            animator.SetBool(AnimatorGroundPound, isGroundPounding);
         }
 
         protected virtual void OnVaulted()
         {
-            animator.SetBool("Vaulting", false);
+            animator.SetBool(AnimatorVaulting, false);
             // animator.ResetTrigger("Vaulted");
-            animator.SetTrigger("Landed"); //TODO: add "Vault Landed" animation!
+            animator.SetTrigger(AnimatorLanded); //TODO: add "Vault Landed" animation!
+        }
+
+        protected virtual void TriggerGroundPound()
+        {
+            isGroundPounding = true;
+            GroundPoundElapsed = 0f;
+            animator.SetBool(AnimatorGroundPound, isGroundPounding);
+        }
+        
+        protected virtual void GroundPoundSequence()
+        {
+            if (GroundPoundElapsed < groundPoundTime)
+            {
+                GroundPoundElapsed += Time.deltaTime;
+            }
+            else
+            {
+                OnGroundPound();
+            }
+        }
+
+        protected virtual void OnGroundPound()
+        {
+            CameraShaker.Presets.Explosion3D();
+            boatInteractor.ImpactBoat(TargetedSpace);
+            GroundPoundElapsed = 0f;
+            isGroundPounding = false;
+            animator.SetBool(AnimatorGroundPound, isGroundPounding);
+            animator.SetTrigger(AnimatorGroundPounded);
         }
 
         #endregion
@@ -465,7 +488,7 @@ namespace GameCharacters
 
 
             // Set Vertical Falling Animation Parameter
-            animator.SetFloat("Vertical Velocity", _verticalVelocity);
+            animator.SetFloat(AnimatorVelocity, _verticalVelocity);
 
             // Damage any Characters below! Only when falling
             if (_verticalVelocity < 0)
@@ -507,12 +530,12 @@ namespace GameCharacters
         /// <summary> Is called before the character jumps </summary>
         protected virtual void OnJumped()
         {
-            animator.SetTrigger("Jump");
-            animator.SetBool("Grounded", isGrounded);
+            animator.SetTrigger(AnimatorJump);
+            animator.SetBool(AnimatorGrounded, isGrounded);
             
             currentSpace.ExitSpace();
 
-            if (isVaultingHeavily && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace);
+            // if (isGroundPounding && canInteractWithBoat) boatInteractor.ImpactBoat(TargetedSpace);
 
             // Debug.Log($"PERFORMED Jump. Current height is: {_currentY}. Grounded = {IsGrounded}");
         }
@@ -525,17 +548,17 @@ namespace GameCharacters
             
             currentSpace.EnterSpace();
             
-            animator.SetTrigger("Landed");
-            animator.SetBool("Grounded", true);
+            animator.SetTrigger(AnimatorLanded);
+            animator.SetBool(AnimatorGrounded, true);
+            animator.SetBool(AnimatorGroundPound, isGroundPounding);
 
             //TODO: Add landed SFX and VFX
 
-            if (isVaultingHeavily)
+            if (isGroundPounding)
             {
-                CameraShaker.Presets.Explosion3D();
                 if (canInteractWithBoat)
-                    boatInteractor.ImpactBoat(TargetedSpace);
-                if (!isVaulting) isVaultingHeavily = false;
+                    OnGroundPound();
+                if (!isVaulting) isGroundPounding = false;
             }
             else CameraShaker.Presets.ShortShake3D();
             // Debug.Log($"Landed. Grounded = {IsGrounded} Height = {_currentY}");
@@ -551,7 +574,7 @@ namespace GameCharacters
             if (!canBounce) return;
             
             isGrounded = false;
-            animator.SetBool("Grounded", isGrounded);
+            animator.SetBool(AnimatorGrounded, isGrounded);
             _verticalVelocity = bouncePower;
             isBouncing = true;
 

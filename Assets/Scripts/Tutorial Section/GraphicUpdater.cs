@@ -23,6 +23,7 @@ public class GraphicUpdater : MonoBehaviour
     private void Awake() => UpdateGraphic();
 
     private int _currentSpriteIndex = 0;
+    // Note: Graphic update is triggered by the InputGraphicController
     public void UpdateGraphic()
     {
         var pad = Gamepad.current;

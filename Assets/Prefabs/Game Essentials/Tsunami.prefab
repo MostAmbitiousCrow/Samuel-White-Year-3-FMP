@@ -4967,7 +4967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1503201422403194710
 Transform:
   m_ObjectHideFlags: 0
@@ -9961,6 +9961,7 @@ MonoBehaviour:
   offset: -20
   distanceOnSpline: 0
   totalDistanceTravelled: 0
+  ignorePause: 0
 --- !u!114 &8931706103474759340
 MonoBehaviour:
   m_ObjectHideFlags: 0

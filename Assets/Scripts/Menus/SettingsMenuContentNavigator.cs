@@ -18,10 +18,10 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     
     [FoldoutGroup("Gameplay", nameof(invincibilityToggle), 
         nameof(dyslexicToggle), nameof(fovToggle), nameof(screenShakeToggle), nameof(hitFreezeToggle),
-        nameof(rainbowModeToggle))]
+        nameof(depthAssistToggle), nameof(rainbowModeToggle))]
     [SerializeField] private Void gameplayFolder;
     [SerializeField, HideProperty] private Toggle invincibilityToggle, dyslexicToggle, fovToggle, screenShakeToggle,
-        hitFreezeToggle, rainbowModeToggle;
+        hitFreezeToggle, depthAssistToggle, rainbowModeToggle;
     
     #endregion
     #region Settings
@@ -64,6 +64,11 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
         hitFreezeToggle.onValueChanged.RemoveAllListeners();
         hitFreezeToggle.onValueChanged.AddListener(OnHitFreezeValueChange);
         
+        // Depth Assist
+        depthAssistToggle.isOn = GameSettingsManager.DoDepthAssist;
+        depthAssistToggle.onValueChanged.RemoveAllListeners();
+        depthAssistToggle.onValueChanged.AddListener(OnDoDepthAssistValueChange);
+        
         // Rainbow Mode
         rainbowModeToggle.isOn = GameSettingsManager.DoRainbowMode;
         rainbowModeToggle.onValueChanged.RemoveAllListeners();
@@ -94,6 +99,11 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     public void OnHitFreezeValueChange(bool value)
     {
         GameSettingsManager.DoHitFreeze = value;
+    }
+
+    public void OnDoDepthAssistValueChange(bool value)
+    {
+        GameSettingsManager.DoDepthAssist = value;
     }
     
     public void OnRainbowModeValueChange(bool value)

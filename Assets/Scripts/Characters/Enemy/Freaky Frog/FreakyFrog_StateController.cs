@@ -286,7 +286,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
              FrogSc.TriggerJump();
              
              // If the frog should attack the opposite lane, vault. Else, just move forward normally
-             if (FrogSc.AttackLane) FrogSc.PerformVault(true); // Heavy impact for the sake of juice
+             if (FrogSc.AttackLane) FrogSc.PerformVault(); // Heavy impact for the sake of juice
              else
              {
                  FrogSc.TriggerJump();

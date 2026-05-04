@@ -21,25 +21,43 @@
                     "id": "d43fde6e-a426-42bd-a0fd-2dac81f4f8bf",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "Tap",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "VaultHeavy",
+                    "name": "Jump",
                     "type": "Value",
-                    "id": "816bc734-6658-4132-87bc-f508ba6d28e1",
+                    "id": "e83e499e-9121-49e7-90c9-b81a2a102ae8",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": true
                 },
                 {
+                    "name": "GroundPound",
+                    "type": "Value",
+                    "id": "816bc734-6658-4132-87bc-f508ba6d28e1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "c3bb2c24-90be-4e91-bb27-2f45d97ad4b2",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause Hold",
+                    "type": "Button",
+                    "id": "3a82350c-add2-4dc8-a95f-4e356eb4df3c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
                     "initialStateCheck": false
                 }
             ],
@@ -387,11 +405,110 @@
                 },
                 {
                     "name": "",
+                    "id": "f77aff4d-a4ee-4fd3-a8a5-9a1370e1a8c4",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0b3e60b-503e-4be2-9c65-c39541e9f484",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ccafab2-2dfc-4e8d-9c90-a9e32ed9bfc7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f55f37eb-363b-4eca-9ec2-13b260be8f66",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2d250be-5574-44a2-ac79-5fce3443e205",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0c4a1ed3-7287-4615-a2e4-5f93c629f8d1",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3daa4edb-614e-4f3a-af8e-7c1d3173ecc3",
+                    "path": "<Joystick>/{PrimaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "24733e5e-ea05-44d2-a513-0c772d62b38b",
+                    "path": "<Joystick>/{SecondaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3962ff18-2d67-4d05-8861-0d0d00da12d9",
                     "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c70f20d-4c3e-4b33-9e01-1e0978613902",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -419,37 +536,48 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Space with Shift Modifier",
-                    "id": "e952f81c-e649-4505-83fb-3365865abd86",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "VaultHeavy",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "14d722a1-3aef-40bb-a11c-2ae408838241",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "VaultHeavy",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "aa9dd615-e20e-43f0-ac89-4982fd91e635",
-                    "path": "<Keyboard>/space",
+                    "name": "",
+                    "id": "22385b0c-061f-4d6d-bc6b-9a3940696b6f",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "VaultHeavy",
+                    "action": "Pause Hold",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7368a734-57aa-40eb-a2b1-86cfd4f5b68e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7c1fedf-f1d9-4de4-8a3b-80a807cbc037",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pause Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eff31bbd-3b46-4c22-974e-57aa5c08e4bc",
+                    "path": "<Joystick>/{Menu}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Pause Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -458,7 +586,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -469,7 +597,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -480,7 +608,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -491,7 +619,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -502,7 +630,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -513,7 +641,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -524,7 +652,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -535,7 +663,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "VaultHeavy",
+                    "action": "GroundPound",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3dce5d0f-92de-40ea-b535-df0bd4bfbfaf",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GroundPound",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -558,7 +697,7 @@
                     "name": "Submit",
                     "type": "Button",
                     "id": "5c48ef50-1529-470a-8897-a30e1fdfbe16",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -567,7 +706,7 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "7dae848b-0708-4809-b87f-6c92b792f7d8",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -890,6 +1029,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3557e98-a8d2-4891-8c7e-985402ebdd81",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false

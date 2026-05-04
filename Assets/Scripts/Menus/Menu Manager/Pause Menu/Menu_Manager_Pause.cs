@@ -94,10 +94,10 @@ public class Menu_Manager_Pause : Menu_Manager
         print("Quit to Menu...");
     }
 
-    void ShowPauseMenu()
+    private void ShowPauseMenu()
     {
         canvas.gameObject.SetActive(true);
-        
+        EventSystem.current.SetSelectedGameObject(screenDatas[currentScreen].EnterButton.gameObject);
     }
 
     void ClosePauseMenu()

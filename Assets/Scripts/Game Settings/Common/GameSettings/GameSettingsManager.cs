@@ -441,7 +441,22 @@ namespace Game
 				PlayerPrefs.Save();
 				GameplayChanged?.Invoke();
 			}
-		} 
+		}
+
+		/// <summary>
+		/// Determines whether to make allow elements that help with persistent perspective
+		/// and depth issues players may encounter
+		/// </summary>
+		public static bool DoDepthAssist
+		{
+			get => PlayerPrefs.GetInt("Gameplay.DepthAssist", 1) == 1;
+			set
+			{
+				PlayerPrefs.SetInt("Gameplay.DepthAssist", value ? 1 : 0);
+				PlayerPrefs.Save();
+				GameplayChanged?.Invoke();
+			}
+		}
 		
 		/// <summary> Determines whether to activate the stylised Rainbow Mode </summary>
         public static bool DoRainbowMode
@@ -458,7 +473,7 @@ namespace Game
 		// ------------------------------------------------------------------------------------------------------------
 		#region Dev
 
-		public static bool AllowExternalLinks = false; //NOTE: Keep false only for exhibition build!
+		public static bool AllowExternalLinks = true; //NOTE: Keep false only for exhibition build!
 
 		#endregion
 	}

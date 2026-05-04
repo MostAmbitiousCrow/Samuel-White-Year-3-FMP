@@ -107,25 +107,43 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""id"": ""d43fde6e-a426-42bd-a0fd-2dac81f4f8bf"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""VaultHeavy"",
+                    ""name"": ""Jump"",
                     ""type"": ""Value"",
-                    ""id"": ""816bc734-6658-4132-87bc-f508ba6d28e1"",
+                    ""id"": ""e83e499e-9121-49e7-90c9-b81a2a102ae8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""GroundPound"",
+                    ""type"": ""Value"",
+                    ""id"": ""816bc734-6658-4132-87bc-f508ba6d28e1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""c3bb2c24-90be-4e91-bb27-2f45d97ad4b2"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause Hold"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a82350c-add2-4dc8-a95f-4e356eb4df3c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -473,11 +491,110 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f77aff4d-a4ee-4fd3-a8a5-9a1370e1a8c4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0b3e60b-503e-4be2-9c65-c39541e9f484"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ccafab2-2dfc-4e8d-9c90-a9e32ed9bfc7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f55f37eb-363b-4eca-9ec2-13b260be8f66"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2d250be-5574-44a2-ac79-5fce3443e205"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c4a1ed3-7287-4615-a2e4-5f93c629f8d1"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3daa4edb-614e-4f3a-af8e-7c1d3173ecc3"",
+                    ""path"": ""<Joystick>/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24733e5e-ea05-44d2-a513-0c772d62b38b"",
+                    ""path"": ""<Joystick>/{SecondaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""3962ff18-2d67-4d05-8861-0d0d00da12d9"",
                     ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c70f20d-4c3e-4b33-9e01-1e0978613902"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -505,37 +622,48 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Space with Shift Modifier"",
-                    ""id"": ""e952f81c-e649-4505-83fb-3365865abd86"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""VaultHeavy"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""14d722a1-3aef-40bb-a11c-2ae408838241"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""VaultHeavy"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""aa9dd615-e20e-43f0-ac89-4982fd91e635"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""name"": """",
+                    ""id"": ""22385b0c-061f-4d6d-bc6b-9a3940696b6f"",
+                    ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""Pause Hold"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7368a734-57aa-40eb-a2b1-86cfd4f5b68e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Pause Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7c1fedf-f1d9-4de4-8a3b-80a807cbc037"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eff31bbd-3b46-4c22-974e-57aa5c08e4bc"",
+                    ""path"": ""<Joystick>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Joystick"",
+                    ""action"": ""Pause Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -544,7 +672,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -555,7 +683,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -566,7 +694,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -577,7 +705,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -588,7 +716,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -599,7 +727,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -610,7 +738,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -621,7 +749,18 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""VaultHeavy"",
+                    ""action"": ""GroundPound"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3dce5d0f-92de-40ea-b535-df0bd4bfbfaf"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""GroundPound"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -644,7 +783,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""5c48ef50-1529-470a-8897-a30e1fdfbe16"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -653,7 +792,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""7dae848b-0708-4809-b87f-6c92b792f7d8"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -982,6 +1121,17 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b3557e98-a8d2-4891-8c7e-985402ebdd81"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""82627dcc-3b13-4ba9-841d-e4b746d6553e"",
                     ""path"": ""*/{Cancel}"",
                     ""interactions"": """",
@@ -1149,8 +1299,10 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Vault = m_Player.FindAction("Vault", throwIfNotFound: true);
-        m_Player_VaultHeavy = m_Player.FindAction("VaultHeavy", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_GroundPound = m_Player.FindAction("GroundPound", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_PauseHold = m_Player.FindAction("Pause Hold", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1244,8 +1396,10 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Vault;
-    private readonly InputAction m_Player_VaultHeavy;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_GroundPound;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_PauseHold;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1266,13 +1420,21 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Vault => m_Wrapper.m_Player_Vault;
         /// <summary>
-        /// Provides access to the underlying input action "Player/VaultHeavy".
+        /// Provides access to the underlying input action "Player/Jump".
         /// </summary>
-        public InputAction @VaultHeavy => m_Wrapper.m_Player_VaultHeavy;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/GroundPound".
+        /// </summary>
+        public InputAction @GroundPound => m_Wrapper.m_Player_GroundPound;
         /// <summary>
         /// Provides access to the underlying input action "Player/Pause".
         /// </summary>
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/PauseHold".
+        /// </summary>
+        public InputAction @PauseHold => m_Wrapper.m_Player_PauseHold;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1305,12 +1467,18 @@ public partial class @FMP: IInputActionCollection2, IDisposable
             @Vault.started += instance.OnVault;
             @Vault.performed += instance.OnVault;
             @Vault.canceled += instance.OnVault;
-            @VaultHeavy.started += instance.OnVaultHeavy;
-            @VaultHeavy.performed += instance.OnVaultHeavy;
-            @VaultHeavy.canceled += instance.OnVaultHeavy;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @GroundPound.started += instance.OnGroundPound;
+            @GroundPound.performed += instance.OnGroundPound;
+            @GroundPound.canceled += instance.OnGroundPound;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @PauseHold.started += instance.OnPauseHold;
+            @PauseHold.performed += instance.OnPauseHold;
+            @PauseHold.canceled += instance.OnPauseHold;
         }
 
         /// <summary>
@@ -1328,12 +1496,18 @@ public partial class @FMP: IInputActionCollection2, IDisposable
             @Vault.started -= instance.OnVault;
             @Vault.performed -= instance.OnVault;
             @Vault.canceled -= instance.OnVault;
-            @VaultHeavy.started -= instance.OnVaultHeavy;
-            @VaultHeavy.performed -= instance.OnVaultHeavy;
-            @VaultHeavy.canceled -= instance.OnVaultHeavy;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @GroundPound.started -= instance.OnGroundPound;
+            @GroundPound.performed -= instance.OnGroundPound;
+            @GroundPound.canceled -= instance.OnGroundPound;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @PauseHold.started -= instance.OnPauseHold;
+            @PauseHold.performed -= instance.OnPauseHold;
+            @PauseHold.canceled -= instance.OnPauseHold;
         }
 
         /// <summary>
@@ -1614,12 +1788,19 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnVault(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "VaultHeavy" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnVaultHeavy(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GroundPound" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGroundPound(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -1627,6 +1808,13 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause Hold" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPauseHold(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

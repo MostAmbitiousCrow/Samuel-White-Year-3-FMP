@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public static MainSceneManager SceneManager { get; private set; }
     public static GameLevelManager LevelManager { get; private set; }
-    public static GameUserSettings UserSettings { get; private set; } = new();
+    // public static GameUserSettings UserSettings { get; private set; } = new();
 
     public static MainGameLogic GameLogic { get; private set; } = new();
 
@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
         GameLogic = new MainGameLogic();
         SceneManager = GetComponent<MainSceneManager>();
         //LevelManager = GetComponent<GameLevelManager>();
-        UserSettings = new GameUserSettings();
+        // UserSettings = new GameUserSettings();
 
-        print($"Game Logic = {GameLogic} | Scene Manager = {SceneManager} | Level Manager = {LevelManager} | User Settings = {UserSettings}");
+        // print($"Game Logic = {GameLogic} | Scene Manager = {SceneManager} | Level Manager = {LevelManager} | User Settings = {UserSettings}");
     }
 
     private void Start()
@@ -232,21 +232,21 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Game Settings
-    public class GameUserSettings
-    {
-        public delegate void SettingsUpdated(GameSettings gameSettings);
-        public SettingsUpdated onSettingsUpdated;
-
-        public GameSettings gameSettings;
-        public class GameSettings
-        {
-            public AspectResolution TargetAspectResolution;
-
-
-        }
-    }
-    #endregion
+    // #region Game Settings
+    // public class GameUserSettings
+    // {
+    //     public delegate void SettingsUpdated(GameSettings gameSettings);
+    //     public SettingsUpdated onSettingsUpdated;
+    //
+    //     public GameSettings gameSettings;
+    //     public class GameSettings
+    //     {
+    //         public AspectResolution TargetAspectResolution;
+    //
+    //
+    //     }
+    // }
+    // #endregion
 
     public void SetEventSystem()
     {

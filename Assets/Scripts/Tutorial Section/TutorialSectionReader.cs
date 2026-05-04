@@ -4,11 +4,13 @@ using EditorAttributes;
 using GameCharacters;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class TutorialSectionReader : MonoBehaviour
 {
     [SerializeField] private float revealSpeed = 1f;
     [SerializeField, ReadOnly] private TutorialContent[] tutorialContents =  new TutorialContent[4];
+    [SerializeField] private CanvasGroup skipTutorialGroup;
     private bool[] _conditions;
 
     /// <summary> Check if the tutorial has been completed. Resets when the tutorial object is created. </summary>
@@ -21,15 +23,16 @@ public class TutorialSectionReader : MonoBehaviour
     // Input Action Listeners
     private Action _movedAction;
     private Action _vaultedAction;
-    private Action _heavyVaultedAction;
+    private Action _groundPoundAction;
     private Action _jumpedAction;
-    private Action _jumpedHeavyAction;
     private Action _steeredLeftAction;
     private Action _steeredRightAction;
     private Action _targetKilledAction;
     
+    private Action _skipTutorialAction;
+    
     // Skip Tutorial Input
-    private Action _tutorialSkipAction;
+    private InputAction _tutorialSkipInput;
 
     private void Awake()
     {
@@ -42,18 +45,24 @@ public class TutorialSectionReader : MonoBehaviour
         
         // Vault Input Section
         _vaultedAction += () => OnAction(1);
-        _heavyVaultedAction +=  () => OnAction(2);
         
         // Jump Input Section
-        _jumpedAction += () => OnAction(3);
-        _jumpedHeavyAction += () => OnAction(4);
+        _jumpedAction += () => OnAction(2);
+        
+        // Ground Pound Section
+        _groundPoundAction +=  () => OnAction(3);
         
         // Boat Steering Section
-        _steeredLeftAction += () => OnAction(5);
-        _steeredRightAction += () => OnAction(6);
+        // _steeredLeftAction += () => OnAction(5);
+        // _steeredRightAction += () => OnAction(6);
         
         // Enemy Killed Section
         // _targetKilledAction += () => OnAction(7); // TODO
+        
+        var actionMap = InputSystem.actions.actionMaps[0];
+
+        // The name of the pause input action
+        _tutorialSkipInput = actionMap.FindAction("Pause Hold");
         
         // Obtain all the tutorial content classes
         tutorialContents = GetComponentsInChildren<TutorialContent>(false);
@@ -69,18 +78,13 @@ public class TutorialSectionReader : MonoBehaviour
         // Assign event checks from player and boat controllers
         PlayerCharacter.OnPlayerMoved += _movedAction;
         PlayerCharacter.OnPlayerVaulted += _vaultedAction;
-        PlayerCharacter.OnPlayerHeavyVaulted += _heavyVaultedAction;
+        PlayerCharacter.OnPlayerGroundPounded += _groundPoundAction;
         PlayerCharacter.OnPlayerJumped += _jumpedAction;
-        PlayerCharacter.OnPlayerHeavyJumped += _jumpedHeavyAction;
         Boat_Controller.OnSteeredLeftAction += _steeredLeftAction;
         Boat_Controller.OnSteeredRightAction += _steeredRightAction;
         PlayerCharacter.OnPlayerKilledEnemy += _targetKilledAction;
         
         TutorialComplete = false;
-
-        // Start input graphic repeating updates
-        foreach (var content in tutorialContents)
-            content.InvokeRepeating(nameof(content.UpdateInputGraphics), 0f, 1f);
         
         // Add the input reader routine to the Start Tutorial Unity Event for simple calling
         StartTutorial.AddListener(() => StartCoroutine(InputReaderRoutine()));
@@ -92,9 +96,8 @@ public class TutorialSectionReader : MonoBehaviour
         // Unassign  event checks from player and boat controllers
         PlayerCharacter.OnPlayerMoved -= _movedAction;
         PlayerCharacter.OnPlayerVaulted -= _vaultedAction;
-        PlayerCharacter.OnPlayerHeavyVaulted -= _heavyVaultedAction;
+        PlayerCharacter.OnPlayerGroundPounded -= _groundPoundAction;
         PlayerCharacter.OnPlayerJumped -= _jumpedAction;
-        PlayerCharacter.OnPlayerHeavyJumped -= _jumpedHeavyAction;
         Boat_Controller.OnSteeredLeftAction -= _steeredLeftAction;
         Boat_Controller.OnSteeredRightAction -= _steeredRightAction;
         PlayerCharacter.OnPlayerKilledEnemy -= _targetKilledAction;
@@ -107,6 +110,12 @@ public class TutorialSectionReader : MonoBehaviour
         TutorialObject = null;
     }
     #endregion
+
+    private void Update()
+    {
+        // Tutorial Skip Input
+        if (_tutorialSkipInput.WasPerformedThisFrame()) StopTutorialSequence();
+    }
 
     #region Action Event
     private void OnAction(int id)
@@ -131,12 +140,7 @@ public class TutorialSectionReader : MonoBehaviour
 
     private void OnValidate()
     {
-        tutorialContents = GetComponentsInChildren<TutorialContent>(false);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Backspace)) StopTutorialSequence();
+        tutorialContents = GetComponentsInChildren<TutorialContent>();
     }
 
     public void StartTutorialSequence()
@@ -156,6 +160,8 @@ public class TutorialSectionReader : MonoBehaviour
         
         // Initially set all canvas groups to be invisible
         foreach (var content in tutorialContents) content.CanvasGroup.alpha = 0f;
+
+        skipTutorialGroup.alpha = 0f;
         
         OnTutorialCompleted();
     }

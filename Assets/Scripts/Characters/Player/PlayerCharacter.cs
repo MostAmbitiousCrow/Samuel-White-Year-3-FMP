@@ -25,19 +25,18 @@ namespace GameCharacters
 
         #region Input Actions
         [Header("Input Actions")]
-        public PlayerInput playerInput;
         private InputAction _moveAction;
-        private InputAction _vaultLightAction;
-        private InputAction _vaultHeavyAction;
+        private InputAction _jumpAction;
+        private InputAction _vaultAction;
+        private InputAction _groundPoundAction;
         
         #region Event Listeners
 
         // Action Listening
         public static event Action OnPlayerMoved;
         public static event Action OnPlayerVaulted;
-        public static event Action OnPlayerHeavyVaulted;
+        public static event Action OnPlayerGroundPounded;
         public static event Action OnPlayerJumped;
-        public static event Action OnPlayerHeavyJumped;
 
         // Event Listening
         public delegate void PlayerDied(DamageType damageType);
@@ -52,11 +51,12 @@ namespace GameCharacters
 
         private void Awake()
         {
-            var actionMap = playerInput.currentActionMap;
+            var actionMap = InputSystem.actions.actionMaps[0];
             _moveAction = actionMap.FindAction("Move");
+            _jumpAction = actionMap.FindAction("Jump");
 
-            _vaultLightAction = actionMap.FindAction("Vault");
-            _vaultHeavyAction = actionMap.FindAction("VaultHeavy");
+            _vaultAction = actionMap.FindAction("Vault");
+            _groundPoundAction = actionMap.FindAction("GroundPound");
         }
 
         private void Start()
@@ -70,8 +70,9 @@ namespace GameCharacters
         private void OnEnable()
         {
             _moveAction?.Enable();
-            _vaultLightAction?.Enable();
-            _vaultHeavyAction?.Enable();
+            _jumpAction?.Enable();
+            _vaultAction?.Enable();
+            _groundPoundAction?.Enable();
 
             // TODO: TEMP. Reset health whenever a new level is loaded
             GameLevelManager.OnLevelLoaded += HealthComponent.RestoreHealth;
@@ -85,13 +86,14 @@ namespace GameCharacters
         private void OnDisable()
         {
             _moveAction?.Disable();
-            _vaultLightAction?.Disable();
-            _vaultHeavyAction?.Disable();
+            _jumpAction?.Disable();
+            _vaultAction?.Disable();
+            _groundPoundAction?.Disable();
             
             // TODO: TEMP. Reset health whenever a new level is loaded
             GameLevelManager.OnLevelLoaded -= HealthComponent.RestoreHealth;
 
-            if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
+            if (GameManager.Instance) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
             
             GameSettingsManager.GameplayChanged -= AssignInvincibility;
         }
@@ -101,16 +103,10 @@ namespace GameCharacters
             // Insert player actions here
             MoveInput();
 
-            if (!WillVault)
-            {
-                OnLightVault();
-                OnHeavyVault();
-            }
-            else
-            {
-                VaultPostProcess();
-            }
+            VaultInput();
 
+            GroundPoundInput();
+            JumpInput();
             
             base.TimeUpdate();
             
@@ -158,45 +154,38 @@ namespace GameCharacters
         /// <summary>
         /// The Vault Player Input Action Function
         /// </summary>
-        private void OnLightVault()
+        private void VaultInput()
         {
-            if (_vaultLightAction.WasPressedThisFrame())
-            {
-                WillVault = true;
-                isVaultingHeavily = false;
-                PerformVault(false);
-            }
+            if (!_vaultAction.WasPerformedThisFrame() || WillVault) return;
+            WillVault = true;
+            isGroundPounding = false;
+            PerformVault();
             // VaultPostProcess();
         }
-
-        private void OnHeavyVault()
+        
+        /// <summary>
+        /// The Ground Pound Player Input Action Function
+        /// </summary>
+        private void GroundPoundInput()
         {
-            if (_vaultHeavyAction.WasPressedThisFrame())
-            {
-                WillVault = true;
-                isVaultingHeavily = true;
-                PerformVault(true);
-            }
-            // VaultPostProcess();
+            if (_groundPoundAction.WasPressedThisFrame() && !isGroundPounding) TriggerGroundPound();
         }
 
-
-        // Bonus process stuff after a heavy or light vault
-        private void VaultPostProcess()
+        protected override void OnGroundPound()
         {
-            if (!isVaulting) return;
-            //TODO: Trigger Jump Upon Landing Logic Here
-            
-            // Trigger Jump if Vault Button is held
-            if (_vaultHeavyAction.WasPerformedThisFrame() || _vaultLightAction.WasPerformedThisFrame())
+            base.OnGroundPound();
+            if (isGrounded)
             {
-                // Debug.Log("Jump Action Performed");
-                if (WillJump) return;
-                WillJump = true;
+                Debug.Log("Player Pounded the boat UWU");
+                OnPlayerGroundPounded?.Invoke();
+                AudioManager.Play(Clip.Plyr_Land_0);
+                // AudioManager.Play(Clip.GroundPound); // TODO: Create SFX for triggering Ground Pound
             }
-            
-            // TriggerJump(); //TODO: Jump is still broken and won't trigger upon vaulting
-
+            else
+            {
+                Debug.Log("Player Triggered the Ground Pound in the Air");
+                // AudioManager.Play(Clip.AirSlam); // TODO: Create SFX for triggering Ground Pound in the air
+            }
         }
         #endregion
 
@@ -206,17 +195,16 @@ namespace GameCharacters
             AudioManager.Play(Clip.Plyr_Vault);
             
             // Trigger OnPlayerVaulted listeners. Used for the Tutorial Section.
-            if (isVaultingHeavily) OnPlayerHeavyVaulted?.Invoke();
-            else OnPlayerVaulted?.Invoke();
+            OnPlayerVaulted?.Invoke();
         }
 
         protected override void OnVaulted()
         {
             base.OnVaulted();
-            if (isVaultingHeavily)
+            if (isGroundPounding)
             {
                 TriggerHitStop(.05f);
-                AudioManager.Play(Clip.Plyr_Land_1); // TODO: needs a new sfx for heavy vaulting
+                AudioManager.Play(Clip.Plyr_Land_1); // TODO: needs a new sfx for ground pounding
             }
             else AudioManager.Play(Clip.Plyr_Land_0);
         }
@@ -232,14 +220,25 @@ namespace GameCharacters
             base.OnMoved();
         }
 
+        private void JumpInput()
+        {
+            if (!_jumpAction.WasPerformedThisFrame()) return;
+            if (!isGrounded) return; //TODO: Add a feature where the player can semi-jump in the air to help with jumping over bridges
+            
+            if (isVaulting)
+            {
+                WillJump = true;
+            }
+            else TriggerJump();
+        }
+
         protected override void OnJumped()
         {
             base.OnJumped();
-            if (isVaultingHeavily)
+            if (isGroundPounding)
             {
                 TriggerHitStop(.05f);
                 AudioManager.Play(Clip.Plyr_Jump_1); // Heavy Jump
-                OnPlayerHeavyJumped?.Invoke();
             }
             else
             {
@@ -252,10 +251,11 @@ namespace GameCharacters
         protected override void OnLanded()
         {
             base.OnLanded();
-            if (isVaultingHeavily)
+            if (isGroundPounding)
             {
                 TriggerHitStop(.05f);
                 AudioManager.Play(Clip.Plyr_Land_1);
+                
             }
             else AudioManager.Play(Clip.Plyr_Land_0);
         }

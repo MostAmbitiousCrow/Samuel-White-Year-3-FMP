@@ -6,16 +6,19 @@ public class InputGraphicController : MonoBehaviour
     private GraphicUpdater[] _graphics;
     private void Awake()
     {
-        _graphics = GetComponentsInChildren<GraphicUpdater>();
+        _graphics = GetComponentsInChildren<GraphicUpdater>(true);
         _time = Time.time + indicateTimer;
     }
 
     private float _time;
     private void Update()
     {
-        if (!(Time.time >= _time)) return;
+        _time += Time.deltaTime;
         
-        _time = Time.time + indicateTimer;
+        if (!(_time > 2f)) return;
+        _time = Mathf.Repeat(Time.timeScale, 2f);
         foreach (GraphicUpdater graphic in _graphics) graphic.UpdateGraphic();
+
     }
+
 }
