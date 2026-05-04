@@ -449,6 +449,7 @@ namespace GameCharacters
             isGroundPounding = true;
             GroundPoundElapsed = 0f;
             animator.SetBool(AnimatorGroundPound, isGroundPounding);
+            OnGroundPoundTriggered();
         }
         
         protected virtual void GroundPoundSequence()
@@ -461,6 +462,11 @@ namespace GameCharacters
             {
                 OnGroundPound();
             }
+        }
+
+        protected virtual void OnGroundPoundTriggered()
+        {
+            
         }
 
         protected virtual void OnGroundPound()

@@ -171,6 +171,15 @@ namespace GameCharacters
             if (_groundPoundAction.WasPressedThisFrame() && !isGroundPounding) TriggerGroundPound();
         }
 
+        protected override void OnGroundPoundTriggered()
+        {
+            base.OnGroundPoundTriggered();
+            
+            // Play initial Ground Pound audio based on if the player is grounded or not
+            var clip = isGrounded? Clip.Plyr_Pound0 : Clip.Plyr_Pound1;
+            AudioManager.Play(clip);
+        }
+
         protected override void OnGroundPound()
         {
             base.OnGroundPound();
@@ -178,8 +187,7 @@ namespace GameCharacters
             {
                 Debug.Log("Player Pounded the boat UWU");
                 OnPlayerGroundPounded?.Invoke();
-                AudioManager.Play(Clip.Plyr_Land_0);
-                // AudioManager.Play(Clip.GroundPound); // TODO: Create SFX for triggering Ground Pound
+                AudioManager.Play(Clip.Plyr_Pound2);
             }
             else
             {

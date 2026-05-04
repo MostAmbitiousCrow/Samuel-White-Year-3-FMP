@@ -167,5 +167,14 @@ namespace CarterGames.Assets.AudioManager
         public const string UI_Enter = "UI_Enter-fd710602-1957-4b6e-892c-ec2bc1ca9643";
         public const string UI_Navigate = "UI_Navigate-156bb326-aec4-483c-95d1-e24fcb14242f";
         public const string UI_Select = "UI_Select-60dbdbd2-725e-4d61-afb8-ed482edc9ab1";
+        public const string _8BitCave = "8BitCave-8e2d3459-5e45-42f0-8bca-6e9ac22c8132";
+        public const string desertbouncetrimmed = "desertbounce-trimmed-ef0114db-4eab-4f53-904b-e75846617519";
+        public const string Epic1x_Intro = "Epic1x_Intro-bba25a4a-8e38-4ea6-8274-24bd3f2bf90d";
+        public const string Epic1x_Loop = "Epic1x_Loop-c5d7b427-52ac-4509-9956-c4fb6f8a80f0";
+        public const string bgm_action_3 = "bgm_action_3-7fbc5833-8b5e-4aff-ab8d-d18af8c1f1e6";
+        public const string whatliesbeneath = "whatliesbeneath-c4515ee8-0545-4cd5-91b4-0286041bac38";
+        public const string Plyr_Pound0 = "Plyr_Pound0-b61c651b-7be1-4261-b69b-f8ac5b31438d";
+        public const string Plyr_Pound1 = "Plyr_Pound1-3e97f49f-0c3d-48cb-8e15-dc404910adc1";
+        public const string Plyr_Pound2 = "Plyr_Pound2-e240f41f-6df7-4bc2-bce8-bb9e43ab9640";
     }
 }
