@@ -1,4 +1,5 @@
 using System.Collections;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 
 public class FreakyFrog_StateController : BoatEnemyStateController
@@ -58,7 +59,12 @@ public class FreakyFrog_StateController : BoatEnemyStateController
         base.EmergeFromRiver();
         ChangeState(EmergeState);
     }
-    
+
+    protected override void OnTargetEliminated()
+    {
+        AudioManager.Play(Clip.Frog_Hit);
+    }
+
     public class FreakyFrog_IdleState : EnemyIdleState
      {
          public FreakyFrog_StateController FrogSc => Sc as FreakyFrog_StateController;
@@ -231,7 +237,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
              var space = Boat_Space_Manager.Instance.GetSpaceFromDirection(FrogSc.CurrentSpace.sideID,
                  FrogSc.CurrentSpace.spaceID, (int)FrogSc.CurrentDirection);
              if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(space.t.position, Vector3.one, 
-                     Quaternion.identity, FrogSc.TargetableCharacterLayers))
+                     Quaternion.identity, FrogSc.targetableCharacterLayers))
              {
                  // If target found, move to attack state and target space ahead
                  FrogSc.AttackLane = false;
@@ -244,7 +250,7 @@ public class FreakyFrog_StateController : BoatEnemyStateController
              space = Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(FrogSc.CurrentSpace.sideID,
                  FrogSc.CurrentSpace.spaceID);
              if (!CharacterSpaceChecks.ScanAreaForDamageableCharacter(space.t.position, Vector3.one,
-                     Quaternion.identity, FrogSc.TargetableCharacterLayers)) return; // Return if no target found
+                     Quaternion.identity, FrogSc.targetableCharacterLayers)) return; // Return if no target found
              
              // If target found, move to attack state and target opposite lane
              FrogSc.AttackLane = true;

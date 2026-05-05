@@ -371,6 +371,9 @@ MonoBehaviour:
   isGrounded: 0
   targetableCharacterLayers:
     serializedVersion: 2
+    m_Bits: 64
+  damageableCharacterLayers:
+    serializedVersion: 2
     m_Bits: 192
   artRoot: {fileID: 5697482129430515386}
   rb: {fileID: 5305761655149165591}
@@ -431,7 +434,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   isVaulting: 0
-  isVaultingHeavily: 0
+  isGroundPounding: 0
+  groundPoundTime: 0.25
   canJump: 1
   jumpPower: 10
   isJumping: 0

@@ -48,6 +48,11 @@ public class SewerBat_StateController : BoatEnemyStateController
         base.OnJumped();
         AudioManager.Play(Clip.Bat_Dive);
     }
+    
+    protected override void OnTargetEliminated()
+    {
+        AudioManager.Play(Clip.Bat_Hit);
+    }
 
     #region States
 
@@ -71,7 +76,7 @@ public class SewerBat_StateController : BoatEnemyStateController
             base.FixedUpdateState();
             var space = BatSc.currentSpace;
             if (CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                (space.t.position, Vector3.one, Quaternion.identity, BatSc.TargetableCharacterLayers))
+                (space.t.position, Vector3.one, Quaternion.identity, BatSc.targetableCharacterLayers))
                 BatSc.ChangeState(BatSc.AttackState);
         }
     }

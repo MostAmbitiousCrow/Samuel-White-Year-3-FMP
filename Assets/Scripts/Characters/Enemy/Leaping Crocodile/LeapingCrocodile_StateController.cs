@@ -249,7 +249,8 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              // Detect if the player is in the space ahead of them based on the current facing directions
              var space = Boat_Space_Manager.Instance.GetSpaceFromDirection(CrocSc.CurrentSpace.sideID,
                  CrocSc.CurrentSpace.spaceID, (int)CrocSc.CurrentDirection);
-             if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(space.t.position, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers))
+             if (CharacterSpaceChecks.ScanAreaForDamageableCharacter(space.t.position, 
+                     Vector3.one, Quaternion.identity, CrocSc.targetableCharacterLayers))
              {
                  CrocSc.ChangeState(CrocSc.AttackState);
              }
@@ -291,12 +292,12 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              
              var space = Boat_Space_Manager.Instance.GetSpaceFromDirection(CrocSc.CurrentSpace.sideID,
                  CrocSc.CurrentSpace.spaceID, (int)CrocSc.CurrentDirection);
-             var player = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-             (space.t.position, Vector3.one, Quaternion.identity, CrocSc.TargetableCharacterLayers);
+             var target = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+             (space.t.position, Vector3.one, Quaternion.identity, CrocSc.damageableCharacterLayers);
      
-             if (player)
+             if (target)
              {
-                 player.GetComponent<IDamageable>().TakeDamage();
+                 target.GetComponent<IDamageable>().TakeDamage();
                  // Debug.Log("Damaged Player");
              }
      

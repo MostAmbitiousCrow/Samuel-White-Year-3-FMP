@@ -168,7 +168,7 @@ namespace GameCharacters
         /// </summary>
         private void GroundPoundInput()
         {
-            if (_groundPoundAction.WasPressedThisFrame() && !isGroundPounding) TriggerGroundPound();
+            if (_groundPoundAction.WasPerformedThisFrame() && !isGroundPounding) TriggerGroundPound();
         }
 
         protected override void OnGroundPoundTriggered()
@@ -271,6 +271,7 @@ namespace GameCharacters
         protected override void OnTargetEliminated()
         {
             base.OnTargetEliminated();
+            AudioManager.Play(Clip.Stomped);
             OnPlayerKilledEnemy?.Invoke(); // Enemy Killed Check for the Tutorial
         }
 

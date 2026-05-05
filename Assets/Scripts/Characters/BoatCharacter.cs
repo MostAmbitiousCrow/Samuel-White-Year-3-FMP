@@ -1,4 +1,5 @@
 using CameraShake;
+using CarterGames.Assets.AudioManager;
 using EditorAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,6 +20,7 @@ namespace GameCharacters
         private static readonly int AnimatorVaulted = Animator.StringToHash("Vaulted");
         private static readonly int AnimatorGroundPound = Animator.StringToHash("Hard Action");
         private static readonly int AnimatorGroundPounded = Animator.StringToHash("Ground Pound");
+        private static readonly int AnimatorGroundPoundedPrepare = Animator.StringToHash("Ground Pound Prepare");
         private static readonly int AnimatorLanded = Animator.StringToHash("Landed");
         private static readonly int AnimatorVelocity = Animator.StringToHash("Vertical Velocity");
         private static readonly int AnimatorJump = Animator.StringToHash("Jump");
@@ -250,7 +252,7 @@ namespace GameCharacters
             SpaceData sd =
                 Boat_Space_Manager.Instance.GetSpaceFromDirection(currentSpace.sideID, currentSpace.spaceID, direction);
             //print($"Checked space: {sd.spaceID}");
-            return Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd);
+            return Boat_Space_Manager.Instance.CheckSpaceAccess(canAccessOuterBoatSides, canAccessBoatSpaces, sd, false);
         }
 
         #endregion
@@ -365,9 +367,9 @@ namespace GameCharacters
 
             // Vault to space. Additionally, if an enemy is on the opposite side of the space, do an attack vault
             var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                (newSpace.t.position, Vector3.one, Quaternion.identity, TargetableCharacterLayers, true);
+                (newSpace.t.position, Vector3.one, Quaternion.identity, targetableCharacterLayers, true);
             
-            if (bc) VaultToSide(newSpace, bc); // TODO: Modify to scan for damageable characters with the Character component
+            if (bc) VaultToSide(newSpace, bc);
             else VaultToSide(newSpace);
         }
 
@@ -397,10 +399,14 @@ namespace GameCharacters
                     animator.ResetTrigger("Vaulted");
                     animator.SetBool(AnimatorVaulting, false);
                 }
-
+                
                 // Damage any targeted characters
-                if (TargetedCharacter)
+                var bc = CharacterSpaceChecks.ScanAreaForDamageableCharacter
+                    (currentSpace.t.position, Vector3.one, Quaternion.identity,
+                        damageableCharacterLayers, true);
+                if (bc)
                 {
+                    TargetedCharacter = bc;
                     TargetedCharacter.GetComponent<IDamageable>().TakeDamage();
                     OnTargetEliminated();
                     TargetedCharacter = null;
@@ -466,7 +472,7 @@ namespace GameCharacters
 
         protected virtual void OnGroundPoundTriggered()
         {
-            
+            if (isGrounded) animator.SetTrigger(AnimatorGroundPoundedPrepare);
         }
 
         protected virtual void OnGroundPound()
@@ -500,12 +506,18 @@ namespace GameCharacters
             if (_verticalVelocity < 0)
             {
                 var character = CharacterSpaceChecks.ScanAreaForDamageableCharacter
-                    (StompPosition.position, stompSize, transform.rotation, TargetableCharacterLayers, true);
+                    (StompPosition.position, stompSize, transform.rotation, damageableCharacterLayers, true);
                 if (character)
                 {
                     if (character == this) return; // Prevent Self Damage
-                    character.GetComponent<IDamageable>().TakeDamage();
-                    OnTargetEliminated();
+                    var damageableCharacter = character.GetComponent<IDamageable>();
+                    if (!damageableCharacter.IsInvincible)
+                    {
+                        // TODO
+                        // Temp solution to instant kill / Constantly updating OnTargetEliminated method
+                        OnTargetEliminated();
+                        damageableCharacter.TakeDamage();
+                    }
                     TriggerBounce();
                 }
             }
@@ -563,7 +575,10 @@ namespace GameCharacters
             if (isGroundPounding)
             {
                 if (canInteractWithBoat)
+                {
                     OnGroundPound();
+                    TriggerBounce(); // For fun!
+                }
                 if (!isVaulting) isGroundPounding = false;
             }
             else CameraShaker.Presets.ShortShake3D();
@@ -579,6 +594,7 @@ namespace GameCharacters
         {
             if (!canBounce) return;
             
+            currentSpace.ExitSpace();
             isGrounded = false;
             animator.SetBool(AnimatorGrounded, isGrounded);
             _verticalVelocity = bouncePower;

@@ -59,8 +59,8 @@ namespace GameCharacters
         [SerializeField, ReadOnly] protected bool isGrounded = true;
         public bool IsGrounded => isGrounded;
         [Space]
-        [SerializeField] private LayerMask targetableCharacterLayers;
-        public LayerMask TargetableCharacterLayers => targetableCharacterLayers;
+        [SerializeField] protected LayerMask targetableCharacterLayers;
+        [SerializeField] protected LayerMask damageableCharacterLayers;
 
         [Header("Components")]
         [SerializeField] protected Transform artRoot;

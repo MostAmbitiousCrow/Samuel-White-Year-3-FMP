@@ -188,13 +188,13 @@ public class Boat_Space_Manager : MonoBehaviour
         // Check access type if the space is within the boat
         bool result = spaceData.insideBoat ? innerSideAccess : outerSideAccess;
         
-        // Check if the check should consider if the space is occupied by another character
+        // Check if the check should consider if the space isn't occupied by another character
         if (!bypassOccupancy)
         {
             return result && !spaceData.IsOccupied;
         }
 
-        //print($"Result: {result} | Can Access Inner = {innerSideAccess} | Can Acess Outer = {outerSideAccess}");
+        //print($"Result: {result} | Can Access Inner = {innerSideAccess} | Can Access Outer = {outerSideAccess}");
         return result;
     }
     #endregion
