@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CarterGames.Assets.AudioManager;
+using Game;
 using GameCharacters;
 using Unity.Mathematics;
 using UnityEngine;
@@ -205,8 +206,8 @@ public class River_Manager : MonoBehaviour
         isHalted = true;
         SetRiverSpeed(targetRiverSpeed / 2, true, false);
 
-        // Progress the Tsunami
-        tsunamiController.Progress();
+        // Progress the Tsunami. Ignore if the player is invincible.
+        if (!GameSettingsManager.DoPlayerInvincibility) tsunamiController.Progress();
     }
 
     /// <summary> The method to slow down the global river speed </summary>
