@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using EditorAttributes;
 using UnityEditor;
+using UnityEngine.Serialization;
 
 /// <summary> Class used for the level builder tool to generate Sections stored in the Level Data Scriptable Objects </summary>
 public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
@@ -74,7 +76,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
     }
 
     [Header("Data Asset Creation")]
-    [SerializeField] private string pathName = "Assets/Scriptable Objects/Level Data/";
+    [SerializeField, TextArea] private string pathName = "Assets/Scriptable Objects/Level Data/";
     [SerializeField] private string assetName = "Level Section Data";
 
     [Button]
@@ -165,6 +167,51 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         foreach (var item in sectionData.collectibleDatas) item.DrawGizmos();
         foreach (var item in sectionData.gemstoneGateDatas) item.DrawGizmos();
         foreach (var item in sectionData.slipStreamDatas) item.DrawGizmos();
+        
+        VisualisePlayerProgress();
+    }
+
+    [Header("Debug")]
+    [SerializeField] private Mesh playerVisual;
+    public float currentDistance;
+    private const int CurrentLane = 1;
+    public float speed;
+    public float defaultSpeed = 10;
+
+    private void VisualisePlayerProgress()
+    {
+        if (!playerVisual) return;
+
+        if (sectionData.slipStreamDatas.Count > 0)
+        {
+            Section_SlipStream_Object slipStream = null;
+            
+            foreach (var stream in sectionData.slipStreamDatas)
+            {
+                if (stream.Distance > currentDistance) continue;
+                slipStream = stream;
+            }
+
+            // Set the boat speed to the speed of the slipstream
+            if (slipStream) speed = slipStream.sectionData.overridedData.speedIncreaseAmount;
+        }
+        else speed = defaultSpeed;
+        
+        // Draw player mesh down the lane
+        currentDistance += Time.deltaTime * (speed / 2f);
+
+        if (currentDistance > 100f)
+        {
+            currentDistance = 0f;
+            speed = defaultSpeed;
+        }
+        
+        riverManager.AssignToCurveSection(currentDistance, CurrentLane, out Vector3 pos, out Quaternion rot);
+
+        pos += transform.position + transform.right * (CurrentLane - 1) * GlobalRiverValues.RiverLaneDistance / 16f; //TODO?: Assign this to AssignToCurveSection
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawMesh(playerVisual, pos, rot, Vector3.one * 4f);
     }
 #endif
 }

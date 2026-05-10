@@ -89,7 +89,7 @@ MonoBehaviour:
     initialDelay: 1
     postDelay: 2
     obstacleDatas:
-    - {fileID: 1720906431794451091}
+    - {fileID: 4681476666619452204}
     - {fileID: 3372578660937775789}
     enemyDatas:
     - {fileID: 2586220247129822895}
@@ -100,9 +100,14 @@ MonoBehaviour:
     - {fileID: 4317962581328293579}
     gemstoneGateDatas:
     - {fileID: 6661693478039078179}
+    slipStreamDatas: []
   pathName: Assets/Scriptable Objects/Level Data/
   assetName: Test Level Section 0
   enableDebug: 1
+  playerVisual: {fileID: 7238753200015459336, guid: 3f755d33305ae45fcb66d526f085f0be,
+    type: 3}
+  speed: 0
+  defaultSpeed: 10
 --- !u!1001 &650529041666936096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,7 +124,7 @@ PrefabInstance:
     - target: {fileID: 849776145697812723, guid: a53c31dd1a6d445d99172953d76fa277,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.98778
+      value: -9.024758
       objectReference: {fileID: 0}
     - target: {fileID: 849776145697812723, guid: a53c31dd1a6d445d99172953d76fa277,
         type: 3}
@@ -129,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 849776145697812723, guid: a53c31dd1a6d445d99172953d76fa277,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6445022
+      value: 0.34239182
       objectReference: {fileID: 0}
     - target: {fileID: 849776145697812723, guid: a53c31dd1a6d445d99172953d76fa277,
         type: 3}
@@ -210,17 +215,17 @@ PrefabInstance:
     - target: {fileID: 6378297017626381915, guid: 7d7b6583675ba4687a34bf8073bec345,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.808151
+      value: -8.844161
       objectReference: {fileID: 0}
     - target: {fileID: 6378297017626381915, guid: 7d7b6583675ba4687a34bf8073bec345,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00016943068
+      value: 0.00009001004
       objectReference: {fileID: 0}
     - target: {fileID: 6378297017626381915, guid: 7d7b6583675ba4687a34bf8073bec345,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.597472
+      value: 5.322085
       objectReference: {fileID: 0}
     - target: {fileID: 6378297017626381915, guid: 7d7b6583675ba4687a34bf8073bec345,
         type: 3}
@@ -565,17 +570,17 @@ PrefabInstance:
     - target: {fileID: 1313936508639737631, guid: 7e56060f8295343d3ad5f0b4dc4af791,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.98778
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1313936508639737631, guid: 7e56060f8295343d3ad5f0b4dc4af791,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1313936508639737631, guid: 7e56060f8295343d3ad5f0b4dc4af791,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6445022
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1313936508639737631, guid: 7e56060f8295343d3ad5f0b4dc4af791,
         type: 3}
@@ -617,6 +622,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstacle - SewerPipe
       objectReference: {fileID: 0}
+    - target: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+        type: 3}
+      propertyPath: lane
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7040310904434626305, guid: 7e56060f8295343d3ad5f0b4dc4af791,
         type: 3}
       propertyPath: meshScale
@@ -627,16 +637,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e56060f8295343d3ad5f0b4dc4af791, type: 3}
---- !u!114 &1720906431794451091 stripped
+--- !u!114 &4681476666619452204 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7040310904434626305, guid: 7e56060f8295343d3ad5f0b4dc4af791,
+  m_CorrespondingSourceObject: {fileID: 3936748635748320958, guid: 7e56060f8295343d3ad5f0b4dc4af791,
     type: 3}
   m_PrefabInstance: {fileID: 8526957036807232914}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23412646c92cd402a9716dead767556a, type: 3}
+  m_Script: {fileID: 11500000, guid: 05cae1df49d314b4dba2c0ae95b6c576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &7235556668447845005 stripped
@@ -661,17 +671,17 @@ PrefabInstance:
     - target: {fileID: 7448863050136868920, guid: ae1b9d489909e41f7937643f699c10a6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.264126
+      value: -8.297006
       objectReference: {fileID: 0}
     - target: {fileID: 7448863050136868920, guid: ae1b9d489909e41f7937643f699c10a6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00089770474
+      value: 0.00047690564
       objectReference: {fileID: 0}
     - target: {fileID: 7448863050136868920, guid: ae1b9d489909e41f7937643f699c10a6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.355825
+      value: 25.194725
       objectReference: {fileID: 0}
     - target: {fileID: 7448863050136868920, guid: ae1b9d489909e41f7937643f699c10a6,
         type: 3}
@@ -747,17 +757,17 @@ PrefabInstance:
     - target: {fileID: 8438480196671846264, guid: 2c1b8c7f7067a4840ac5949f183fc148,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.64561
+      value: -8.680718
       objectReference: {fileID: 0}
     - target: {fileID: 8438480196671846264, guid: 2c1b8c7f7067a4840ac5949f183fc148,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0003433
+      value: 0.0001824559
       objectReference: {fileID: 0}
     - target: {fileID: 8438480196671846264, guid: 2c1b8c7f7067a4840ac5949f183fc148,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.543413
+      value: 10.295441
       objectReference: {fileID: 0}
     - target: {fileID: 8438480196671846264, guid: 2c1b8c7f7067a4840ac5949f183fc148,
         type: 3}

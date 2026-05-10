@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using EditorAttributes;
 using UnityEditor;
@@ -28,6 +29,11 @@ public class LevelContentBuilder : MonoBehaviour
         // Naming:
         string splined = sc ? "Splined" : "";
         name = new string($"{environmentType} Level Content Builder ({sections.Length}) {splined}");
+
+        foreach (var section in sections)
+        {
+            section.currentDistance = 0f;
+        }
     }
 
     [Button]
@@ -61,4 +67,31 @@ public class LevelContentBuilder : MonoBehaviour
 
         Debug.Log($"Saved {scriptableObject} to {pathName}");
     }
+    
+    # if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (sections.Length <= 0) return;
+        
+        var previousSpeed = 10;
+        foreach (var section in sections)
+        {
+            if (section.sectionData.slipStreamDatas.Count > 0)
+            {
+                // Get the last slip stream speed value
+                var increaseAmount = section.sectionData.slipStreamDatas[^1].sectionData.overridedData.speedIncreaseAmount;
+                
+                if (increaseAmount >= previousSpeed)
+                {
+                    section.speed = increaseAmount;
+                    previousSpeed = increaseAmount;
+                }
+            }
+            else
+            {
+                section.defaultSpeed = previousSpeed;
+            }
+        }
+    }
+    #endif
 }

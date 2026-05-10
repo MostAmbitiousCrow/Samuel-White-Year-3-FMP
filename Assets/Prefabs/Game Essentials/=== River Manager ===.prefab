@@ -188,21 +188,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldSplineContainer: {fileID: 0}
   boatController: {fileID: 0}
+  tsunamiController: {fileID: 0}
   speedIncreaseSound: {fileID: 8208937539249067663}
   speedDecreaseSound: {fileID: 7279005641592401926}
   riverFlowSpeed: 0
   minMaxSpeed: {x: 10, y: 50}
   startingRiverSpeed: 10
   currentRiverSpeed: 5
-  riverObjectSpawnDistance: 100
+  riverObjectSpawnDistance: 120
   lanesParent: {fileID: 3663419595711803000}
-  RiverLanes:
-  - ID: 0
-    transform: {fileID: 4854008090063710238}
-  - ID: 1
-    transform: {fileID: 3232485264081671715}
-  - ID: 2
-    transform: {fileID: 6516330997399742662}
+  riverLanes: []
   slowCurve:
     serializedVersion: 2
     m_Curve:
@@ -251,6 +246,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  slowTime: 0.5
+  speedRecoveryTime: 2.4
+  isHalted: 0
+  targetRiverSpeed: 0
+  slowTargetRiverSpeed: 0
   evaluation: 0
 --- !u!1 &3450312016689361990
 GameObject:
