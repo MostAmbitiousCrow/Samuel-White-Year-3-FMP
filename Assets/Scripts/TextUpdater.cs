@@ -16,18 +16,20 @@ public class TextUpdater : MonoBehaviour
     private void OnEnable()
     {
         GameSettingsManager.GameplayChanged += ActivateFont;
+        GameColoursManager.OnGameColoursChanged += ActivateFont;
         ActivateFont();
     }
 
     private void OnDisable()
     {
         GameSettingsManager.GameplayChanged -= ActivateFont;
+        GameColoursManager.OnGameColoursChanged -= ActivateFont;
     }
 
     private void ActivateFont()
     {
-        if (textMesh == null) textMesh = GetComponent<TextMeshProUGUI>();
-        if (GameSettingsManager.Instance == null)
+        if (!textMesh) textMesh = GetComponent<TextMeshProUGUI>();
+        if (!GameSettingsManager.Instance)
         {
             // Debug.Log("Game Settings Instance is Missing"); //TODO
             return;
@@ -37,8 +39,8 @@ public class TextUpdater : MonoBehaviour
             GameSettingsManager.DoDyslexiaFont? 
             GameSettingsManager.Instance.dyslexicFont : GameSettingsManager.Instance.pixelFont;
 
-        // Set text colour as the global highlight colour
-        if (GameColoursManager.CurrentColours == null) return;
-        textMesh.color = GameColoursManager.CurrentColours.MaterialColours[0].HighlightColour;
+        // Set text colour as the UI highlight colour
+        if (!GameColoursManager.CurrentColours) return;
+        textMesh.color = GameColoursManager.MaterialTypes[7].materials[0].GetColor(GameColoursManager.NewHighlight);
     }
 }

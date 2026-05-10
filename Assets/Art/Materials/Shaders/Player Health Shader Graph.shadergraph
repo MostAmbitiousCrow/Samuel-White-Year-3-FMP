@@ -1209,8 +1209,8 @@
     "m_ObjectId": "109b1deaec71406ab05e5dff243f0186",
     "m_Title": "Pixelate",
     "m_Position": {
-        "x": -2332.571044921875,
-        "y": 842.8570556640625
+        "x": -2332.0,
+        "y": 843.5
     }
 }
 
@@ -1696,10 +1696,10 @@
     "m_Guid": {
         "m_GuidSerialized": "00e34148-dc79-45b3-bafb-674239fdcd62"
     },
-    "m_Name": "Highlight",
+    "m_Name": "NewHighlight",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Highlight",
-    "m_DefaultReferenceName": "_Highlight",
+    "m_RefNameGeneratedByDisplayName": "NewHighlight",
+    "m_DefaultReferenceName": "_NewHighlight",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -1848,7 +1848,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "2d40fded68d346188b2819044b1a9ad2",
     "m_Id": 0,
-    "m_DisplayName": "Shadow",
+    "m_DisplayName": "NewShadow",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2009,7 +2009,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "38e3271f6ba54ff889770e51329cb3ca",
     "m_Id": 0,
-    "m_DisplayName": "Highlight",
+    "m_DisplayName": "NewHighlight",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -3307,7 +3307,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "823fbaf2378e478fa90862f8bf1e910a",
     "m_Id": 0,
-    "m_DisplayName": "Midtone",
+    "m_DisplayName": "NewMidtone",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -3671,10 +3671,10 @@
     "m_Guid": {
         "m_GuidSerialized": "61ca1f4d-83f2-4ba0-a670-6c7ed52e63f3"
     },
-    "m_Name": "Shadow",
+    "m_Name": "NewShadow",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Shadow",
-    "m_DefaultReferenceName": "_Shadow",
+    "m_RefNameGeneratedByDisplayName": "NewShadow",
+    "m_DefaultReferenceName": "_NewShadow",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -5198,8 +5198,8 @@
     "m_ObjectId": "d812ca8e70fb411ebded57eb94e8c029",
     "m_Title": "Pulse Effect",
     "m_Position": {
-        "x": -2367.99951171875,
-        "y": 1248.5714111328125
+        "x": -2367.0,
+        "y": 1249.5
     }
 }
 
@@ -5876,10 +5876,10 @@
     "m_Guid": {
         "m_GuidSerialized": "366d215f-1c26-4a1f-9ad1-1ad53edcc424"
     },
-    "m_Name": "Midtone",
+    "m_Name": "NewMidtone",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Midtone",
-    "m_DefaultReferenceName": "_Midtone",
+    "m_RefNameGeneratedByDisplayName": "NewMidtone",
+    "m_DefaultReferenceName": "_NewMidtone",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,

@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Serbian (sr)
   m_GUID: 243f8bb9da8f8a049a4698dc7675ac34
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: b9432abf722ddd849832f636e1c59f50
+    m_Address: String_sr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-sr
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 470abac8e37c5c54e9e97068617f0a6b, type: 2}
   m_SchemaSet:

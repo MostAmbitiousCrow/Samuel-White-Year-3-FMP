@@ -9,12 +9,13 @@ namespace GameColours
     public class GameColoursManager : MonoBehaviour
     {
         // Cached Shader Property IDs
-        private static readonly int NewHighlight = Shader.PropertyToID(HighlightString);
+        public static readonly int NewHighlight = Shader.PropertyToID(HighlightString);
         private static readonly int NewMidtone = Shader.PropertyToID(MidtoneString);
         private static readonly int NewShadow = Shader.PropertyToID(ShadowString);
 
         [Header("Colours")]
         [SerializeField] private MaterialType[] materialTypes;
+        public static MaterialType[] MaterialTypes;
         
         [Serializable]
         public class MaterialType
@@ -45,11 +46,17 @@ namespace GameColours
         {
             Global, Player, Enemy, Obstacle, Collectible, Environment, River, UI
         }
+
+        public static event Action OnGameColoursChanged;
     
         private void Awake()
         {
-            _colourBlindness = colourBlindColours;
-            _defaultColours = defaultColours;
+            if (!CurrentColours)
+            {
+                _colourBlindness = colourBlindColours;
+                _defaultColours = defaultColours;
+                CurrentColours = defaultColours;
+            }
 
             _objectColours = new Dictionary<int, Material[]>();
             var count = Enum.GetNames(typeof(ObjectTypes)).Length;
@@ -58,10 +65,10 @@ namespace GameColours
                 var matType = materialTypes[i];
                 _objectColours.Add((int)matType.type, matType.materials);
             }
+            MaterialTypes = materialTypes;
             print($"Counted Types = {count}. Actual Count = {_objectColours.Count}");
             
             UpdateColours();
-            SetRainbowMode(GameSettingsManager.DoRainbowMode);
 
             // GameManager.SceneManager.onLevelLoaded += ResetColours;
         }
@@ -78,15 +85,21 @@ namespace GameColours
     
         public static void UpdateColours()
         {
-            if (GameSettingsManager.CurrentColourblindMode 
-                == 
+            if (GameSettingsManager.CurrentColourblindMode
+                ==
                 GameSettingsManager.ColourblindType.None)
-                AssignColours(_defaultColours);
+            {
+                AssignColours(CurrentColours);
+                SetRainbowMode(GameSettingsManager.DoRainbowMode);
+            }
             else
             {
                 UpdateColourBlindColours();
             }
-            SetRainbowMode(GameSettingsManager.DoRainbowMode);
+            
+            OnGameColoursChanged?.Invoke();
+            
+            Debug.Log($"Updated Colours. New Colours = {CurrentColours}");
         }
 
         [Button]
@@ -154,6 +167,7 @@ namespace GameColours
         private void CycleRainbow()
         {
             // Use Time.time to get a continuously increasing value for the hue
+            // Modular to always loop
             var hueOffset = (Time.realtimeSinceStartup * 0.25f) % 1f;
     
             for (var i = 0; i < _objectColours.Count; i++)
@@ -161,9 +175,9 @@ namespace GameColours
                 var mats = _objectColours[i];
             
                 // Reference colour from offset
-                var baseCol = _defaultColours.MaterialColours[i];
+                var baseCol = CurrentColours.MaterialColours[i];
             
-                // Must change the colour values INSIDE the class. ffs.
+                // Note: Change the colour values INSIDE the class, otherwise it won't update the colours
                 var rainbowCol = new ObjectMaterialColours
                 {
                     HighlightColour = ShiftHue(baseCol.HighlightColour, hueOffset),
@@ -173,6 +187,7 @@ namespace GameColours
             
                 UpdateMaterials(mats, rainbowCol);
             }
+            OnGameColoursChanged?.Invoke();
     
             if (Camera.main) UpdateSkybox(ShiftHue(Camera.main.backgroundColor, hueOffset));
         }

@@ -158,11 +158,6 @@ public class TutorialSectionReader : MonoBehaviour
     {
         if (_inputReaderRoutine != null) StopCoroutine(_inputReaderRoutine);
         
-        // Initially set all canvas groups to be invisible
-        foreach (var content in tutorialContents) content.CanvasGroup.alpha = 0f;
-
-        skipTutorialGroup.alpha = 0f;
-        
         OnTutorialCompleted();
     }
 
@@ -203,7 +198,12 @@ public class TutorialSectionReader : MonoBehaviour
     private void OnTutorialCompleted()
     {
         TutorialComplete = true;
-        Debug.Log("Tutorial Completed");
+        // Debug.Log("Tutorial Completed");
+        
+        // Initially set all canvas groups to be invisible
+        foreach (var content in tutorialContents) content.CanvasGroup.alpha = 0f;
+
+        skipTutorialGroup.alpha = 0f;
         
         // Start the game once the tutorial has been completed
         GameManager.GameLogic.StartGame();

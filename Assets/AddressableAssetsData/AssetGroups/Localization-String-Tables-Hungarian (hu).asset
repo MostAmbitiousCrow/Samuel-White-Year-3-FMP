@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Hungarian (hu)
   m_GUID: e2b742fddc95c6840b57210b7e42a65f
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 578ccf72833593144a59c2d51eb2d8cf
+    m_Address: String_hu
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-hu
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 470abac8e37c5c54e9e97068617f0a6b, type: 2}
   m_SchemaSet:
