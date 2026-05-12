@@ -117,6 +117,8 @@ public class GameLevelManager : MonoBehaviour
         _sectionManager.AssignNewLevelData(levels[currentLevel]);
             
         // Update the world Spline 
+        if (!levels[currentLevel]) Debug.LogError("No level assigned!");
+        
         var spline = levels[currentLevel].levelSpline;
         if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
         OnLevelLoaded?.Invoke();

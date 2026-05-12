@@ -29,11 +29,11 @@ namespace GameColours
         [Space]
         public static SO_GameColours CurrentColours;
         [SerializeField] private SO_GameColours defaultColours;
-        private static SO_GameColours _defaultColours;
+        public static SO_GameColours CurrentColourBlindColours;
         
         [Header("Colour Blindness")]
         [SerializeField] private SO_GameColours[] colourBlindColours = new  SO_GameColours[3];
-        private static SO_GameColours[] _colourBlindness;
+        private static SO_GameColours[] _colourBlindColours;
     
         // Cached parameter names
         private const string HighlightString = "_NewHighlight";
@@ -53,11 +53,11 @@ namespace GameColours
         {
             if (!CurrentColours)
             {
-                _colourBlindness = colourBlindColours;
-                _defaultColours = defaultColours;
+                _colourBlindColours = colourBlindColours;
                 CurrentColours = defaultColours;
             }
-
+            
+            // Create a dictionary of references to the arrays of materials categorised by Object Type
             _objectColours = new Dictionary<int, Material[]>();
             var count = Enum.GetNames(typeof(ObjectTypes)).Length;
             for (int i = 0; i < count; i++)
@@ -69,8 +69,6 @@ namespace GameColours
             print($"Counted Types = {count}. Actual Count = {_objectColours.Count}");
             
             UpdateColours();
-
-            // GameManager.SceneManager.onLevelLoaded += ResetColours;
         }
     
         private void OnEnable()
@@ -105,7 +103,7 @@ namespace GameColours
         [Button]
         public void ResetColours()
         {
-            _defaultColours = defaultColours;
+            CurrentColours = defaultColours;
             UpdateColours();
         }
 
@@ -119,12 +117,16 @@ namespace GameColours
 
         private static void UpdateColourBlindColours()
         {
-            AssignColours(_colourBlindness[(int)GameSettingsManager.CurrentColourblindMode]);
+            CurrentColourBlindColours = _colourBlindColours[(int)GameSettingsManager.CurrentColourblindMode];
+            SetRainbowMode(false);
+            AssignColours(CurrentColourBlindColours);
         }
     
         private static void AssignColours(SO_GameColours colours)
         {
-            CurrentColours = colours;
+            // Ignore replacing the default, non-colourblind, colours
+            if (GameSettingsManager.CurrentColourblindMode == GameSettingsManager.ColourblindType.None)
+                CurrentColours = colours;
     
             for (var i = 0; i < colours.MaterialColours.Length; i++)
             {

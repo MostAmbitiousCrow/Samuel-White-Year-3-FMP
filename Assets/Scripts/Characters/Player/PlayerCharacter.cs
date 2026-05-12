@@ -185,13 +185,13 @@ namespace GameCharacters
             base.OnGroundPound();
             if (isGrounded)
             {
-                Debug.Log("Player Pounded the boat UWU");
+                // Debug.Log("Player Pounded the boat UWU");
                 OnPlayerGroundPounded?.Invoke();
                 AudioManager.Play(Clip.Plyr_Pound2);
             }
             else
             {
-                Debug.Log("Player Triggered the Ground Pound in the Air");
+                // Debug.Log("Player Triggered the Ground Pound in the Air");
                 // AudioManager.Play(Clip.AirSlam); // TODO: Create SFX for triggering Ground Pound in the air
             }
         }

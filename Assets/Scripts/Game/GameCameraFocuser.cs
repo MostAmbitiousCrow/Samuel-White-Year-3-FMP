@@ -82,8 +82,7 @@ public class GameCameraFocuser : MonoBehaviour
     
             transform.localPosition = originPosition + new Vector3(_currentXOffset, 0f, 0f); //TODO: Fix NaN error
     
-            if (lookAtTarget)
-                transform.LookAt(lookAtTarget, transform.up);
+            if (lookAtTarget) transform.LookAt(lookAtTarget, transform.up);
         }    
         
         private float GetTargetLean(Transform target, float strength)
@@ -97,10 +96,10 @@ public class GameCameraFocuser : MonoBehaviour
         /// <summary>
         /// forces the camera position to a given side 
         /// </summary>
-        private void SlamCamera()
-        {
-         
-        }
+        // private void SlamCamera()
+        // {
+        //  
+        // }
     #endregion
 
     #region Camera FOV Sliding

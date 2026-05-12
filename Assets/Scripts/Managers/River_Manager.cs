@@ -194,6 +194,7 @@ public class River_Manager : MonoBehaviour
             else if (amount < _previousSpeed) speedDecreaseSound.Play();
         }
         _previousSpeed = amount;
+        OnRiverSpeedUpdate?.Invoke();
     }
 
     private int _storedRiverSpeed;
@@ -220,10 +221,10 @@ public class River_Manager : MonoBehaviour
         if (targetSpeed < minMaxSpeed.x && !bypassRange) // If target speed is less than the min speed value
         {
             print("River speed has reached minimum speed");
+            OnRiverSpeedUpdate?.Invoke();
             return;
         }
         targetRiverSpeed = targetSpeed;
-        
         OnRiverSpeedUpdate?.Invoke();
         speedDecreaseSound.Play();
     }
@@ -237,6 +238,7 @@ public class River_Manager : MonoBehaviour
         if (targetSpeed > minMaxSpeed.y)
         {
             print("River speed has reached maximum speed!");
+            OnRiverSpeedUpdate?.Invoke();
             return;
         }
 
