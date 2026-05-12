@@ -4,7 +4,7 @@ using EditorAttributes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
-
+#if UNITY_EDITOR
 public class LevelContentBuilder : MonoBehaviour
 {
     [Header("Data")]
@@ -95,3 +95,4 @@ public class LevelContentBuilder : MonoBehaviour
     }
     #endif
 }
+#endif

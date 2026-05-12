@@ -29,11 +29,7 @@ public class TextUpdater : MonoBehaviour
     private void ActivateFont()
     {
         if (!textMesh) textMesh = GetComponent<TextMeshProUGUI>();
-        if (!GameSettingsManager.Instance)
-        {
-            // Debug.Log("Game Settings Instance is Missing"); //TODO
-            return;
-        }
+        if (!GameSettingsManager.Instance) return;
         
         textMesh.font = 
             GameSettingsManager.DoDyslexiaFont? 

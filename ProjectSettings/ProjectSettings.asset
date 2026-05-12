@@ -12,12 +12,12 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: MostAmbitiousCrow
-  productName: Flushed Forward (Demo)
+  companyName: Samuel White Games
+  productName: Flushed Forward (FMP)
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
-  m_ShowUnitySplashScreen: 0
+  m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
@@ -39,7 +39,9 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
+  m_SplashScreenLogos:
+  - logo: {fileID: 21300000, guid: 8722583e72b9a5a4e8ce1c147f92cfff, type: 3}
+    duration: 2
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
@@ -141,9 +143,11 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.9
+  bundleVersion: 1.0
   preloadedAssets:
   - {fileID: 11400000, guid: 921f311abf6d1452495d15aab60bc67d, type: 2}
+  - {fileID: 11400000, guid: ec5a95d02d5f22947a68fb2ea833044f, type: 2}
+  - {fileID: -944628639613478452, guid: 55c7fdd9c90c84921a58861b0ad28b5e, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -297,7 +301,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: bbf1b10794c39ed4d877f6e219977eb4, type: 3}
+      m_Icon: {fileID: 2800000, guid: b29e4875ce0216c4f99d900c19665c21, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

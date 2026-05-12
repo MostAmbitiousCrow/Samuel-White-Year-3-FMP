@@ -87,8 +87,8 @@ namespace GameColours
                 ==
                 GameSettingsManager.ColourblindType.None)
             {
-                AssignColours(CurrentColours);
                 SetRainbowMode(GameSettingsManager.DoRainbowMode);
+                AssignColours(CurrentColours);
             }
             else
             {
