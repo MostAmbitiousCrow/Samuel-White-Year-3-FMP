@@ -128,11 +128,9 @@ public class Gemstone : River_Collectible
 
     private ParticleSystem.Particle[] _particles;
 
-    private void ParticleAnimation() // TODO: Turn into a coroutine
+    private void ParticleAnimation()
     {
-        // Debug.Log($"Target = {_particleHomeTarget}. Is Collected = {IsCollected}");
         if (!particleHomeTarget || !IsCollected) return;
-        // Debug.Log("Doing The Particle Animation");
 
         // Make sure buffer is large enough
         if (_particles == null || _particles.Length < collectParticles.main.maxParticles)
@@ -150,16 +148,16 @@ public class Gemstone : River_Collectible
 
             float age = _particles[i].startLifetime - _particles[i].remainingLifetime;
 
-            if (age >= homingDelay / (River_Manager.Instance.currentRiverSpeed / 10f))
+            if (age >= homingDelay / (River_Manager.Instance.TargetRiverSpeed / 10f))
             {
                 Vector3 dir = (particleHomeTarget.position - _particles[i].position).normalized;
                 _particles[i].velocity = Vector3.Lerp(_particles[i].velocity, dir * homingStrength,
-                    Time.deltaTime * (River_Manager.Instance.currentRiverSpeed * 2f)); //Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); // smoothing
+                    Time.deltaTime * (River_Manager.Instance.TargetRiverSpeed * 2f)); //Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); // smoothing
 
                 float distance = Vector3.Distance(_particles[i].position, particleHomeTarget.position);
                 if (distance < particleDespawnDistance)
                 {
-                     GameManager.GameLogic.AddGemstones(Data.BankValue); // Replace to update the Players visual Gemstone Count
+                     GameManager.GameLogic.AddGemstones(Data.BankValue);
                     _particles[i].remainingLifetime = 0f;
                     AudioManager.Play(Clip.Gem_Collect);
                 }
