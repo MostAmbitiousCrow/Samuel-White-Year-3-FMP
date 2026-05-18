@@ -54,8 +54,11 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 0.5, b: 0, a: 1}
     - _Color: {r: 1, g: 0.5, b: 0, a: 1}
+    - _Highlight: {r: 1, g: 0.6337449, b: 0, a: 1}
+    - _Midtone: {r: 0.9019608, g: 0.375817, b: 0, a: 1}
     - _NewHighlight: {r: 1, g: 0.6337449, b: 0, a: 1}
     - _NewMidtone: {r: 0.9019608, g: 0.375817, b: 0, a: 1}
     - _NewShadow: {r: 0.45882353, g: 0.19117647, b: 0, a: 1}
+    - _Shadow: {r: 0.45882353, g: 0.19117647, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -48,8 +48,11 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _NewHighlight: {r: 1, g: 1, b: 1, a: 1}
-    - _NewMidtone: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _NewShadow: {r: 0, g: 0, b: 0, a: 1}
+    - _Highlight: {r: 0, g: 0.90099996, b: 0, a: 1}
+    - _Midtone: {r: 0.14901963, g: 0.49411765, b: 0.14901963, a: 1}
+    - _NewHighlight: {r: 0, g: 0.90099996, b: 0, a: 1}
+    - _NewMidtone: {r: 0.14901963, g: 0.49411765, b: 0.14901963, a: 1}
+    - _NewShadow: {r: 0, g: 0.2, b: 0, a: 1}
+    - _Shadow: {r: 0, g: 0.2, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

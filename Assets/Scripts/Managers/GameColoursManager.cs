@@ -36,9 +36,9 @@ namespace GameColours
         private static SO_GameColours[] _colourBlindColours;
     
         // Cached parameter names
-        private const string HighlightString = "_NewHighlight";
-        private const string MidtoneString = "_NewMidtone";
-        private const string ShadowString = "_NewShadow";
+        private const string HighlightString = "_Highlight";
+        private const string MidtoneString = "_Midtone";
+        private const string ShadowString = "_Shadow";
 
         public static bool IsRainbowModeActive;
     
@@ -211,6 +211,7 @@ namespace GameColours
         
     }
     
+    // DON'T CHANGE NAMES, IT WILL DELETE COLOUR PALETTE SCRIPTABLE OBJECT VALUES
     [Serializable]
     public class ObjectMaterialColours
     {
