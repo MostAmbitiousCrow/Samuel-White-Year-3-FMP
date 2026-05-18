@@ -34,6 +34,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     [Tooltip("The distance of this object to the destination of its lane")]
     [SerializeField] protected float distance = 0f;
     [SerializeField] protected float startDistance;
+    public float StartDistance => startDistance;
     [Space]
     public bool canMove = false;
     public bool isMoving;

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using EditorAttributes;
 using Void = EditorAttributes.Void;
 
@@ -13,6 +14,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     #region Section Objects & Look-up
     [Header("Level Data")]
     [SerializeField] private SO_LevelData currentLevelData;
+    private SO_SectionData[] _randomisedSectionData;
 
     [Header("Section Info")]
     [Min(0)][SerializeField] private int currentSectionIndex = 0;
@@ -111,6 +113,16 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     public void AssignNewLevelData(SO_LevelData data)
     {
         currentLevelData = data;
+        _randomisedSectionData = data.sectionData;
+        
+        _randomisedSectionData = _randomisedSectionData.OrderBy(x => new System.Random().Next()).ToArray();
+
+        Debug.Log("Randomised Data:");
+        foreach (var sectionData in _randomisedSectionData)
+        {
+            Debug.Log(sectionData.name);
+        }
+        
         // Debug.Log($"Assigned new Level Data to Section Manager");
     }
 
@@ -145,7 +157,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         // Spawn Sections
         while (currentSectionIndex < sectionLength)
         {
-            var data = currentLevelData.sectionData[currentSectionIndex];
+            var data = _randomisedSectionData[currentSectionIndex];
 
             if (!data)
             {
@@ -180,9 +192,10 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             _currentSectionOffset += (furthestDistance + gapBetweenSections);
             yield return currentSectionIndex++;
         }
-        
-        // TODO: Maybe use for the thing...
-        if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
+
+        // End once the players boat has progressed past the last spawned river object
+        if (lastSpawnedObject) yield return new WaitUntil(() 
+            => boatController.RiverSplineObject.DistanceOnSpline > lastSpawnedObject.StartDistance + 20f);
         else Debug.Log($"Section {currentSectionIndex} had no objects.");
         
         Debug.Log("All Sections Spawned and Completed. Triggering Next Level Load");
