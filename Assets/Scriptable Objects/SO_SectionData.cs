@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using EditorAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// 
@@ -88,5 +87,12 @@ public class SO_SectionData : ScriptableObject
             public int distance;
             public int height;
         }
+        
+        /// <summary> What difficulty this section qualifies as. Setting difficulty as none will cause this
+        /// section to be ignored. </summary>
+        [Flags]
+        public enum DifficultyQualification { Easy = 1, Medium = 2, Hard = 4 }
+        /// <summary> Determines the difficulty considered for this section </summary>
+        public DifficultyQualification difficultyType;
     }
 }

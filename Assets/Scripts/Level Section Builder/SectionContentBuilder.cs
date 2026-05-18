@@ -34,6 +34,8 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         
         [Line(GUIColor.White)]
         public List<Section_SlipStream_Object> slipStreamDatas = new();
+        
+        public SO_SectionData.SectionContent.DifficultyQualification difficultyType;
     }
     public SectionData sectionData = new();
     // public SplineContainer splineContainer;

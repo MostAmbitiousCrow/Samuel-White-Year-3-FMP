@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -30,6 +31,17 @@ public class GameLevelManager : MonoBehaviour
     private void OnDisable()
     {
         GameManager.GameLogic.OnGameStarted -= InitialiseFirstLevel;
+    }
+
+    #endregion
+
+    #region Level Creation
+    
+    private Dictionary<int, SO_LevelData[]> _levels;
+
+    public void CreateLevels()
+    {
+        
     }
 
     #endregion

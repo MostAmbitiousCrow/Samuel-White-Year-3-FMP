@@ -14,8 +14,8 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     #region Section Objects & Look-up
     [Header("Level Data")]
     [SerializeField] private SO_LevelData currentLevelData;
-    private SO_SectionData[] _randomisedSectionData;
-
+    private SO_SectionData[] _sectionData;
+    
     [Header("Section Info")]
     [Min(0)][SerializeField] private int currentSectionIndex = 0;
     
@@ -113,17 +113,11 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     public void AssignNewLevelData(SO_LevelData data)
     {
         currentLevelData = data;
-        _randomisedSectionData = data.sectionData;
+        _sectionData = data.sectionData;
         
-        _randomisedSectionData = _randomisedSectionData.OrderBy(x => new System.Random().Next()).ToArray();
-
-        Debug.Log("Randomised Data:");
-        foreach (var sectionData in _randomisedSectionData)
-        {
-            Debug.Log(sectionData.name);
-        }
-        
-        // Debug.Log($"Assigned new Level Data to Section Manager");
+        // Randomise Sections if applicable
+        if (currentLevelData.levelType == SO_LevelData.LevelType.Randomised)
+            _sectionData = _sectionData.OrderBy(x => new System.Random().Next()).ToArray();
     }
 
     private Coroutine _spawnRoutine;
@@ -157,7 +151,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         // Spawn Sections
         while (currentSectionIndex < sectionLength)
         {
-            var data = _randomisedSectionData[currentSectionIndex];
+            var data = _sectionData[currentSectionIndex];
 
             if (!data)
             {

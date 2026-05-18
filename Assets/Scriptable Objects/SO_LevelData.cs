@@ -20,10 +20,21 @@ public class SO_LevelData : ScriptableObject
     public SO_GameColours levelColours;
     [Tooltip("The spline that will be applied to the World Spline of which objects travel on")]
     public Spline levelSpline;
-    [FormerlySerializedAs("levelType")] [Tooltip("The level type that will affect the environment of the game")]
+    [Tooltip("The level type that will affect the environment of the game")]
     public Environments environmentType;
     
     [Header("Section Data")]
     [Tooltip("The array of sections that will appear during this level. Sections load from first to last.")]
     public SO_SectionData[] sectionData;
+    
+    /// <summary>
+    /// <para>The type this level will approach loading sections.</para>
+    /// <para>Defined will spawn the sections provided in order.</para>
+    /// <para>Randomised will randomise the sections provided.</para>
+    /// </summary>
+    public enum LevelType
+    {
+        Defined, Randomised
+    }
+    public LevelType levelType;
 }
