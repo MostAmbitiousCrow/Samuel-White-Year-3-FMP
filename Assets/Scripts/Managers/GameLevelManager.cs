@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /*
  * The Game Level Manager exists in the Main Game scene and stores Scriptable Object Level Data.
  * The Current Level Data is then provided to the Section Manager to load the level content.
  */
-public class GameLevelManager : MonoBehaviour
+/*public class GameLevelManager : MonoBehaviour
 {
     // Previously the GameSectionManager
     private LevelSectionManager _sectionManager;
@@ -33,6 +36,23 @@ public class GameLevelManager : MonoBehaviour
         GameManager.GameLogic.OnGameStarted -= InitialiseFirstLevel;
     }
 
+    #endregion
+    
+    #region Level Selection
+
+    public static Environments[] GetAvailableEnvironments(Environments environment)
+    {
+        return environment switch
+        {
+            Environments.Sewer => new[] { Environments.Cave, Environments.Pyramid },
+            Environments.Pyramid => new[] { Environments.Dungeon, Environments.Forest },
+            Environments.Cave => new[] { Environments.Sewer, Environments.Forest },
+            Environments.Forest => new[] { Environments.Cave, Environments.Dungeon },
+            Environments.Dungeon => new[] { Environments.Sewer, Environments.Pyramid },
+            _ => throw new ArgumentOutOfRangeException(nameof(environment), environment, null)
+        };
+    }
+    
     #endregion
 
     #region Level Creation
@@ -140,9 +160,260 @@ public class GameLevelManager : MonoBehaviour
     }
     
     #endregion
+}*/
+
+public class GameLevelManager : MonoBehaviour
+{
+    /// <summary>
+    /// The current Difficulty value of the game.
+    /// <para>Level Sections will be added into the level selection based on the current game difficulty. </para>
+    /// </summary>
+    public static float CurrentDifficulty { get; private set; }
+    public static SO_GameDifficultyValues.DifficultyValues CurrentDifficultyValues { get; private set; }
+    /// <summary> What Environment the player is currently on </summary>
+    public static Environments CurrentEnvironment { get; private set; }
+    
+    /// <summary> What level is the player currently on in the current environment</summary>
+    public static int CurrentLevel { get; private set; }
+    public static SO_LevelData CurrentLevelData;
+    /// <summary> Checklist of which environments the player has completed </summary>
+    public static Dictionary<Environments, bool> EnvironmentCompletions { get; private set; } = new()
+    {
+        { Environments.Sewer, false },
+        { Environments.Pyramid, false },
+        { Environments.Cave, false },
+        { Environments.Forest, false },
+        { Environments.Dungeon, false },
+    };
+
+    public static GameLevelManager Instance { get; private set; }
+    public static event Action OnLevelLoaded;
+
+    #region Instanced Variables
+    [SerializeField] private float difficultyIncreasePerLevel = 5f;
+    
+    [Header("Dependencies")]
+    [SerializeField] private SO_LevelsContainer levelsContainer;
+    [SerializeField] private SO_GameDifficultyValues difficultyValues;
+    [SerializeField] private LevelSectionManager sectionManager;
+
+    #endregion
+
+    #region Initialisation
+
+    private void OnEnable()
+    {
+        GameManager.GameLogic.OnGameStarted += InitialiseLevels;
+    }
+    
+    private void OnDisable()
+    {
+        GameManager.GameLogic.OnGameStarted -= InitialiseLevels;
+    }
+
+    private void Awake()
+    {
+        if (!Instance) Instance = this;
+        else { Destroy(gameObject); return; }
+        
+        CurrentLevel = 0;
+        CurrentDifficulty = 0f;
+            
+        sectionManager = FindFirstObjectByType<LevelSectionManager>();
+        if (!sectionManager) Debug.LogError("No Game Section Manager was found!");
+    }
+
+    private void Start()
+    {
+        _loadingScreenController = GameManager.SceneManager.LoadingScreenController;
+    }
+    #endregion
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) InitiateEnvironmentSelect();
+    }
+
+    #region Environment Checks
+    
+    /// <summary>
+    /// Returns true if the player has completed every environment
+    /// </summary>
+    /// <returns>Boolean based on if all environments were completed</returns>
+    public static bool CheckEnvironmentsCompleted()
+    {
+        var requirement = EnvironmentCompletions.Count;
+        var progress = EnvironmentCompletions.Count(environment => environment.Value);
+
+        return progress >= requirement;
+    }
+
+    /// <summary>
+    /// Check if a specific environment has been completed
+    /// </summary>
+    /// <param name="environment">The environment type to check</param>
+    /// <returns>Boolean based on if the given environment has been completed</returns>
+    public static bool CheckEnvironmentCompleted(Environments environment)
+    {
+        return EnvironmentCompletions[environment];
+    }
+    
+    #endregion
+
+    #region Environment and Level Loading
+
+    private void InitialiseLevels()
+    {
+        LoadEnvironmentAndLevel(Environments.Sewer);
+    }
+
+    public void LoadNextLevel() //TODO
+    {
+        CurrentLevel++;
+        // Check if all the required levels are completed
+        if (CurrentLevel >= CurrentDifficultyValues.levels)
+        {
+            InitiateEnvironmentSelect();
+            return;
+        }
+
+        UpdateDifficulty();
+        
+        StartCoroutine(LevelTransitionRoutine());
+        Debug.Log($"Loaded Level '{CurrentLevel}' of {CurrentDifficultyValues.levels}. Difficulty = {CurrentDifficulty}.");
+    }
+
+    public void LoadEnvironmentAndLevel(Environments environment)
+    {
+        CurrentEnvironment = environment;
+        CurrentLevel = 0;
+        
+        UpdateDifficulty();
+        StartCoroutine(LevelTransitionRoutine());
+        
+        Debug.Log($"Loaded Environment '{CurrentEnvironment}'. Difficulty = {CurrentDifficulty}. Current Level = {CurrentLevel}. Max Levels = {CurrentDifficultyValues.levels}");
+    }
+
+    private void UpdateDifficulty()
+    {
+        CurrentDifficulty += difficultyIncreasePerLevel;
+        // CurrentDifficulty = Mathf.Clamp(CurrentDifficulty, 0, difficultyValues.maxDifficulty);
+        if (CurrentDifficulty >= CurrentDifficultyValues.threshold.y)
+            CurrentDifficultyValues = GetCurrentDifficulty();
+    }
+
+    private static void InitiateEnvironmentSelect()
+    {
+        Game_UI.Instance.OpenEnvironmentSelect(CurrentEnvironment);
+        
+    }
+
+    /// <summary> Creates a level under the current environment </summary>
+    private SO_LevelData CreateLevel()
+    {
+        List<SO_SectionData> selectedSections = new();
+        int sectionCount = Mathf.RoundToInt(Mathf.Lerp(CurrentDifficultyValues.sectionsRange.x,
+            CurrentDifficultyValues.sectionsRange.y, CurrentDifficulty / difficultyValues.maxDifficulty));
+        
+        Debug.Log($"Creating {sectionCount} sections for {CurrentEnvironment}");
+
+        for (int i = 0; i < sectionCount; i++)
+        {
+            SO_SectionData section = levelsContainer.GetRandomSection
+                (CurrentEnvironment, CurrentDifficultyValues.difficulty);
+            if (!section) continue;
+            
+            selectedSections.Add(section);
+            // Debug.Log($"Loaded section Hash: {section.GetHashCode()}");
+        }
+
+        // Get a level template from the current environment
+        SO_LevelData template = levelsContainer.GetRandomLevel(CurrentEnvironment);
+
+        if (!template) { Debug.LogError($"No level template found for {CurrentEnvironment}"); return null; }
+
+        // Clone it so we don't modify the original asset
+        SO_LevelData level = Instantiate(template);
+
+        // Replace its sections with our generated ones
+        level.sectionData = selectedSections.ToArray();
+
+        return level;
+    }
+    
+    private Loading_Screen_Controller _loadingScreenController;
+
+    private IEnumerator LevelTransitionRoutine()
+    {
+        _loadingScreenController.StartLoadingScreen();
+
+        yield return new WaitUntil(() => !_loadingScreenController.IsTransitioning);
+
+        CurrentLevelData = CreateLevel();
+
+        sectionManager.AssignNewLevelData(CurrentLevelData);
+        sectionManager.StartSpawning();
+        
+        var spline = CurrentLevelData.levelSpline;
+        if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
+        OnLevelLoaded?.Invoke();
+        Debug.Log($"Loaded Level '{CurrentLevelData.levelName}'");
+
+        _loadingScreenController.EndLoadingScreen();
+    }
+    
+    /// <summary>
+    /// Get a random difficulty value based on a difficulty value
+    /// </summary>
+    /// <returns></returns>
+    private SO_GameDifficultyValues.DifficultyValues GetCurrentDifficulty()
+    {
+        var easy = difficultyValues.GameDifficultyValues[0];
+        var medium = difficultyValues.GameDifficultyValues[1];
+        var hard = difficultyValues.GameDifficultyValues[2];
+
+        float t = Mathf.Clamp01(CurrentDifficulty / difficultyValues.maxDifficulty);
+
+        float easyWeight =
+            Mathf.Lerp(easy.threshold.x, easy.threshold.y, t);
+
+        float mediumWeight =
+            Mathf.Lerp(medium.threshold.x, medium.threshold.y, t);
+
+        float hardWeight =
+            Mathf.Lerp(hard.threshold.x, hard.threshold.y, t);
+
+        float total = easyWeight + mediumWeight + hardWeight;
+
+        float roll = Random.Range(0f, total);
+
+        if (roll < easyWeight)
+            return easy;
+
+        roll -= easyWeight;
+
+        if (roll < mediumWeight)
+            return medium;
+
+        return hard;
+    }
+    #endregion
+    
+    
+    // Reminder: I'm creating levels using randomly selected sections curated by difficulty,
 }
 
-public enum Environments
-{
-    Sewer, Pyramid, Cave, Dungeon
-}
+/// <summary>
+/// What difficulty a section qualifies as.
+/// <para>
+/// Setting difficulty as none should cause a section to be ignored.
+/// </para>
+/// </summary>
+[Flags]
+public enum DifficultyQualification { None = 0, Easy = 1, Medium = 2, Hard = 4 }
+
+/// <summary> The difficulty of game as a whole </summary>
+public enum GameDifficulty { Easy, Medium, Hard }
+
+// NOTE: You might need to modify the Sewer Environment Manager to load based on current Environment, not level
+public enum Environments { Sewer = 0, Pyramid = 1, Cave = 2, Forest = 3, Dungeon = 4 }

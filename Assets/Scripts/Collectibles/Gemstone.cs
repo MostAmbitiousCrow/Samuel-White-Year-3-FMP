@@ -142,7 +142,7 @@ public class Gemstone : River_Collectible
         {
             if (_particles[i].totalVelocity == Vector3.zero)
             {
-                print("Stopped");
+                // print("Stopped");
                 return;
             }
 

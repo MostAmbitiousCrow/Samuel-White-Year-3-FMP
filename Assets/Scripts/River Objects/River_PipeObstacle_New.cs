@@ -125,7 +125,7 @@ public class River_PipeObstacle_New : River_Obstacle
     protected override void FixedTimeUpdate()
     {
         base.FixedTimeUpdate();
-        if (IsHit) return;
+        if (isHit) return;
 
         for (int i = 0; i < points.Count-1; i++)
         {
@@ -163,7 +163,7 @@ public class River_PipeObstacle_New : River_Obstacle
             for (int i = 0; i < hitCount; i++)
             {
                 OnHit(_results[i].gameObject);
-                Debug.Log($"Hit: {_results[i].gameObject}");
+                // Debug.Log($"Hit: {_results[i].gameObject}");
             }
         }
         #if UNITY_EDITOR

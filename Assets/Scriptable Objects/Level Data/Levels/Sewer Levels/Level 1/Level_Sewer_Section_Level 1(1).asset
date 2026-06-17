@@ -16,29 +16,10 @@ MonoBehaviour:
     initialDelay: 0
     postDelay: 0
     obstacles:
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          connectedPipes:
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          pipeJoints: []
-        obstacleBridgeData:
-          leftJointLane: 0
-          rightJointLane: 0
-      lane: 1
+    - lane: 1
       distance: 1
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -57,10 +38,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 2
+    - lane: 2
       distance: 30
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -79,10 +60,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 0
+    - lane: 0
       distance: 30
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -101,10 +82,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
+    - lane: 1
       distance: 60
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -123,10 +104,31 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 0
+    - lane: 0
       distance: 90
       height: 0
+      data:
+        obstacleType: 0
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
     enemies: []
     collectibles: []
     gemstoneGates: []
     slipStreams: []
+    difficultyType: -1
+    applicableEnvironments: -1

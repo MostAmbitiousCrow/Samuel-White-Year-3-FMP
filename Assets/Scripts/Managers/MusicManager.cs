@@ -8,13 +8,12 @@ public class MusicManager : MonoBehaviour
 
     [SerializeField] private AudioClip[] sewerMusic = new AudioClip[4];
     
-    [Header("Dependencies")]
-    private GameLevelManager _gameLevelManager;
+    // [Header("Dependencies")]
+    // private GameLevelManager _gameLevelManager;
 
     private void Awake()
     {
         MusicSource = GetComponent<AudioSource>();
-        _gameLevelManager = FindFirstObjectByType<GameLevelManager>();
         
         Instance = this;
     }
@@ -28,11 +27,17 @@ public class MusicManager : MonoBehaviour
     {
         GameLevelManager.OnLevelLoaded -= PlayMusic;
     }
+    
+    private Environments _lastEnvironment;
 
     public void PlayMusic()
     {
-        if (_gameLevelManager.GameCompleted) return;
-        var data = _gameLevelManager.Levels[_gameLevelManager.CurrentLevel].environmentType;
+        // if (GameLevelManager.Instance.GameCompleted) return;
+        var data = GameLevelManager.CurrentEnvironment;
+        
+        // Skip reseting the same music
+        if (_lastEnvironment == data) return;
+        _lastEnvironment = data;
         var audioClip = sewerMusic[(int)data];
         MusicSource.clip = audioClip;
         // Debug.Log($"Playing Music: {audioClip} From the {data} Level");

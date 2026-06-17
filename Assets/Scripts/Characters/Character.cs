@@ -196,7 +196,7 @@ namespace GameCharacters
             rb.isKinematic = true;
             animator.SetTrigger(Died);
             TriggerHitStop(.1f);
-            Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
+            // Debug.Log($"{name} Died!. Collider is {characterCollider.enabled}");
         }
 
         /// <summary>

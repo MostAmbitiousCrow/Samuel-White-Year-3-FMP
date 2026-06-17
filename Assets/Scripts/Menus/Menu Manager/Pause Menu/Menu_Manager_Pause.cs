@@ -60,27 +60,7 @@ public class Menu_Manager_Pause : Menu_Manager
 		GameManager.GameLogic.OnGameResume -= ClosePauseMenu;
 		GameManager.GameLogic.OnGamePaused -= ShowPauseMenu;
 	}
-
-#if UNITY_EDITOR
-
-    protected override void Validation()
-    {
-        base.Validation();
-
-        //screenDatas = GetComponentsInChildren<MenuScreenContent>();
-
-        //// Filter to only MenuScreenContent_Pause and sort by PauseMenuScreenTypes order
-        //var sorted = screenDatas
-        //    .OfType<MenuScreenContent_Pause>()
-        //    .OrderBy(s => s.MainScreenTypes)
-        //    .Cast<MenuScreenContent>()
-        //    .ToArray();
-
-        //screenDatas = sorted;
-
-        //if (!_audioSource) _audioSource = GetComponent<AudioSource>();
-    }
-#endif
+    
     public void Resume()
     {
         GameManager.GameLogic.SetPauseState(false);

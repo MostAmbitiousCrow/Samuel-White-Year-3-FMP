@@ -16,7 +16,10 @@ MonoBehaviour:
     initialDelay: 0
     postDelay: 0
     obstacles:
-    - data:
+    - lane: 1
+      distance: 0
+      height: 2
+      data:
         obstacleType: 3
         overrideData: 0
         overriddenData:
@@ -35,10 +38,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 2
-      lane: 1
-      distance: 0
-      height: 2
-    - data:
+    - lane: 1
+      distance: 25
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -63,10 +66,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 25
+    - lane: 1
+      distance: 65
       height: 0
-    - data:
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -91,10 +94,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 65
-      height: 0
-    - data:
+    - lane: 1
+      distance: 90
+      height: 2
+      data:
         obstacleType: 3
         overrideData: 0
         overriddenData:
@@ -113,34 +116,33 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 2
-      lane: 1
-      distance: 90
-      height: 2
     enemies: []
     collectibles:
-    - data:
-        collectibleType: 0
-        overrideData: 0
-        overridedData:
-          BankValue: 1
-      lane: 1
+    - lane: 1
       distance: 0
       height: 4
-    - data:
+      data:
         collectibleType: 0
         overrideData: 0
         overridedData:
           BankValue: 1
-      lane: 1
+    - lane: 1
       distance: 70
       height: 0
-    - data:
+      data:
         collectibleType: 0
         overrideData: 0
         overridedData:
           BankValue: 1
-      lane: 2
+    - lane: 2
       distance: 90
       height: 4
+      data:
+        collectibleType: 0
+        overrideData: 0
+        overridedData:
+          BankValue: 1
     gemstoneGates: []
     slipStreams: []
+    difficultyType: -1
+    applicableEnvironments: -1

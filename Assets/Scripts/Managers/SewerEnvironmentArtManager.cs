@@ -51,10 +51,10 @@ public class SewerEnvironmentArtManager : MonoBehaviour
 
     public void UpdateSewerEnvironment() //TODO Find a way to ease the massive frame drop when regenerating the environment
     {
-        if (_gameLevelManager.GameCompleted) return; // TODO: TEMP Until I find a solution to levels loading after levels have already all been completed
+        //if (_gameLevelManager.GameCompleted) return; // TODO: TEMP Until I find a solution to levels loading after levels have already all been completed
         
-        var data = _gameLevelManager.Levels[_gameLevelManager.CurrentLevel];
-        var content = sewerArtContents[(int)data.environmentType];
+        var data = GameLevelManager.CurrentLevelData;
+        var content = sewerArtContents[(int)GameLevelManager.CurrentEnvironment];
         
         // Update the World Spline Container
         if (data.levelSpline.Count > 1) _splineContainer.Spline = data.levelSpline;

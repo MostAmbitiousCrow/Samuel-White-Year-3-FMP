@@ -334,6 +334,13 @@ MonoBehaviour:
     ceilingMesh: {fileID: -3721922691531902857, guid: a04bc79f842daf043a85a9ab97f03524,
       type: 3}
     ceilingMaterial: {fileID: 2100000, guid: 32c3720ac450ad34782515c5463ae174, type: 2}
+  - levelType: 4
+    wallMesh: {fileID: 1648688946560327016, guid: cb89fcd58172b4243a68db6ecdeca96d,
+      type: 3}
+    wallMaterial: {fileID: 2100000, guid: 79b54505d008ba54c95de0fec3d2cf68, type: 2}
+    ceilingMesh: {fileID: -3721922691531902857, guid: a04bc79f842daf043a85a9ab97f03524,
+      type: 3}
+    ceilingMaterial: {fileID: 2100000, guid: 32c3720ac450ad34782515c5463ae174, type: 2}
 --- !u!1001 &8693543776646312779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,7 +467,7 @@ PrefabInstance:
     - target: {fileID: 8633808145058857635, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}
       propertyPath: settings.deforming.scale.z
-      value: 40
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8633808145058857635, guid: afb52b4e771c2554e918c953cfc7952a,
         type: 3}

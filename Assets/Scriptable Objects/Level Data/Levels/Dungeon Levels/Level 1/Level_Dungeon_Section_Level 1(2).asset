@@ -16,7 +16,10 @@ MonoBehaviour:
     initialDelay: 0
     postDelay: 0
     obstacles:
-    - data:
+    - lane: 1
+      distance: 0
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -59,10 +62,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 0
+    - lane: 1
+      distance: 60
       height: 0
-    - data:
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -102,10 +105,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 60
+    - lane: 2
+      distance: 100
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -124,17 +127,16 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 2
-      distance: 100
-      height: 0
     enemies: []
     collectibles: []
     gemstoneGates: []
     slipStreams:
-    - data:
+    - lane: 1
+      distance: 100
+      height: 0
+      data:
         overrideData: 1
         overridedData:
           speedIncreaseAmount: 20
-      lane: 1
-      distance: 100
-      height: 0
+    difficultyType: -1
+    applicableEnvironments: -1

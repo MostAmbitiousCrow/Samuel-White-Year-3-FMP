@@ -86,7 +86,7 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         
         var normalisedHealth = CurrentHealth / (float)MaxHealth;
         animator.SetFloat(HealthParameter, normalisedHealth);
-        Debug.Log($"{name} damaged by type: {type}, for {amount} damage");
+        // Debug.Log($"{name} damaged by type: {type}, for {amount} damage");
     }
 
     private IEnumerator DamageInvincibilityRoutine()

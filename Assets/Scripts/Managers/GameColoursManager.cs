@@ -66,7 +66,7 @@ namespace GameColours
                 _objectColours.Add((int)matType.type, matType.materials);
             }
             MaterialTypes = materialTypes;
-            print($"Counted Types = {count}. Actual Count = {_objectColours.Count}");
+            // print($"Counted Types = {count}. Actual Count = {_objectColours.Count}");
             
             UpdateColours();
         }

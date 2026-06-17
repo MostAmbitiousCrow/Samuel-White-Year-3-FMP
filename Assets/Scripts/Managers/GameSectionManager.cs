@@ -155,7 +155,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 
             if (!data)
             {
-                Debug.LogWarning($"Section Data at index {currentSectionIndex} is null. Skipping.");
+                // Debug.LogWarning($"Section Data at index {currentSectionIndex} is null. Skipping.");
                 currentSectionIndex++;
                 continue;
             }
@@ -173,7 +173,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             SpawnGemstoneGates(data.sectionContent.gemstoneGates);
             SpawnSlipStreams(data.sectionContent.slipStreams);
             
-            Debug.Log($"Last Spawned Object is: {lastSpawnedObject}");
+            // Debug.Log($"Last Spawned Object is: {lastSpawnedObject}");
             
             // if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
             // else Debug.Log($"Section {currentSectionIndex} had no objects.");
@@ -181,7 +181,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             // Delay
             // if (data.sectionContent.postDelay > 0) yield return new WaitForSeconds(data.sectionContent.postDelay);
             
-            Debug.Log($"Completed Section {currentSectionIndex}.");
+            // Debug.Log($"Spawned Section {currentSectionIndex}.");
             
             _currentSectionOffset += (furthestDistance + gapBetweenSections);
             yield return currentSectionIndex++;

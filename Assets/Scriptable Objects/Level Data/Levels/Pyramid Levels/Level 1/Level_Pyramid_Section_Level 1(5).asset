@@ -16,7 +16,10 @@ MonoBehaviour:
     initialDelay: 0
     postDelay: 0
     obstacles:
-    - data:
+    - lane: 1
+      distance: 0
+      height: 2
+      data:
         obstacleType: 3
         overrideData: 0
         overriddenData:
@@ -35,10 +38,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 2
-      lane: 1
+    - lane: 1
       distance: 0
-      height: 2
-    - data:
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -57,10 +60,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 0
-      height: 0
-    - data:
+    - lane: 1
+      distance: 35
+      height: 2
+      data:
         obstacleType: 3
         overrideData: 0
         overriddenData:
@@ -79,10 +82,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 2
-      lane: 1
+    - lane: 1
       distance: 35
-      height: 2
-    - data:
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -101,10 +104,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 35
-      height: 0
-    - data:
+    - lane: 1
+      distance: 75
+      height: 2
+      data:
         obstacleType: 3
         overrideData: 0
         overriddenData:
@@ -123,10 +126,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 2
-      lane: 1
+    - lane: 1
       distance: 75
-      height: 2
-    - data:
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -145,34 +148,33 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 75
-      height: 0
     enemies: []
     collectibles:
-    - data:
-        collectibleType: 0
-        overrideData: 0
-        overridedData:
-          BankValue: 1
-      lane: 0
+    - lane: 0
       distance: 0
       height: 4
-    - data:
+      data:
         collectibleType: 0
         overrideData: 0
         overridedData:
           BankValue: 1
-      lane: 2
+    - lane: 2
       distance: 35
       height: 4
-    - data:
+      data:
         collectibleType: 0
         overrideData: 0
         overridedData:
           BankValue: 1
-      lane: 0
+    - lane: 0
       distance: 75
       height: 4
+      data:
+        collectibleType: 0
+        overrideData: 0
+        overridedData:
+          BankValue: 1
     gemstoneGates: []
     slipStreams: []
+    difficultyType: -1
+    applicableEnvironments: -1

@@ -48,7 +48,7 @@ public class ArtExplode : MonoBehaviour
         }
 
 
-        Debug.Log($"{gameObject} Art Reset");
+        // Debug.Log($"{gameObject} Art Reset");
     }
 
     public void ExplodeArt()

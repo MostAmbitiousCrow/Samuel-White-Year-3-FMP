@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0c55704dcd5449fcafce4fbde257c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameLevels:
-  - Levels: 00000000
+  difficultyIncreasePerLevel: 5
+  levelsContainer: {fileID: 11400000, guid: b314590d6c30a3449a5ffb5b82a7615a, type: 2}
+  difficultyValues: {fileID: 11400000, guid: 2bb429796a0ae8646b331eff5e06670b, type: 2}
+  sectionManager: {fileID: 0}

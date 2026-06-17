@@ -17,53 +17,56 @@ MonoBehaviour:
     postDelay: 0
     obstacles: []
     enemies:
-    - data:
+    - lane: 0
+      distance: 0
+      height: 0
+      data:
         enemyType: 0
         silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          targetSideSpaces: 1
+          doTargetSideSpaces: 0
           targetSideSpace: 1
-          targetLeftSide: 1
+          doTargetLeftSide: 0
           startFacingDirection: 1
           targetBoatSpaces: 1
           targetSpace: 1
           targetBoatSide: 0
           boardingFacingDirection: 1
-      lane: 0
+    - lane: 2
       distance: 0
       height: 0
-    - data:
+      data:
         enemyType: 0
         silhouetteAlwaysVisible: 1
         overrideData: 1
         overridedData:
-          targetSideSpaces: 1
+          doTargetSideSpaces: 0
           targetSideSpace: 0
-          targetLeftSide: 0
+          doTargetLeftSide: 0
           startFacingDirection: 1
           targetBoatSpaces: 1
           targetSpace: 4
           targetBoatSide: 1
           boardingFacingDirection: 1
-      lane: 2
-      distance: 0
-      height: 0
-    - data:
-        enemyType: 0
-        silhouetteAlwaysVisible: 1
-        overrideData: 1
-        overridedData:
-          targetSideSpaces: 1
-          targetSideSpace: 0
-          targetLeftSide: 0
-          startFacingDirection: 1
-          targetBoatSpaces: 1
-          targetSpace: 4
-          targetBoatSide: 1
-          boardingFacingDirection: 1
-      lane: 1
+    - lane: 1
       distance: 20
       height: 0
+      data:
+        enemyType: 0
+        silhouetteAlwaysVisible: 1
+        overrideData: 1
+        overridedData:
+          doTargetSideSpaces: 0
+          targetSideSpace: 0
+          doTargetLeftSide: 0
+          startFacingDirection: 1
+          targetBoatSpaces: 1
+          targetSpace: 4
+          targetBoatSide: 1
+          boardingFacingDirection: 1
     collectibles: []
     gemstoneGates: []
+    slipStreams: []
+    difficultyType: -1
+    applicableEnvironments: -1

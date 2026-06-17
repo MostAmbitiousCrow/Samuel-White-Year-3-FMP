@@ -38,61 +38,49 @@ public class SO_SectionData : ScriptableObject
 
         [Line(GUIColor.Gray)] public List<SectionSlipStreamData> slipStreams;
         
+        public abstract class SectionData
+        {
+            public int lane;
+            public int distance;
+            public int height;
+        }
         [Serializable]
-        public class SectionObstacleData
+        public class SectionObstacleData : SectionData
         {
             public Section_Obstacle_Object.SectionObstacleData data;
-
-            public int lane;
-            public int distance;
-            public int height;
         }
         
         [Serializable]
-        public class SectionEnemyData
+        public class SectionEnemyData : SectionData
         {
             public Section_Enemy_Object.SectionEnemyData data;
-                
-            public int lane;
-            public int distance;
-            public int height;
         }
         
         [Serializable]
-        public class SectionCollectibleData
+        public class SectionCollectibleData : SectionData
         {
             public Section_Collectible_Object.SectionCollectibleData data;
-                
-            public int lane;
-            public int distance;
-            public int height;
         }
         
         [Serializable]
-        public class SectionGemstoneGateData
+        public class SectionGemstoneGateData : SectionData
         {
             public Section_Gemstone_Gate.SectionGemstoneGateData data;
-                
-            public int lane;
-            public int distance;
-            public int height;
         }
         
         [Serializable]
-        public class SectionSlipStreamData
+        public class SectionSlipStreamData : SectionData
         {
             public Section_SlipStream_Object.SectionSlipStreamData data;
-                
-            public int lane;
-            public int distance;
-            public int height;
         }
-        
-        /// <summary> What difficulty this section qualifies as. Setting difficulty as none will cause this
-        /// section to be ignored. </summary>
-        [Flags]
-        public enum DifficultyQualification { Easy = 1, Medium = 2, Hard = 4 }
-        /// <summary> Determines the difficulty considered for this section </summary>
+        /// <summary> Determines the difficulty is considered to be for this section </summary>
         public DifficultyQualification difficultyType;
+
+        [Flags]
+        public enum AvailableEnvironments
+        {
+            None = 0, Sewer = 1, Pyramid = 2, Cave = 4, Forest = 8, Dungeon = 16
+        }
+        public AvailableEnvironments applicableEnvironments;
     }
 }

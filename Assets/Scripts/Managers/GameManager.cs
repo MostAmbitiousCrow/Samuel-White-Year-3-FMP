@@ -62,10 +62,13 @@ public class GameManager : MonoBehaviour
     #region Main Game Logic
     public class MainGameLogic
     {
+        #region Pausing
         /// <summary> Checker if the game is paused </summary>
-        public bool GamePaused => _gamePaused;
-        [SerializeField] bool _gamePaused;
+        public bool GamePaused => gamePaused;
+        [SerializeField] private bool gamePaused;
         public int GamePauseInt => GamePaused ? 0 : 1;
+
+        public bool CanPauseGame = true;
 
         /// <summary> Delegate for whenever the game is paused </summary>
         public delegate void GamePause();
@@ -74,40 +77,49 @@ public class GameManager : MonoBehaviour
         /// <summary> Delegate for whenever the game is resumed </summary>
         public GameResume OnGameResume;
 
-        public void SetPauseState(bool state)
+        /// <summary>
+        /// Method to pause the game
+        /// </summary>
+        /// <param name="state">Set either pause state to be true or false</param>
+        /// <param name="onlyAffectTime">Only modify Time.timescale without triggering events</param>
+        public void SetPauseState(bool state, bool onlyAffectTime = false)
         {
             // Pause game logic here
-            print($"Game Pause State = {_gamePaused = state}");
+            if (!CanPauseGame) return;
+            gamePaused = state;
+            // print($"Game Pause State = {gamePaused = state}");
 
             if (state)
             {
                 Time.timeScale = 0f;
-                OnGamePaused?.Invoke();
+                if (!onlyAffectTime) OnGamePaused?.Invoke();
             }
             else
             {
                 Time.timeScale = 1f;
-                OnGameResume?.Invoke();
+                if (!onlyAffectTime) OnGameResume?.Invoke();
             }
         }
 
-        public void TogglePauseState()
+        public void TogglePauseState(bool onlyAffectTime = false)
         {
+            if (!CanPauseGame) return;
             // Pause game logic here
-            _gamePaused = !_gamePaused;
-            print($"Game Pause State = {_gamePaused}");
+            gamePaused = !gamePaused;
+            // print($"Game Pause State = {gamePaused}");
 
-            if (_gamePaused)
+            if (gamePaused)
             {
                 Time.timeScale = 0f;
-                OnGamePaused?.Invoke();
+                if (!onlyAffectTime) OnGamePaused?.Invoke();
             }
             else
             {
                 Time.timeScale = 1f;
-                OnGameResume?.Invoke();
+                if (!onlyAffectTime) OnGameResume?.Invoke();
             }
         }
+        #endregion
 
         #region Game Initialisation
         public bool GameStarted => _gameStarted;

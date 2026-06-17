@@ -12,7 +12,7 @@ public class LevelContentBuilder : MonoBehaviour
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private SO_GameColours levelColours;
     [SerializeField] private Environments environmentType;
-    [SerializeField] private SO_SectionData.SectionContent.DifficultyQualification difficultyType;
+    // [SerializeField] private SO_SectionData.SectionContent.DifficultyQualification difficultyType;
     
     [Header("Data Asset Creation")]
     [SerializeField, TextArea] private string pathName = "Assets/Scriptable Objects/Level Data/";

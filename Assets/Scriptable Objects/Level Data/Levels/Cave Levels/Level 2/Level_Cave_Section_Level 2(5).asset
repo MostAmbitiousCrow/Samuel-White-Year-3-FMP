@@ -16,7 +16,10 @@ MonoBehaviour:
     initialDelay: 0
     postDelay: 0
     obstacles:
-    - data:
+    - lane: 1
+      distance: 0
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -35,10 +38,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 0
+    - lane: 1
+      distance: 50
       height: 0
-    - data:
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -57,10 +60,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
+    - lane: 1
       distance: 50
       height: 0
-    - data:
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -79,32 +82,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 50
-      height: 0
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          connectedPipes:
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          pipeJoints: []
-        obstacleBridgeData:
-          leftJointLane: 0
-          rightJointLane: 0
-      lane: 2
+    - lane: 2
       distance: 25
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -123,10 +104,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 0
+    - lane: 0
       distance: 75
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -145,24 +126,45 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
+    - lane: 1
       distance: 100
       height: 0
+      data:
+        obstacleType: 0
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
     enemies: []
     collectibles: []
     gemstoneGates: []
     slipStreams:
-    - data:
+    - lane: 1
+      distance: 0
+      height: 0
+      data:
         overrideData: 1
         overridedData:
           speedIncreaseAmount: 40
-      lane: 1
-      distance: 0
+    - lane: 1
+      distance: 100
       height: 0
-    - data:
+      data:
         overrideData: 1
         overridedData:
           speedIncreaseAmount: 10
-      lane: 1
-      distance: 100
-      height: 0
+    difficultyType: -1
+    applicableEnvironments: -1

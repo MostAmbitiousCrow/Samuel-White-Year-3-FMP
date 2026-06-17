@@ -29,7 +29,7 @@ public class River_Enemy : River_Object
         enemyController.transform.SetParent(transform.parent, true);
         enemyController.gameObject.SetActive(false);
         gameObject.SetActive(true);
-        Debug.Log($"Returned {enemyController.name} to {name}");
+        // Debug.Log($"Returned {enemyController.name} to {name}");
     }
 
     private void OnEnable()

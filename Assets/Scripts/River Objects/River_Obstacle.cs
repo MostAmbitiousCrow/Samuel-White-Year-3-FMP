@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.Serialization;
 
 // Collider will only register enemies, the player and their boat
 /// <summary>
@@ -16,14 +17,14 @@ public class River_Obstacle : River_Object
     [Header("Obstacle Stats")]
     public ObstacleData obstacleData; //TODO can be private
 
-    public bool IsHit; //{ get; protected set; }
+    [FormerlySerializedAs("IsHit")] [SerializeField] protected bool isHit; //{ get; protected set; }
     
     [SerializeField] protected BoxCollider boxCollider;
 
     public void OverrideData(ObstacleData overridedData)
     {
         obstacleData = overridedData;
-        print($"{name} stats were overrided");
+        // print($"{name} stats were overrided");
     }
 
     // When collided with an object (player or enemy), damage it and destroy this obstacle
@@ -34,7 +35,7 @@ public class River_Obstacle : River_Object
     
     protected void OnHit(GameObject other)
     {
-        if (IsHit)
+        if (isHit)
         {
             print($"{name} Was already hit");
             return;
@@ -44,14 +45,14 @@ public class River_Obstacle : River_Object
         if (other.TryGetComponent<IDamageable>(out var character))
         {
             character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
-            IsHit = true;
+            isHit = true;
             if (explodesOnHit) artExploder.ExplodeArt();
             
         }
         else if (other.CompareTag("Boat"))
         {
             other.GetComponent<Boat_Controller>().TakeDamage();
-            IsHit = true;
+            isHit = true;
             if (explodesOnHit) artExploder.ExplodeArt();
         }
     }
@@ -64,7 +65,7 @@ public class River_Obstacle : River_Object
     protected override void OnObjectPlaced()
     {
         base.OnObjectPlaced();
-        IsHit = false;
+        isHit = false;
     }
 
     #endregion

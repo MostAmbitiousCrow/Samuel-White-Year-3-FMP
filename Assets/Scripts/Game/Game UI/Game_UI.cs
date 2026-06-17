@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
+using Environment_Select;
 using GameCharacters;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Game_UI : MonoBehaviour
 {
@@ -12,6 +16,8 @@ public class Game_UI : MonoBehaviour
     {
         Instance = this;
         _storedTime = Time.time;
+        
+        environmentSelectFolder.SetActive(false);
     }
     private void Start()
     {
@@ -36,10 +42,17 @@ public class Game_UI : MonoBehaviour
         GameLevelManager.OnLevelLoaded -= ResetHealthBorder;
     }
 
+    private void OnValidate()
+    {
+        environmentSelectUI = GetComponentsInChildren<EnvironmentSelectUI>(true);
+
+        // OpenEnvironmentSelect(yeah);
+    }
+
     #endregion
 
-    [Header("Player UI")]
     #region Player Health UI
+    [Header("Player UI")]
     [SerializeField] private Material visualHealthBorder;
     [SerializeField] private float fadeDuration = 3.25f;
     private float _storedTime;
@@ -81,7 +94,7 @@ public class Game_UI : MonoBehaviour
     #region Gemstone Counter
     [SerializeField] private TextMeshProUGUI gemstoneCounterText;
 
-    /// <summary> Fuction to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
+    /// <summary> Function to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
     private void UpdateGemstoneCounter(int gemstones)
     {
         // if (!gemstoneCounterText.gameObject)
@@ -95,5 +108,62 @@ public class Game_UI : MonoBehaviour
         //print($"Updated Gemstone Text: {gemstones}");
     }
 
+    #endregion
+    
+    #region Environment Select
+    
+    [Header("Environment Select")]
+    [SerializeField] private SO_EnvironmentPaths environmentPaths;
+    [SerializeField] private EnvironmentSelectUI[] environmentSelectUI;
+    [Space]
+    [SerializeField] private GameObject environmentSelectFolder;
+
+    /// <summary>
+    /// <para> Shows the Environment Select Options when deciding to move to a new environment</para>
+    /// <para> This stops the player from moving until the select screen is closed </para>
+    /// </summary>
+    public void OpenEnvironmentSelect(Environments environment)
+    {
+        var selectedRoot = environmentPaths.paths[(int)environment];
+        Debug.Log($"Selected Environment: {selectedRoot.root}");
+        
+        environmentSelectFolder.SetActive(true);
+
+        foreach (var element in environmentSelectUI)
+        {
+            element.gameObject.SetActive(false);
+        }
+
+        // Update selections based on the current environment
+        for (int i = 0; i < selectedRoot.branches.Length; i++)
+        {
+            var element = environmentSelectUI[i];
+            
+            element.gameObject.SetActive(true);
+            element.UpdateSelectDetails(environmentPaths.paths[(int)selectedRoot.branches[i]]);
+        }
+        
+        // Select the first UI Select
+        EventSystem.current.SetSelectedGameObject(environmentSelectUI[0].Button.gameObject);
+        
+        //TODO: Prevent Player Character Input whilst this menu is open!
+        GameManager.GameLogic.SetPauseState(true, true);
+        GameManager.GameLogic.CanPauseGame = false;
+    }
+
+    /// <summary>
+    /// <para> Hides the Environment Select Options </para>
+    /// <para> Additionally restores player input </para>
+    /// </summary>
+    public void CloseEnvironmentSelect()
+    {
+        // Disable content folder //TODO: Temp - Leave room for an animation?
+        environmentSelectFolder.SetActive(false);
+        
+        //TODO: Restore Player Character Input!
+        GameManager.GameLogic.CanPauseGame = true;
+        GameManager.GameLogic.SetPauseState(false, true);
+    }
+    
     #endregion
 }

@@ -16,29 +16,32 @@ MonoBehaviour:
     initialDelay: 0
     postDelay: 0
     obstacles:
-    - data:
-        obstacleType: 2
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          connectedPipes:
-          - lane: 1
-            height: 0
-            distance: 0
-            pipeConnection: 1
-          - lane: 1
-            height: 5
-            distance: 0
-            pipeConnection: 4
-          pipeJoints: []
-        obstacleBridgeData:
-          leftJointLane: 0
-          rightJointLane: 0
-      lane: 1
+    - lane: 1
       distance: 0
       height: 0
-    - data:
+      data:
+        obstacleType: 2
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 1
+            height: 0
+            distance: 0
+            pipeConnection: 1
+          - lane: 1
+            height: 5
+            distance: 0
+            pipeConnection: 4
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
+    - lane: 1
+      distance: 80
+      height: 0
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -57,10 +60,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 80
+    - lane: 1
+      distance: 40
       height: 0
-    - data:
+      data:
         obstacleType: 2
         overrideData: 0
         overriddenData:
@@ -82,32 +85,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
-      distance: 40
-      height: 0
-    - data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          connectedPipes:
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          pipeJoints: []
-        obstacleBridgeData:
-          leftJointLane: 0
-          rightJointLane: 0
-      lane: 0
+    - lane: 0
       distance: 25
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -126,10 +107,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 2
+    - lane: 2
       distance: 40
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -148,10 +129,10 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 1
+    - lane: 1
       distance: 55
       height: 0
-    - data:
+      data:
         obstacleType: 0
         overrideData: 0
         overriddenData:
@@ -170,11 +151,33 @@ MonoBehaviour:
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-      lane: 0
+    - lane: 0
       distance: 80
       height: 0
+      data:
+        obstacleType: 0
+        overrideData: 0
+        overriddenData:
+          ImpactDamage: 1
+        pipeObstacleData:
+          connectedPipes:
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          - lane: 0
+            height: 0
+            distance: 0
+            pipeConnection: 0
+          pipeJoints: []
+        obstacleBridgeData:
+          leftJointLane: 0
+          rightJointLane: 0
     enemies:
-    - data:
+    - lane: 2
+      distance: 0
+      height: 0
+      data:
         enemyType: 1
         silhouetteAlwaysVisible: 1
         overrideData: 1
@@ -187,10 +190,10 @@ MonoBehaviour:
           targetSpace: 4
           targetBoatSide: 0
           boardingFacingDirection: -1
-      lane: 2
+    - lane: 0
       distance: 0
       height: 0
-    - data:
+      data:
         enemyType: 0
         silhouetteAlwaysVisible: 1
         overrideData: 1
@@ -203,10 +206,10 @@ MonoBehaviour:
           targetSpace: 1
           targetBoatSide: 1
           boardingFacingDirection: 1
-      lane: 0
-      distance: 0
+    - lane: 1
+      distance: 70
       height: 0
-    - data:
+      data:
         enemyType: 0
         silhouetteAlwaysVisible: 1
         overrideData: 1
@@ -219,10 +222,8 @@ MonoBehaviour:
           targetSpace: 1
           targetBoatSide: 0
           boardingFacingDirection: 1
-      lane: 1
-      distance: 70
-      height: 0
     collectibles: []
     gemstoneGates: []
     slipStreams: []
-  difficultyType: 0
+    difficultyType: -1
+    applicableEnvironments: -1

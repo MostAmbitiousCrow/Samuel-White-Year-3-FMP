@@ -12,7 +12,7 @@ public class River_SlipStream : River_Object
     public void OverrideData(SlipStreamData overridedData)
     {
         data = overridedData;
-        print($"{name} stats were overrided");
+        // print($"{name} stats were overrided");
     }
     
     private void OnTriggerEnter(Collider other)
