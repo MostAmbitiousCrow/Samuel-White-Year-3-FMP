@@ -1194,7 +1194,8 @@ MonoBehaviour:
   riverManager: {fileID: 0}
   obstacleData:
     ImpactDamage: 1
-  IsHit: 0
+  isHit: 0
+  canTakeMultipleHits: 1
   boxCollider: {fileID: 771585089249952896}
   splineMesher: {fileID: 2789556175491864994}
   obstacleBridgeData:

@@ -3402,6 +3402,44 @@ MonoBehaviour:
           category: 
           tags:
           - Player
+    - key: Score_Rise-b8dd9d94-110b-47e8-8556-37773353cbc8
+      value:
+        key: Score_Rise
+        id: Score_Rise-b8dd9d94-110b-47e8-8556-37773353cbc8
+        defaultKey: Score_Rise-b8dd9d94-110b-47e8-8556-37773353cbc8
+        value: {fileID: 8300000, guid: f70c8046d93df42108e565e4ff9281f9, type: 3}
+        path: Assets/Sounds/New/Misc/Score_Rise.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
+    - key: Score_Stop-f14e87a6-37b6-481d-beed-d0f86cf7fbdb
+      value:
+        key: Score_Stop
+        id: Score_Stop-f14e87a6-37b6-481d-beed-d0f86cf7fbdb
+        defaultKey: Score_Stop-f14e87a6-37b6-481d-beed-d0f86cf7fbdb
+        value: {fileID: 8300000, guid: 84efd6ac5dbe742ca8235019e92d5c4e, type: 3}
+        path: Assets/Sounds/New/Misc/Score_Stop.wav
+        dynamicStartTime:
+          time: 0
+          threshold: 0
+          option: 1
+          tabPos: 1
+        defaultSettings:
+          volume: 1
+          pitch: 1
+        showDynamicTime: 0
+        metaData:
+          category: 
+          tags: []
   groups:
     list:
     - key: 06b86d15-6c2b-4f89-9e54-1caf4f4856e9

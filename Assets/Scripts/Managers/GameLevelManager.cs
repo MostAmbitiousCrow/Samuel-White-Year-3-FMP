@@ -175,6 +175,7 @@ public class GameLevelManager : MonoBehaviour
     
     /// <summary> What level is the player currently on in the current environment</summary>
     public static int CurrentLevel { get; private set; }
+    public static int LevelsCompleted {get; private set;}
     public static SO_LevelData CurrentLevelData;
     /// <summary> Checklist of which environments the player has completed </summary>
     public static Dictionary<Environments, bool> EnvironmentCompletions { get; private set; } = new()
@@ -195,6 +196,7 @@ public class GameLevelManager : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private SO_LevelsContainer levelsContainer;
     [SerializeField] private SO_GameDifficultyValues difficultyValues;
+    [SerializeField] private SO_EnvironmentPaths environmentPaths;
     [SerializeField] private LevelSectionManager sectionManager;
 
     #endregion
@@ -217,6 +219,7 @@ public class GameLevelManager : MonoBehaviour
         else { Destroy(gameObject); return; }
         
         CurrentLevel = 0;
+        LevelsCompleted = 0;
         CurrentDifficulty = 0f;
             
         sectionManager = FindFirstObjectByType<LevelSectionManager>();
@@ -228,11 +231,6 @@ public class GameLevelManager : MonoBehaviour
         _loadingScreenController = GameManager.SceneManager.LoadingScreenController;
     }
     #endregion
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R)) InitiateEnvironmentSelect();
-    }
 
     #region Environment Checks
     
@@ -257,6 +255,11 @@ public class GameLevelManager : MonoBehaviour
     {
         return EnvironmentCompletions[environment];
     }
+
+    public static int CountEnvironmentsCompleted()
+    {
+        return EnvironmentCompletions.Count(x => x.Value);
+    }
     
     #endregion
 
@@ -267,13 +270,21 @@ public class GameLevelManager : MonoBehaviour
         LoadEnvironmentAndLevel(Environments.Sewer);
     }
 
-    public void LoadNextLevel() //TODO
+    public void LoadNextLevel()
     {
         CurrentLevel++;
+        LevelsCompleted++;
         // Check if all the required levels are completed
         if (CurrentLevel >= CurrentDifficultyValues.levels)
         {
-            InitiateEnvironmentSelect();
+            EnvironmentCompletions[CurrentEnvironment] = true;
+
+            if (CheckEnvironmentsCompleted())
+            {
+                //TODO: Temp
+                GameManager.GameLogic.CompleteGame();
+            }
+            else InitiateEnvironmentSelect();
             return;
         }
 
@@ -297,15 +308,36 @@ public class GameLevelManager : MonoBehaviour
     private void UpdateDifficulty()
     {
         CurrentDifficulty += difficultyIncreasePerLevel;
-        // CurrentDifficulty = Mathf.Clamp(CurrentDifficulty, 0, difficultyValues.maxDifficulty);
+        
         if (CurrentDifficulty >= CurrentDifficultyValues.threshold.y)
-            CurrentDifficultyValues = GetCurrentDifficulty();
+            CurrentDifficultyValues = CalculateDifficulty();
     }
 
-    private static void InitiateEnvironmentSelect()
+    private void InitiateEnvironmentSelect()
     {
         Game_UI.Instance.OpenEnvironmentSelect(CurrentEnvironment);
+
+        // TODO: Make it so that after sections are completed, open paths based on the amount of branches from the current environment and change environment based on what lane the boat was on...
+        /*var boat = River_Manager.Instance.BoatController;
+        var selectedRoot = environmentPaths.paths[(int)CurrentEnvironment];
         
+        // If there are 3 branches
+        if (selectedRoot.branches.Length > 2)
+        {
+            var environment = selectedRoot.branches[boat.CurrentLane.id];
+            LoadEnvironmentAndLevel(environment);
+        }
+        // If there are only 2 branches
+        else
+        {
+            // Is in the centre lane
+            if (boat.CurrentLane.id == 1)
+            {
+                boat.DestroyBoat(DamageType.Tsunami); //TODO: Temp
+            }
+            var environment = selectedRoot.branches[boat.CurrentLane.id];
+            LoadEnvironmentAndLevel(environment);
+        }*/
     }
 
     /// <summary> Creates a level under the current environment </summary>
@@ -324,7 +356,6 @@ public class GameLevelManager : MonoBehaviour
             if (!section) continue;
             
             selectedSections.Add(section);
-            // Debug.Log($"Loaded section Hash: {section.GetHashCode()}");
         }
 
         // Get a level template from the current environment
@@ -366,7 +397,7 @@ public class GameLevelManager : MonoBehaviour
     /// Get a random difficulty value based on a difficulty value
     /// </summary>
     /// <returns></returns>
-    private SO_GameDifficultyValues.DifficultyValues GetCurrentDifficulty()
+    private SO_GameDifficultyValues.DifficultyValues CalculateDifficulty()
     {
         var easy = difficultyValues.GameDifficultyValues[0];
         var medium = difficultyValues.GameDifficultyValues[1];

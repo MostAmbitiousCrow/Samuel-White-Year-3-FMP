@@ -47,26 +47,14 @@ public class GameManager : MonoBehaviour
         GameLogic.InitialiseGame(); //TODO: Temp
     }
 
-    [Button]
-    public void DEVInitialiseGame()
-    {
-        if(GameLogic.GameStarted) GameLogic.InitialiseGame();
-    }
-    
-    [Button]
-    public void DEVStartGame()
-    {
-        GameLogic.StartGame();
-    }
-
     #region Main Game Logic
     public class MainGameLogic
     {
         #region Pausing
         /// <summary> Checker if the game is paused </summary>
-        public bool GamePaused => gamePaused;
-        [SerializeField] private bool gamePaused;
-        public int GamePauseInt => GamePaused ? 0 : 1;
+        public bool IsGamePaused => isGamePaused;
+        [SerializeField] private bool isGamePaused;
+        public int GamePauseInt => IsGamePaused ? 0 : 1;
 
         public bool CanPauseGame = true;
 
@@ -86,7 +74,7 @@ public class GameManager : MonoBehaviour
         {
             // Pause game logic here
             if (!CanPauseGame) return;
-            gamePaused = state;
+            isGamePaused = state;
             // print($"Game Pause State = {gamePaused = state}");
 
             if (state)
@@ -105,10 +93,10 @@ public class GameManager : MonoBehaviour
         {
             if (!CanPauseGame) return;
             // Pause game logic here
-            gamePaused = !gamePaused;
+            isGamePaused = !isGamePaused;
             // print($"Game Pause State = {gamePaused}");
 
-            if (gamePaused)
+            if (isGamePaused)
             {
                 Time.timeScale = 0f;
                 if (!onlyAffectTime) OnGamePaused?.Invoke();
@@ -207,6 +195,17 @@ public class GameManager : MonoBehaviour
             // TODO: Decide on a proper game complete thing... This is just temporary for the demo
             SceneManager.LoadScene(MainSceneManager.GameScenes.DemoCompleteScreen);
         }
+
+        public int CalculateFinalScore() // TODO: Have this animated with the score values and multipliers are visible
+        {
+            var enemiesDefeated = playerData.EnemiesDefeated * 100;
+            var gemstones = playerData.CurrentGemstones * 10;
+            var levels = GameLevelManager.LevelsCompleted * 1000;
+            var distance = Mathf.RoundToInt(River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled);
+            var environmentsMultiplier = 1 + GameLevelManager.CountEnvironmentsCompleted();
+            
+            return (enemiesDefeated + gemstones + levels + distance) * environmentsMultiplier;;
+        }
         #endregion
 
         #region Player
@@ -218,6 +217,7 @@ public class GameManager : MonoBehaviour
         public class PlayerData
         {
             public int CurrentGemstones { get; set; } = 0;
+            public int EnemiesDefeated { get; set; } = 0;
             public Transform PlayerTransform { get; set; }
             // public Player_Controller controller; // TODO: Create a script that controls certain player events (dying, resetting etc)
 

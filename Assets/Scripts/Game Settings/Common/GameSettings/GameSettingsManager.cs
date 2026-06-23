@@ -31,7 +31,7 @@ namespace Game
 			}
 			
 			// Set VSync and Framerate
-			SetVSync(PlayerPrefs.GetInt("Settings.VSync") == 1);
+			SetVSync(PlayerPrefs.GetInt("Settings.VSync", 0) == 1);
 		}
 
 		private static readonly Vector2 MinScreenSize = new Vector2(1024, 768);
@@ -42,7 +42,7 @@ namespace Game
 		/// <summary> Restore saved settings. You normally call this as soon as the game has started </summary>
 		public static void RestoreSettings()
 		{
-			// make sure it is initlaized
+			// make sure it is initialised
 			InitializeVolumeTypes();
 
 			// restore sound volume
@@ -374,7 +374,7 @@ namespace Game
 		/// <summary> Determines whether to make the plater character take no damage </summary>
 		public static bool DoPlayerInvincibility
 		{
-			get => PlayerPrefs.GetInt("Gameplay.Invincibility", 1) == 1;
+			get => PlayerPrefs.GetInt("Gameplay.Invincibility", 0) == 1;
 			set
 			{
 				PlayerPrefs.SetInt("Gameplay.Invincibility", value ? 1 : 0);
@@ -434,7 +434,7 @@ namespace Game
 		/// <summary> Determines whether to make all fonts use the dyslexic friendly font </summary>
 		public static bool DoDyslexiaFont
 		{
-			get  => PlayerPrefs.GetInt("Gameplay.DyslexiaFont", 1) == 1;
+			get  => PlayerPrefs.GetInt("Gameplay.DyslexiaFont", 0) == 1;
 			set
 			{ 
 				PlayerPrefs.SetInt("Gameplay.DyslexiaFont", value ? 1 : 0);
@@ -449,7 +449,7 @@ namespace Game
 		/// </summary>
 		public static bool DoDepthAssist
 		{
-			get => PlayerPrefs.GetInt("Gameplay.DepthAssist", 1) == 1;
+			get => PlayerPrefs.GetInt("Gameplay.DepthAssist", 0) == 1;
 			set
 			{
 				PlayerPrefs.SetInt("Gameplay.DepthAssist", value ? 1 : 0);
@@ -461,7 +461,7 @@ namespace Game
 		/// <summary> Determines whether to activate the stylised Rainbow Mode </summary>
         public static bool DoRainbowMode
         {
-        	get => PlayerPrefs.GetInt("Gameplay.RainbowMode", 1) == 1;
+        	get => PlayerPrefs.GetInt("Gameplay.RainbowMode", 0) == 1;
         	set
         	{
         		PlayerPrefs.SetInt("Gameplay.RainbowMode", value ? 1 : 0);
@@ -469,6 +469,17 @@ namespace Game
         		GameplayChanged?.Invoke();
         	}
         }
+
+		public static bool UseAlternativeControlScheme
+		{
+			get => PlayerPrefs.GetInt("Gameplay.UseAlternativeControlScheme", 0) == 1;
+			set
+			{
+				PlayerPrefs.SetInt("Gameplay.UseAlternativeControlScheme", value ? 1 : 0);
+				PlayerPrefs.Save();
+				GameplayChanged?.Invoke();
+			}
+		}
 		#endregion
 		// ------------------------------------------------------------------------------------------------------------
 		#region Dev

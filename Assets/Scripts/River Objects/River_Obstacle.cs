@@ -17,7 +17,8 @@ public class River_Obstacle : River_Object
     [Header("Obstacle Stats")]
     public ObstacleData obstacleData; //TODO can be private
 
-    [FormerlySerializedAs("IsHit")] [SerializeField] protected bool isHit; //{ get; protected set; }
+    [SerializeField] protected bool isHit; //{ get; protected set; }
+    [SerializeField] protected bool canTakeMultipleHits;
     
     [SerializeField] protected BoxCollider boxCollider;
 
@@ -35,7 +36,7 @@ public class River_Obstacle : River_Object
     
     protected void OnHit(GameObject other)
     {
-        if (isHit)
+        if (isHit && !canTakeMultipleHits)
         {
             print($"{name} Was already hit");
             return;
@@ -46,19 +47,16 @@ public class River_Obstacle : River_Object
         {
             character.TakeDamage(DamageType.Standard, obstacleData.ImpactDamage);
             isHit = true;
-            if (explodesOnHit) artExploder.ExplodeArt();
+            if (explodesOnHit && !canTakeMultipleHits) artExploder.ExplodeArt();
             
         }
         else if (other.CompareTag("Boat"))
         {
             other.GetComponent<Boat_Controller>().TakeDamage();
             isHit = true;
-            if (explodesOnHit) artExploder.ExplodeArt();
+            if (explodesOnHit && !canTakeMultipleHits) artExploder.ExplodeArt();
         }
     }
-
-    // TODO: Add animation / Sink or destroy obstacle after damaging something
-
 
     #region Pooling Methods
 

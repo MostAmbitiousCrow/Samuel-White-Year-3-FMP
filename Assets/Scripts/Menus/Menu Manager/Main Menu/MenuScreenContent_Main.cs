@@ -11,12 +11,14 @@ public class MenuScreenContent_Main : MenuScreenContent
     //public int[] MenuScreen { get { return (int[])Enum.GetValues(typeof(MainMenuScreenTypes)); } }
     //public int MenuScreen { get { return (int)_menuScreen; } }
 
+    #if UNITY_EDITOR
     protected override void Validation()
     {
         base.Validation();
         _currentMenuScreen = (int)_menuScreen;
         _screenRoot.name = new string($"--- Screen ({_menuScreen} = {(int)_menuScreen}) ---");
     }
+    #endif
 
 
     // NOTE: Any additional titles you want to add, just add a value to this enum

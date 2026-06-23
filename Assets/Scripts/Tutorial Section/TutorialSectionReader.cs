@@ -114,7 +114,7 @@ public class TutorialSectionReader : MonoBehaviour
     private void Update()
     {
         // Tutorial Skip Input
-        if (_tutorialSkipInput.WasPerformedThisFrame()) StopTutorialSequence();
+        if (_tutorialSkipInput.WasPerformedThisFrame() && !GameManager.GameLogic.IsGamePaused) StopTutorialSequence();
     }
 
     #region Action Event

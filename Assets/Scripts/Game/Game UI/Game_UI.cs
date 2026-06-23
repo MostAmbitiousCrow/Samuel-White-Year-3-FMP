@@ -1,16 +1,21 @@
-using System;
-using System.Collections.Generic;
 using Environment_Select;
 using GameCharacters;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Game_UI : MonoBehaviour
 {
     public static Game_UI Instance;
     private static readonly int Alpha = Shader.PropertyToID("_Alpha");
+    
 
+    private void Update()
+    {
+        AnimateHealthBar();
+        if (_isEnvironmentSelectActive) EnvironmentSelectionProcess();
+    }
+    
     #region Subscriptions
     private void Awake()
     {
@@ -73,7 +78,7 @@ public class Game_UI : MonoBehaviour
         _isHealthInDanger = false;
     }
 
-    private void Update()
+    private void AnimateHealthBar()
     {
         var progress = _storedTime - Time.time;
 
@@ -85,9 +90,9 @@ public class Game_UI : MonoBehaviour
         var start = _isHealthInDanger ? 0f : .15f;
         var lerp = Mathf.Lerp(target, start, value);
         visualHealthBorder.SetFloat(Alpha, lerp);
-        
-        // Debug.Log($"Health in Danger = {_isHealthInDanger}. Updating Health Border: Progress = {progress} Lerp = {lerp}");
     }
+
+
 
     #endregion
 
@@ -117,15 +122,21 @@ public class Game_UI : MonoBehaviour
     [SerializeField] private EnvironmentSelectUI[] environmentSelectUI;
     [Space]
     [SerializeField] private GameObject environmentSelectFolder;
+    [SerializeField] private Sprite[] directionSprites;
+    [Space]
+    [SerializeField] private TextMeshProUGUI countDownText;
+    [SerializeField] private float selectionTime = 6.5f;
+    private bool _isEnvironmentSelectActive;
+    private int _branchCount;
+    private SO_EnvironmentPaths.EnvironmentPath _environmentPath;
 
     /// <summary>
     /// <para> Shows the Environment Select Options when deciding to move to a new environment</para>
-    /// <para> This stops the player from moving until the select screen is closed </para>
     /// </summary>
     public void OpenEnvironmentSelect(Environments environment)
     {
-        var selectedRoot = environmentPaths.paths[(int)environment];
-        Debug.Log($"Selected Environment: {selectedRoot.root}");
+        _environmentPath = environmentPaths.paths[(int)environment];
+        Debug.Log($"Selected Environment: {_environmentPath.root}");
         
         environmentSelectFolder.SetActive(true);
 
@@ -134,35 +145,104 @@ public class Game_UI : MonoBehaviour
             element.gameObject.SetActive(false);
         }
 
+        _branchCount = _environmentPath.branches.Length;
         // Update selections based on the current environment
-        for (int i = 0; i < selectedRoot.branches.Length; i++)
+        for (int i = 0; i < _branchCount; i++)
         {
             var element = environmentSelectUI[i];
             
             element.gameObject.SetActive(true);
-            element.UpdateSelectDetails(environmentPaths.paths[(int)selectedRoot.branches[i]]);
+            element.UpdateSelectDetails(environmentPaths.paths[(int)_environmentPath.branches[i]]);
         }
+
+        // Set the arrow icons to each environment direction
+        if (_branchCount < 3)
+        {
+            // Set icons to use the Left and Right arrows
+            environmentSelectUI[0].DirectionalIcon.sprite = directionSprites[0];
+            environmentSelectUI[1].DirectionalIcon.sprite = directionSprites[2];
+        }
+        else
+        {
+            // Set icons to use all arrows
+            for (int i = 0; i < _branchCount; i++)
+                environmentSelectUI[i].DirectionalIcon.sprite = directionSprites[i];
+        }
+
+        _selectTime = selectionTime;
+        _isEnvironmentSelectActive = true;
         
-        // Select the first UI Select
-        EventSystem.current.SetSelectedGameObject(environmentSelectUI[0].Button.gameObject);
-        
-        //TODO: Prevent Player Character Input whilst this menu is open!
-        GameManager.GameLogic.SetPauseState(true, true);
-        GameManager.GameLogic.CanPauseGame = false;
+        _lastSelectedBoatLane = River_Manager.Instance.BoatController.CurrentLane.id;
     }
 
     /// <summary>
     /// <para> Hides the Environment Select Options </para>
-    /// <para> Additionally restores player input </para>
     /// </summary>
-    public void CloseEnvironmentSelect()
+    public void ChooseEnvironment()
     {
-        // Disable content folder //TODO: Temp - Leave room for an animation?
+        // Disable content folder //TODO: Temp - Animate process?
         environmentSelectFolder.SetActive(false);
         
-        //TODO: Restore Player Character Input!
-        GameManager.GameLogic.CanPauseGame = true;
-        GameManager.GameLogic.SetPauseState(false, true);
+        // Reset conditions
+        _isEnvironmentSelectActive = false;
+        _selectTime = 0f;
+        
+        int boatLane = River_Manager.Instance.BoatController.CurrentLane.id;
+        
+        // If only 2 branches, middle lane will default to zero.
+        if (_branchCount == 2 && boatLane == 1) boatLane = 0;
+        var environment = _environmentPath.branches[GetEnvironmentUIIndex(boatLane)];
+        GameLevelManager.Instance.LoadEnvironmentAndLevel(environment);
+    }
+
+    private int _lastSelectedBoatLane;
+    private float _selectTime;
+    private void EnvironmentSelectionProcess()
+    {
+        int boatLane = River_Manager.Instance.BoatController.CurrentLane.id;
+
+        if (_selectTime < 0f)
+        {
+            ChooseEnvironment();
+            countDownText.SetText($"0s Remaining");
+        }
+        else
+        {
+            countDownText.SetText($"{Mathf.RoundToInt(_selectTime)}s Remaining");
+            _selectTime -= Time.deltaTime;
+        }
+        
+        if (boatLane == _lastSelectedBoatLane)
+            return;
+
+        int previousUI = GetEnvironmentUIIndex(_lastSelectedBoatLane);
+        int currentUI = GetEnvironmentUIIndex(boatLane);
+
+        // Deselect previous
+        if (previousUI != -1)
+            environmentSelectUI[previousUI].DeSelectEnvironment();
+
+        // Store new lane
+        _lastSelectedBoatLane = boatLane;
+
+        // Select new (if valid)
+        if (currentUI != -1)
+            environmentSelectUI[currentUI].SelectEnvironment();
+    }
+    
+    private int GetEnvironmentUIIndex(int boatLane)
+    {
+        if (_branchCount == 2)
+        {
+            return boatLane switch
+            {
+                0 => 0,
+                2 => 1,
+                _ => -1
+            };
+        }
+
+        return boatLane;
     }
     
     #endregion

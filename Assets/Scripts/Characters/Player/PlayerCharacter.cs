@@ -156,11 +156,26 @@ namespace GameCharacters
         /// </summary>
         private void VaultInput()
         {
-            if (!_vaultAction.WasPerformedThisFrame() || WillVault) return;
-            WillVault = true;
-            isGroundPounding = false;
-            PerformVault();
-            // VaultPostProcess();
+            if (WillVault) return;
+            
+            switch (GameSettingsManager.UseAlternativeControlScheme)
+            {
+                // Alternative vault towards the vertical move direction
+                case true:
+                    var direction = _moveAction.ReadValue<Vector2>().y;
+                    // Player is on the opposite lane of the boat
+                    if (currentSpace.sideID > 0)
+                    {
+                        if (direction < -.6f) PerformVault();
+                    }
+                    else if (direction > .6f) PerformVault();
+                    break;
+                // Default tap to vault
+                case false:
+                    if (!_vaultAction.WasPerformedThisFrame()) return;
+                    PerformVault();
+                    break;
+            }
         }
         
         /// <summary>
@@ -168,7 +183,10 @@ namespace GameCharacters
         /// </summary>
         private void GroundPoundInput()
         {
-            if (_groundPoundAction.WasPerformedThisFrame() && !isGroundPounding) TriggerGroundPound();
+            var action = GameSettingsManager.UseAlternativeControlScheme
+                ? _groundPoundAction.WasPressedThisFrame()
+                : _groundPoundAction.WasPerformedThisFrame();
+            if (action && !isGroundPounding) TriggerGroundPound();
         }
 
         protected override void OnGroundPoundTriggered()
@@ -185,7 +203,6 @@ namespace GameCharacters
             base.OnGroundPound();
             if (isGrounded)
             {
-                // Debug.Log("Player Pounded the boat UWU");
                 OnPlayerGroundPounded?.Invoke();
                 AudioManager.Play(Clip.Plyr_Pound2);
             }
@@ -230,14 +247,26 @@ namespace GameCharacters
 
         private void JumpInput()
         {
-            if (!_jumpAction.WasPerformedThisFrame()) return;
-            if (!isGrounded) return; //TODO: Add a feature where the player can semi-jump in the air to help with jumping over bridges
-            
-            if (isVaulting)
+            if (!isGrounded) return;
+            switch (GameSettingsManager.UseAlternativeControlScheme)
             {
-                WillJump = true;
+                // Alternative tap to jump
+                case true:
+                    if (_jumpAction.WasPressedThisFrame())
+                    {
+                        if (isVaulting) WillJump = true;
+                        else TriggerJump();
+                    }
+                    break;
+                // Default hold to jump
+                case false:
+                    if (_jumpAction.WasPerformedThisFrame())
+                    {
+                        if (isVaulting) WillJump = true;
+                        else TriggerJump();
+                    }
+                    break;
             }
-            else TriggerJump();
         }
 
         protected override void OnJumped()

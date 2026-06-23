@@ -89,7 +89,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     ""name"": ""FMP"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Player (Button)"",
             ""id"": ""97447362-879c-467e-8999-d5a2d06fd340"",
             ""actions"": [
                 {
@@ -153,7 +153,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""id"": ""978bfe49-cc26-4a3d-ab7b-7d7a29327403"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(y=0)"",
+                    ""processors"": ""ScaleVector2"",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
@@ -1295,14 +1295,14 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Vault = m_Player.FindAction("Vault", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_GroundPound = m_Player.FindAction("GroundPound", throwIfNotFound: true);
-        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
-        m_Player_PauseHold = m_Player.FindAction("Pause Hold", throwIfNotFound: true);
+        // Player (Button)
+        m_PlayerButton = asset.FindActionMap("Player (Button)", throwIfNotFound: true);
+        m_PlayerButton_Move = m_PlayerButton.FindAction("Move", throwIfNotFound: true);
+        m_PlayerButton_Vault = m_PlayerButton.FindAction("Vault", throwIfNotFound: true);
+        m_PlayerButton_Jump = m_PlayerButton.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerButton_GroundPound = m_PlayerButton.FindAction("GroundPound", throwIfNotFound: true);
+        m_PlayerButton_Pause = m_PlayerButton.FindAction("Pause", throwIfNotFound: true);
+        m_PlayerButton_PauseHold = m_PlayerButton.FindAction("Pause Hold", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1317,7 +1317,7 @@ public partial class @FMP: IInputActionCollection2, IDisposable
 
     ~@FMP()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, FMP.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_PlayerButton.enabled, "This will cause a leak and performance issues, FMP.PlayerButton.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, FMP.UI.Disable() has not been called.");
     }
 
@@ -1391,54 +1391,54 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Vault;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_GroundPound;
-    private readonly InputAction m_Player_Pause;
-    private readonly InputAction m_Player_PauseHold;
+    // Player (Button)
+    private readonly InputActionMap m_PlayerButton;
+    private List<IPlayerButtonActions> m_PlayerButtonActionsCallbackInterfaces = new List<IPlayerButtonActions>();
+    private readonly InputAction m_PlayerButton_Move;
+    private readonly InputAction m_PlayerButton_Vault;
+    private readonly InputAction m_PlayerButton_Jump;
+    private readonly InputAction m_PlayerButton_GroundPound;
+    private readonly InputAction m_PlayerButton_Pause;
+    private readonly InputAction m_PlayerButton_PauseHold;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Player".
+    /// Provides access to input actions defined in input action map "Player (Button)".
     /// </summary>
-    public struct PlayerActions
+    public struct PlayerButtonActions
     {
         private @FMP m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayerActions(@FMP wrapper) { m_Wrapper = wrapper; }
+        public PlayerButtonActions(@FMP wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Player/Move".
+        /// Provides access to the underlying input action "PlayerButton/Move".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Move => m_Wrapper.m_PlayerButton_Move;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Vault".
+        /// Provides access to the underlying input action "PlayerButton/Vault".
         /// </summary>
-        public InputAction @Vault => m_Wrapper.m_Player_Vault;
+        public InputAction @Vault => m_Wrapper.m_PlayerButton_Vault;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Jump".
+        /// Provides access to the underlying input action "PlayerButton/Jump".
         /// </summary>
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Jump => m_Wrapper.m_PlayerButton_Jump;
         /// <summary>
-        /// Provides access to the underlying input action "Player/GroundPound".
+        /// Provides access to the underlying input action "PlayerButton/GroundPound".
         /// </summary>
-        public InputAction @GroundPound => m_Wrapper.m_Player_GroundPound;
+        public InputAction @GroundPound => m_Wrapper.m_PlayerButton_GroundPound;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Pause".
+        /// Provides access to the underlying input action "PlayerButton/Pause".
         /// </summary>
-        public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @Pause => m_Wrapper.m_PlayerButton_Pause;
         /// <summary>
-        /// Provides access to the underlying input action "Player/PauseHold".
+        /// Provides access to the underlying input action "PlayerButton/PauseHold".
         /// </summary>
-        public InputAction @PauseHold => m_Wrapper.m_Player_PauseHold;
+        public InputAction @PauseHold => m_Wrapper.m_PlayerButton_PauseHold;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public InputActionMap Get() { return m_Wrapper.m_PlayerButton; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -1446,9 +1446,9 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="PlayerActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="PlayerButtonActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(PlayerButtonActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -1456,11 +1456,11 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="PlayerActions" />
-        public void AddCallbacks(IPlayerActions instance)
+        /// <seealso cref="PlayerButtonActions" />
+        public void AddCallbacks(IPlayerButtonActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerButtonActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerButtonActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -1487,8 +1487,8 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="PlayerActions" />
-        private void UnregisterCallbacks(IPlayerActions instance)
+        /// <seealso cref="PlayerButtonActions" />
+        private void UnregisterCallbacks(IPlayerButtonActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -1511,12 +1511,12 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayerButtonActions.UnregisterCallbacks(IPlayerButtonActions)" />.
         /// </summary>
-        /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-        public void RemoveCallbacks(IPlayerActions instance)
+        /// <seealso cref="PlayerButtonActions.UnregisterCallbacks(IPlayerButtonActions)" />
+        public void RemoveCallbacks(IPlayerButtonActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerButtonActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -1526,21 +1526,21 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-        /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-        /// <seealso cref="PlayerActions.UnregisterCallbacks(IPlayerActions)" />
-        public void SetCallbacks(IPlayerActions instance)
+        /// <seealso cref="PlayerButtonActions.AddCallbacks(IPlayerButtonActions)" />
+        /// <seealso cref="PlayerButtonActions.RemoveCallbacks(IPlayerButtonActions)" />
+        /// <seealso cref="PlayerButtonActions.UnregisterCallbacks(IPlayerButtonActions)" />
+        public void SetCallbacks(IPlayerButtonActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerButtonActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerButtonActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
+    /// Provides a new <see cref="PlayerButtonActions" /> instance referencing this action map.
     /// </summary>
-    public PlayerActions @Player => new PlayerActions(this);
+    public PlayerButtonActions @PlayerButton => new PlayerButtonActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1767,11 +1767,11 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         }
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player (Button)" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="PlayerActions.AddCallbacks(IPlayerActions)" />
-    /// <seealso cref="PlayerActions.RemoveCallbacks(IPlayerActions)" />
-    public interface IPlayerActions
+    /// <seealso cref="PlayerButtonActions.AddCallbacks(IPlayerButtonActions)" />
+    /// <seealso cref="PlayerButtonActions.RemoveCallbacks(IPlayerButtonActions)" />
+    public interface IPlayerButtonActions
     {
         /// <summary>
         /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.

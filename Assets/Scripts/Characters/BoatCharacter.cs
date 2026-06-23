@@ -360,7 +360,10 @@ namespace GameCharacters
 
         protected void PerformVault()
         {
-            if (GameManager.GameLogic.GamePaused) return;
+            if (GameManager.GameLogic.IsGamePaused) return;
+            
+            WillVault = true;
+            isGroundPounding = false;
 
             var newSpace =
                 Boat_Space_Manager.Instance.GetSpaceFromOppositeLane(currentSpace.sideID, currentSpace.spaceID);

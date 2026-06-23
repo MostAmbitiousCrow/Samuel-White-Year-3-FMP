@@ -3,7 +3,7 @@
     "name": "FMP",
     "maps": [
         {
-            "name": "Player",
+            "name": "Player (Button)",
             "id": "97447362-879c-467e-8999-d5a2d06fd340",
             "actions": [
                 {
@@ -67,7 +67,7 @@
                     "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "ScaleVector2(y=0)",
+                    "processors": "ScaleVector2",
                     "groups": ";Gamepad",
                     "action": "Move",
                     "isComposite": false,

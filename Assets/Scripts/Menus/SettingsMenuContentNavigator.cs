@@ -18,12 +18,13 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     
     [FoldoutGroup("Gameplay", nameof(invincibilityToggle), 
         nameof(dyslexicToggle), nameof(fovToggle), nameof(screenShakeToggle), nameof(hitFreezeToggle),
-        nameof(depthAssistToggle), nameof(rainbowModeToggle))]
+        nameof(depthAssistToggle), nameof(rainbowModeToggle), nameof(alternativeControlSchemeToggle))]
     [SerializeField] private Void gameplayFolder;
     [SerializeField, HideProperty] private Toggle invincibilityToggle, dyslexicToggle, fovToggle, screenShakeToggle,
-        hitFreezeToggle, depthAssistToggle, rainbowModeToggle;
+        hitFreezeToggle, depthAssistToggle, rainbowModeToggle, alternativeControlSchemeToggle;
     
     #endregion
+    
     #region Settings
     #region Gameplay Settings
     
@@ -69,6 +70,11 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
         depthAssistToggle.onValueChanged.RemoveAllListeners();
         depthAssistToggle.onValueChanged.AddListener(OnDoDepthAssistValueChange);
         
+        // Alternative Control Scheme
+        alternativeControlSchemeToggle.isOn = GameSettingsManager.UseAlternativeControlScheme;
+        alternativeControlSchemeToggle.onValueChanged.RemoveAllListeners();
+        alternativeControlSchemeToggle.onValueChanged.AddListener(OnUseAlternativeControlSchemeValueChange);
+        
         // Rainbow Mode
         rainbowModeToggle.isOn = GameSettingsManager.DoRainbowMode;
         rainbowModeToggle.onValueChanged.RemoveAllListeners();
@@ -104,6 +110,11 @@ public class SettingsMenuContentNavigator : ScreenContentNavigator
     public void OnDoDepthAssistValueChange(bool value)
     {
         GameSettingsManager.DoDepthAssist = value;
+    }
+
+    public void OnUseAlternativeControlSchemeValueChange(bool value)
+    {
+        GameSettingsManager.UseAlternativeControlScheme = value;
     }
     
     public void OnRainbowModeValueChange(bool value)

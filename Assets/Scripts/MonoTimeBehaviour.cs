@@ -7,14 +7,14 @@ public abstract class MonoTimeBehaviour : MonoBehaviour
 {
     /// <summary> Coroutine suspension supplied with the check for if the game is paused </summary>
     /// TODO: PauseWait should include HitStop
-    public WaitUntil PauseWait { get; } = new(() => !GameManager.GameLogic.GamePaused); // Variable should be in the game manager
+    public WaitUntil PauseWait { get; } = new(() => !GameManager.GameLogic.IsGamePaused); // Variable should be in the game manager
     private void Update()
     {
-        if(!GameManager.GameLogic.GamePaused) TimeUpdate();
+        if(!GameManager.GameLogic.IsGamePaused) TimeUpdate();
     }
     private void FixedUpdate()
     {
-        if (!GameManager.GameLogic.GamePaused) FixedTimeUpdate();
+        if (!GameManager.GameLogic.IsGamePaused) FixedTimeUpdate();
     }
 
     /// <summary>

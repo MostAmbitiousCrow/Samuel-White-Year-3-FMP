@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using EditorAttributes;
+using UnityEngine.InputSystem;
 
 public abstract class MenuScreenContent : MonoBehaviour
 {
@@ -49,7 +51,22 @@ public abstract class MenuScreenContent : MonoBehaviour
     /// <summary> An additional event that will trigger upon entering this screen </summary>
     public UnityEvent TriggerEvent { get { return _triggerEvent; } }
 
+    [SerializeField] private bool useBackButton = true;
+    private InputAction _cancelAction;
+    private void Awake()
+    {
+        if (!useBackButton) return;
+        _cancelAction = InputSystem.actions.FindAction("Cancel");
+    }
 
+    private void Update()
+    {
+        if (!useBackButton) return;
+        if (_cancelAction.WasPerformedThisFrame()) _enterButton.onClick?.Invoke();
+    }
+
+
+#if UNITY_EDITOR
     private void OnValidate()
     {
         _screenRoot = gameObject;
@@ -57,4 +74,5 @@ public abstract class MenuScreenContent : MonoBehaviour
     }
 
     protected virtual void Validation() { }
+    #endif
 }

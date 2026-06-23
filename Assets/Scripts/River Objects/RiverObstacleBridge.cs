@@ -26,11 +26,12 @@ public class RiverObstacleBridge : River_Obstacle
     protected override void FixedTimeUpdate()
     {
         base.FixedTimeUpdate();
-        if (isHit) return;
+        if (isHit && !canTakeMultipleHits) return;
         
         // Do Detection
         for (int i = 0; i < _points.Count-1; i++)
         {
+            //TODO: improve performance by storing point values?
             var pointA = transform.TransformPoint(_points[i]);
             var pointB = transform.TransformPoint(_points[i + 1]);
 
