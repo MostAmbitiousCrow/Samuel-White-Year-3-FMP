@@ -8,12 +8,14 @@ public class MenuScreenContent_Pause : MenuScreenContent
     /// <summary> The type of Screen </summary>
     public PauseMenuScreenTypes MainScreenTypes { get { return _menuScreen; } }
 
+    #if UNITY_EDITOR
     protected override void Validation()
     {
         base.Validation();
         _currentMenuScreen = (int)_menuScreen;
         _screenRoot.name = new string($"--- Screen ({_menuScreen} = {CurrentMenuScreen}) ---");
     }
+    #endif
 
 
     // NOTE: Any additional titles you want to add, just add a value to this enum

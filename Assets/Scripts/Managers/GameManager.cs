@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
             var enemiesDefeated = playerData.EnemiesDefeated * 100;
             var gemstones = playerData.CurrentGemstones * 10;
             var levels = GameLevelManager.LevelsCompleted * 1000;
-            var distance = Mathf.RoundToInt(River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled);
+            var distance = Mathf.RoundToInt(River_Manager.Instance.BoatController.RiverSplineObject.GlobalDistanceTravelled);
             var environmentsMultiplier = 1 + GameLevelManager.CountEnvironmentsCompleted();
             
             return (enemiesDefeated + gemstones + levels + distance) * environmentsMultiplier;;

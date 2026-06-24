@@ -10,8 +10,8 @@ public class SO_LevelsContainer : ScriptableObject
     public SO_LevelData[] levels;
     public SO_SectionData[] sections;
     
-    public Dictionary<Environments, SO_LevelData[]> SortedLevels = new();
-    public Dictionary<Environments, Dictionary<GameDifficulty, List<SO_SectionData>>> SortedSections = new();
+    private Dictionary<Environments, SO_LevelData[]> SortedLevels = new();
+    private Dictionary<Environments, Dictionary<GameDifficulty, List<SO_SectionData>>> SortedSections = new();
     
     #if UNITY_EDITOR
     private void OnValidate()
@@ -23,6 +23,15 @@ public class SO_LevelsContainer : ScriptableObject
         SortSections();
     }
     #endif
+
+    private void Awake()
+    {
+        if (levels == null) return;
+        if (sections == null) return;
+        
+        SortLevels();
+        SortSections();
+    }
 
     public void SortLevels()
     {
@@ -159,7 +168,7 @@ public class SO_LevelsContainer : ScriptableObject
         if (env.Length == 0)
             return null;
         
-        return levels[Random.Range(0, levels.Length)];
+        return env[Random.Range(0, env.Length)];
     }
 
     

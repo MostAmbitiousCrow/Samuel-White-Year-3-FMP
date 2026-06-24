@@ -57,6 +57,7 @@ public class GameOverMenu : MonoBehaviour
         contentBackground.color = Color.clear;
         buttonsGroup.alpha = 0f;
         buttonsGroup.interactable = false;
+        GameManager.GameLogic.CanPauseGame = false;
         StartCoroutine(RevealResultsRoutine());
     }
 
@@ -115,7 +116,8 @@ public class GameOverMenu : MonoBehaviour
 
         // Distance travelled
         yield return RevealScore(1, Mathf.RoundToInt(
-                River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled));
+                River_Manager.Instance.BoatController.RiverSplineObject.GlobalDistanceTravelled),
+            current => $"{current}m");
 
         // Gems
         yield return RevealScore(2, GameManager.GameLogic.playerData.CurrentGemstones);

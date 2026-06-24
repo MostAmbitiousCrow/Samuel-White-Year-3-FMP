@@ -1,4 +1,5 @@
 using System;
+using EditorAttributes;
 using UnityEngine;
 
 public class RiverSplineObject : MonoBehaviour
@@ -8,10 +9,13 @@ public class RiverSplineObject : MonoBehaviour
     [Tooltip("Optional offset of this object on the river spline")]
     [SerializeField] private float offset;
 
-    [SerializeField] private float distanceOnSpline = 0f;
+    [SerializeField, ReadOnly] private float distanceOnSpline = 0f;
     public float DistanceOnSpline => distanceOnSpline;
-    [SerializeField] private float totalDistanceTravelled = 0f;
+    [SerializeField, ReadOnly] private float totalDistanceTravelled = 0f;
     public float TotalDistanceTravelled => totalDistanceTravelled;
+    [SerializeField, ReadOnly] private float globalDistanceTravelled = 0f;
+    /// <summary> The overall distance this object has travelled during the playthrough </summary>
+    public float GlobalDistanceTravelled => globalDistanceTravelled;
     public bool ignorePause;
 
     private void OnEnable()
@@ -33,6 +37,7 @@ public class RiverSplineObject : MonoBehaviour
         // move forward
         totalDistanceTravelled += speed * Time.deltaTime;
         distanceOnSpline +=  speed * Time.deltaTime;
+        globalDistanceTravelled += speed * Time.deltaTime;
         distanceOnSpline %= River_Manager.SplineTotalLength; // Modulo to loop forever!
 
         River_Manager.Instance.AssignToCurveSection(totalDistanceTravelled + offset, lane,

@@ -25,7 +25,10 @@ public class Loading_Screen_Controller : MonoBehaviour
     [Header("Stats")]
     [SerializeField] float startTransitionTime = .5f;
     [SerializeField] float endTransitionTime = 1.5f;
-    public bool IsTransitioning { get; private set; }
+    public static bool IsOpening { get; private set; }
+    public static bool IsClosing { get; private set; }
+
+    public static bool IsTransitioning => IsOpening || IsClosing;
 
     private void Start()
     {
@@ -36,7 +39,7 @@ public class Loading_Screen_Controller : MonoBehaviour
     public void StartLoadingScreen()
     {
         if (IsTransitioning) return;
-        IsTransitioning = true;
+        IsOpening = true;
         _transitionScreen.SetActive(true);
         UpdateLoadingMeter(0f);
         StartCoroutine(EnterLoadingScreenProcess());
@@ -44,6 +47,7 @@ public class Loading_Screen_Controller : MonoBehaviour
 
     public void EndLoadingScreen()
     {
+        IsClosing = true;
         StartCoroutine(CloseLoadingScreenProcess());
     }
     #endregion
@@ -52,6 +56,8 @@ public class Loading_Screen_Controller : MonoBehaviour
 
     private IEnumerator EnterLoadingScreenProcess()
     {
+        GameManager.GameLogic.CanPauseGame = false;
+        
         float t = startTransitionTime;
 
         // Update Animator Speed and trigger the Enter Animation
@@ -65,7 +71,7 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         while (t > 0f)
         {
-            // Update Loading Meter Aplha
+            // Update Loading Meter Alpha
             _loadingMeterGroup.alpha = Mathf.Lerp(1f, 0f, t);
             yield return t -= Time.unscaledDeltaTime;
         }
@@ -76,14 +82,15 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         UpdateLoadingMeter(0f);
         _loadingMeterGroup.alpha = 1f;
+
+        var waitForFrame = new WaitForEndOfFrame();
+        for (int i = 0; i < 8; i++) yield return waitForFrame; // Kinda prevents lag, but isn't the best atm
         
-        IsTransitioning = false;
+        IsOpening = false;
     }
 
     private IEnumerator CloseLoadingScreenProcess()
     {
-        yield return new WaitUntil(() => _canvas.worldCamera = Camera.main);
-        // Debug.Log($"Render Camera was set to: {_canvas.worldCamera}");
         
         float t = 0f;
 
@@ -108,7 +115,8 @@ public class Loading_Screen_Controller : MonoBehaviour
         
         _transitionScreen.SetActive(false);
 
-        yield break;
+        GameManager.GameLogic.CanPauseGame = true;
+        IsClosing = false;
     }
     #endregion
 

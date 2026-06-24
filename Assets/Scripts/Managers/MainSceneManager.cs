@@ -33,11 +33,13 @@ public class MainSceneManager : MonoBehaviour
     /// <param name="sceneID"> The ID corresponding to the GameScene enum values</param>
     public void LoadScene(int sceneID)
     {
+        if (IsLoadingScene) return;
         LoadScene((GameScenes)sceneID, LoadSceneMode.Single);
     }
 
     public void LoadScene(GameScenes scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
+        if (IsLoadingScene) return;
         // Load game scene logic here
         Menu_Transition_Controller.ResetTransitionEvents(); // Reset events to prevent stacking
         StartCoroutine(LoadSceneRoutine((int)scene, mode));
@@ -45,9 +47,9 @@ public class MainSceneManager : MonoBehaviour
 
     public void ReloadScene(GameScenes scene, LoadSceneMode mode = LoadSceneMode.Single)
     {
+        if (IsLoadingScene) return;
         // Reload selected scene and unpause the game
         StartCoroutine(LoadSceneRoutine((int)scene, mode));
-        GameManager.GameLogic.SetPauseState(false);
     }
 
     // Loading Information
@@ -58,6 +60,8 @@ public class MainSceneManager : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator LoadSceneRoutine(int scene, LoadSceneMode sceneMode)
     {
+        GameManager.GameLogic.SetPauseState(true);
+        
         _async = SceneManager.LoadSceneAsync(scene, sceneMode);
         if (_async != null)
         {
@@ -67,42 +71,40 @@ public class MainSceneManager : MonoBehaviour
             // Begin the opening Loading Transition
             loadingScreenController.StartLoadingScreen();
 
-            Debug.Log($"Loading Screen Controller is Transitioning: {loadingScreenController.IsTransitioning}");
-            // Wait until the opening loading screen is finished
-            yield return new WaitUntil(() => !loadingScreenController.IsTransitioning);
-            Debug.Log($"Loading Screen Controller is Transitioning: {loadingScreenController.IsTransitioning}");
+            // Wait until the opening loading screen is finished opening
+            yield return new WaitUntil(() => !Loading_Screen_Controller.IsOpening);
 
             // Update Loading Screen Progress and wait until async loading is completed
-            while (_async.progress < .9f)
+            while (_async.progress < 0.9f)
             {
                 Progress = _async.progress;
                 loadingScreenController.UpdateLoadingMeter(Progress);
                 yield return null;
             }
 
-            // Wait until the level is completed
-            var prog = new WaitUntil(() => _async.progress >= .9f);
-            yield return prog;
-
             loadingScreenController.UpdateLoadingMeter(1f);
             _async.allowSceneActivation = true;
 
             yield return new WaitUntil(() => _async.isDone);
         }
-        else Debug.LogWarning($"Failed to load Scene: {scene}");
+        else Debug.LogError($"Failed to load Scene: {scene}");
+        
+        onLevelLoaded?.Invoke();
+        Debug.Log("Level Loaded");
+
+        //TODO: Bruh XD
+        GameManager.GameLogic.CanPauseGame = true;
+        GameManager.GameLogic.SetPauseState(false);
+        GameManager.GameLogic.CanPauseGame = false;
 
         // End the opening Loading transition
         loadingScreenController.EndLoadingScreen();
         IsLoadingScene = false;
         currentScene = (GameScenes)scene;
 
-        onLevelLoaded?.Invoke();
-        Debug.Log("Level Loaded");
-
         if (currentScene == GameScenes.MainGame)
         {
             // Unpause Game
-            GameManager.GameLogic.SetPauseState(false);
             yield return new WaitForSecondsRealtime(1f); // TODO: Polish to have the game properly initialised
             GameManager.GameLogic.InitialiseGame();
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -368,7 +369,7 @@ public class GameLevelManager : MonoBehaviour
 
         // Replace its sections with our generated ones
         level.sectionData = selectedSections.ToArray();
-
+        
         return level;
     }
     
@@ -377,9 +378,10 @@ public class GameLevelManager : MonoBehaviour
     private IEnumerator LevelTransitionRoutine()
     {
         _loadingScreenController.StartLoadingScreen();
+        var waitForFrame = new WaitForEndOfFrame();
 
-        yield return new WaitUntil(() => !_loadingScreenController.IsTransitioning);
-
+        yield return new WaitUntil(() => !Loading_Screen_Controller.IsOpening);
+        
         CurrentLevelData = CreateLevel();
 
         sectionManager.AssignNewLevelData(CurrentLevelData);
@@ -387,8 +389,13 @@ public class GameLevelManager : MonoBehaviour
         
         var spline = CurrentLevelData.levelSpline;
         if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
+
+        yield return waitForFrame;
+        
         OnLevelLoaded?.Invoke();
         Debug.Log($"Loaded Level '{CurrentLevelData.levelName}'");
+
+        for (int i = 0; i < 8; i++) yield return waitForFrame;
 
         _loadingScreenController.EndLoadingScreen();
     }

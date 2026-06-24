@@ -49,7 +49,7 @@ public class Menu_Manager_Main : Menu_Manager
     #region Game Initialisation
     public void PlayGame()
     {
-        if (transitionArtController.IsTransitioning) return;
+        if (transitionArtController.IsTransitioning || Loading_Screen_Controller.IsTransitioning) return;
         
         Debug.Log("Play Game Button triggered");
         ToggleInput(false);
