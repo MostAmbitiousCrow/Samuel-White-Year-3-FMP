@@ -140,6 +140,8 @@ public class SewerBat_StateController : BoatEnemyStateController
             // Revert the ground parameter from the Idle State to fix falling animation
             BatSc.animator.SetBool("Grounded", false);
             AudioManager.Play(Clip.Bat_Alert);
+            
+            BatSc.verticalVelocity = 0f;
         }
 
         public override void UpdateState()

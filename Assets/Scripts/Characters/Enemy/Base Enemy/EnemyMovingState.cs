@@ -4,7 +4,7 @@ public class EnemyMovingState : EnemyState
 {
     public override void OnEnter()
     {
-        Sc.Animator.SetTrigger("Move");
+        // Sc.Animator.SetTrigger("Move");
 
     }
 

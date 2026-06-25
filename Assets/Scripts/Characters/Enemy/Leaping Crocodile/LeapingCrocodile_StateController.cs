@@ -90,6 +90,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
          public LeapingCrocodile_StateController CrocSc => Sc as LeapingCrocodile_StateController;
          // private float _currentEmergeTime = 0f;
      
+         private Coroutine _emergeRoutine;
          public override void OnEnter()
          {
              base.OnEnter();
@@ -107,7 +108,7 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
              CrocSc.Animator.SetTrigger("Emerge");
 
              // Start the Emerge Routine
-             CrocSc.StartCoroutine(EmergeRoutine());
+             _emergeRoutine = CrocSc.StartCoroutine(EmergeRoutine());
          }
 
          private IEnumerator EmergeRoutine()
@@ -165,9 +166,12 @@ public class LeapingCrocodile_StateController : BoatEnemyStateController
          public override void OnExit()
          {
              base.OnExit();
+             
              // Revoke access to outer sides after they've landed on the boat
              CrocSc.canAccessOuterBoatSides = false;
              CrocSc.canAccessBoatSpaces = true;
+             
+             CrocSc.StopCoroutine(_emergeRoutine);
              
              CrocSc.Animator.SetTrigger("Idle");
          }

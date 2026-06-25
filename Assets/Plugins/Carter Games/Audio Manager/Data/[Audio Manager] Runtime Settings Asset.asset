@@ -18,10 +18,10 @@ MonoBehaviour:
   sourceInstancePrefab: {fileID: 2444215560086890528, guid: 57cbaaf6882b313429e179a430fc3183,
     type: 3}
   clipAudioMixer: {fileID: 24300002, guid: bc074bad2bcae8d47866a94f883f1390, type: 2}
-  audioPoolInitSize: 50
+  audioPoolInitSize: 500
   useGlobalVariance: 1
   volumeVarianceOffset: 0.2
   pitchVarianceOffset: 0.2
   useDynamicStartTime: 1
-  dynamicDetectionOffset: 50
+  dynamicDetectionOffset: 0
   dynamicMaxSampleDivision: 4

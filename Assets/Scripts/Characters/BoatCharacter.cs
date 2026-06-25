@@ -56,7 +56,7 @@ namespace GameCharacters
         public bool isAffectedByGravity = true;
         [SerializeField] protected float gravity = -25f;
 
-        private float _verticalVelocity;
+        [HideInInspector] public float verticalVelocity;
         [SerializeField, ReadOnly] protected float currentY;
 
         [Header("Head Bounce")] [ReadOnly]
@@ -460,6 +460,13 @@ namespace GameCharacters
             animator.SetBool(AnimatorGroundPound, isGroundPounding);
             OnGroundPoundTriggered();
         }
+
+        protected virtual void CancelGroundPound()
+        {
+            isGroundPounding = false;
+            GroundPoundElapsed = 0f;
+            animator.SetBool(AnimatorGroundPound, isGroundPounding);
+        }
         
         protected virtual void GroundPoundSequence()
         {
@@ -497,16 +504,16 @@ namespace GameCharacters
             if (isAffectedByGravity)
             {
                 // Do Gravity (fall)
-                _verticalVelocity += gravity * Time.deltaTime;
-                currentY += _verticalVelocity * Time.deltaTime;
+                verticalVelocity += gravity * Time.deltaTime;
+                currentY += verticalVelocity * Time.deltaTime;
             }
 
 
             // Set Vertical Falling Animation Parameter
-            animator.SetFloat(AnimatorVelocity, _verticalVelocity);
+            animator.SetFloat(AnimatorVelocity, verticalVelocity);
 
             // Damage any Characters below! Only when falling
-            if (_verticalVelocity < 0)
+            if (verticalVelocity < 0)
             {
                 var character = CharacterSpaceChecks.ScanAreaForDamageableCharacter
                     (StompPosition.position, stompSize, transform.rotation, damageableCharacterLayers, true);
@@ -528,7 +535,7 @@ namespace GameCharacters
             // Detect Landing
             if (!(currentY <= 0f)) return;
             currentY = 0f;
-            _verticalVelocity = 0f;
+            verticalVelocity = 0f;
             isGrounded = true;
 
             OnLanded();
@@ -542,7 +549,7 @@ namespace GameCharacters
             
             isJumping = true;
             isGrounded = false;
-            _verticalVelocity = jumpPower;
+            verticalVelocity = jumpPower;
             currentY = 0.1f;
 
             OnJumped();
@@ -580,7 +587,7 @@ namespace GameCharacters
                 if (canInteractWithBoat)
                 {
                     OnGroundPound();
-                    TriggerBounce(); // For fun!
+                    // TriggerBounce(); // For fun! (can be pretty inconvenient sometimes, disabling)
                 }
                 if (!isVaulting) isGroundPounding = false;
             }
@@ -600,7 +607,7 @@ namespace GameCharacters
             currentSpace.ExitSpace();
             isGrounded = false;
             animator.SetBool(AnimatorGrounded, isGrounded);
-            _verticalVelocity = bouncePower;
+            verticalVelocity = bouncePower;
             isBouncing = true;
 
             _timeSinceLastBounce = Time.time;

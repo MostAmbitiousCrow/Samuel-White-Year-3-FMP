@@ -317,28 +317,6 @@ public class GameLevelManager : MonoBehaviour
     private void InitiateEnvironmentSelect()
     {
         Game_UI.Instance.OpenEnvironmentSelect(CurrentEnvironment);
-
-        // TODO: Make it so that after sections are completed, open paths based on the amount of branches from the current environment and change environment based on what lane the boat was on...
-        /*var boat = River_Manager.Instance.BoatController;
-        var selectedRoot = environmentPaths.paths[(int)CurrentEnvironment];
-        
-        // If there are 3 branches
-        if (selectedRoot.branches.Length > 2)
-        {
-            var environment = selectedRoot.branches[boat.CurrentLane.id];
-            LoadEnvironmentAndLevel(environment);
-        }
-        // If there are only 2 branches
-        else
-        {
-            // Is in the centre lane
-            if (boat.CurrentLane.id == 1)
-            {
-                boat.DestroyBoat(DamageType.Tsunami); //TODO: Temp
-            }
-            var environment = selectedRoot.branches[boat.CurrentLane.id];
-            LoadEnvironmentAndLevel(environment);
-        }*/
     }
 
     /// <summary> Creates a level under the current environment </summary>

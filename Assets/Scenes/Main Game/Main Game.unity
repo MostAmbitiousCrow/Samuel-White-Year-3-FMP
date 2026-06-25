@@ -280,11 +280,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2383320502940276244, guid: 8dab577151e5b4b48afdb76b51e67d77,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 18
-      objectReference: {fileID: 0}
     - target: {fileID: 2558142938215623017, guid: 8dab577151e5b4b48afdb76b51e67d77,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -4280,7 +4275,7 @@ MonoBehaviour:
     type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
@@ -5146,7 +5141,8 @@ AudioSource:
   m_GameObject: {fileID: 2011801272}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3384144120901897181, guid: bc074bad2bcae8d47866a94f883f1390,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ecc6d9c04faa48c4188d7f4159ece16e, type: 3}
   m_PlayOnAwake: 1

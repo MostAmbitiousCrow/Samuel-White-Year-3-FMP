@@ -29,6 +29,8 @@ namespace GameCharacters
         private InputAction _jumpAction;
         private InputAction _vaultAction;
         private InputAction _groundPoundAction;
+
+        private float _inputInhibitation = .1f;
         
         #region Event Listeners
 
@@ -77,7 +79,9 @@ namespace GameCharacters
             // TODO: TEMP. Reset health whenever a new level is loaded
             GameLevelManager.OnLevelLoaded += HealthComponent.RestoreHealth;
 
-            if (GameManager.Instance != null) GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
+            GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
+            GameManager.GameLogic.OnGameResume += () => _inputInhibitation = 0f;
+            
             HealthComponent.IsInvincible = GameSettingsManager.DoPlayerInvincibility;
 
             GameSettingsManager.GameplayChanged += AssignInvincibility;
@@ -100,14 +104,20 @@ namespace GameCharacters
 
         protected override void TimeUpdate()
         {
-            // Insert player actions here
-            MoveInput();
-
-            VaultInput();
-
-            GroundPoundInput();
-            JumpInput();
+            if (GameManager.GameLogic.IsGamePaused) return;
             
+            if (Mathf.Approximately(_inputInhibitation, .1f))
+            {
+                // Player actions here
+                MoveInput();
+
+                VaultInput();
+
+                GroundPoundInput();
+                JumpInput();
+            }
+            _inputInhibitation = .1f; // TODO: Temp as to somewhat prevent the player from making an input as they press 'resume'
+
             base.TimeUpdate();
             
             //TODO: Temporary way of triggering the players bounce, for testing purposes. Remove on Build
@@ -272,7 +282,7 @@ namespace GameCharacters
         protected override void OnJumped()
         {
             base.OnJumped();
-            if (isGroundPounding)
+            /*if (isGroundPounding)
             {
                 TriggerHitStop(.05f);
                 AudioManager.Play(Clip.Plyr_Jump_1); // Heavy Jump
@@ -282,7 +292,13 @@ namespace GameCharacters
                 // Trigger OnPlayerJumped listeners. Used for the Tutorial Section.
                 OnPlayerJumped?.Invoke();
                 AudioManager.Play(Clip.Plyr_Jump_0); // Light Jump
-            }
+            }*/
+
+            CancelGroundPound();
+            
+            // Trigger OnPlayerJumped listeners. Used for the Tutorial Section.
+            OnPlayerJumped?.Invoke();
+            AudioManager.Play(Clip.Plyr_Jump_0); // Light Jump
         }
 
         protected override void OnLanded()
@@ -301,6 +317,7 @@ namespace GameCharacters
         {
             base.OnTargetEliminated();
             AudioManager.Play(Clip.Stomped);
+            GameManager.GameLogic.playerData.EnemiesDefeated++;
             OnPlayerKilledEnemy?.Invoke(); // Enemy Killed Check for the Tutorial
         }
 

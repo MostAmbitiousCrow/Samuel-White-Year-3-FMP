@@ -23,6 +23,11 @@ namespace Environment_Select
             checkmark.gameObject.SetActive(false);
         }
 
+        private void OnDisable()
+        {
+            _isSelected = false;
+        }
+
         public void UpdateSelectDetails(SO_EnvironmentPaths.EnvironmentPath data)
         {
             buttonText.text = data.root.ToString();
@@ -42,6 +47,7 @@ namespace Environment_Select
             animator.SetTrigger(Selected);
 
             _isSelected = true;
+            Debug.Log($"Selected Choice: {environment} = {_isSelected}");
         }
 
         public void DeSelectEnvironment()

@@ -9961,6 +9961,7 @@ MonoBehaviour:
   offset: -20
   distanceOnSpline: 0
   totalDistanceTravelled: 0
+  globalDistanceTravelled: 0
   ignorePause: 0
 --- !u!114 &8931706103474759340
 MonoBehaviour:
@@ -10026,7 +10027,8 @@ AudioSource:
   m_GameObject: {fileID: 8555857859445590250}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4840437137353293865, guid: bc074bad2bcae8d47866a94f883f1390,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ea82ed58c8b364036b3437b49b266362, type: 3}
   m_PlayOnAwake: 1

@@ -14,7 +14,6 @@ public class GameOverMenu : MonoBehaviour
     private Animation _animation;
     private Canvas _canvas;
     private Button _button;
-    
     private void Start()
     {
         _canvas = GetComponent<Canvas>();
@@ -23,6 +22,9 @@ public class GameOverMenu : MonoBehaviour
         _button = GetComponentInChildren(typeof(Button), true) as Button;
 
         GameManager.MainGameLogic.OnGameOver += OnGameOver;
+        
+        // Disable Menu
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -123,7 +125,7 @@ public class GameOverMenu : MonoBehaviour
         yield return RevealScore(2, GameManager.GameLogic.playerData.CurrentGemstones);
 
         // Enemies defeated
-        yield return RevealScore(3, 0);
+        yield return RevealScore(3, GameManager.GameLogic.playerData.EnemiesDefeated);
 
         // Levels beaten
         yield return RevealScore(4, GameLevelManager.LevelsCompleted);

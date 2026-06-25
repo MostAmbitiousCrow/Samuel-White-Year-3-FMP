@@ -236,7 +236,6 @@ public class GameManager : MonoBehaviour
         /// <summary> Method to trigger whenever the player dies during the game </summary>
         public void PlayerDied()
         {
-
             EndGame();
         }
 

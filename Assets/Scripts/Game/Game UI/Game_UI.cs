@@ -26,14 +26,14 @@ public class Game_UI : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
+        // GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
         PlayerCharacter.OnPlayerDamaged += CheckPlayerHealth;
         PlayerCharacter.OnPlayerDied += _ => ResetHealthBorder();
         GameLevelManager.OnLevelLoaded += ResetHealthBorder;
     }
     private void OnEnable()
     {
-        GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
+        // GameManager.GameLogic.OnGemstoneCollected += UpdateGemstoneCounter;
         PlayerCharacter.OnPlayerDamaged += CheckPlayerHealth;
         PlayerCharacter.OnPlayerDied += _ => ResetHealthBorder();
         GameLevelManager.OnLevelLoaded += ResetHealthBorder;
@@ -41,7 +41,7 @@ public class Game_UI : MonoBehaviour
 
     private void OnDisable()
     {
-        GameManager.GameLogic.OnGemstoneCollected -= UpdateGemstoneCounter;
+        // GameManager.GameLogic.OnGemstoneCollected -= UpdateGemstoneCounter;
         PlayerCharacter.OnPlayerDamaged -= CheckPlayerHealth;
         PlayerCharacter.OnPlayerDied -= _ => ResetHealthBorder();
         GameLevelManager.OnLevelLoaded -= ResetHealthBorder;
@@ -100,7 +100,7 @@ public class Game_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gemstoneCounterText;
 
     /// <summary> Function to update the UI for the Gemstone Counter. Parameter must be the current Gemstone count. </summary>
-    private void UpdateGemstoneCounter(int gemstones)
+    /*private void UpdateGemstoneCounter(int gemstones)
     {
         // if (!gemstoneCounterText.gameObject)
         // {
@@ -111,7 +111,7 @@ public class Game_UI : MonoBehaviour
 
         gemstoneCounterText.SetText($"Gemstones: {gemstones}");
         //print($"Updated Gemstone Text: {gemstones}");
-    }
+    }*/
 
     #endregion
     
@@ -142,6 +142,7 @@ public class Game_UI : MonoBehaviour
 
         foreach (var element in environmentSelectUI)
         {
+            element.DeSelectEnvironment();
             element.gameObject.SetActive(false);
         }
 
@@ -173,6 +174,9 @@ public class Game_UI : MonoBehaviour
         _isEnvironmentSelectActive = true;
         
         _lastSelectedBoatLane = River_Manager.Instance.BoatController.CurrentLane.id;
+        
+        var currentUI = GetEnvironmentUIIndex(_lastSelectedBoatLane);
+        if (currentUI != -1) environmentSelectUI[currentUI].SelectEnvironment();
     }
 
     /// <summary>
