@@ -793,10 +793,19 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
   alternativeGraphics:
     instruction: 
-    psGraphics: []
-    xboxGraphics: []
-    gamepadGraphics: []
-    keyboardGraphics: []
+    psGraphics:
+    - {fileID: 21300000, guid: 58a0c15d29b3d410aba276cbbd48f653, type: 3}
+    - {fileID: 21300000, guid: f0e702908ad064589859acfcda1df6b9, type: 3}
+    xboxGraphics:
+    - {fileID: 21300000, guid: 77bc9a74f61154e1f9c09ebad77f5a42, type: 3}
+    - {fileID: 21300000, guid: 25eeccf368dc54af6be0ca3fc7e81dbf, type: 3}
+    gamepadGraphics:
+    - {fileID: 21300000, guid: 36239cf70b3e14f10ac5079567d4f25e, type: 3}
+    - {fileID: 21300000, guid: 46e45c0d0c54a49da8d829e667a39dd8, type: 3}
+    keyboardGraphics:
+    - {fileID: 21300000, guid: c8c08673bbf7d014995eed92d261023b, type: 3}
+    - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &1131785570745947273
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,10 +989,19 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
   alternativeGraphics:
     instruction: 
-    psGraphics: []
-    xboxGraphics: []
-    gamepadGraphics: []
-    keyboardGraphics: []
+    psGraphics:
+    - {fileID: 21300000, guid: 58a0c15d29b3d410aba276cbbd48f653, type: 3}
+    - {fileID: 21300000, guid: f0e702908ad064589859acfcda1df6b9, type: 3}
+    xboxGraphics:
+    - {fileID: 21300000, guid: 77bc9a74f61154e1f9c09ebad77f5a42, type: 3}
+    - {fileID: 21300000, guid: 25eeccf368dc54af6be0ca3fc7e81dbf, type: 3}
+    gamepadGraphics:
+    - {fileID: 21300000, guid: 36239cf70b3e14f10ac5079567d4f25e, type: 3}
+    - {fileID: 21300000, guid: 46e45c0d0c54a49da8d829e667a39dd8, type: 3}
+    keyboardGraphics:
+    - {fileID: 21300000, guid: c8c08673bbf7d014995eed92d261023b, type: 3}
+    - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &1362385133162245902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4160,9 +4178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicRenderer: {fileID: 5998240472080130090}
-  promptText: {fileID: 0}
+  promptText: {fileID: 7094829985886727871}
   graphics:
-    instruction: 
+    instruction: Hold
     psGraphics:
     - {fileID: 21300000, guid: ee30e5f8efc7c4674a1138519662a176, type: 3}
     - {fileID: 21300000, guid: aa7585bc374554bc7a0d969fac87883e, type: 3}
@@ -4176,11 +4194,20 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 9ccd6bd98e35b2a40b6d6c0465115867, type: 3}
     - {fileID: 21300000, guid: 0ec088b5d4d9a2c4b8cc50097037f2a5, type: 3}
   alternativeGraphics:
-    instruction: 
-    psGraphics: []
-    xboxGraphics: []
-    gamepadGraphics: []
-    keyboardGraphics: []
+    instruction: Hold
+    psGraphics:
+    - {fileID: 21300000, guid: ee30e5f8efc7c4674a1138519662a176, type: 3}
+    - {fileID: 21300000, guid: aa7585bc374554bc7a0d969fac87883e, type: 3}
+    xboxGraphics:
+    - {fileID: 21300000, guid: 03b56019b095645109721ab6c2acaa92, type: 3}
+    - {fileID: 21300000, guid: 9728fbc6a806a491fbbbbf470f528bae, type: 3}
+    gamepadGraphics:
+    - {fileID: 21300000, guid: e9773244a2c0a442c9fec2cc13aac4b9, type: 3}
+    - {fileID: 21300000, guid: 5c97221b169d442a5a792764e0f12eb8, type: 3}
+    keyboardGraphics:
+    - {fileID: 21300000, guid: 9ccd6bd98e35b2a40b6d6c0465115867, type: 3}
+    - {fileID: 21300000, guid: 0ec088b5d4d9a2c4b8cc50097037f2a5, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &5539492466537341959
 GameObject:
   m_ObjectHideFlags: 0
@@ -4490,6 +4517,7 @@ MonoBehaviour:
     keyboardGraphics:
     - {fileID: 21300000, guid: 7baaee5c18bdf304ea5a165351ec75e6, type: 3}
     - {fileID: 21300000, guid: 178b09e0888517e4b9d07a9ec5ac9b2a, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &5944947029848222701
 GameObject:
   m_ObjectHideFlags: 0
@@ -5027,10 +5055,19 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
   alternativeGraphics:
     instruction: 
-    psGraphics: []
-    xboxGraphics: []
-    gamepadGraphics: []
-    keyboardGraphics: []
+    psGraphics:
+    - {fileID: 21300000, guid: 58a0c15d29b3d410aba276cbbd48f653, type: 3}
+    - {fileID: 21300000, guid: f0e702908ad064589859acfcda1df6b9, type: 3}
+    xboxGraphics:
+    - {fileID: 21300000, guid: 77bc9a74f61154e1f9c09ebad77f5a42, type: 3}
+    - {fileID: 21300000, guid: 25eeccf368dc54af6be0ca3fc7e81dbf, type: 3}
+    gamepadGraphics:
+    - {fileID: 21300000, guid: 36239cf70b3e14f10ac5079567d4f25e, type: 3}
+    - {fileID: 21300000, guid: 46e45c0d0c54a49da8d829e667a39dd8, type: 3}
+    keyboardGraphics:
+    - {fileID: 21300000, guid: c8c08673bbf7d014995eed92d261023b, type: 3}
+    - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &6485077101020996909
 GameObject:
   m_ObjectHideFlags: 0
@@ -5777,10 +5814,19 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
   alternativeGraphics:
     instruction: 
-    psGraphics: []
-    xboxGraphics: []
-    gamepadGraphics: []
-    keyboardGraphics: []
+    psGraphics:
+    - {fileID: 21300000, guid: 58a0c15d29b3d410aba276cbbd48f653, type: 3}
+    - {fileID: 21300000, guid: f0e702908ad064589859acfcda1df6b9, type: 3}
+    xboxGraphics:
+    - {fileID: 21300000, guid: 77bc9a74f61154e1f9c09ebad77f5a42, type: 3}
+    - {fileID: 21300000, guid: 25eeccf368dc54af6be0ca3fc7e81dbf, type: 3}
+    gamepadGraphics:
+    - {fileID: 21300000, guid: 36239cf70b3e14f10ac5079567d4f25e, type: 3}
+    - {fileID: 21300000, guid: 46e45c0d0c54a49da8d829e667a39dd8, type: 3}
+    keyboardGraphics:
+    - {fileID: 21300000, guid: c8c08673bbf7d014995eed92d261023b, type: 3}
+    - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &6820695828754764621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5899,6 +5945,7 @@ MonoBehaviour:
     keyboardGraphics:
     - {fileID: 21300000, guid: e4ea7e6386981b048914735325bf9fcc, type: 3}
     - {fileID: 21300000, guid: 65f157d39e7aebf43b2d3c0f5fed25af, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &6852658216482328096
 GameObject:
   m_ObjectHideFlags: 0
@@ -6585,6 +6632,7 @@ MonoBehaviour:
     keyboardGraphics:
     - {fileID: 21300000, guid: e4ea7e6386981b048914735325bf9fcc, type: 3}
     - {fileID: 21300000, guid: 9bb8f759396311b4eac55c82314d6975, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &7456200687443337341
 GameObject:
   m_ObjectHideFlags: 0
@@ -7749,6 +7797,7 @@ MonoBehaviour:
     keyboardGraphics:
     - {fileID: 21300000, guid: c8c08673bbf7d014995eed92d261023b, type: 3}
     - {fileID: 21300000, guid: 810d87e3debfe794ca14b8f50b8a9a7d, type: 3}
+  _currentSpriteIndex: 0
 --- !u!1 &8700151613095795911
 GameObject:
   m_ObjectHideFlags: 0

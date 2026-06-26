@@ -50,30 +50,35 @@ public class GraphicUpdater : MonoBehaviour
         var text = alternativeControls ? alternativeGraphics.instruction : graphics.instruction;
         promptText?.gameObject.SetActive(text.Length != 0);
         promptText?.SetText(alternativeControls? alternativeGraphics.instruction : graphics.instruction);
-        
-        graphicRenderer.sprite = pad switch
+
+        if (alternativeGraphics.keyboardGraphics.Length is > 0 or > 0)
         {
-            // Keyboard
-            null => alternativeControls? //TODO: this keeps throwing errors despite there being literally no issue with it
-                alternativeGraphics.keyboardGraphics[_currentSpriteIndex]
-                : 
-                graphics.keyboardGraphics[_currentSpriteIndex],
-            // Xbox
-            XInputController => alternativeControls?
-                alternativeGraphics.xboxGraphics[_currentSpriteIndex] 
-                : 
-                graphics.xboxGraphics[_currentSpriteIndex],
-            // Playstation
-            DualShockGamepad => alternativeControls?
-                alternativeGraphics.psGraphics[_currentSpriteIndex] 
-                : 
-                graphics.psGraphics[_currentSpriteIndex],
-            // Gamepad
-            not null =>alternativeControls?
-                alternativeGraphics.gamepadGraphics[_currentSpriteIndex] 
-                : 
-                graphics.gamepadGraphics[_currentSpriteIndex],
-        };
+            graphicRenderer.sprite = pad switch
+            {
+                // Keyboard
+                null => alternativeControls? //TODO: this keeps throwing errors despite there being literally no issue with it
+                    alternativeGraphics.keyboardGraphics[_currentSpriteIndex]
+                    : 
+                    graphics.keyboardGraphics[_currentSpriteIndex],
+                // Xbox
+                XInputController => alternativeControls?
+                    alternativeGraphics.xboxGraphics[_currentSpriteIndex] 
+                    : 
+                    graphics.xboxGraphics[_currentSpriteIndex],
+                // Playstation
+                DualShockGamepad => alternativeControls?
+                    alternativeGraphics.psGraphics[_currentSpriteIndex] 
+                    : 
+                    graphics.psGraphics[_currentSpriteIndex],
+                // Gamepad
+                not null =>alternativeControls?
+                    alternativeGraphics.gamepadGraphics[_currentSpriteIndex] 
+                    : 
+                    graphics.gamepadGraphics[_currentSpriteIndex]
+            };
+        }
+        
+
         
         _currentSpriteIndex++;
         if (_currentSpriteIndex >= 2) _currentSpriteIndex = 0;
