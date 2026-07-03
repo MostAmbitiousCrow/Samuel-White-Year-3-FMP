@@ -25,8 +25,12 @@ public class SO_SectionData : ScriptableObject
     [Serializable]
     public struct SectionContent
     {
-        public float initialDelay;
-        public float postDelay;
+        /// <summary> The overall distance of this section </summary>
+        public int sectionDistance;
+        /// <summary> The distance added before this Section is spawned </summary>
+        public int distanceBeforeSection;
+        /// <summary> The distance added after this Section is spawned </summary>
+        public int distanceAfterSection;
 
         public int ObjectCount => obstacles.Count + enemies.Count + collectibles.Count + gemstoneGates.Count;
 

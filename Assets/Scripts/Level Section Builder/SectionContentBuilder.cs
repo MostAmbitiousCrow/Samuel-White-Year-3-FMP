@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using EditorAttributes;
 using UnityEditor;
-using UnityEngine.Serialization;
 
 /// <summary> Class used for the level builder tool to generate Sections stored in the Level Data Scriptable Objects </summary>
 public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
@@ -16,8 +14,12 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
     [Serializable]
     public class SectionData
     {
-        public float initialDelay = 0f;
-        public float postDelay = 0f;
+        /// <summary> The overall distance of this section </summary>
+        public int sectionDistance = 100;
+        /// <summary> The distance added before this lane is spawned </summary>
+        public int distanceBeforeSection;
+        /// <summary> The distance added after this lane is spawned </summary>
+        public int distanceAfterSection;
 
         public int ObjectCount => SectionBuilderDatas.Count;
         public List<ISectionData> SectionBuilderDatas = new();
@@ -35,7 +37,12 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         [Line(GUIColor.White)]
         public List<Section_SlipStream_Object> slipStreamDatas = new();
         
-        // public SO_SectionData.SectionContent.DifficultyQualification difficultyType;
+        /// <summary> Determines the difficulty is considered to be for this section </summary>
+        [Space]
+        
+        public DifficultyQualification difficultyType;
+        
+        public SO_SectionData.SectionContent.AvailableEnvironments applicableEnvironments;
     }
     public SectionData sectionData = new();
     // public SplineContainer splineContainer;
@@ -139,8 +146,25 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         }).ToList();
         content.slipStreams = slipStreamData;
         
+        // Assign Difficulties and Environments
+        content.difficultyType = sectionData.difficultyType;
+        content.applicableEnvironments = sectionData.applicableEnvironments;
+        
+        // Assign Distances
+        content.distanceBeforeSection = sectionData.distanceBeforeSection;
+        content.distanceAfterSection = sectionData.distanceAfterSection;
+        content.sectionDistance = sectionData.sectionDistance;
+        
         // Assign the section content to the Level Data Scriptable Object
         scriptableObject.sectionContent = content;
+
+        // Naming
+        var environment = (int)content.applicableEnvironments == -1 ?
+                new string("Everything") : content.applicableEnvironments.ToString();
+        var difficulty = (int)content.difficultyType == -1 ?
+            new string("Everything") : content.difficultyType.ToString();
+        
+        paraAssetName = ($"({environment}) ({difficulty}) {paraAssetName}");
 
         var path = $"{paraPathName}/{paraAssetName}.asset";
 
@@ -161,6 +185,8 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
     private void OnDrawGizmos()
     {
         GetSectionObjects();
+
+        name = $"=== Section Builder Root === ({assetName})";
 
         if (!enableDebug) return;
 
@@ -202,7 +228,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         // Draw player mesh down the lane
         currentDistance += Time.deltaTime * (speed / 2f);
 
-        if (currentDistance > 100f)
+        if (currentDistance > sectionData.sectionDistance)
         {
             currentDistance = 0f;
             speed = defaultSpeed;

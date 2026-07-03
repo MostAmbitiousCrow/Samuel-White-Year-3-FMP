@@ -162,6 +162,8 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             lastSpawnedObject = null;
             furthestDistance = 0;
+
+            _currentSectionOffset += data.sectionContent.distanceBeforeSection;
             
             // Initial delay
             // if (data.sectionContent.initialDelay > 0) yield return new WaitForSeconds(data.sectionContent.initialDelay);
@@ -183,7 +185,8 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             // Debug.Log($"Spawned Section {currentSectionIndex}.");
             
-            _currentSectionOffset += (furthestDistance + gapBetweenSections);
+            _currentSectionOffset += (data.sectionContent.sectionDistance 
+                                      + gapBetweenSections + data.sectionContent.distanceAfterSection);
             yield return currentSectionIndex++;
         }
 

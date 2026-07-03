@@ -13,6 +13,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     [Line(GUIColor.Green)]
     [Header("Boat Settings")]
     public RiverLane CurrentLane { get; set; }
+    private RiverLane _returningLane;
     public float steerSpeed = 1;
     public AnimationCurve steerInterpolationCurve;
     [Tooltip("What lane should this object start on? (if applicable)")]
@@ -25,11 +26,14 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     [Space(10)]
     [SerializeField, ReadOnly] private bool isMoving;
     public bool IsMoving => isMoving;
+    private bool _willReturn;
 
     private Vector3 _currentMoveTarget;
     private Vector3 _startMovePosition;
     private float _moveElapsed;
     [SerializeField] private float steerDuration = 0.35f;
+    [SerializeField] private float returnSteerMultiplier = 2f;
+    private float _steerMultiplier = 1f;
 
     private int _direction = 0;
 
@@ -82,6 +86,9 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     /// </summary>
     public void SteerBoat(SpaceData spaceData, float force)
     {
+        // Prevent the player from steering if their boat is returning
+        if (_willReturn) return;
+        
         Transform spaceTransform = spaceData.t;
         Vector3 localPos = transform.InverseTransformPoint(spaceTransform.position);
 
@@ -109,19 +116,46 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     {
         throw new NotImplementedException();
     }
+    
+    public void MoveToLane(RiverLane lane)
+    {
+        if (lane == null) return;
+
+        // If the river lane is block, set lane to return to
+        _willReturn = lane.isBlocked;
+        if (_willReturn) _returningLane = CurrentLane;
+        
+        CurrentLane = lane;
+
+        Vector3 lanePos = lane.transform.localPosition;
+
+        // Use current position as new start (allows mid-steer blending)
+        _startMovePosition = transform.localPosition;
+
+
+        _currentMoveTarget = new Vector3(lanePos.x, lanePos.y, transform.localPosition.z);
+
+        _moveElapsed = 0f;
+        isMoving = true;
+    }
 
     public void MoveToLane(int direction)
     {
         RiverLane rl = Instance.GetLaneFromDirection(CurrentLane.id, direction);
         if (rl == null) return;
 
+        // If the river lane is block, set lane to return to
+        _willReturn = rl.isBlocked;
+        if (_willReturn) _returningLane = CurrentLane;
+        
         CurrentLane = rl;
 
         Vector3 lanePos = rl.transform.localPosition;
 
-        // IMPORTANT:
-        // Use CURRENT position as new start (allows mid-steer blending)
+        // Use current position as new start (allows mid-steer blending)
         _startMovePosition = transform.localPosition;
+
+
         _currentMoveTarget = new Vector3(lanePos.x, lanePos.y, transform.localPosition.z);
 
         _moveElapsed = 0f;
@@ -146,7 +180,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     
     private void SteerMovement()
     {
-        _moveElapsed += Time.deltaTime / Mathf.Max(steerDuration, 0.0001f);
+        _moveElapsed += Time.deltaTime / Mathf.Max(steerDuration / _steerMultiplier, 0.0001f);
 
         float t = Mathf.Clamp01(_moveElapsed);
         float steerT = steerInterpolationCurve?.Evaluate(t) ?? t;
@@ -169,7 +203,21 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
         transform.localPosition = _currentMoveTarget;
         transform.localRotation = Quaternion.identity;
 
-        isMoving = false;
+        if (_willReturn)
+        {
+            _willReturn = false;
+            CurrentLane = _returningLane;
+            _returningLane = null;
+            _direction *= -1; // Revert Direction
+            _steerMultiplier = returnSteerMultiplier;
+            MoveToLane(CurrentLane);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+            _steerMultiplier = 1f;
+        }
     }
 
     private void AnimatePropeller()

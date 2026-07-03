@@ -57,6 +57,9 @@ namespace GameCharacters
 
         public void GoToLane(int lane)
         {
+            // Remove Listener from previous lane
+            CurrentLane?.onObjectEntered.RemoveListener(OnLaneDamaged);
+            
             // Get the River Lane Reference from the River Manager
             var rl = Instance.GetLane(lane);
 
@@ -64,6 +67,8 @@ namespace GameCharacters
             var pos = rl.transform.localPosition;
             CurrentLane = rl;
             transform.localPosition = new Vector3(pos.x, pos.y, transform.localPosition.z);
+
+            CurrentLane.onObjectEntered.AddListener(OnLaneDamaged);
         }
 
         public int GetCurrentLane()
@@ -73,6 +78,11 @@ namespace GameCharacters
         #endregion
 
         #region Health Events
+
+        private void OnLaneDamaged()
+        {
+            HealthComponent.TakeDamage();
+        }
 
         public override void OnTookDamage(DamageType damageType)
         {

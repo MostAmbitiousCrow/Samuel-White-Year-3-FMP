@@ -1,12 +1,12 @@
 using EditorAttributes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using CarterGames.Assets.AudioManager;
 using Game;
 using GameCharacters;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
@@ -51,7 +51,9 @@ public class River_Manager : MonoBehaviour
     public class RiverLane
     {
         public int id;
+        public bool isBlocked;
         public Transform transform;
+        public UnityEvent onObjectEntered; // Perhaps have an event that river enemies subscribe to, and have them take damage?
     }
     public List<RiverLane> riverLanes;
     public List<IAffectedByRiver> RiverInfluencedObjects = new();

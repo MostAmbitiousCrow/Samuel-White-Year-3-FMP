@@ -1,3 +1,4 @@
+using System;
 using EditorAttributes;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
     [Title("River Object for Building Objects for Level Sections", 11)]
     [Line(GUIColor.White, alpha: 1, lineThickness: 10)]
     [Range(0, 2), SerializeField] int lane;
-    [Range(0, 100), SerializeField] int distance;
+    [SerializeField] int distance;
     [Range(0, 5), SerializeField] int height;
 
     // ISectionData Variables
@@ -23,6 +24,17 @@ public abstract class SectionBuilderObject : MonoBehaviour, ISectionData
     // [SerializeField] private GlobalRiverValues globalRiverValues;
 
     [SerializeField] protected River_Manager riverManager;
+    [SerializeField] protected SectionContentBuilder contentBuilder;
+
+    private void OnValidate()
+    {
+        if (!contentBuilder) contentBuilder = transform.parent.transform.parent.GetComponent<SectionContentBuilder>();
+
+        var sectionDistance = contentBuilder.sectionData.sectionDistance;
+
+        if (distance > sectionDistance) distance = sectionDistance;
+        else if (distance < 0) distance = 0;
+    }
 
     public void DrawGizmos()
     {
