@@ -289,7 +289,7 @@ public class River_Manager : MonoBehaviour
     public int TargetRiverSpeed => targetRiverSpeed;
     [SerializeField] private int slowTargetRiverSpeed;
     
-    private void Update()
+    private void LateUpdate()
     {
         if (IsPaused) return;
         

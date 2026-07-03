@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using CameraShake;
 using CarterGames.Assets.AudioManager;
 using EditorAttributes;
@@ -69,6 +70,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     private void Start()
     {
         GoToLane(startLane);
+        GameLevelManager.OnLevelLoaded += TriggerLevelEnterSpeedUp;
     }
 
     private void OnEnable()
@@ -79,6 +81,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     private void OnDisable()
     {
         PlayerCharacter.OnPlayerDied -= DestroyBoat;
+        GameLevelManager.OnLevelLoaded -= TriggerLevelEnterSpeedUp;
     }
 
     /// <summary>
@@ -226,12 +229,27 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     }
     #endregion
 
-    #region Injection
-    //public void InjectRiverManager(River_Manager manager)
-    //{
-    //    riverManager = manager;
-    //    print($"Injected {manager} into {name}");
-    //}
+    #region Events
+
+    [Header("Level Enter Data")]
+    [SerializeField] private int levelEnterSpeed = 30;
+    [SerializeField] private float levelExitSpeedResetTime = 1.5f;
+
+    private void TriggerLevelEnterSpeedUp()
+    {
+        StartCoroutine(LevelEnterSpeedUpRoutine());
+    }
+
+    private IEnumerator LevelEnterSpeedUpRoutine()
+    {
+        var cachedSpeed = River_Manager.Instance.TargetRiverSpeed;
+        Instance.SetRiverSpeed(levelEnterSpeed, true, false);
+        
+        yield return new WaitForSeconds(levelExitSpeedResetTime);
+        
+        Instance.SetRiverSpeed(cachedSpeed, true, false);
+    }
+    
     #endregion
 
     #region Damage Events

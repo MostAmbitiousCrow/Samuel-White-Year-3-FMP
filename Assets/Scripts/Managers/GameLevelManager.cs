@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CarterGames.Assets.AudioManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -368,7 +367,7 @@ public class GameLevelManager : MonoBehaviour
         var spline = CurrentLevelData.levelSpline;
         if (spline.Count > 0) River_Manager.Instance.UpdateWorldSpline(spline);
 
-        yield return waitForFrame;
+        // yield return waitForFrame;
         
         OnLevelLoaded?.Invoke();
         Debug.Log($"Loaded Level '{CurrentLevelData.levelName}'");

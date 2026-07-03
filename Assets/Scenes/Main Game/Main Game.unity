@@ -4204,7 +4204,7 @@ Transform:
   m_GameObject: {fileID: 1610909931}
   serializedVersion: 2
   m_LocalRotation: {x: 0.11841464, y: 0.000000031664964, z: 0.00000001117587, w: 0.99296427}
-  m_LocalPosition: {x: 0.82, y: 12, z: -20}
+  m_LocalPosition: {x: 0.82, y: 12, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4987,8 +4987,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873301173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.017246997, z: -0, w: 0.9998513}
-  m_LocalPosition: {x: 1.8362019, y: 0, z: -23.330399}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5289,9 +5289,19 @@ PrefabInstance:
       objectReference: {fileID: 274381121}
     - target: {fileID: 6398182107363113773, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
+      propertyPath: levelEnterSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398182107363113773, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
+        type: 3}
       propertyPath: riverSplineObject
       value: 
       objectReference: {fileID: 274381121}
+    - target: {fileID: 6398182107363113773, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
+        type: 3}
+      propertyPath: levelExitSpeedResetTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7697235221224964546, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5409,6 +5419,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tsunami
+      objectReference: {fileID: 0}
+    - target: {fileID: 8555857859445590250, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

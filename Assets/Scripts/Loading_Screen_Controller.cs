@@ -26,9 +26,10 @@ public class Loading_Screen_Controller : MonoBehaviour
     [SerializeField] float startTransitionTime = .5f;
     [SerializeField] float endTransitionTime = 1.5f;
     public static bool IsOpening { get; private set; }
+    public static bool IsProcessing { get; private set; }
     public static bool IsClosing { get; private set; }
 
-    public static bool IsTransitioning => IsOpening || IsClosing;
+    public static bool IsTransitioning => IsOpening || IsClosing || IsProcessing;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class Loading_Screen_Controller : MonoBehaviour
     public void EndLoadingScreen()
     {
         IsClosing = true;
+        IsProcessing = false;
         StartCoroutine(CloseLoadingScreenProcess());
     }
     #endregion
@@ -87,6 +89,7 @@ public class Loading_Screen_Controller : MonoBehaviour
         for (int i = 0; i < 8; i++) yield return waitForFrame; // Kinda prevents lag, but isn't the best atm
         
         IsOpening = false;
+        IsProcessing = true;
     }
 
     private IEnumerator CloseLoadingScreenProcess()
