@@ -22,7 +22,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     [Header("Spacing Settings")]
     [Tooltip("The distance between the end of each section")]
     [SerializeField] private float gapBetweenSections = 20f;
-    private float _currentSectionOffset;
+    [SerializeField, ReadOnly] private float _currentSectionOffset;
     
     [Header("Section Objects")]
     private readonly Dictionary<Enum, int> _prefabLookup = new Dictionary<System.Enum, int>();
@@ -51,6 +51,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
     // Tracked last object in segment
     [SerializeField, ReadOnly] private River_Object lastSpawnedObject;
     [SerializeField, ReadOnly] private float furthestDistance;
+    private float _lastSlipStreamSpeed;
     #endregion
 
     #region Injection Dependencies
@@ -146,7 +147,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         _currentSectionOffset = 0f;
 
         // Wait a frame to allow the boat to reset first
-        yield return null;
+        yield return new WaitForEndOfFrame();
         
         // Spawn Sections
         while (currentSectionIndex < sectionLength)
@@ -155,18 +156,16 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
 
             if (!data)
             {
-                // Debug.LogWarning($"Section Data at index {currentSectionIndex} is null. Skipping.");
+                Debug.LogWarning($"Section Data at index {currentSectionIndex} is null. Skipping.");
                 currentSectionIndex++;
                 continue;
             }
             
             lastSpawnedObject = null;
-            furthestDistance = 0;
+            // furthestDistance = 0;
 
+            // Using Distancing Only
             _currentSectionOffset += data.sectionContent.distanceBeforeSection;
-            
-            // Initial delay
-            // if (data.sectionContent.initialDelay > 0) yield return new WaitForSeconds(data.sectionContent.initialDelay);
             
             // Spawn objects
             SpawnObstacles(data.sectionContent.obstacles);
@@ -179,21 +178,28 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             // if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
             // else Debug.Log($"Section {currentSectionIndex} had no objects.");
-
-            // Delay
-            // if (data.sectionContent.postDelay > 0) yield return new WaitForSeconds(data.sectionContent.postDelay);
             
             // Debug.Log($"Spawned Section {currentSectionIndex}.");
             
-            _currentSectionOffset += (data.sectionContent.sectionDistance 
-                                      + gapBetweenSections + data.sectionContent.distanceAfterSection);
+            // Using last spawned furthest distance
+            /*_currentSectionOffset += (furthestDistance + gapBetweenSections);*/
+            
+            // Using Distancing Only
+            _currentSectionOffset += 
+                (data.sectionContent.sectionDistance + gapBetweenSections + data.sectionContent.distanceAfterSection);
+            
             yield return currentSectionIndex++;
         }
 
         // End once the players boat has progressed past the last spawned river object
-        if (lastSpawnedObject) yield return new WaitUntil(() 
-            => boatController.RiverSplineObject.DistanceOnSpline > lastSpawnedObject.StartDistance + 20f);
-        else Debug.Log($"Section {currentSectionIndex} had no objects.");
+        // if (lastSpawnedObject) yield return new WaitUntil(() 
+        //     => boatController.RiverSplineObject.DistanceOnSpline > lastSpawnedObject.StartDistance + 20f);
+        // else Debug.Log($"Section {currentSectionIndex} had no objects.");
+
+        var totalDistance = furthestDistance + _currentSectionOffset + 40f;
+        Debug.Log($"Spawn Complete. Offset = {_currentSectionOffset}. Section Total Distance = {totalDistance}");
+        
+        yield return new WaitUntil(() => boatController.RiverSplineObject.TotalDistanceTravelled > totalDistance);
         
         Debug.Log("All Sections Spawned and Completed. Triggering Next Level Load");
         currentSectionIndex = 0;
@@ -292,10 +298,17 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         if (data == null) return;
         foreach (var item in data)
         {
+            // Skip Slip streams that have similar speeds after each other
+            if (!Mathf.Approximately(item.data.overridedData.speedIncreaseAmount, _lastSlipStreamSpeed))
+                continue;
+            
+            // Spawn, Override Data and Place the Slipstream
             var gsg = ObjectPoolManager.Instance.Spawn<River_SlipStream>(slipStreamObjectID);
-            // Override Data
             if (item.data.overrideData) gsg.OverrideData(item.data.overridedData);
             PlaceSectionObject(gsg, item.lane, item.distance, item.height);
+            
+            // Store the most recent slipstream with a different speed increase value
+            _lastSlipStreamSpeed = item.data.overridedData.speedIncreaseAmount;
         }
     }
 
@@ -304,17 +317,14 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         // Debug.Log($"Placing Object: {ro.name}. Lane = {lane}, Distance = {distance}, Height = {height}");
         ro.InjectRiverManager(riverManager);
         ro.canMove = true;
-
-        float spawnDist = distance;
         
         // Store the distance and object, as to detect the furthest object in this section
-        if (spawnDist > furthestDistance)
+        if (distance > furthestDistance)
         {
             lastSpawnedObject = ro;
-            furthestDistance = spawnDist;
+            Debug.Log($"Updated FurthestDistance. {ro.gameObject}: {distance}");
+            furthestDistance = distance;
         }
-
-        // TODO: Add a set distance between each section
         
         float finalDistance = riverManager.riverObjectSpawnDistance + _currentSectionOffset + distance;
         

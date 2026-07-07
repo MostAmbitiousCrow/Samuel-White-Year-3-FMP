@@ -31,9 +31,10 @@ public class LevelContentBuilder : MonoBehaviour
         string splined = sc ? "Splined" : "";
         name = new string($"{environmentType} Level Content Builder ({sections.Length}) {splined}");
 
-        foreach (var section in sections)
+        for (int i = 0; i < sections.Length; i++)
         {
-            section.currentDistance = 0f;
+            sections[i].currentDistance = 0;
+            sections[i].transform.localPosition = Vector3.right * (60 * i);
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEngine;
 using EditorAttributes;
 using UnityEditor;
@@ -186,7 +187,12 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
     {
         GetSectionObjects();
 
-        name = $"=== Section Builder Root === ({assetName})";
+        var environment = (int)sectionData.applicableEnvironments == -1 ?
+            new string("All Environments") : sectionData.applicableEnvironments.ToString();
+        var difficulty = (int)sectionData.difficultyType == -1 ?
+            new string("All Difficulties") : sectionData.difficultyType.ToString();
+        
+        name = $"- Section Builder | {difficulty} | {environment} | ({assetName})";
 
         if (!enableDebug) return;
 
@@ -195,6 +201,14 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         foreach (var item in sectionData.collectibleDatas) item.DrawGizmos();
         foreach (var item in sectionData.gemstoneGateDatas) item.DrawGizmos();
         foreach (var item in sectionData.slipStreamDatas) item.DrawGizmos();
+
+        // var label = string.Format(assetName);
+        Handles.Label(transform.position + (Vector3.up * 5), $"'{assetName}'\n{difficulty} | {environment}");
+        
+        // Draw Section Distance
+        Debug.DrawLine(transform.position + (Vector3.back * sectionData.distanceBeforeSection),
+            transform.position + (Vector3.forward * (sectionData.sectionDistance + sectionData.distanceAfterSection)),
+            Color.red);
         
         VisualisePlayerProgress();
     }
@@ -202,6 +216,7 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
     [Header("Debug")]
     [SerializeField] private Mesh playerVisual;
     public float currentDistance;
+    private Vector3 _playerPosition;
     private const int CurrentLane = 1;
     public float speed;
     public float defaultSpeed = 10;
@@ -228,18 +243,21 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         // Draw player mesh down the lane
         currentDistance += Time.deltaTime * (speed / 2f);
 
-        if (currentDistance > sectionData.sectionDistance)
+        if (currentDistance > sectionData.sectionDistance + sectionData.distanceAfterSection)
         {
-            currentDistance = 0f;
+            currentDistance = -sectionData.distanceBeforeSection;
             speed = defaultSpeed;
         }
         
-        riverManager.AssignToCurveSection(currentDistance, CurrentLane, out Vector3 pos, out Quaternion rot);
+        // riverManager.AssignToCurveSection(currentDistance, CurrentLane, out Vector3 pos, out Quaternion rot);
 
-        pos += transform.position + transform.right * (CurrentLane - 1) * GlobalRiverValues.RiverLaneDistance / 16f; //TODO?: Assign this to AssignToCurveSection
+        // pos += transform.position + transform.right * (CurrentLane - 1) * GlobalRiverValues.RiverLaneDistance / 16f; //TODO?: Assign this to AssignToCurveSection
+        _playerPosition = (Vector3.forward * currentDistance) + transform.position; //transform.position + transform.right * (CurrentLane - 1) * GlobalRiverValues.RiverLaneDistance / 16f;
+        // transform.localPosition = _playerPosition + transform.parent.position;
         
         Gizmos.color = Color.green;
-        Gizmos.DrawMesh(playerVisual, pos, rot, Vector3.one * 4f);
+        // Gizmos.DrawMesh(playerVisual, pos, rot, Vector3.one * 4f);
+        Gizmos.DrawMesh(playerVisual, _playerPosition, Quaternion.identity, Vector3.one * 4f);
     }
 #endif
 }

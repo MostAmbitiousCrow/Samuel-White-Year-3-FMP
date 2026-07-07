@@ -10,97 +10,81 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d9e6e9060cfc34da5d009b2059e303, type: 3}
-  m_Name: (Everything) (Everything) Trash Swerve
+  m_Name: (Everything) (Everything) Pipe Underpasses R
   m_EditorClassIdentifier: 
   sectionContent:
-    sectionDistance: 35
-    distanceBeforeSection: 0
-    distanceAfterSection: 30
+    sectionDistance: 50
+    distanceBeforeSection: 10
+    distanceAfterSection: 10
     obstacles:
-    - lane: 0
+    - lane: 1
       distance: 0
       height: 0
       data:
-        obstacleType: 0
+        obstacleType: 2
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
           - lane: 0
+            height: 5
+            distance: 0
+            pipeConnection: 2
+          - lane: 2
             height: 0
             distance: 0
-            pipeConnection: 0
-          - lane: 0
-            height: 0
+            pipeConnection: 3
+          pipeJoints:
+          - lane: 2
+            height: 5
             distance: 0
-            pipeConnection: 0
-          pipeJoints: []
-        obstacleBridgeData:
-          leftJointLane: 0
-          rightJointLane: 0
-    - lane: 0
-      distance: 35
-      height: 0
-      data:
-        obstacleType: 0
-        overrideData: 0
-        overriddenData:
-          ImpactDamage: 1
-        pipeObstacleData:
-          connectedPipes:
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          - lane: 0
-            height: 0
-            distance: 0
-            pipeConnection: 0
-          pipeJoints: []
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
     - lane: 1
-      distance: 10
+      distance: 20
       height: 0
       data:
-        obstacleType: 0
+        obstacleType: 2
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
+          - lane: 2
+            height: 5
+            distance: 0
+            pipeConnection: 3
           - lane: 0
             height: 0
             distance: 0
-            pipeConnection: 0
+            pipeConnection: 2
+          pipeJoints:
           - lane: 0
-            height: 0
+            height: 5
             distance: 0
-            pipeConnection: 0
-          pipeJoints: []
         obstacleBridgeData:
           leftJointLane: 0
           rightJointLane: 0
-    - lane: 2
-      distance: 35
+    - lane: 1
+      distance: 40
       height: 0
       data:
-        obstacleType: 0
+        obstacleType: 2
         overrideData: 0
         overriddenData:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
-          - lane: 0
-            height: 0
+          - lane: 2
+            height: 5
             distance: 0
-            pipeConnection: 0
+            pipeConnection: 3
           - lane: 0
-            height: 0
+            height: 5
             distance: 0
-            pipeConnection: 0
+            pipeConnection: 2
           pipeJoints: []
         obstacleBridgeData:
           leftJointLane: 0

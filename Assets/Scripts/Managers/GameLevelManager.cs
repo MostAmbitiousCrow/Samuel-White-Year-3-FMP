@@ -189,6 +189,7 @@ public class GameLevelManager : MonoBehaviour
 
     public static GameLevelManager Instance { get; private set; }
     public static event Action OnLevelLoaded;
+    public static event Action OnLevelCompleted;
 
     #region Instanced Variables
     [SerializeField] private float difficultyIncreasePerLevel = 5f;
@@ -287,6 +288,8 @@ public class GameLevelManager : MonoBehaviour
             else InitiateEnvironmentSelect();
             return;
         }
+
+        OnLevelCompleted?.Invoke();
 
         UpdateDifficulty();
         

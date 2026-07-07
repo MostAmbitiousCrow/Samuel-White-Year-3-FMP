@@ -5042,6 +5042,11 @@ PrefabInstance:
       propertyPath: gameLevelManager
       value: 
       objectReference: {fileID: 219833878}
+    - target: {fileID: 1228340096938242610, guid: 116d579121f184fe9af9abad9c40cf5a,
+        type: 3}
+      propertyPath: gapBetweenSections
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4199037100368548076, guid: 116d579121f184fe9af9abad9c40cf5a,
         type: 3}
       propertyPath: m_Name
@@ -5423,7 +5428,7 @@ PrefabInstance:
     - target: {fileID: 8555857859445590250, guid: 4f3c2dea38c58a449acbce1b1c4f5273,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

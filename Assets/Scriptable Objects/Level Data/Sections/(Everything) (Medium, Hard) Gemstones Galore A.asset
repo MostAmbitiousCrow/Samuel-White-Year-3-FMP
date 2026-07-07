@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d9e6e9060cfc34da5d009b2059e303, type: 3}
+  m_Name: (Everything) (Medium, Hard) Gemstones Galore A
+  m_EditorClassIdentifier: 
+  sectionContent:
+    sectionDistance: 50
+    distanceBeforeSection: 10
+    distanceAfterSection: 10
+    obstacles: []
+    enemies: []
+    collectibles:
+    - lane: 1
+      distance: 0
+      height: 0
+      data:
+        collectibleType: 0
+        overrideData: 0
+        overridedData:
+          BankValue: 1
+    - lane: 2
+      distance: 25
+      height: 0
+      data:
+        collectibleType: 0
+        overrideData: 0
+        overridedData:
+          BankValue: 1
+    - lane: 0
+      distance: 50
+      height: 0
+      data:
+        collectibleType: 0
+        overrideData: 0
+        overridedData:
+          BankValue: 1
+    gemstoneGates: []
+    slipStreams: []
+    difficultyType: 6
+    applicableEnvironments: -1

@@ -53,15 +53,15 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     #endregion
 
-    // private void OnEnable()
-    // {
-    //     SewerEnvironmentArtManager.OnEnvironmentUpdated += RecalculateRiverPosition;
-    // }
-    //
-    // private void OnDisable()
-    // {
-    //     SewerEnvironmentArtManager.OnEnvironmentUpdated -= RecalculateRiverPosition;
-    // }
+    private void OnEnable()
+    {
+        GameLevelManager.OnLevelCompleted += ReturnToPool; //TODO: Note, if enemies aren't returning properly this might be the issue. This hasn't been tested yet.
+    }
+    
+    private void OnDisable()
+    {
+        GameLevelManager.OnLevelCompleted -= ReturnToPool;
+    }
 
     #region Space Movement Logic
 

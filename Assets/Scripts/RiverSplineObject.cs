@@ -44,7 +44,7 @@ public class RiverSplineObject : MonoBehaviour
         globalDistanceTravelled += speed * Time.deltaTime;
         distanceOnSpline %= River_Manager.SplineTotalLength; // Modulo to loop forever!
         
-        Debug.Log($"{name} Update Frame:{Time.frameCount} Dist:{distanceOnSpline} Speed:{River_Manager.Instance.currentRiverSpeed}");
+        // Debug.Log($"{name} Update Frame:{Time.frameCount} Dist:{distanceOnSpline} Speed:{River_Manager.Instance.currentRiverSpeed}");
 
         River_Manager.Instance.AssignToCurveSection(totalDistanceTravelled + offset, lane,
             out Vector3 pos, out Quaternion rot);
@@ -67,7 +67,7 @@ public class RiverSplineObject : MonoBehaviour
         totalDistanceTravelled = 0f;
         distanceOnSpline = 0f;
         
-        Debug.Log($"{name} Reset Frame:{Time.frameCount} Dist:{distanceOnSpline} Speed:{River_Manager.Instance.currentRiverSpeed}");
+        // Debug.Log($"{name} Reset Frame:{Time.frameCount} Dist:{distanceOnSpline} Speed:{River_Manager.Instance.currentRiverSpeed}");
         
         River_Manager.Instance.AssignToCurveSection(totalDistanceTravelled, lane, out Vector3 pos, out Quaternion rot);
         transform.SetPositionAndRotation(pos, rot);

@@ -49,14 +49,15 @@ public class Section_Enemy_Object : SectionBuilderObject
         {
             Gizmos.color = Color.white;
             Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSideSpace
-                (data.targetSideSpace, data.doTargetLeftSide).t.position, .5f);
+                (data.targetSideSpace, data.doTargetLeftSide).t.position + transform.position, .5f);
         }
         // Draw targeted boat space
         if (data.targetBoatSpaces)
         {
             Gizmos.color = Color.black;
             data = sectionData.overridedData;
-            Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace(data.targetBoatSide, data.targetSpace).t.position, .25f);   
+            Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace
+                (data.targetBoatSide, data.targetSpace).t.position + transform.position, .25f);   
         }
     }
 }
