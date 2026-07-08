@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d9e6e9060cfc34da5d009b2059e303, type: 3}
-  m_Name: (Everything) (Everything) Tight Jump
+  m_Name: (Everything) (Everything) Tight Jump R
   m_EditorClassIdentifier: 
   sectionContent:
     sectionDistance: 80
@@ -27,16 +27,16 @@ MonoBehaviour:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 0
             pipeConnection: 4
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 20
             pipeConnection: 4
           pipeJoints:
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 10
         obstacleBridgeData:
@@ -77,16 +77,16 @@ MonoBehaviour:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 0
             pipeConnection: 4
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 20
             pipeConnection: 4
           pipeJoints:
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 10
         obstacleBridgeData:
@@ -127,16 +127,16 @@ MonoBehaviour:
           ImpactDamage: 1
         pipeObstacleData:
           connectedPipes:
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 0
             pipeConnection: 4
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 20
             pipeConnection: 4
           pipeJoints:
-          - lane: 2
+          - lane: 1
             height: 0
             distance: 10
         obstacleBridgeData:

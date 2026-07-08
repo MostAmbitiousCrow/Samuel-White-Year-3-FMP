@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d9e6e9060cfc34da5d009b2059e303, type: 3}
-  m_Name: (Everything) (Everything) Bridge Jump A
+  m_Name: (Everything) (Easy, Medium) Bridge Jump C
   m_EditorClassIdentifier: 
   sectionContent:
     sectionDistance: 40
@@ -37,11 +37,11 @@ MonoBehaviour:
             pipeConnection: 0
           pipeJoints: []
         obstacleBridgeData:
-          leftJointLane: 0
+          leftJointLane: 1
           rightJointLane: 2
     enemies: []
     collectibles:
-    - lane: 1
+    - lane: 2
       distance: 20
       height: 5
       data:
@@ -51,5 +51,5 @@ MonoBehaviour:
           BankValue: 1
     gemstoneGates: []
     slipStreams: []
-    difficultyType: -1
+    difficultyType: 3
     applicableEnvironments: -1

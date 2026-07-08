@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7d9e6e9060cfc34da5d009b2059e303, type: 3}
-  m_Name: (Everything) (Everything) Bridge Bias Jump B
+  m_Name: (Everything) (Easy, Medium) Bridge Bias Jump B
   m_EditorClassIdentifier: 
   sectionContent:
     sectionDistance: 40
@@ -73,5 +73,5 @@ MonoBehaviour:
           BankValue: 1
     gemstoneGates: []
     slipStreams: []
-    difficultyType: -1
+    difficultyType: 3
     applicableEnvironments: -1

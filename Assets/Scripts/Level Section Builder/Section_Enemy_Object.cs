@@ -56,8 +56,9 @@ public class Section_Enemy_Object : SectionBuilderObject
         {
             Gizmos.color = Color.black;
             data = sectionData.overridedData;
-            Gizmos.DrawSphere(Boat_Space_Manager.Instance.GetSpace
-                (data.targetBoatSide, data.targetSpace).t.position + transform.position, .25f);   
+            var center = Boat_Space_Manager.Instance.GetSpace
+                (data.targetBoatSide, data.targetSpace).t.localPosition + transform.position;
+            Gizmos.DrawSphere(center, .25f);   
         }
     }
 }
