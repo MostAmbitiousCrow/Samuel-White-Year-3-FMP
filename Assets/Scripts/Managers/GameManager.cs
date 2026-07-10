@@ -110,10 +110,10 @@ public class GameManager : MonoBehaviour
         #endregion
 
         #region Game Initialisation
-        public bool GameStarted => _gameStarted;
-        bool _gameStarted;
-        public delegate void OnGameInitialised();
-        public OnGameInitialised onGameInitialised;
+        public bool GameStarted { get; private set; }
+
+        public delegate void GameInitialised();
+        public GameInitialised onGameInitialised;
         public void InitialiseGame()
         {
             if (SceneManager.CurrentScene == MainSceneManager.GameScenes.MainMenu)
@@ -143,14 +143,14 @@ public class GameManager : MonoBehaviour
                 print("Game Initialised, started Game");
                 StartGame();
             }
-
+            Debug.Log("Game Initialised");
         }
 
         public Action OnGameStarted;
         public void StartGame()
         {
             // Logic to start the main game after it has been initialised
-            _gameStarted = true;
+            GameStarted = true;
 
             // Invoke subscribed methods
             OnGameStarted?.Invoke();
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
         public void EndGame(GameOverType gameOverType = GameOverType.Default)
         {
             // Logic to end the main game after it has started
-            _gameStarted = false;
+            GameStarted = false;
             // Invoke subscribed methods
             OnGameOver?.Invoke(gameOverType);
 
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Completed");
             
             // TODO: Decide on a proper game complete thing... This is just temporary for the demo
-            SceneManager.LoadScene(MainSceneManager.GameScenes.DemoCompleteScreen);
+            // SceneManager.LoadScene(MainSceneManager.GameScenes.DemoCompleteScreen);
         }
 
         public int CalculateFinalScore() // TODO: Have this animated with the score values and multipliers are visible

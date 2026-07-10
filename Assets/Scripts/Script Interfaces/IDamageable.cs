@@ -8,6 +8,8 @@ using System;public interface IDamageable
     /// <summary> Cause the character to take a set amount of damage </summary>
     public void TakeDamage(DamageType type = DamageType.Standard, int amount = 1);
 
+    public void HealDamage();
+
     /// <summary> Kills the character </summary>
     public void Die(DamageType type = DamageType.Standard);
 

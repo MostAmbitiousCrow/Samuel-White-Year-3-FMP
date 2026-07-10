@@ -1241,6 +1241,34 @@ public partial class @FMP: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DEV"",
+            ""id"": ""6ebc592c-e563-4188-ad79-ccca63f52424"",
+            ""actions"": [
+                {
+                    ""name"": ""Toggle Exhibit Mode"",
+                    ""type"": ""Button"",
+                    ""id"": ""e40507ae-0993-4dfd-b802-693ce3edba3d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5287860a-9d5a-430d-b588-feadbcd84a3a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Hold(duration=5)"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Toggle Exhibit Mode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1313,12 +1341,16 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_MiddleClick = m_UI.FindAction("MiddleClick", throwIfNotFound: true);
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
+        // DEV
+        m_DEV = asset.FindActionMap("DEV", throwIfNotFound: true);
+        m_DEV_ToggleExhibitMode = m_DEV.FindAction("Toggle Exhibit Mode", throwIfNotFound: true);
     }
 
     ~@FMP()
     {
         UnityEngine.Debug.Assert(!m_PlayerButton.enabled, "This will cause a leak and performance issues, FMP.PlayerButton.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, FMP.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_DEV.enabled, "This will cause a leak and performance issues, FMP.DEV.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1714,6 +1746,102 @@ public partial class @FMP: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // DEV
+    private readonly InputActionMap m_DEV;
+    private List<IDEVActions> m_DEVActionsCallbackInterfaces = new List<IDEVActions>();
+    private readonly InputAction m_DEV_ToggleExhibitMode;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "DEV".
+    /// </summary>
+    public struct DEVActions
+    {
+        private @FMP m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public DEVActions(@FMP wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "DEV/ToggleExhibitMode".
+        /// </summary>
+        public InputAction @ToggleExhibitMode => m_Wrapper.m_DEV_ToggleExhibitMode;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_DEV; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="DEVActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(DEVActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="DEVActions" />
+        public void AddCallbacks(IDEVActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DEVActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DEVActionsCallbackInterfaces.Add(instance);
+            @ToggleExhibitMode.started += instance.OnToggleExhibitMode;
+            @ToggleExhibitMode.performed += instance.OnToggleExhibitMode;
+            @ToggleExhibitMode.canceled += instance.OnToggleExhibitMode;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="DEVActions" />
+        private void UnregisterCallbacks(IDEVActions instance)
+        {
+            @ToggleExhibitMode.started -= instance.OnToggleExhibitMode;
+            @ToggleExhibitMode.performed -= instance.OnToggleExhibitMode;
+            @ToggleExhibitMode.canceled -= instance.OnToggleExhibitMode;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DEVActions.UnregisterCallbacks(IDEVActions)" />.
+        /// </summary>
+        /// <seealso cref="DEVActions.UnregisterCallbacks(IDEVActions)" />
+        public void RemoveCallbacks(IDEVActions instance)
+        {
+            if (m_Wrapper.m_DEVActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="DEVActions.AddCallbacks(IDEVActions)" />
+        /// <seealso cref="DEVActions.RemoveCallbacks(IDEVActions)" />
+        /// <seealso cref="DEVActions.UnregisterCallbacks(IDEVActions)" />
+        public void SetCallbacks(IDEVActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DEVActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DEVActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="DEVActions" /> instance referencing this action map.
+    /// </summary>
+    public DEVActions @DEV => new DEVActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1879,5 +2007,20 @@ public partial class @FMP: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightClick(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "DEV" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="DEVActions.AddCallbacks(IDEVActions)" />
+    /// <seealso cref="DEVActions.RemoveCallbacks(IDEVActions)" />
+    public interface IDEVActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Toggle Exhibit Mode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleExhibitMode(InputAction.CallbackContext context);
     }
 }

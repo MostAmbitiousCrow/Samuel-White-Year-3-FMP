@@ -57,6 +57,8 @@ public class Gemstone : River_Collectible
     {
         base.OnCollected();
 
+        collectParticles.transform.position = particleHomeTarget.position;
+
         collectParticles.Emit(collectParticlesAmount);
         artObject.gameObject.SetActive(false);
         GameManager.GameLogic.AddGemstones(collectParticlesAmount * Data.BankValue);
@@ -71,7 +73,9 @@ public class Gemstone : River_Collectible
     {
         base.OnObjectPlaced();
         artObject.gameObject.SetActive(true);
-        // TODO
+        
+        //Reset Particle Collect Position
+        collectParticles.transform.position = Vector3.zero;
     }
 
     // #region FrameRateManager Subscription
@@ -127,16 +131,19 @@ public class Gemstone : River_Collectible
     }
 
     private ParticleSystem.Particle[] _particles;
-
+    
     private void ParticleAnimation()
     {
         if (!particleHomeTarget || !IsCollected) return;
 
         // Make sure buffer is large enough
-        if (_particles == null || _particles.Length < collectParticles.main.maxParticles)
+        if (_particles == null || _particles.Length < collectParticles.main.maxParticles) 
             _particles = new ParticleSystem.Particle[collectParticles.main.maxParticles];
+        var aliveCount = collectParticles.GetParticles(_particles);
 
-        int aliveCount = collectParticles.GetParticles(_particles);
+        var pos = collectParticles.transform.position;
+        collectParticles.transform.position =
+            Vector3.Lerp(particleHomeTarget.position, pos, Time.deltaTime * (River_Manager.Instance.currentRiverSpeed * .1f));
 
         for (int i = 0; i < aliveCount; i++)
         {
@@ -148,16 +155,19 @@ public class Gemstone : River_Collectible
 
             float age = _particles[i].startLifetime - _particles[i].remainingLifetime;
 
-            if (age >= homingDelay / (River_Manager.Instance.TargetRiverSpeed / 10f))
+            if (age >= homingDelay) 
             {
-                Vector3 dir = (particleHomeTarget.position - _particles[i].position).normalized;
+                Vector3 dir = (Vector3.zero - _particles[i].position).normalized;
                 _particles[i].velocity = Vector3.Lerp(_particles[i].velocity, dir * homingStrength,
-                    Time.deltaTime * (River_Manager.Instance.TargetRiverSpeed * 2f)); //Animation_Frame_Rate_Manager.GetDeltaAnimationFrameRate() * 5); // smoothing
+                    Time.deltaTime);
 
-                float distance = Vector3.Distance(_particles[i].position, particleHomeTarget.position);
+                /*_particles[i].position = Vector3.Lerp(_particles[i].position, particleHomeTarget.position,
+                        Time.deltaTime * (River_Manager.Instance.TargetRiverSpeed / 2f));*/
+
+                float distance = Vector3.Distance(_particles[i].position, Vector3.zero);
                 if (distance < particleDespawnDistance)
                 {
-                     GameManager.GameLogic.AddGemstones(Data.BankValue);
+                    GameManager.GameLogic.AddGemstones(Data.BankValue);
                     _particles[i].remainingLifetime = 0f;
                     AudioManager.Play(Clip.Gem_Collect);
                 }

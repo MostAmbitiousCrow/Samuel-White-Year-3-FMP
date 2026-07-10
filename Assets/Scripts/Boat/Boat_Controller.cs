@@ -53,6 +53,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     [SerializeField] private Transform propellerArt;
     [SerializeField] private ArtExplode artExplode;
     [SerializeField] private RiverSplineObject splineObject;
+    [SerializeField] private ParticleSystem smokeParticles;
 
     #region Event Listeners
     public static event Action OnBoatMoved;
@@ -76,11 +77,13 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     private void OnEnable()
     {
         PlayerCharacter.OnPlayerDied += DestroyBoat;
+        TsunamiController.OnTsunamiUpdated += UpdateSmokeParticles;
     }
 
     private void OnDisable()
     {
         PlayerCharacter.OnPlayerDied -= DestroyBoat;
+        TsunamiController.OnTsunamiUpdated -= UpdateSmokeParticles;
         GameLevelManager.OnLevelLoaded -= TriggerLevelEnterSpeedUp;
     }
 
@@ -248,6 +251,17 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
         yield return new WaitForSeconds(levelExitSpeedResetTime);
         
         Instance.SetRiverSpeed(cachedSpeed, true, false);
+    }
+
+    
+    private void UpdateSmokeParticles(int steps)
+    {
+        if (steps <= 0) smokeParticles.Stop();
+        else smokeParticles.Play();
+        
+        var rot = smokeParticles.emission;
+        rot.rateOverTime = steps * 10;
+        Debug.Log($"Updated SmokeParticles. Value = {steps} Emission = {rot.rateOverTime.constant}");
     }
     
     #endregion

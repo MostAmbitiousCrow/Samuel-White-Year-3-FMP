@@ -65,6 +65,9 @@ public class TsunamiController : MonoBehaviour
     private Tsunami_Shadow_Controller tsunamiShadowController;
     [SerializeField] private River_Manager riverManager;
     [SerializeField] private Boat_Controller boatController;
+    
+    // Events
+    public static event Action<int> OnTsunamiUpdated;
     #endregion
 
     #region Initialisers
@@ -74,6 +77,8 @@ public class TsunamiController : MonoBehaviour
         if (!riverManager) riverManager = FindFirstObjectByType<River_Manager>();
         if (!boatController) boatController = FindFirstObjectByType<Boat_Controller>();
         if (!smashBox) smashBox = GetComponent<BoxCollider>();
+        
+        _onRegress = () => Regress(1);
     }
 
     private void Start()
@@ -87,17 +92,22 @@ public class TsunamiController : MonoBehaviour
         ResetProgress();
     }
 
+    private Action _onRegress;
+
     private void OnEnable()
     {
         GameManager.GameLogic.OnGameStarted += EnableControl;
         GameManager.MainGameLogic.OnGameOver += DisableControl;
-        GameLevelManager.OnLevelLoaded += ResetProgress;
+        GameLevelManager.OnLevelLoaded += _onRegress;
+        // SewerEnvironmentArtManager.OnEnvironmentUpdated += ResetProgress;
+        
     }
     private void OnDisable()
     {
         GameManager.GameLogic.OnGameStarted -= EnableControl;
         GameManager.MainGameLogic.OnGameOver -= DisableControl;
-        GameLevelManager.OnLevelLoaded -= ResetProgress;
+        GameLevelManager.OnLevelLoaded -= _onRegress;
+        // SewerEnvironmentArtManager.OnEnvironmentUpdated -= ResetProgress;
     }
     #endregion
     private void Update()
@@ -166,6 +176,7 @@ public class TsunamiController : MonoBehaviour
             hasReachedDangerMark = false;
             if (currentStep < 0) currentStep = 0;
         }
+        OnTsunamiUpdated?.Invoke(currentStep);
     }
 
     private float _smooth;

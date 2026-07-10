@@ -77,7 +77,7 @@ namespace GameCharacters
             _groundPoundAction?.Enable();
 
             // TODO: TEMP. Reset health whenever a new level is loaded
-            GameLevelManager.OnLevelLoaded += HealthComponent.RestoreHealth;
+            GameLevelManager.OnLevelLoaded += HealthComponent.HealDamage;
 
             GameManager.GameLogic.OnGemstoneCollected += GemstoneCollected;
             GameManager.GameLogic.OnGameResume += () => _inputInhibitation = 0f;
@@ -95,7 +95,7 @@ namespace GameCharacters
             _groundPoundAction?.Disable();
             
             // TODO: TEMP. Reset health whenever a new level is loaded
-            GameLevelManager.OnLevelLoaded -= HealthComponent.RestoreHealth;
+            GameLevelManager.OnLevelLoaded -= HealthComponent.HealDamage;
 
             if (GameManager.Instance) GameManager.GameLogic.OnGemstoneCollected -= GemstoneCollected;
             

@@ -416,9 +416,6 @@ public class GameLevelManager : MonoBehaviour
         return hard;
     }
     #endregion
-    
-    
-    // Reminder: I'm creating levels using randomly selected sections curated by difficulty,
 }
 
 /// <summary>

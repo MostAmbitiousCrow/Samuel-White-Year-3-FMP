@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using GameColours;
 using TMPro;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -23,15 +26,26 @@ namespace Game
 			{
 				Debug.Log("Game Settings Manager already exists, deleting new Game Settings Manager");
 				Destroy(gameObject);
+				return;
 			}
-			else
-			{
-				Instance = this;
-                DontDestroyOnLoad(this);
-			}
+			Instance = this;
+            DontDestroyOnLoad(this);
 			
 			// Set VSync and Framerate
 			SetVSync(PlayerPrefs.GetInt("Settings.VSync", 0) == 1);
+
+			_inputExhibitMode = InputSystem.actions.FindAction("Toggle Exhibit Mode");
+
+			_inputExhibitMode.performed += ToggleExhibitMode;
+		}
+
+        // DEV
+        private InputAction _inputExhibitMode; 
+
+		private static void ToggleExhibitMode(InputAction.CallbackContext context)
+		{
+			DoExhibitMode = !DoExhibitMode;
+			ExhibitModeManager.Instance.UpdateExhibitMode();
 		}
 
 		private static readonly Vector2 MinScreenSize = new Vector2(1024, 768);
@@ -484,7 +498,7 @@ namespace Game
 		// ------------------------------------------------------------------------------------------------------------
 		#region Dev
 
-		public static bool AllowExternalLinks = true; //NOTE: Keep false only for exhibition build!
+		public static bool DoExhibitMode;
 
 		#endregion
 	}

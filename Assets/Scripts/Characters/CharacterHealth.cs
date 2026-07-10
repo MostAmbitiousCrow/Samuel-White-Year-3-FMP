@@ -88,6 +88,15 @@ public class CharacterHealth : MonoBehaviour, IDamageable
         animator.SetFloat(HealthParameter, normalisedHealth);
         // Debug.Log($"{name} damaged by type: {type}, for {amount} damage");
     }
+    
+    public void HealDamage()
+    {
+        var newHealth = currentHealth + 1;
+        currentHealth = newHealth > MaxHealth ? MaxHealth : newHealth;
+        
+        var normalisedHealth = CurrentHealth / (float)MaxHealth;
+        animator.SetFloat(HealthParameter, normalisedHealth);
+    }
 
     private IEnumerator DamageInvincibilityRoutine()
     {

@@ -7,7 +7,7 @@ public class ExternalLinkButton : MonoBehaviour
 
     public void OpenLink()
     {
-        if (GameSettingsManager.AllowExternalLinks) Application.OpenURL(linkURL);
+        if (!GameSettingsManager.DoExhibitMode) Application.OpenURL(linkURL);
         else Debug.LogWarning("Tried to load Link URL but external links are disabled in the Games Settings Manager");
     }
 }

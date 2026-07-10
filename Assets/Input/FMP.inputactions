@@ -1155,6 +1155,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "DEV",
+            "id": "6ebc592c-e563-4188-ad79-ccca63f52424",
+            "actions": [
+                {
+                    "name": "Toggle Exhibit Mode",
+                    "type": "Button",
+                    "id": "e40507ae-0993-4dfd-b802-693ce3edba3d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5287860a-9d5a-430d-b588-feadbcd84a3a",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold(duration=5)",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Toggle Exhibit Mode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

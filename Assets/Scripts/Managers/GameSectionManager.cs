@@ -186,7 +186,9 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             
             // Using Distancing Only
             _currentSectionOffset += 
-                (data.sectionContent.sectionDistance + gapBetweenSections + data.sectionContent.distanceAfterSection);
+                (data.sectionContent.sectionDistance 
+                 + (gapBetweenSections * Mathf.RoundToInt(riverManager.TargetRiverSpeed / 10f)) 
+                 + data.sectionContent.distanceAfterSection);
             
             yield return currentSectionIndex++;
         }
@@ -299,8 +301,11 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         foreach (var item in data)
         {
             // Skip Slip streams that have similar speeds after each other
-            if (!Mathf.Approximately(item.data.overridedData.speedIncreaseAmount, _lastSlipStreamSpeed))
+            if (Mathf.Approximately(item.data.overridedData.speedIncreaseAmount, _lastSlipStreamSpeed))
+            {
+                Debug.LogWarning($"Slip Stream was skipped. Slip Speed = {item.data.overridedData.speedIncreaseAmount}. Previous = {_lastSlipStreamSpeed}");
                 continue;
+            }
             
             // Spawn, Override Data and Place the Slipstream
             var gsg = ObjectPoolManager.Instance.Spawn<River_SlipStream>(slipStreamObjectID);
