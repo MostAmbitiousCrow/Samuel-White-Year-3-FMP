@@ -246,7 +246,19 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
     private IEnumerator LevelEnterSpeedUpRoutine()
     {
         var cachedSpeed = River_Manager.Instance.TargetRiverSpeed;
-        Instance.SetRiverSpeed(levelEnterSpeed, true, false);
+
+        var enterSpeed = GameLevelManager.Instance.CalculateDifficulty().difficulty switch
+        {
+            GameDifficulty.Easy => 20,
+            GameDifficulty.Medium => 30,
+            GameDifficulty.Hard => 30,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        
+        if (cachedSpeed > enterSpeed) enterSpeed = cachedSpeed;
+        if (enterSpeed < levelEnterSpeed) enterSpeed = levelEnterSpeed;
+        
+        Instance.SetRiverSpeed(enterSpeed, true, false);
         
         yield return new WaitForSeconds(levelExitSpeedResetTime);
         

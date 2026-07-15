@@ -165,6 +165,11 @@ public class SectionContentBuilder : MonoBehaviour, IAffectedByRiver
         var difficulty = (int)content.difficultyType == -1 ?
             new string("Everything") : content.difficultyType.ToString();
         
+        if (paraAssetName.Length == 0)
+        {
+            paraAssetName = $"{environment} {transform.GetSiblingIndex()}";
+        }
+        
         paraAssetName = ($"({environment}) ({difficulty}) {paraAssetName}");
 
         var path = $"{paraPathName}/{paraAssetName}.asset";

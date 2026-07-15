@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using CarterGames.Assets.AudioManager;
 using TMPro;
@@ -26,8 +27,10 @@ public class Loading_Screen_Controller : MonoBehaviour
     [SerializeField] float startTransitionTime = .5f;
     [SerializeField] float endTransitionTime = 1.5f;
     public static bool IsOpening { get; private set; }
+    public static event Action OnTransitionOpened;
     public static bool IsProcessing { get; private set; }
     public static bool IsClosing { get; private set; }
+    public static event Action OnTransitionClosed;
 
     public static bool IsTransitioning => IsOpening || IsClosing || IsProcessing;
 
@@ -41,6 +44,7 @@ public class Loading_Screen_Controller : MonoBehaviour
     {
         if (IsTransitioning) return;
         IsOpening = true;
+        OnTransitionOpened?.Invoke();
         _transitionScreen.SetActive(true);
         UpdateLoadingMeter(0f);
         StartCoroutine(EnterLoadingScreenProcess());
@@ -120,6 +124,8 @@ public class Loading_Screen_Controller : MonoBehaviour
 
         GameManager.GameLogic.CanPauseGame = true;
         IsClosing = false;
+        
+        OnTransitionClosed?.Invoke();
     }
     #endregion
 

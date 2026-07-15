@@ -52,6 +52,7 @@ MonoBehaviour:
     type: 3}
   meshScale: 1
   riverManager: {fileID: 0}
+  contentBuilder: {fileID: 0}
   sectionData:
     enemyType: 2
     silhouetteAlwaysVisible: 1
@@ -62,6 +63,6 @@ MonoBehaviour:
       doTargetLeftSide: 0
       startFacingDirection: 1
       targetBoatSpaces: 1
-      targetSpace: 0
+      targetSpace: 1
       targetBoatSide: 0
       boardingFacingDirection: 1

@@ -57,7 +57,7 @@ public class TutorialSectionReader : MonoBehaviour
         // _steeredRightAction += () => OnAction(6);
         
         // Enemy Killed Section
-        // _targetKilledAction += () => OnAction(7); // TODO
+        _targetKilledAction += () => OnAction(4); // TODO
         
         var actionMap = InputSystem.actions.actionMaps[0];
 
@@ -87,7 +87,7 @@ public class TutorialSectionReader : MonoBehaviour
         TutorialComplete = false;
         
         // Add the input reader routine to the Start Tutorial Unity Event for simple calling
-        StartTutorial.AddListener(() => StartCoroutine(InputReaderRoutine()));
+        StartTutorial.AddListener(StartTutorialSequence);
         TutorialObject = gameObject;
     }
 
@@ -106,7 +106,7 @@ public class TutorialSectionReader : MonoBehaviour
         foreach (var content in tutorialContents) content.CancelInvoke(nameof(content.UpdateInputGraphics));
         
         // Remove the input reader routine from the Start Tutorial
-        StartTutorial.RemoveListener(() => StartCoroutine(InputReaderRoutine()));
+        StartTutorial.RemoveListener(StartTutorialSequence);
         TutorialObject = null;
     }
     #endregion
@@ -134,10 +134,10 @@ public class TutorialSectionReader : MonoBehaviour
     }
     #endregion
 
-    private void Start()
-    {
-        StartTutorialSequence();
-    }
+    // private void Start()
+    // {
+    //     StartTutorialSequence();
+    // }
 
     private void OnValidate()
     {
@@ -146,7 +146,7 @@ public class TutorialSectionReader : MonoBehaviour
 
     public void StartTutorialSequence()
     {
-        if (_inputReaderRoutine != null) StopCoroutine(_inputReaderRoutine);
+        if (_inputReaderRoutine != null) return;
         
         // Initially set all canvas groups to be invisible
         foreach (var content in tutorialContents) content.CanvasGroup.alpha = 0f;
@@ -166,10 +166,15 @@ public class TutorialSectionReader : MonoBehaviour
     private Coroutine _inputReaderRoutine;
     private IEnumerator InputReaderRoutine()
     {
+        Debug.Log("Starting Input Reader Routine");
+        
         for (int i = 0; i < tutorialContents.Length; i++)
         {
             // Reveal the tutorial content
             while (tutorialContents[i].RevealGroupContent()) yield return null;
+            
+            // If it's the enemy tutorial, spawn an enemy (TODO: FIX HARD CODED THINGAMAJIG)
+            if (i == 4) SpawnEnemy();
             
             yield return new WaitUntil(() => _conditions[i]);
             
@@ -210,4 +215,25 @@ public class TutorialSectionReader : MonoBehaviour
         // Start the game once the tutorial has been completed
         GameManager.GameLogic.StartGame();
     }
+
+    private void SpawnEnemy()
+    {
+        var enm = ObjectPoolManager.Instance.Spawn<River_Enemy>(0); // Spawn Crocodile
+        // Override Data
+        var data = new BoatEnemy_Data
+        {
+            targetSpace = 1
+        };
+        enm.OverrideData(data);
+        // PlaceSectionObject(enm, item.lane, item.distance, item.height);
+        
+        // Debug.Log($"Placing Object: {ro.name}. Lane = {lane}, Distance = {distance}, Height = {height}");
+        enm.InjectRiverManager(River_Manager.Instance);
+        enm.canMove = true;
+    
+        enm.StartOnLane(1, River_Manager.Instance.BoatController.RiverSplineObject.GlobalDistanceTravelled, 0);
+        Debug.Log("TUTORIAL SPAWNED ENEMY");
+    }
+    
+    
 }

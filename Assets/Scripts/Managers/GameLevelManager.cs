@@ -384,7 +384,7 @@ public class GameLevelManager : MonoBehaviour
     /// Get a random difficulty value based on a difficulty value
     /// </summary>
     /// <returns></returns>
-    private SO_GameDifficultyValues.DifficultyValues CalculateDifficulty()
+    public SO_GameDifficultyValues.DifficultyValues CalculateDifficulty()
     {
         var easy = difficultyValues.GameDifficultyValues[0];
         var medium = difficultyValues.GameDifficultyValues[1];

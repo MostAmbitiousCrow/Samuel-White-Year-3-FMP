@@ -21,6 +21,7 @@ public class RiverSplineObject : MonoBehaviour
     /// <summary> The overall distance this object has travelled during the playthrough </summary>
     public float GlobalDistanceTravelled => globalDistanceTravelled;
     public bool ignorePause;
+    public bool ignoreRiverSpeed;
 
     private void OnEnable()
     {
@@ -36,7 +37,8 @@ public class RiverSplineObject : MonoBehaviour
     {
         if (River_Manager.Instance.IsPaused && !ignorePause) return;
 
-        float speed = River_Manager.Instance.currentRiverSpeed * speedMultiplier;
+        float speed = (ignoreRiverSpeed ? 
+            River_Manager.Instance.StoredRiverSpeed : River_Manager.Instance.currentRiverSpeed) * speedMultiplier;
 
         // move forward
         totalDistanceTravelled += speed * Time.deltaTime;

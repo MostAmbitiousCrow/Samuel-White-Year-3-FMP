@@ -8,8 +8,9 @@ public class ExhibitModeManager : MonoBehaviour
     [Header("Controls")]
     [Tooltip("The time of each play session in minutes before force-completing the game")]
     [SerializeField] private float playTime = 10;
-    [SerializeField] private float _currentTime;
-    [SerializeField] private bool _isCompleted;
+    private static float _currentTime;
+    private static bool _isCompleted;
+    private static bool _isPaused;
     [SerializeField] private float timerTextScale = 100;
 
     [Header("Components")]
@@ -27,8 +28,12 @@ public class ExhibitModeManager : MonoBehaviour
         _currentTime = playTime * 60f;
         
         UpdateTimer();
+        
         GameManager.GameLogic.onGameInitialised += StartTimer;
         GameManager.GameLogic.OnGameCompleted += TriggerForceGameOver;
+        
+        /*Loading_Screen_Controller.OnTransitionOpened += PauseTimer;
+        Loading_Screen_Controller.OnTransitionClosed += UnPauseTimer;*/
     }
 
     // private void OnEnable()
@@ -40,6 +45,9 @@ public class ExhibitModeManager : MonoBehaviour
     {
         GameManager.GameLogic.onGameInitialised -= StartTimer;
         GameManager.GameLogic.OnGameCompleted -= TriggerForceGameOver;
+
+        /*Loading_Screen_Controller.OnTransitionOpened -= PauseTimer;
+        Loading_Screen_Controller.OnTransitionClosed -= UnPauseTimer;*/
     }
 
     public void UpdateExhibitMode()
@@ -58,6 +66,18 @@ public class ExhibitModeManager : MonoBehaviour
         Debug.Log($"Started Exhibitor Timer. Is Exhibiting: {GameSettingsManager.DoExhibitMode}");
     }
 
+    /*private static void PauseTimer()
+    {
+        _isPaused = true;
+        Debug.Log($"Timer Updated. Paused = {_isPaused}");
+    }
+
+    private static void UnPauseTimer()
+    {
+        _isPaused = false;
+        Debug.Log($"Timer Updated. Paused = {_isPaused}");
+    }*/
+
     /*private void ResetTimer()
     {
         _isCompleted = false;
@@ -68,7 +88,7 @@ public class ExhibitModeManager : MonoBehaviour
 
     private void Update()
     {
-        if (!GameSettingsManager.DoExhibitMode || _isCompleted) return;
+        if (!GameSettingsManager.DoExhibitMode || _isCompleted || Loading_Screen_Controller.IsTransitioning) return;
         
         _currentTime -= Time.unscaledDeltaTime;
 

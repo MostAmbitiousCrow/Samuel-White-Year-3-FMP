@@ -54,8 +54,12 @@ public class River_Enemy : River_Object
 
         if (!isMoving) return;
         // Debug.Log($"Enemy is Moving");
-        
-        if (!(GetDistanceToBoat() < emergeTriggerDetectRadius)) return;
+
+        if (!(GetDistanceToBoat() < emergeTriggerDetectRadius))
+        {
+            Debug.Log($"Starting position = {startDistance} Distance to boat is: {GetDistanceToBoat()}");
+            return;
+        }
         
         isMoving = false;
         enemyController.gameObject.SetActive(true);

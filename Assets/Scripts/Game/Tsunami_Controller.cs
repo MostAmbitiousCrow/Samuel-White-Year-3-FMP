@@ -259,6 +259,7 @@ public class TsunamiController : MonoBehaviour
         artwork.SetActive(true);
         smashBox.enabled = true;
 
+        riverSplineObject.ignoreRiverSpeed = true;
         riverSplineObject.speedMultiplier = 3.5f;
         riverSplineObject.ignorePause = true;
         hasReachedBoat = true;

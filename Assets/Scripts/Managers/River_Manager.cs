@@ -199,13 +199,14 @@ public class River_Manager : MonoBehaviour
         OnRiverSpeedUpdate?.Invoke();
     }
 
-    private int _storedRiverSpeed;
+    public int StoredRiverSpeed { get; private set; }
+
     [Button]
     public void HaltRiver(int amount = 10)
     {
         _capturedTime = Time.time;
         // Skip storing value if halting whilst slowed
-        if (!isHalted) _storedRiverSpeed = targetRiverSpeed;
+        if (!isHalted) StoredRiverSpeed = targetRiverSpeed;
         isHalted = true;
         SetRiverSpeed(targetRiverSpeed / 2, true, false);
 
@@ -227,6 +228,7 @@ public class River_Manager : MonoBehaviour
             return;
         }
         targetRiverSpeed = targetSpeed;
+        StoredRiverSpeed = targetRiverSpeed;
         OnRiverSpeedUpdate?.Invoke();
         speedDecreaseSound.Play();
     }
@@ -245,6 +247,7 @@ public class River_Manager : MonoBehaviour
         }
 
         targetRiverSpeed = targetSpeed;
+        StoredRiverSpeed = targetRiverSpeed;
         IsTransitioning = true;
 
         OnRiverSpeedUpdate?.Invoke();
@@ -273,6 +276,7 @@ public class River_Manager : MonoBehaviour
     {
         currentRiverSpeed = startingRiverSpeed;
         targetRiverSpeed = startingRiverSpeed;
+        StoredRiverSpeed = targetRiverSpeed;
     }
 
     // ==============================================================
@@ -302,7 +306,8 @@ public class River_Manager : MonoBehaviour
             if (Time.time > _capturedTime + speedRecoveryTime)
             {
                 isHalted = false;
-                targetRiverSpeed = _storedRiverSpeed;
+                targetRiverSpeed = StoredRiverSpeed;
+                StoredRiverSpeed = targetRiverSpeed;
                 OnRiverSpeedUpdate?.Invoke();
             }
         }
