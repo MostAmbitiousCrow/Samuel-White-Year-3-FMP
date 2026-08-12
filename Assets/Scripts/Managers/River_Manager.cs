@@ -201,8 +201,8 @@ public class River_Manager : MonoBehaviour
 
     public int StoredRiverSpeed { get; private set; }
 
-    [Button]
-    public void HaltRiver(int amount = 10)
+    /*[Button]
+    public void  HaltRiver(int amount = 10)
     {
         _capturedTime = Time.time;
         // Skip storing value if halting whilst slowed
@@ -212,7 +212,7 @@ public class River_Manager : MonoBehaviour
 
         // Progress the Tsunami. Ignore if the player is invincible.
         if (!GameSettingsManager.DoPlayerInvincibility) tsunamiController.Progress();
-    }
+    }*/
 
     /// <summary> The method to slow down the global river speed </summary>
     /// <param name="amount"></param>

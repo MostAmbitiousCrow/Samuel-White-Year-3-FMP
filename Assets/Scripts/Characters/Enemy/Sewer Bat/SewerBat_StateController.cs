@@ -63,7 +63,7 @@ public class SewerBat_StateController : BoatEnemyStateController
         public override void OnEnter()
         {
             base.OnEnter();
-            BatSc.gravity = 0f;
+            BatSc.minimumGravity = 0f;
             // BatSc.currentY = BatSc.jumpPower;
             BatSc.isAffectedByGravity = false;
             // Temp to prevent Fall/Rise Blend Animation from getting stuck...
@@ -151,7 +151,7 @@ public class SewerBat_StateController : BoatEnemyStateController
             // Once the delay is finished, enable gravity as if the Bat is Diving!
             if (Time.time - _storedTime > BatSc.BatData.attackDelay)
             {
-                BatSc.gravity = BatSc.BatData.diveGravity;
+                BatSc.minimumGravity = BatSc.BatData.diveGravity;
                 BatSc.isAffectedByGravity = true;
             }
 

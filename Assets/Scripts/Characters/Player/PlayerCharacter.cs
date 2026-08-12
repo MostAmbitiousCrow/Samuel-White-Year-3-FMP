@@ -257,7 +257,11 @@ namespace GameCharacters
 
         private void JumpInput()
         {
-            if (!isGrounded) return;
+            if (!isGrounded)
+            {
+                if (_jumpAction.WasReleasedThisFrame()) StopJump();
+                return;
+            }
             switch (GameSettingsManager.UseAlternativeControlScheme)
             {
                 // Alternative tap to jump
@@ -275,6 +279,7 @@ namespace GameCharacters
                         if (isVaulting) WillJump = true;
                         else TriggerJump();
                     }
+                    // TODO: Add a way to stop the jump in the alternative control scheme
                     break;
             }
         }

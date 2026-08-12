@@ -282,7 +282,7 @@ public class Boat_Controller : MonoTimeBehaviour, IRiverLaneMovement
 
     public void TakeDamage()
     {
-        Instance.HaltRiver(10);
+        GameSpeedManager.SetGameSpeed();
         AudioManager.Play(Clip.Crash);
         CameraShaker.Presets.Explosion3D();
         // print("Boat hit, halted river");

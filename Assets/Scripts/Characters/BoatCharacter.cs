@@ -50,18 +50,22 @@ namespace GameCharacters
 
         [Header("Jump Movement")] 
         [SerializeField] protected bool canJump = true;
-        [SerializeField, ShowField(nameof(canJump))] protected float jumpPower = 10f;
+        [FormerlySerializedAs("jumpPower")] [SerializeField, ShowField(nameof(canJump))] protected float jumpHeight = 10f;
         [ShowField(nameof(canJump))] public bool isJumping;
         protected float JumpTimeElapsed = 0f;
         public bool isAffectedByGravity = true;
-        [SerializeField] protected float gravity = -25f;
+        [SerializeField] protected bool isFastFalling = false;
+        [SerializeField] private float gravityScale = 1f;
+        [SerializeField] protected float minimumGravity = -15f;
+        [SerializeField] protected float maximumGravity = -25f;
 
+        [ShowField(nameof(canJump))] public bool isFalling;
         [HideInInspector] public float verticalVelocity;
         [SerializeField, ReadOnly] protected float currentY;
 
         [Header("Head Bounce")] [ReadOnly]
         public bool isBouncing = false;
-        [SerializeField] protected float bouncePower = 5f;
+        [FormerlySerializedAs("bouncePower")] [SerializeField] protected float bounceHeight = 5f;
         private float _timeSinceLastBounce;
         [SerializeField] private bool canBounce = true;
 
@@ -504,7 +508,7 @@ namespace GameCharacters
             if (isAffectedByGravity)
             {
                 // Do Gravity (fall)
-                verticalVelocity += gravity * Time.deltaTime;
+                verticalVelocity += (isFastFalling? maximumGravity : minimumGravity) * Time.deltaTime;
                 currentY += verticalVelocity * Time.deltaTime;
             }
 
@@ -537,11 +541,12 @@ namespace GameCharacters
             currentY = 0f;
             verticalVelocity = 0f;
             isGrounded = true;
+            isFastFalling = false;
 
             OnLanded();
         }
 
-        public void TriggerJump()
+        protected void TriggerJump()
         {
             WillJump = false;
             // Return if already in the air
@@ -549,10 +554,15 @@ namespace GameCharacters
             
             isJumping = true;
             isGrounded = false;
-            verticalVelocity = jumpPower;
+            verticalVelocity = Mathf.Sqrt(jumpHeight * (Physics.gravity.y * gravityScale) * -2f);
             currentY = 0.1f;
 
             OnJumped();
+        }
+
+        protected void StopJump()
+        {
+            isFastFalling = true;
         }
 
         /// <summary> Is called before the character jumps </summary>
@@ -607,7 +617,7 @@ namespace GameCharacters
             currentSpace.ExitSpace();
             isGrounded = false;
             animator.SetBool(AnimatorGrounded, isGrounded);
-            verticalVelocity = bouncePower;
+            verticalVelocity = Mathf.Sqrt(bounceHeight * (Physics.gravity.y * gravityScale) * -2f);;
             isBouncing = true;
 
             _timeSinceLastBounce = Time.time;
