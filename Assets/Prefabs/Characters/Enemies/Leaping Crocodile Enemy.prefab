@@ -961,13 +961,18 @@ MonoBehaviour:
   isGroundPounding: 0
   groundPoundTime: 0.25
   canJump: 1
-  jumpPower: 24
+  jumpHeight: 20
   isJumping: 0
   isAffectedByGravity: 1
-  gravity: -25
+  isFastFalling: 0
+  gravityScale: 1
+  minimumGravity: -20
+  maximumGravity: -25
+  isFalling: 0
+  verticalVelocity: 0
   currentY: 0
   isBouncing: 0
-  bouncePower: 5
+  bounceHeight: 5
   canBounce: 0
   currentSpace:
     t: {fileID: 0}
