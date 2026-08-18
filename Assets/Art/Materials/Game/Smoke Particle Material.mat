@@ -26,6 +26,7 @@ Material:
   m_Parent: {fileID: 2100000, guid: 7e4053c2ebd544c2abce40da48ec9d83, type: 2}
   m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _EMISSION
@@ -46,7 +47,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _DstBlend: 10
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _Surface: 1
     - _ZWrite: 0
     m_Colors:

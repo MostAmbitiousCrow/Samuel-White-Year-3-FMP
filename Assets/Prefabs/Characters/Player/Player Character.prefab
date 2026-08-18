@@ -819,6 +819,11 @@ PrefabInstance:
       propertyPath: m_FadeFactor
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 13068614275916849, guid: 33215788b5a5849508fd602e5dbdeed1,
+        type: 3}
+      propertyPath: m_DrawDistance
+      value: 213.4
+      objectReference: {fileID: 0}
     - target: {fileID: 743139148720724485, guid: 33215788b5a5849508fd602e5dbdeed1,
         type: 3}
       propertyPath: looping
@@ -1830,7 +1835,7 @@ MonoBehaviour:
   verticalVelocity: 0
   currentY: 0
   isBouncing: 0
-  bouncePower: 10
+  bounceHeight: 10
   canBounce: 1
   currentSpace:
     t: {fileID: 0}
