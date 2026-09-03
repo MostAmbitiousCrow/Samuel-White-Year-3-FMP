@@ -57,7 +57,7 @@ public class River_Enemy : River_Object
 
         if (!(GetDistanceToBoat() < emergeTriggerDetectRadius))
         {
-            Debug.Log($"Starting position = {startDistance} Distance to boat is: {GetDistanceToBoat()}");
+            // Debug.Log($"Starting position = {startDistance} Distance to boat is: {GetDistanceToBoat()}");
             return;
         }
         

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ea86b3300adcf49b226562b8a31ba6, type: 3}
+  m_Name: Sewer Environment
+  m_EditorClassIdentifier: 
+  environmentType: 0
+  blocks:
+  - {fileID: 4256033749955053948, guid: 7f0d9a0b7192b544093810e8904a665d, type: 3}

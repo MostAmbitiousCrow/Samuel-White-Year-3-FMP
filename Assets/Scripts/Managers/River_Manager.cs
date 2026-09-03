@@ -484,7 +484,8 @@ public class River_Manager : MonoBehaviour
 
     public void UpdateWorldSpline(Spline newSpline)
     {
-        worldSplineContainer.Spline = newSpline;
+        Debug.LogWarning("Prevented World Spline from Changing due to changes");
+        //worldSplineContainer.Spline = newSpline;
     }
 
     #endregion

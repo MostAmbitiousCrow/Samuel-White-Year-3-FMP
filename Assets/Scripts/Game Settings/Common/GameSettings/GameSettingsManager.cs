@@ -239,18 +239,10 @@ namespace Game
 
 		public static void SetVSync(bool state, int targetFPS = 60)
 		{
-			// VSync On
-			if (state)
-			{
-				QualitySettings.vSyncCount = 1;
-			}
-			// VSync Off
-			else
-			{
-				QualitySettings.vSyncCount = 0;
-				Application.targetFrameRate = targetFPS; 
-			}
-
+			// VSync On/Off
+			QualitySettings.vSyncCount = state ? 1 : 0;
+			Application.targetFrameRate = state? targetFPS : -1;
+			
 			PlayerPrefs.SetInt("Settings.VSync", state ? 1:0);
 			PlayerPrefs.Save();
 		}

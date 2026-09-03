@@ -26,7 +26,7 @@ public class RiverObstacleBridge : River_Obstacle
     protected override void FixedTimeUpdate()
     {
         base.FixedTimeUpdate();
-        if (isHit && !canTakeMultipleHits) return;
+        if (isHit && !canTakeMultipleHits || !isMoving) return;
         
         // Do Detection
         for (int i = 0; i < _points.Count-1; i++)

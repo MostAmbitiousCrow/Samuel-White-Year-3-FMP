@@ -65,7 +65,7 @@ public class RiverSplineObject : MonoBehaviour
 
     public void Reset()
     {
-        speedMultiplier = 1f;
+        // speedMultiplier = 1f;
         totalDistanceTravelled = 0f;
         distanceOnSpline = 0f;
         

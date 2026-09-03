@@ -54,13 +54,17 @@ MonoBehaviour:
   startLane: 1
   height: 0
   distance: 0
-  canMove: 0
-  isMoving: 0
+  startDistance: 0
+  canMove: 1
+  isMoving: 1
   explodesOnHit: 0
   artExploder: {fileID: 0}
-  objectPrefab: {fileID: 4004389689732239133}
+  riverManager: {fileID: 0}
   obstacleData:
     ImpactDamage: 1
+  isHit: 0
+  canTakeMultipleHits: 0
+  boxCollider: {fileID: 0}
 --- !u!114 &4151325652179011707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +78,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   art: []
+  artPositions: []
+  artRotations: []
   force: 1
   minMaxAngularVelocity: {x: -5, y: 5}
   animator: {fileID: 0}

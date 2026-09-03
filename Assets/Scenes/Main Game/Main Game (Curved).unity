@@ -19,7 +19,7 @@ RenderSettings:
   m_FogMode: 1
   m_FogDensity: 0.01
   m_LinearFogStart: 0
-  m_LinearFogEnd: 100
+  m_LinearFogEnd: 115
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -35,7 +35,7 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1062169140}
   m_UseRadianceAmbientProbe: 0
@@ -140,7 +140,7 @@ PrefabInstance:
     - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14
+      value: 3.26
       objectReference: {fileID: 0}
     - target: {fileID: 1996692682384391393, guid: cdefbb419192e4f26bb14479e7a9c848,
         type: 3}
@@ -1813,7 +1813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &145775832
 Transform:
   m_ObjectHideFlags: 0
@@ -1822,7 +1822,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145775831}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1846,7 +1846,19 @@ MonoBehaviour:
   - prefab: {fileID: 0}
     Prefab: {fileID: 919132149155446097, guid: 3d1a1c72054198048a58ee0a9fa21045, type: 3}
     probability: 0
-    Probability: 0
+    Probability: 25
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 919132149155446097, guid: 87080a64ea83e354fbcab08bd04ceaf0, type: 3}
+    probability: 0
+    Probability: 25
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 919132149155446097, guid: 2497b68dccf0f1f47a577d8c3db74372, type: 3}
+    probability: 0
+    Probability: 25
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 919132149155446097, guid: cb89fcd58172b4243a68db6ecdeca96d, type: 3}
+    probability: 0
+    Probability: 25
   m_Method: 1
   m_Space: 1
   m_Spacing: {x: 32, y: 32}
@@ -1895,7 +1907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &191832457
 Transform:
   m_ObjectHideFlags: 0
@@ -1904,7 +1916,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191832456}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1928,7 +1940,19 @@ MonoBehaviour:
   - prefab: {fileID: 0}
     Prefab: {fileID: 919132149155446097, guid: 3d1a1c72054198048a58ee0a9fa21045, type: 3}
     probability: 0
-    Probability: 0
+    Probability: 25
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 919132149155446097, guid: 87080a64ea83e354fbcab08bd04ceaf0, type: 3}
+    probability: 0
+    Probability: 25
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 919132149155446097, guid: 2497b68dccf0f1f47a577d8c3db74372, type: 3}
+    probability: 0
+    Probability: 25
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 919132149155446097, guid: cb89fcd58172b4243a68db6ecdeca96d, type: 3}
+    probability: 0
+    Probability: 25
   m_Method: 1
   m_Space: 1
   m_Spacing: {x: 32, y: 32}
@@ -2169,7 +2193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 1
-  speedMultiplier: 4
+  speedMultiplier: 0
   offset: 0
   distanceOnSpline: 0
   totalDistanceTravelled: 0
@@ -3115,7 +3139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &398303709
 Transform:
   m_ObjectHideFlags: 0
@@ -3124,7 +3148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398303708}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3148,7 +3172,7 @@ MonoBehaviour:
   - prefab: {fileID: 0}
     Prefab: {fileID: 919132149155446097, guid: 5e07974304fe440438b5c81114f8daa4, type: 3}
     probability: 0
-    Probability: 0
+    Probability: 25
   m_Method: 1
   m_Space: 1
   m_Spacing: {x: 32, y: 32}
@@ -3264,6 +3288,11 @@ PrefabInstance:
       propertyPath: tsunamiController
       value: 
       objectReference: {fileID: 2068701860}
+    - target: {fileID: 8362121423649790839, guid: ba2115c47db2448bdb2c8612a2261e67,
+        type: 3}
+      propertyPath: startingRiverSpeed
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8362121423649790839, guid: ba2115c47db2448bdb2c8612a2261e67,
         type: 3}
       propertyPath: worldSplineContainer
@@ -4459,7 +4488,7 @@ MonoBehaviour:
   boatFollowStrength: 0.6
   originPosition: {x: 0, y: 0, z: 0}
   smoothTime: 0.25
-  fovSlideRange: {x: 50, y: 90}
+  fovSlideRange: {x: 45, y: 65}
 --- !u!114 &913156670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4490,7 +4519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1062169139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4675,7 +4704,7 @@ MonoBehaviour:
     - Position:
         x: 0
         y: 0
-        z: 608
+        z: 1216
       TangentIn:
         x: 0
         y: 0
@@ -4888,10 +4917,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d200580271d64ba4d975662a20037f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalCurve: 0
-  verticalCurve: 0
-  gameMaterial: {fileID: 2100000, guid: eae4ad5d722da5c469f1fee10bfaee86, type: 2}
-  waterMaterial: {fileID: 2100000, guid: 485ea99145c364045b7586ea0a99ca01, type: 2}
+  horizontalCurveScale: 0.0075
+  verticalCurveScale: 0.002
+  speedMultiplier: 0.4
+  noiseScale: 0.5
+  horizontalValue: 0.0012113607
+  verticalValue: 0.002539681
+  folder: {fileID: 884481923}
+  environmentDatas:
+  - {fileID: 11400000, guid: ffb6a92f9322d5247a236a1d7cb8b449, type: 2}
+  despawnDistance: -10
+  maxBlocks: 10
+  lastBlock: {fileID: 0}
+  closestBlock: {fileID: 0}
 --- !u!1 &1610909931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,7 +4993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1655239391
 Transform:
   m_ObjectHideFlags: 0
@@ -4964,7 +5002,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1655239390}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4989,7 +5027,7 @@ MonoBehaviour:
     Prefab: {fileID: 1851728445680641960, guid: 210e80351ecd22743a9ddaa08a0ecdc1,
       type: 3}
     probability: 0
-    Probability: 0
+    Probability: 25
   m_Method: 1
   m_Space: 1
   m_Spacing: {x: 48, y: 48}
@@ -5158,7 +5196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 1
-  speedMultiplier: 4
+  speedMultiplier: 0
   offset: 0
   distanceOnSpline: 0
   totalDistanceTravelled: 0
@@ -5445,19 +5483,9 @@ PrefabInstance:
       objectReference: {fileID: 274381121}
     - target: {fileID: 6398182107363113773, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
-      propertyPath: levelEnterSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6398182107363113773, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
-        type: 3}
       propertyPath: riverSplineObject
       value: 
       objectReference: {fileID: 274381121}
-    - target: {fileID: 6398182107363113773, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
-        type: 3}
-      propertyPath: levelExitSpeedResetTime
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7697235221224964546, guid: 3ef26fa2e4f35433dbe983fb5ec1b21d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5614,7 +5642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2103990911
 Transform:
   m_ObjectHideFlags: 0
@@ -5623,7 +5651,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103990910}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5647,15 +5675,15 @@ MonoBehaviour:
   - prefab: {fileID: 0}
     Prefab: {fileID: 919132149155446097, guid: 5e07974304fe440438b5c81114f8daa4, type: 3}
     probability: 0
-    Probability: 0
+    Probability: 25
   m_Method: 1
   m_Space: 1
   m_Spacing: {x: 32, y: 32}
   m_Up: 1
   m_Forward: 2
   m_PositionOffset:
-    setup: 0
-    min: {x: 0, y: 0, z: 0}
+    setup: 1
+    min: {x: 0, y: -0.5, z: 0}
     max: {x: 3.51, y: 4.81, z: 0}
     randomX: 0
     randomY: 0
@@ -5686,12 +5714,12 @@ SceneRoots:
   m_Roots:
   - {fileID: 1673436213}
   - {fileID: 1873301174}
+  - {fileID: 54051144}
   - {fileID: 274381120}
   - {fileID: 559965578}
   - {fileID: 1514418188}
   - {fileID: 1576542373}
   - {fileID: 432632605}
-  - {fileID: 54051144}
   - {fileID: 1539210893}
   - {fileID: 219833877}
   - {fileID: 1962718609}

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using sc.modeling.splines.runtime;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -82,39 +80,4 @@ public class SewerEnvironmentArtManager : MonoBehaviour
         // Update subscribers (River Manager updates its spline length when the environment is updated)
         OnEnvironmentUpdated?.Invoke();
     }
-
-    /*
-    private IEnumerator UpdateSewerEnvironmentRoutine()
-    {
-        var data = _gameLevelManager.Levels[_gameLevelManager.CurrentLevel];
-        var content = sewerArtContents[(int)data.levelType];
-
-        var time = new WaitForEndOfFrame();
-        
-        // Update the World Spline Container
-        if (data.levelSpline.Count > 1) _splineContainer.Spline = data.levelSpline;
-
-        // Update Sewer Wall Artwork
-        foreach (var splineMesher in sewerWallSplineMeshers)
-        {
-            splineMesher.sourceMesh = content.wallMesh;
-            splineMesher.GetComponent<MeshRenderer>().material = content.wallMaterial;
-            splineMesher.Rebuild();
-            yield return time;
-        }
-        
-        // Update Sewer Ceiling Artwork
-        foreach (var splineMesher in sewerCeilingSplineMeshers)
-        {
-            splineMesher.sourceMesh = content.ceilingMesh;
-            splineMesher.GetComponent<MeshRenderer>().material = content.ceilingMaterial;
-            splineMesher.Rebuild();
-            yield return time;
-        }
-        
-        // Rebuild Sewer River Artwork
-        yield return time;
-        sewerRiverSplineMesher.Rebuild();
-    }
-    */
 }

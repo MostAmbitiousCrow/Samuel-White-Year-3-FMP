@@ -162,7 +162,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             }
             
             lastSpawnedObject = null;
-            // furthestDistance = 0;
+            furthestDistance = 0;
 
             // Using Distancing Only
             _currentSectionOffset += data.sectionContent.distanceBeforeSection;
@@ -174,7 +174,7 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
             SpawnGemstoneGates(data.sectionContent.gemstoneGates);
             SpawnSlipStreams(data.sectionContent.slipStreams);
             
-            // Debug.Log($"Last Spawned Object is: {lastSpawnedObject}");
+            Debug.Log($"Last Spawned Object is: {lastSpawnedObject}");
             
             // if (lastSpawnedObject) yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeSelf);
             // else Debug.Log($"Section {currentSectionIndex} had no objects.");
@@ -201,7 +201,10 @@ public class LevelSectionManager : MonoBehaviour, IAffectedByRiver, ITargetsBoat
         var totalDistance = furthestDistance + _currentSectionOffset + 40f;
         Debug.Log($"Spawn Complete. Offset = {_currentSectionOffset}. Section Total Distance = {totalDistance}");
         
-        yield return new WaitUntil(() => boatController.RiverSplineObject.TotalDistanceTravelled > totalDistance);
+        yield return new WaitUntil(() => !lastSpawnedObject.gameObject.activeInHierarchy);
+        
+        // Removed as part of reworking the environment to be curved
+        // yield return new WaitUntil(() => boatController.RiverSplineObject.TotalDistanceTravelled > totalDistance);
         
         Debug.Log("All Sections Spawned and Completed. Triggering Next Level Load");
         currentSectionIndex = 0;

@@ -52,6 +52,5 @@ public class GameSpeedManager : MonoBehaviour
 
         Time.timeScale = currentSpeed;
         currentTime -= Time.unscaledDeltaTime;
-        Debug.Log($"dt = {dt}, t = {t} speed = {speed}\nCurrent speed = {currentSpeed}, CurrentTime = {currentTime}");
     }
 }

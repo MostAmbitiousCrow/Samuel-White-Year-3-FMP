@@ -146,11 +146,16 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     #region Update Events
     protected override void FixedTimeUpdate()
     {
+        
+    }
+
+    protected override void TimeUpdate()
+    {
         // Do Movement
         if (!isMoving || !canMove) return;
-        // RiverFlowMovement(); // TODO: Might not actually need this if objects will be stationary...
+        RiverFlowMovement();
         distance = GetDistanceToBoat();
-            
+        
         // Once out of sight, return to pool
         if (distance < -100f) ReturnToPool();
     }
@@ -160,8 +165,8 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
         float speed = isAffectedByRiverSpeed ? River_Manager.Instance.currentRiverSpeed : travelSpeed;
 
         // Move the object forwards
-        Vector3 travelDirection = Time.fixedDeltaTime * speed * 
-            River_Manager.Instance.GetLane(currentLane).transform.forward;
+        Vector3 travelDirection = Time.deltaTime * speed * -transform.forward;
+            //River_Manager.Instance.GetLane(currentLane).transform.forward;
         transform.Translate(travelDirection, Space.World); // Move along the river in world space
     }
     #endregion
@@ -169,9 +174,11 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
     #region Math
     protected float GetDistanceToBoat()
     {
-        return startDistance - River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled;
+        return transform.position.z; // If the object has surpassed the world backwards coordinates
+        
+        // Removed as part of reworking the environment to be curved
+        // return startDistance - River_Manager.Instance.BoatController.RiverSplineObject.TotalDistanceTravelled;
     }
-
     #endregion
 
     #region Pooling
@@ -192,6 +199,7 @@ public abstract class River_Object : MonoTimeBehaviour, IRiverLaneMovement, IPoo
 
     public virtual void OnSpawned()
     {
+        isMoving = true;
     }
     
     private void OnDestroy()

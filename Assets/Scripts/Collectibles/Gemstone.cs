@@ -63,8 +63,12 @@ public class Gemstone : River_Collectible
         artObject.gameObject.SetActive(false);
         GameManager.GameLogic.AddGemstones(collectParticlesAmount * Data.BankValue);
         AudioManager.Play(Clip.Gem_Smash);
-
-        idleParticles.Stop();
+        
+        // Stop Idle Particles
+        var idleModule = idleParticles.main;
+        idleModule.simulationSpace = ParticleSystemSimulationSpace.World;
+        idleParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        
         isMoving = false; //TODO: Temp
     }
     #endregion
@@ -76,6 +80,13 @@ public class Gemstone : River_Collectible
         
         //Reset Particle Collect Position
         collectParticles.transform.position = Vector3.zero;
+        
+        // Reset and Play Idle Particles
+        var idleModule = idleParticles.main;
+        idleModule.simulationSpace = ParticleSystemSimulationSpace.Local;
+        idleParticles.Play();
+        
+        IsCollected = false;
     }
 
     // #region FrameRateManager Subscription
@@ -107,6 +118,7 @@ public class Gemstone : River_Collectible
 
     protected override void TimeUpdate() //TODO: Make gemstone stop upon being smashed
     {
+        base.TimeUpdate();
         AnimateArtObject();
         TickParticles();
         ParticleAnimation();
@@ -176,7 +188,6 @@ public class Gemstone : River_Collectible
         if (aliveCount > 0) collectParticles.SetParticles(_particles, aliveCount);
         else
         {
-            IsCollected = false;
             isMoving = true;
         }
     }

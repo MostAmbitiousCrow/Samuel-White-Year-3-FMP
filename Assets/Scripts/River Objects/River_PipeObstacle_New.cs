@@ -125,7 +125,7 @@ public class River_PipeObstacle_New : River_Obstacle
     protected override void FixedTimeUpdate()
     {
         base.FixedTimeUpdate();
-        if (isHit) return;
+        if (isHit || !isMoving) return;
 
         for (int i = 0; i < points.Count-1; i++)
         {
