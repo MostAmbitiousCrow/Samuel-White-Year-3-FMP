@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 11eb4507345584cfca13be90b70d0d26
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 6703156854643642326
+    second: Steam-Flushed_Forward-QR_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -108,7 +111,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Steam-Flushed_Forward-QR_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2205
+        height: 2205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6df42caf4a5660d50800000000000000
+      internalID: 6703156854643642326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
